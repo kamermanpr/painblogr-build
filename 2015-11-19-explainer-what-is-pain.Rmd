@@ -1,0 +1,72 @@
+---
+post_title: 'Explainer: what is pain and what is happening when we feel it?'
+post_author: 'Lorimer Moseley'
+post_date: '19 November 2015'
+post_image: './images/capsaicin.png'
+permalink:  '2015-11-19-explainer-what-is-pain.html'
+description: 'A brief introduction to what pain is.'
+output:
+    html_document:
+        template: './_templates/posts.html'
+---
+
+> _"If someone has a pain in his hand […] one does not comfort the hand, but the sufferer."_ – [Philosopher Ludwig Wittgenstein, 1953](http://www.amazon.com/Philosophical-Investigations-Ludwig-Wittgenstein/dp/0631205691)
+
+What is pain? It might seem like an easy question. The answer, however, depends on who you ask.
+
+Some say pain is a warning signal that something is damaged, but what about [pain-free major trauma](http://www.amazon.com/Painful-Yarns-Metaphors-Stories-Understand/dp/0980358809)? Some say pain is the body’s way of telling you something is wrong, but what about [phantom limb pain](http://www.amazon.co.uk/Explain-Edition-Lorimer-Moseley-Butler/dp/B00GGY23A4), where the painful body part is not even there?
+
+Pain scientists are reasonably agreed that pain is an unpleasant feeling in our body that makes us want to stop and change our behaviour. We no longer think of pain as a measure of tissue damage – it doesn’t actually work that way even in highly controlled experiments. We now think of pain as a complex and highly sophisticated protective mechanism.
+
+## How does pain work?
+Our body contains specialised nerves that detect potentially dangerous changes in temperature, chemical balance or pressure. These “danger detectors” (or “nociceptors”) send alerts to the brain, but they cannot send pain to the brain because _all_ pain is made _by_ the brain.
+
+![www.shutterstock.com -1](https://62e528761d0685343e1c-f3d1b99a743ffa4142d9d7f1978d9686.ssl.cf2.rackcdn.com/files/101649/width237/image-20151112-9388-1n9pswo.jpg)
+
+When you’re injured, the brain makes an educated guess which part of the body is in danger and produces the pain there. Pain is not actually coming from the wrist you broke, or the ankle you sprained. Pain is the result of the brain evaluating information, including danger data from the danger detection system, cognitive data such as expectations, previous exposure, cultural and social norms and [beliefs](http://www.amazon.co.uk/Explain-Edition-Lorimer-Moseley-Butler/dp/B00GGY23A4), and other [sensory data](http://www.ncbi.nlm.nih.gov/pubmed/17449180) such as what you see, hear and otherwise sense.
+
+The brain produces pain. Where in the body the brain produces the pain is a _“best guess scenario”_, based on all the incoming data and stored information. Usually the brain gets it right, but sometimes it doesn’t. An example is referred pain in your leg when it is your back that might need the protecting.
+
+It is pain that tells us not to do things – for example, not to lift with an injured hand, or not to walk with an injured foot. It is pain, too, that tells us to do things – see a physio, visit a GP, sit still and rest.
+
+We now know that pain can be “[turned on](http://www.ncbi.nlm.nih.gov/pubmed/2038488)” or “[turned up](http://www.ncbi.nlm.nih.gov/pubmed/15082122)” by anything that provides the brain with credible evidence that the body is in [danger and needs protecting](http://www.noigroup.com/en/Product/EPHPB).
+
+## All in your head?
+So is pain all about the brain and not at all about the body? No, these “danger detectors” are distributed across almost all of our body tissues and act as the eyes of the brain.
+
+When there is a sudden change in tissue environment – for example, it heats up, gets acidic (cyclists, imagine the lactic acid burn at the end of a sprint), is squashed, squeezed, pulled or pinched – these danger detectors are our first line of defence.
+
+They alert the brain and mobilise inflammatory mechanisms that increase blood flow and cause the release of healing molecules from nearby tissue, thus triggering the repair process.
+
+Local anaesthetic renders these danger detectors useless, so danger messages are not triggered. As such, we can be pain-free despite major tissue trauma, such as being cut into for an operation. Just because pain comes from the brain, it doesn’t mean it’s all in your head.
+
+![www.shutterstock.com -2](https://62e528761d0685343e1c-f3d1b99a743ffa4142d9d7f1978d9686.ssl.cf2.rackcdn.com/files/101653/width237/image-20151112-9400-1tgwbuo.jpg)
+
+Inflammation, on the other hand, renders these danger detectors more sensitive, so they respond to situations that are not actually dangerous. For example, when you move an inflamed joint, it hurts a long way before the tissues of the joint are actually stressed.
+
+Danger messages travel to the brain and are highly processed along the way, with the brain itself taking part in the processing. The danger transmission neurones that run up the spinal cord to the brain are under real-time control from the brain, increasing and decreasing their sensitivity according to what the brain suggests would be helpful.
+
+So, if the brain’s evaluation of all available information leads it to conclude that things are truly dangerous, then the danger transmission system becomes more sensitive (called descending facilitation). If the brain concludes things are not truly dangerous, then the danger transmission system becomes less sensitive (called descending inhibition).
+
+Danger evaluation in the brain is mindbogglingly complex. Many brain regions are involved, some more commonly that others, but the exact mix of brain regions varies between individuals and, in fact, between moments within individuals.
+
+To understand how pain emerges into consciousness requires us to understand how consciousness itself emerges, and that is [proving to be very tricky](http://consc.net/papers/facing.html).
+
+To understand how pain works in real-life people with real-life pain, we can apply a reasonably easy principle: any credible evidence that the body is in danger and protective behaviour would be helpful will increase the likelihood and intensity of pain. Any credible evidence that the body is safe will [decrease the likelihood](http://www.sciencedirect.com/science/article/pii/S1526590015006823) and intensity of pain. It is as simple and as difficult as that.
+
+## Implications
+To reduce pain, we need to reduce credible evidence of danger and increase credible evidence of safety. Danger detectors can be turned off by local anaesthetic, and we can also stimulate the body’s own danger-reduction pathways and mechanisms. This can be done by anything that is associated with safety – most obviously accurate understanding of how pain really works, exercise, active coping strategies, safe people and places.
+
+A very effective way to reduce pain is to make something else seem more important to the brain – this is called distraction. Only being unconscious or dead provide greater pain relief than distraction.
+
+In chronic pain the sensitivity of the hardware (the biological structures) increases so the relationship between pain and the true need for protection becomes distorted: we become over-protected by pain.
+
+This is one significant reason there is no quick fix for nearly all persistent pains. Recovery requires a journey of patience, persistence, courage and good coaching. The best interventions focus on slowly training our body and brain to be less protective.
+
+***
+
+_This article was originally published on [The Conversation](http://theconversation.com). Read the original article [here](https://theconversation.com/explainer-what-is-pain-and-what-is-happening-when-we-feel-it-49040)._
+
+_The article is the first in our series on Pain. Further articles will explore who pain affects, how we describe and experience pain across cultures and genders, and the effect of chronic pain on the economy._
+
+_[Lorimer Moseley](http://theconversation.com/profiles/lorimer-moseley-1552), is Professor of Clinical Neurosciences and Foundation Chair in Physiotherapy, University of South Australia_

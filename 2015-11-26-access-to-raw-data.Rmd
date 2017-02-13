@@ -1,0 +1,33 @@
+---
+post_title: 'Access to raw data from preclinical studies'
+post_author: 'Peter Kamerman'
+post_date: '26 November 2015'
+post_image: './images/posts/open_access.jpg'
+permalink:  '2015-11-26-access-to-raw-data.html'
+description: 'Make sure to publish your data with your paper. Its the right thing to do.'
+output:
+    html_document:
+        template: './_templates/posts.html'
+---
+
+<br>
+
+Rosie Morland (PhD) published an excellent commentary on the Pain Research Forum (PRF) website earlier this year in which she called for open access to raw data from preclinical animal studies.
+
+You can access the full article [here](http://www.painresearchforum.org/forums/discussion/58615-access-raw-behavioral-data-preclinical-research-papers):
+
+> _**Access to Raw Behavioral Data From Preclinical Research Papers**_
+>
+> _Rosemary Morland (September 21, 2015)_
+>
+> _There is a revolution happening in scientific publishing, spurred by the ability to include full sets of raw data alongside original research articles. This level of data transparency is changing the way we both view and use publications. Articles are no longer static, but can be updated as new findings become available, and can also act as data sources in their own right, not just in terms of systematic review and meta-analysis, but by providing the complete, raw data sets for subsequent re-analysis by other researchers who may discover novel findings, for instance, by applying different analysis paradigms that may not have been available to the original authors at the time of publication._
+
+This is an important topic, and one in which medical sciences lag far behind other fields. I had not directly encountered the issue until we recently were asked by [PLoS One](http://www.plosone.org) to make the data for a study available, which we did. But making data available is pointless if the supporting documentation is not supplied or it inadequately describes how the data were processed. For instance, the material made available ideally should include: 1) the raw data, 2) the tidy dataset (post-cleaning), 3) the codebook, and 4) the data analysis scripts (which should include how the data was cleaned). The data provided should allow others to reproduce the authors' analyses, and extend the analyses if appropriate. This is the concept of 'reproducible research' (if you are unfamiliar with this concept, [rOpenSci](https://ropensci.org/blog/2014/06/09/reproducibility/) and [Roger Peng](https://youtu.be/DfBSiOupI1I) provide good descriptions).\readmore
+
+Listing these requirements is much easier than achieving them. Most biomedical researchers receive limited exposure during their training to data wrangling and management, and statistics (usually you learn what stats your supervisor/mentor uses, and you pursue the _'all important p-value'_ using canned, GUI-based statistics packages that are user-friendly, but poor for documenting  your analytical approach). This poor data handling awareness contrasts with the meticulous schooling they often receive in experimental design and execution (including record keeping - the ever present lab book).
+
+When asked to provide access to my data by [PLoS One](http://www.plosone.org) I was fortunate in that I was using [R](http://cran.r-project.org/) and the [RStudio](http://www.rstudio.com/) IDE for my analysis. But even for the uninitiated, this platform provides an easy to learn literate programming platform for documenting your analyses (from data munging through to your final analyses and making pretty plots) using the ultra-easy to learn markup language, [rmarkdown](http://rmarkdown.rstudio.com/), and [Yihui Xie's](http://yihui.name/knitr/) awesome knitr package. You just have to push the 'knit' button when you are done. And if you are intimidated by R, there is a wealth of high-class, and mostly free, online learning material to get you going (e.g., [DataCamp](https://www.datacamp.com), [CodeSchool](https://www.codeschool.com/courses/try-r)). Not to mention the ever helpful community at [stackoverflow.com](http://stackoverflow.com/); if you are having a problem, someone else probably has experienced a similar problem, and Googling your problem will send you to the answer.
+
+To get your data and documentation online, there are numerous online resources available to host the material. I primarily use [GitHub.com](http://www.github.com), which is used mainly by programmers and data scientists. It's free, it is designed to facilitate collaboration and sharing, it allows version control, licenses can be assigned, private repositories are available for while you are working on the data, it can generate simple webpages for each project. As examples, follow these links to the original github [repository](https://github.com/kamermanpr/Amitriptyline.HIVSN.git) and the simple github-generated [webpage](http://kamermanpr.github.io/Amitriptyline.HIVSN/) for the study I mentioned earlier (please forgive me, only the cleaned data are posted - I was new to this). If you want a DOI for your work, there are many free services that will provide you with one (e.g., [Zenodo.com](http://www.zenodo.org), [Figshare.com](http://www.figshare.com)).
+
+Data drives innovation, and I believe that progress in the field of pain would be greatly enhanced if we were afforded the opportunity to directly interact with others researchers' data, and combine and directly compare it to our data or data from other sources.

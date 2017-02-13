@@ -1,0 +1,499 @@
+---
+post_title: "Too few medicines to treat neuropathic pain on national essential medicines lists"
+post_author: 'Peter Kamerman'
+post_date: '11 February 2017'
+post_image: './images/posts/eml-drug-map-2017/tablets.png'
+permalink:  '2017-02-11-eml-drug-map.html'
+description: "An interactive map of which medicines recommended for the treatment of neuropathic pain are listed on national essential medicines lists."
+output:
+    html_document:
+        template: './_templates/posts.html'
+        code_folding: hide
+---
+
+```{r setup, include = FALSE, warning = FALSE, message = FALSE}
+# Load libraries
+library(tidyverse)
+library(stringr)
+library(geojsonio)
+library(sp)
+library(leaflet)
+
+# Set global knitr chunck options
+knitr::opts_chunk$set(warning = FALSE,
+                      message = FALSE,
+                      cache = TRUE)
+```
+
+
+****
+
+<span style="font-weight:bold;font-size:120%;">Map: Inclusion of medicines to treat neuropathic pain on national essential medicines lists</span>
+
+<span style="font-size:90%;font-style:italic;"><b>Interactive plot:</b> Choose the drug class or IMF income category using the radio buttons in the top-right corner, and click on the country of interest to get more information.</span>
+
+```{r choropleth}
+
+############################################################
+#                                                          #
+#                      Load raw data                       #
+#                                                          #
+############################################################
+
+access_data <- read_csv('./_data/2017-02-10-eml-drug-map/2015-neml-data.csv')
+
+############################################################
+#                                                          #
+#                      Prepare data                        #
+#                                                          #
+############################################################
+
+# Create filtering objects
+drug_class <- c('Anticonvulsant', 'SNRI', 'TCA', 'Opioid', 'Topical')
+drug_name <- c('Gabapentin', 'Pregabalin', 'Duloxetine', 'Venlafaxine',
+               'Amitriptyline', 'Clomipramine', 'Desipramine', 'Imipramine',
+               'Nortriptyline', 'Morphine', 'Oxycodone', 'Tramadol',
+               'Capsaicin', 'Lidocaine')
+first_line <- c('Gabapentin', 'Pregabalin', 'Duloxetine', 'Venlafaxine',
+                'Amitriptyline', 'Clomipramine', 'Desipramine', 'Imipramine',
+                'Nortriptyline')
+simplify_tca <- 'Amitriptyline|Clomipramine|Desipramine|Imipramine|Nortriptyline'
+second_line <- c('Tramadol', 'Capsaicin', 'Lidocaine')
+third_line <- c('Morphine', 'Oxycodone')
+
+# Remove extraneous drugs/countries
+access_data <- access_data  %>%
+    # Select required columns
+    select(Country, Class, Drug, Listed) %>%
+    # Get rid of Sweden (OECD High Income)
+    filter(Country != 'Sweden') %>%
+    # Make lower case
+    rename(country = Country,
+           class = Class,
+           drug = Drug,
+           listed = Listed) %>%
+    ## filter by drug name
+    filter(drug %in% drug_name)
+
+# Get country names from access_data df for expanding first_line df (see below)
+countries_access <- access_data$country
+
+#-- Extract first-line drugs per country -------------------------------------#
+
+first_line <- access_data %>%
+    filter(drug %in% first_line) %>%
+    mutate(grade = rep('first_line', nrow(.))) %>%
+    filter(listed == 'Yes') %>%
+    # Simplify TCAs
+    mutate(drug = str_replace(drug,
+                              pattern = simplify_tca,
+                              replacement = 'Tricyclic')) %>%
+    select(country, grade, class, drug) %>%
+    group_by(country, grade, class, drug) %>%
+    summarise(n = n()) %>%
+    # Flesh-out countries so that they all have all second-line drugs
+    complete(country = unique(countries_access), drug) %>%
+    unique(.) %>%
+    # Convert NA to 0
+    mutate(n = str_replace_na(n)) %>%
+    mutate(n = as.numeric(str_replace(n,
+                                      pattern = 'NA',
+                                      replacement = '0'))) %>%
+    # Recode all values > 0 as 1 (i.e., yes or no)
+    mutate(n = ifelse(test = n > 0, yes = 1, no = 0)) %>%
+    # Spread and flatten across drug classes
+    spread(drug, n) %>%
+    ungroup() %>%
+    select(-class) %>%
+    mutate(Tricyclic = str_replace_na(Tricyclic),
+           Gabapentin = str_replace_na(Gabapentin),
+           Pregabalin = str_replace_na(Pregabalin),
+           Duloxetine = str_replace_na(Duloxetine),
+           Venlafaxine = str_replace_na(Venlafaxine)) %>%
+    mutate(Tricyclic = as.numeric(str_replace(Tricyclic,
+                                              pattern = 'NA',
+                                              replacement = '0')),
+           Gabapentin = as.numeric(str_replace(Gabapentin,
+                                               pattern = 'NA',
+                                               replacement = '0')),
+           Pregabalin = as.numeric(str_replace(Pregabalin,
+                                               pattern = 'NA',
+                                               replacement = '0')),
+           Duloxetine = as.numeric(str_replace(Duloxetine,
+                                               pattern = 'NA',
+                                               replacement = '0')),
+           Venlafaxine = as.numeric(str_replace(Venlafaxine,
+                                                pattern = 'NA',
+                                                replacement = '0'))) %>%
+    # Calculate totals per drug per country
+    # (used to reduce rows from 345 to 115 after expansion of '0' rows
+    # caused by previous steps)
+    group_by(grade, country) %>%
+    summarise(tricyclic = sum(Tricyclic),
+              gabapentin = sum(Gabapentin),
+              pregabalin = sum(Pregabalin),
+              duloxetine = sum(Duloxetine),
+              venlafaxine = sum(Venlafaxine)) %>%
+    # Calculate class totals
+    mutate(class_tca = ifelse(tricyclic > 0,
+                              yes = 1, no = 0),
+           class_alpha2delta = ifelse(gabapentin + pregabalin > 0,
+                                      yes = 1, no = 0),
+           class_snri = ifelse(duloxetine + venlafaxine > 0,
+                               yes = 1, no = 0)) %>%
+    # Calculate classes per country
+    mutate(classes_first = class_tca + class_alpha2delta + class_snri) %>%
+    # Convert 0 and 1 to 'No' and 'Yes' for the drug columns (for popup)
+    mutate(tricyclic = ifelse(tricyclic == 1,
+                              yes = 'yes', no = 'no'),
+              gabapentin = ifelse(gabapentin == 1,
+                                  yes = 'yes', no = 'no'),
+              pregabalin = ifelse(pregabalin == 1,
+                                  yes = 'yes', no = 'no'),
+              duloxetine = ifelse(duloxetine == 1,
+                                  yes = 'yes', no = 'no'),
+              venlafaxine = ifelse(venlafaxine == 1,
+                                   yes = 'yes', no = 'no')) %>%
+    # Rename for merging to SPDF
+    rename(name = country) %>%
+    # Reorder columns
+    select(name, grade, tricyclic, gabapentin, pregabalin, duloxetine,
+           venlafaxine, class_tca, class_alpha2delta,
+           class_snri, classes_first) %>%
+    # Get rid of strange attr that have cropped-up
+    tbl_df()
+
+#-- Extract second-line drugs per country ------------------------------------#
+
+second_line <- access_data %>%
+    filter(drug %in% second_line) %>%
+    mutate(grade = rep('second_line', nrow(.))) %>%
+    filter(listed == 'Yes') %>%
+    select(country, grade, class, drug) %>%
+    group_by(country, grade, class, drug) %>%
+    summarise(n = n()) %>%
+    # Flesh-out countries so that they all have all second-line drugs
+    complete(country = countries_access, drug) %>%
+    unique(.) %>%
+    # Convert NA to 0
+    mutate(n = str_replace_na(n)) %>%
+    mutate(n = as.numeric(str_replace(n,
+                                      pattern = 'NA',
+                                      replacement = '0'))) %>%
+    # Recode all values > 0 as 1 (i.e., yes or no)
+    mutate(n = ifelse(test = n > 0, yes = 1, no = 0)) %>%
+    # Spread and flatten across drug classes
+    spread(drug, n) %>%
+    ungroup() %>%
+    select(-class) %>%
+    mutate(Lidocaine = str_replace_na(Lidocaine),
+           Tramadol = str_replace_na(Tramadol)) %>%
+    mutate(Lidocaine = as.numeric(str_replace(Lidocaine,
+                                              pattern = 'NA',
+                                              replacement = '0')),
+           Tramadol = as.numeric(str_replace(Tramadol,
+                                             pattern = 'NA',
+                                             replacement = '0'))) %>%
+    # Calculate totals per drug per country
+    group_by(grade, country) %>%
+    summarise(lidocaine = sum(Lidocaine),
+              tramadol = sum(Tramadol)) %>%
+    # Calculate class totals
+    mutate(class_opioid2 = ifelse(tramadol > 0,
+                                 yes = 1, no = 0),
+           class_topical = ifelse(lidocaine > 0,
+                                  yes = 1, no = 0)) %>%
+    # Calculate classes per country
+    mutate(classes_second = class_opioid2 + class_topical) %>%
+    # Convert 0 and 1 to 'No' and 'Yes' for the drug columns (for popup)
+    mutate(tramadol = ifelse(tramadol == 1,
+                             yes = 'yes', no = 'no'),
+           lidocaine = ifelse(lidocaine == 1,
+                              yes = 'yes', no = 'no')) %>%
+    # Make sure the is a zero for the classes_total (for plotting)
+    complete(classes_second = c(0, 1, 2)) %>%
+    # Rename for merging to SPDF
+    rename(name = country) %>%
+    # Reorder columns
+    select(name, grade, tramadol, lidocaine, class_opioid2,
+           class_topical, classes_second) %>%
+    # Get rid of strange attr that have cropped-up
+    tbl_df()
+
+#-- Extract third-line drugs per country -------------------------------------#
+
+third_line <- access_data %>%
+    filter(drug %in% third_line) %>%
+    mutate(grade = rep('third_line', nrow(.))) %>%
+    filter(listed == 'Yes') %>%
+    select(country, grade, class, drug) %>%
+    group_by(country, grade, class, drug) %>%
+    summarise(n = n()) %>%
+    # Flesh-out countries so that they all have all second-line drugs
+    complete(country = countries_access, drug) %>%
+    unique(.) %>%
+    # Convert NA to 0
+    mutate(n = str_replace_na(n)) %>%
+    mutate(n = as.numeric(str_replace(n,
+                                      pattern = 'NA',
+                                      replacement = '0'))) %>%
+    # Recode all values > 0 as 1 (i.e., yes or no)
+    mutate(n = ifelse(test = n > 0, yes = 1, no = 0)) %>%
+    # Spread and flatten across drug classes
+    spread(drug, n) %>%
+    ungroup() %>%
+    select(-class) %>%
+    mutate(Morphine = str_replace_na(Morphine), # None had Botox
+           Oxycodone = str_replace_na(Oxycodone)) %>%
+    mutate(Morphine = as.numeric(str_replace(Morphine,
+                                             pattern = 'NA',
+                                             replacement = '0')),
+           Oxycodone = as.numeric(str_replace(Oxycodone,
+                                              pattern = 'NA',
+                                              replacement = '0'))) %>%
+    # Calculate totals per drug per country
+    group_by(grade, country) %>%
+    summarise(morphine = sum(Morphine),
+              oxycodone = sum(Oxycodone)) %>%
+    # Calculate class totals
+    mutate(classes_third = ifelse(morphine > 0 | oxycodone > 0,
+                                   yes = 1, no = 0)) %>%
+    # Convert 0 and 1 to 'No' and 'Yes' for the drug columns (for popup)
+    mutate(morphine = ifelse(morphine == 1,
+                             yes = 'yes', no = 'no'),
+           oxycodone = ifelse(oxycodone == 1,
+                              yes = 'yes', no = 'no')) %>%
+    # Make sure the is a zero for the classes_total (for plotting)
+    complete(classes_third = c(0, 1, 2)) %>%
+    # Get rid of strange NA row that gets added when using 'complete'
+    filter(!is.na(country)) %>%
+    # Rename for merging to SPDF
+    rename(name = country) %>%
+    # Reorder columns
+    select(name, grade, morphine, oxycodone, classes_third) %>%
+    # Get rid of strange attr that have cropped-up
+    tbl_df()
+
+############################################################
+#                                                          #
+#                  Make geospacial object                  #
+#                                                          #
+############################################################
+# Load geojson
+geo_data <- geojson_read(
+    './_data/2017-02-10-eml-drug-map/admin0_countries_50m.geojson',
+    what = 'sp')
+
+# Other countries
+## Filter out countries with data
+geo_other <- geo_data
+geo_other <- geo_other[!(geo_data$name %in% countries_access), 'name']
+
+# Simplify SPDF to avoid NAs
+## Filter geo_data by countries in first_line df
+geo_data <- geo_data[geo_data$name %in% countries_access,
+                      c('name', 'income_grp', 'gdp_md_est')]
+
+## Filter *_line dfs by countries in geo_data
+countries_geo <- geo_data$name
+first_line <- first_line[first_line$name %in% countries_geo, ]
+second_line <- second_line[second_line$name %in% countries_geo, ]
+third_line <- third_line[third_line$name %in% countries_geo, ]
+
+## Factor 'classes_*'
+first_line$factor_first <- factor(first_line$classes_first,
+                                  levels = c('0', '1', '2', '3'),
+                                  ordered = TRUE)
+second_line$factor_second <- factor(second_line$classes_second,
+                                  levels = c('0', '1', '2'),
+                                  ordered = TRUE)
+third_line$factor_third <- factor(third_line$classes_third,
+                                  levels = c('0', '1', '2'),
+                                  ordered = TRUE)
+
+## Clean-up 'income grp'
+imf <- data_frame(name = geo_data$name, imf = geo_data$income_grp) %>%
+    mutate(imf = str_replace(imf,
+                             pattern = '1. High income: OECD',
+                             replacement = 'High income')) %>%
+    mutate(imf = str_replace(imf,
+                             pattern = '2. High income: nonOECD',
+                             replacement = 'High income')) %>%
+    mutate(imf = str_replace(imf,
+                             pattern = '3. Upper middle income',
+                             replacement = 'Upper-middle income')) %>%
+    mutate(imf = str_replace(imf,
+                             pattern = '4. Lower middle income',
+                             replacement = 'Lower-middle income')) %>%
+    mutate(imf = str_replace(imf,
+                             pattern = '5. Low income',
+                             replacement = 'Low income')) %>%
+    mutate(imf = factor(imf,
+                        levels = c('Low income', 'Lower-middle income',
+                                   'Upper-middle income', 'High income'),
+                        ordered = TRUE))
+
+# Merge SPDF with *_line dfs
+geo_data <- merge(x = geo_data, y = first_line,
+                   by.x = 'name', by.y = 'name') %>%
+    merge(x = ., y = second_line,
+          by.x = 'name', by.y = 'name') %>%
+    merge(x = ., y = third_line,
+          by.x = 'name', by.y = 'name') %>%
+    merge(x = ., y = imf,
+          by.x = 'name', by.y = 'name')
+
+# Remove 'income_grp' column
+geo_data@data <- geo_data@data[-2]
+
+# Palette (from Color Brewer single hue sequential palette)
+pal_first <- colorFactor(c('#feedde','#fdbe85','#fd8d3c','#d94701'),
+                         geo_data$factors_first, ordered = TRUE)
+pal_second <- colorFactor(c('#efedf5','#bcbddc','#756bb1'),
+                          geo_data$factor_second, ordered = TRUE)
+pal_third <- colorFactor(c('#e5f5e0','#a1d99b','#31a354'),
+                         geo_data$factor_third, ordered = TRUE)
+pal_income <- colorFactor(c('#eff3ff','#bdd7e7','#6baed6','#2171b5'),
+                          geo_data$imf, ordered = TRUE)
+# Popups
+popup_first <- paste0('<b>Country: </b>', geo_data$name,
+                      ' (', geo_data$imf, ')',
+                      '<br><b>No. 1st-line classes on NEML: </b>',
+                      geo_data$classes_first,
+                      '<br><em>TCA (any): </em>',
+                      geo_data$tricyclic,
+                      '<br><em>&alpha;2&delta;-ligand (gabapentin): </em>',
+                      geo_data$gabapentin,
+                      '<br><em>&alpha;2&delta;-ligand (pregabalin): </em>',
+                      geo_data$pregabalin,
+                      '<br><em>SNRI (duloxetine): </em>',
+                      geo_data$duloxetine,
+                      '<br><em>SNRI (venlafaxine): </em>',
+                      geo_data$venlafaxine)
+
+popup_second <- paste0('<b>Country: </b>', geo_data$name,
+                       ' (', geo_data$imf, ')',
+                       '<br><b>No. 2nd-line classes on NEML: </b>',
+                       geo_data$classes_second,
+                       '<br><em>Weak Opioid (Tramadol): </em>',
+                       geo_data$tramadol,
+                       '<br><em>Topical agent (5% lidocaine): </em>',
+                       geo_data$lidocaine,
+                       '<br><em>Topical agent (8% capsaicin): </em> no')
+
+popup_third <- paste0('<b>Country: </b>', geo_data$name,
+                      ' (', geo_data$imf, ')',
+                      '<br><b>No. 3rd-line classes on NEML: </b>',
+                      geo_data$classes_third,
+                      '<br><em>Strong opioid (morphine): </em>',
+                      geo_data$morphine,
+                      '<br><em>Strong opioid (oxycodone): </em>',
+                      geo_data$oxycodone,
+                      '<br><em>Other (Botulinium toxin A): </em> no')
+
+popup_NA <- paste0('<b>Country: </b>', geo_other$name,
+                      '<br><b>No data</b>')
+
+############################################################
+#                                                          #
+#                           Plot                           #
+#                                                          #
+############################################################
+
+leaflet(data = geo_data,
+        width = '100%',
+        height = 600) %>%
+    setView(lat = 10, lng = 0, zoom = 2) %>%
+     # Add other countries
+    addPolygons(data = geo_other, weight = 1, color = '#777777',
+                opacity = 1, fillColor = '#777777',
+                fillOpacity = 1, popup = popup_NA) %>%
+    # Add analysed countries
+    addPolygons(weight = 1, color = '#000000',
+                opacity = 1, fillColor = ~ pal_first(factor_first),
+                fillOpacity = 1, popup = popup_first,
+                group = 'First-line drug classes') %>%
+    addPolygons(weight = 1, color = '#000000',
+                opacity = 1,fillColor = ~ pal_second(factor_second),
+                fillOpacity = 1, popup = popup_second,
+                group = 'Second-line drug classes') %>%
+    addPolygons(weight = 1, color = '#000000',
+                opacity = 1, fillColor = ~ pal_third(factor_third),
+                fillOpacity = 1, popup = popup_third,
+                group = 'Third-line drug classes') %>%
+    addPolygons(weight = 1, color = '#000000',
+                opacity = 1, fillColor = ~ pal_income(imf),
+                fillOpacity = 1, group = 'IMF income group') %>%
+    addLayersControl(baseGroups = c('First-line drug classes',
+                                    'Second-line drug classes',
+                                    'Third-line drug classes',
+                                    'IMF income group'),
+                     options = layersControlOptions(collapsed = FALSE)) %>%
+    # Added new class to leafletfix.css - .info-small with smaller font size
+    addLegend("bottomright", 
+              pal = pal_income, 
+              values = ~ imf,
+              title = "International Monetary Fund (IMF) <br>income category", 
+              className = 'info-small legend-small',
+              opacity = 1) %>%
+    addLegend("bottomleft", 
+              pal = pal_third, 
+              values = ~ factor_third,
+              title = "No. of 3rd-line classes on NEML <br><em>(strong opioid, other)<sup>&sect;</sup></em>", 
+              className = 'info-small legend-small',
+              opacity = 1) %>%
+    addLegend("bottomleft", 
+              pal = pal_second,
+              values = ~ factor_second,
+              title = "No. of 2nd-line classes on NEML <br><em>(weak opioid, topical agents)<sup>&Dagger;</sup></em>",
+              className = 'info-small legend-small',
+              opacity = 1) %>%
+    addLegend("bottomleft", 
+              pal = pal_first, values = ~ factor_first,
+              title = "No. of 1st-line classes on NEML <br><em>(TCA, &alpha;2&delta;-ligand, SNRI)<sup>&dagger;</sup></em>",
+              className = 'info-small legend-small', 
+              opacity = 1)
+
+```
+<div style=font-size:80%>
+
+Classification of medicines as first-, second-, or third-line was based on the recent recommendations by the Neuropathic Pain Special Interest Group of the International Association for the Study of Pain. Get the manuscript <a href= target="_blank">here</a>.
+
+&dagger;: TCA = tricyclic antidepressants, &alpha;2&delta;-ligand = gabapentin and pregabaline; SNRI = serotonin and noradrenaline reuptake inhibitors (duloxetine and venlafaxine)
+
+&Dagger;: weak opioid = tramadol; topical agents = 5\% lidocaine patch and 8\% capsaicin patch  
+
+&sect;: strong opioids = morphine and oxycodone; other = botulinium toxin A
+</div>
+
+## About
+
+The World Health Organization [(WHO)](//www.who.int/en/){ target="_blank" } has urged its members to ensure, [_\"the availability of essential medicines for the management of symptoms, including pain\"_](http://apps.who.int/gb/ebwha/pdf_files/WHA67/A67_31-en.pdf){ target="_blank" }. But, a [recent audit](//www.ncbi.nlm.nih.gov/pmc/articles/PMC4670621/pdf/nihms701453.pdf){ target="_blank" } of over 100 national essential medicines lists (NEML) for drugs recommended for the treatment of neuropathic pain _(pain caused by damage to sensory nerves)_ identified that ~66% of countries had only one class of first-line agent (typically tricyclic antidepressants), and ~50% had only one second-line agent (typically tramadol, a weak opioid), included on their NEMLs. This means that should a patient fail to respond to initial therapy, have significant side effects, or have contraindications to a drug’s use, there are no or limited alternative agents available to switch to, or add-on to the initial agent. 
+
+To raise awareness of the plight of people in developing countries who suffer from neuropathic pain, I have previously published an online storyboard on the [topic](//painblogr.org/neuropathic-pain-storyboard-2016/){ target="_blank" }. That post included an interactive map of drugs recommended for managing neuropathic pain that are listed on national essential medicines lists of over 100 developing countries.
+
+The space available on the storyboard for the map was very limited, so to mark the submission of an application for the inclusion of _gabapentin_ (a first-line medicine for managing neuropathic pain) on the WHO Model List of Essential Medicines, I have reposted the map as a standalone item. The application was made by the International Association for the Study of Pain [(IASP)](//www.iasp-pain.org/){ target="_blank" }, the Neuropathic Pain Special Interest Group of the IASP [(NeuPSIG)](//www.iasp-pain.org/SIG/NeuropathicPain){ target="_blank" }, and the International Association of Hospice and Palliative Care [(IAHPC)](//hospicecare.com){ target="_blank" }, and you can download the application [here](//www.who.int/selection_medicines/committees/expert/21/applications/gabapentin_ad/en/){ target="_blank" } and all the information used to generate the application [here](//dx.doi.org/10.6084/m9.figshare.3814206){ target="_blank" }.
+
+
+****
+
+## tl;dr
+
+Get the data and geojson used in this plot [here](){ target="_blank" }
+
+### Citations
+
+#### Dataset
+Kamerman PR, Wadley AL, Davis KD, Hietaharju A, Jain P, Kopf A, Meyer A-C, Raja SN, Rice ASC, Smith BH, Treede R-D, Wiffen PJ. Data and analysis scripts: Inclusion of medicines to treat neuropathic pain on national essential medicines lists. _Figshare_ DOI: [10.6084/m9.figshare.4644412](//dx.doi.org/10.6084/m9.figshare.4644412){ target="_blank" }
+
+#### Manuscript
+Kamerman PR, Wadley AL, Davis KD, Hietaharju A, Jain P, Kopf A, Meyer A-C, Raja SN, Rice ASC, Smith BH, Treede R-D, Wiffen PJ. World Health Organization essential medicines lists: where are the drugs to treat neuropathic pain? _PAIN_ **156**: 793–797, 2015. DOI: [10.1097/01.j.pain.0000460356.94374.a1](//dx.doi.org/10.1097/01.j.pain.0000460356.94374.a1){ target="_blank" }
+
+
+****
+
+## Session information
+```{r session_info}
+sessionInfo()
+```
+

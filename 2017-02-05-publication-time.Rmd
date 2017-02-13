@@ -1,0 +1,993 @@
+---
+post_title: "From epub to print copy, which of the traditional 'pain' journals is the quickest?"
+post_author: 'Peter Kamerman'
+post_date: '5 February 2017'
+post_image: './images/posts/publication-time-2017/books.png'
+permalink:  '2017-02-05-publication-time.html'
+description: "Which of the traditional pain journals has the fastest conversion from epub to print copy?"
+output:
+    html_document:
+        template: './_templates/posts.html'
+        code_folding: hide
+---
+
+```{r setup, include = FALSE}
+# Load libraries
+library(xml2)
+library(tidyverse)
+library(stringr)
+library(lubridate)
+library(forcats)
+library(viridis)
+library(ggiraph)
+
+# Set global knitr chunck options
+knitr::opts_chunk$set(warning = FALSE,
+                      message = FALSE)
+
+```
+
+<br>
+
+## Background
+
+Traditional journals (those that publish hardcopy volumes) typically publish an electronic version of the article before the print copy is produced, presumably because the practise reduces the time between a journal article being accepted for publication and the information being disseminated. These _epubs_ have a DOI, which makes them readily citable. 
+
+In my neck of the woods (South Africa), the number of original research outputs by a university is factored into the annual government subsidy an institution receives. Only articles with page numbers are included in the calculation, which for traditional journals means that the articles must have been published in hardcopy format. At my institution, the <a href="https://www.wits.ac.za" target="_blank">University of the Witwatersrand</a>, a small fraction of that government subsidy for publications trickles down to the originating labs as a research incentive. It's not much money, but every bit helps in these tight funding times, and so _'time to print'_ is something we have to consider when selecting which journal(s) to submit our work to.  
+
+To help us decide which of the traditional pain-focused journals have the quickest _electronic_ to _hardcopy_ conversion rate, I have performed a very **crude analysis** of the _'time to print'_ by the four top-ranked traditional pain journals (based on impact factor) we typically consider submitting manuscripts to (Table 1.).
+
+```{r journal_table}
+# Make a dataframe to populate the table
+tab_df <- data_frame(Journal = c('<a href="http://journals.lww.com/clinicalpain/pages/default.aspx" target="_blank">Clinical Journal of Pain</a>', '<a href="http://onlinelibrary.wiley.com/journal/10.1002/(ISSN)1532-2149" target="_blank">European Journal of Pain</a>', '<a href="http://www.jpain.org/home" target="_blank">Journal of Pain</a>', '<a href="http://journals.lww.com/pain/pages/default.aspx" target="_blank">PAIN</a>'), 
+                     `Impact factor` = c(2.7, 2.9, 4.5, 5.6),
+                     `Year started` = c(1985, 1997, 2000, 1975),
+                     `Frequency (issues per year)` = c(12, 10, 12, 12)) 
+
+# Print table
+knitr::kable(x = tab_df,
+             align = c('l', 'l', 'l', 'l'),
+             caption = '<b>Table 1.</b> Journals included in assessment')
+
+```
+
+### Getting the data
+I obtained the electronic and print publication dates of articles for the past four years from <a href="https://www.ncbi.nlm.nih.gov/pubmed" target="_blank">PubMed</a>. Beyond the usual web browser method of searching PubMed, you can remotely access the full database through the user-friendly and well-documented Entrez Programming Utilities API (<a href="https://www.ncbi.nlm.nih.gov/books/NBK25501/" target="_blank">E-utilities</a>). In _R_ you can make these queries to the PubMed database directly using packages such as <a href="https://cran.r-project.org/web/packages/xml2/index.html" target="_blank">xml2</a>, or if you are not familiar with using web APIs, the guys at <a href="https://ropensci.org/" target="_blank">rOpenSci</a> have given us the excellent <a href="https://ropensci.org/tutorials/rentrez_tutorial.html" target="_blank">rentrez</a> package. I have used the direct approach here (see code below). 
+
+```{r get_data, cache = TRUE}
+
+############################################################
+#                                                          #
+#            Query PubMed for records from the             #
+#         top four journals from the past 4 years          #
+#                                                          #
+############################################################
+
+# Set E-Utilities base query string
+base_url <- 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/'
+
+# Set database query to search and fetch from PubMed
+database_query <- 'esearch.fcgi?db=pubmed'
+database_query2 <- 'efetch.fcgi?db=pubmed'
+
+# Set search criteria
+## Restricted to:
+### 1. journal articles
+### 2. articles with abstracts
+### 3. Clin J Pain, Eur J Pain, J Pain, PAIN
+### 4. Entrez entry date range of 2013/01/01 to 2016/12/31
+### 5. First 10,000 articles
+### 6. xml format
+terms <- '&term=((journal+article[Publication+Type]+AND+hasabstract[All+Fields])+AND+("2013/01/01"[EDAT]+:+"2016/12/31"[EDAT]))+AND+((("Pain"[Journal]+OR+"J+Pain"[Journal])+OR+"Clin+J+Pain"[Journal])+OR+"Eur+J+Pain"[Journal])&rettype=xml&retmax=10000'
+
+# Piece together the search query string
+search_query <- paste0(base_url, 
+                       database_query,
+                       terms)
+
+# Execute search
+search_get <- read_xml(search_query)
+
+# Find xpath for PMIDs from 'query'
+pmid_path <- xml_find_all(search_get, xpath = './/Id')
+
+# Use xpath to extract PMIDs
+pmids <- xml_text(pmid_path)
+
+############################################################
+#                                                          #
+#        Fetch the records using the returned PMIDs        #
+#                                                          #
+############################################################
+
+# Get the number of records returned by the search
+record_count = length(pmids)
+    
+# Split the 'pmids' vector into n = 200 sized chunks 
+# (the max number of ids the API can handle)
+splitter <- seq(from = 1,
+                to = record_count,
+                by = 200)
+
+# Create an empty list of length 'splitter'
+splitter_list <- vector(mode = 'list',
+                        length = length(splitter))
+
+# Split the list of PMIDs, and paste each into a single string
+for(i in seq_along(splitter)) {
+    splitter_list[[i]] <- pmids[splitter[[i]]:(splitter[[i]] + 199)]
+    splitter_list[[i]] <- paste(splitter_list[[i]],
+                                collapse = ',')
+}
+
+# Create empty list of length 'splitter_list'
+pubmed_query <- vector(mode = 'list',
+                       length = length(splitter_list))
+
+# Populate empty list with repeated PubMed query calls
+for(i in seq_along(splitter_list)) {
+    pubmed_query[[i]] <- paste0(base_url,
+                                database_query2,
+                                '&id=',
+                                splitter_list[[i]],
+                                '&retmode=xml&retmax=200')
+}
+
+# Fetch pubmed xml records
+record <- map(pubmed_query,
+              read_xml)
+
+############################################################
+#                                                          #
+#      Make a user-defined function ('parse_record')       #
+#               to extract date information                #
+#                                                          #
+############################################################
+
+parse_record <- function(record) {
+    
+    # Packages to load when fucntion used outside this .Rmd script #
+    ################################################################
+    # library(dplyr)
+    # library(xml2)
+    # library(stringr)
+    
+    
+    # Set XPaths to xml nodes #
+    ###########################
+    
+    #-- Publisher -----------------------------------------------------------#
+    
+    publisher_path <- xml_path(
+            xml_find_all(record,
+                         './/ISSNLinking'))
+    
+    #-- Journal -------------------------------------------------------------#
+
+    journal_path <- xml_path(
+            xml_find_all(record,
+                         './/ISOAbbreviation'))
+    
+    #-- Volume --------------------------------------------------------------#
+
+    volume_path <- xml2::xml_path(
+        xml2::xml_find_all(record,
+                           './/Volume'))
+    
+    #-- Issue ---------------------------------------------------------------#
+
+    issue_path <- xml2::xml_path(
+        xml2::xml_find_all(record,
+                           './/Issue'))
+    
+    #-- PMID ----------------------------------------------------------------#
+
+    pmid_path <- xml_path(
+        xml_find_all(record,
+                     ".//ArticleId[@IdType = 'pubmed']"))
+
+    #-- Publication status --------------------------------------------------#
+
+    status_path <- xml_path(
+        xml_find_all(record,
+                     './/PublicationStatus'))
+
+    #-- Year / month published ----------------------------------------------#
+
+    year_published_path <- xml_path(
+        xml_find_all(record,
+                     './/PubDate/Year'))
+    
+     month_published_path <- xml_path(
+        xml_find_all(record,
+                     './/PubDate/Month'))
+
+    #-- Year / month / day online -------------------------------------------#
+
+    year_online_path <- xml_path(
+        xml_find_all(record,
+                     ".//ArticleDate[@DateType = 'Electronic']/Year"))
+    
+    month_online_path <- xml_path(
+        xml_find_all(record,
+                     ".//ArticleDate[@DateType = 'Electronic']/Month"))
+    
+    day_online_path <- xml_path(
+        xml_find_all(record,
+                     ".//ArticleDate[@DateType = 'Electronic']/Day"))
+    
+    #-- Year / month / day entrez -------------------------------------------#
+    
+    # PAIN stopped giving the 'ArticleDate' info in 2015, so also get 
+    # 'PubMedPubDate[@PubStatus = 'entrez']', which is a close match. 
+    
+    year_entrez_path <- xml_path(
+        xml_find_all(record,
+                     ".//PubMedPubDate[@PubStatus = 'entrez']/Year"))
+    
+    month_entrez_path <- xml_path(
+        xml_find_all(record,
+                     ".//PubMedPubDate[@PubStatus = 'entrez']/Month"))
+    
+    day_entrez_path <- xml_path(
+        xml_find_all(record,
+                     ".//PubMedPubDate[@PubStatus = 'entrez']/Day"))
+
+    # Extract information using XPaths #
+    ####################################
+
+    #-- Publisher -----------------------------------------------------------#
+    
+    # Define vector for publisher name
+    publisher <- vector(mode = 'character',
+                        length = length(publisher_path))
+
+    for(i in 1:length(publisher_path)) {
+        publisher[[i]] <- str_to_lower(
+            xml_text(
+                xml_find_first(record,
+                               publisher_path[[i]])))
+    }
+
+    # Make article marker for joins
+    ## Define vector for 'trimmed' publisher path
+    publisher_path2 <- vector(mode = 'character',
+                              length = length(publisher_path))
+
+    for(i in 1:length(publisher_path)) {
+        publisher_path2[[i]] <- 
+            str_extract(publisher_path[[i]],
+                        '/PubmedArticleSet/PubmedArticle\\[[0-9][0-9]?[0-9]?\\]')
+    }
+
+    # Make dataframe
+    publisher2 <- data_frame(article_node = publisher_path2,
+                             publisher = publisher)
+    
+    #-- Journal -------------------------------------------------------------#
+
+    # Define vector for journal name
+    journal <- vector(mode = 'character',
+                      length = length(journal_path))
+
+    for(i in 1:length(journal_path)) {
+        journal[[i]] <- str_to_lower(
+            xml_text(
+                xml_find_first(record,
+                               journal_path[[i]])))
+    }
+
+    # Make article marker for joins
+    ## Define vector for 'trimmed' journal path
+    journal_path2 <- vector(mode = 'character',
+                            length = length(journal_path))
+
+    for(i in 1:length(journal_path)) {
+        journal_path2[[i]] <- 
+            str_extract(journal_path[[i]],
+                        '/PubmedArticleSet/PubmedArticle\\[[0-9][0-9]?[0-9]?\\]')
+    }
+
+    # Make dataframe
+    journal2 <- data_frame(article_node = journal_path2,
+                           journal = journal) %>%
+        mutate(journal = str_replace_all(journal,
+                                         pattern = '[.]',
+                                         replacement = ''))
+    
+    #-- Volume ----------------------------------------------------------------#
+    
+        # Define vector for journal volume
+        volume <- vector(mode = 'numeric',
+                         length = length(volume_path))
+    
+        for(i in 1:length(volume_path)) {
+            volume[[i]] <- xml2::xml_text(
+                xml2::xml_find_first(record,
+                                     volume_path[[i]]))
+        }
+    
+        # Make article marker for joins
+        ## Define vector for 'trimmed' volume path
+        volume_path2 <- vector(mode = 'character',
+                               length = length(volume_path))
+    
+        for(i in 1:length(volume_path)) {
+            volume_path2[[i]] <- 
+                stringr::str_extract(
+                    volume_path[[i]],
+                    '/PubmedArticleSet/PubmedArticle\\[[0-9][0-9]?[0-9]?\\]')
+        }
+    
+        # Make dataframe
+        volume2 <- dplyr::data_frame(article_node = volume_path2,
+                                     volume = volume) %>%
+            separate(volume, 
+                     into = c('volume', 'other'),
+                     extra = 'merge') %>%
+            mutate(volume = as.numeric(volume)) %>%
+            select(article_node, volume)
+    
+    #-- Issue -------------------------------------------------------------------#
+    
+        # Define vector for journal issue
+        issue <- vector(mode = 'numeric',
+                        length = length(issue_path))
+    
+        for(i in 1:length(issue_path)) {
+            issue[[i]] <- xml2::xml_text(
+                xml2::xml_find_first(record,
+                                     issue_path[[i]]))
+        }
+    
+        # Make article marker for joins
+        ## Define vector for 'trimmed' issue path
+        issue_path2 <- vector(mode = 'character',
+                              length = length(issue_path))
+    
+        for(i in 1:length(issue_path)) {
+            issue_path2[[i]] <- 
+                stringr::str_extract(
+                    issue_path[[i]],
+                    '/PubmedArticleSet/PubmedArticle\\[[0-9][0-9]?[0-9]?\\]')
+        }
+    
+        # Make dataframe
+        issue2 <- dplyr::data_frame(article_node = issue_path2,
+                                    issue = issue) %>%
+            separate(issue, 
+                     into = c('issue', 'other'),
+                     extra = 'merge') %>%
+            mutate(issue = as.numeric(issue)) %>%
+            select(article_node, issue)
+    
+    #-- PMID ----------------------------------------------------------------#
+
+    # Define vector for pmid
+    pmid <- vector(mode = 'character',
+                   length = length(pmid_path))
+
+    for(i in 1:length(pmid_path)) {
+        pmid[[i]] <- xml_text(
+            xml_find_first(record,
+                           pmid_path[[i]]))
+    }
+
+    # Make article marker for joins
+    ## Define vector for 'trimmed' pmid path
+    pmid_path2 <- vector(mode = 'character',
+                         length = length(pmid_path))
+
+    for(i in 1:length(pmid_path)) {
+        pmid_path2[[i]] <- 
+            str_extract(pmid_path[[i]],
+                        '/PubmedArticleSet/PubmedArticle\\[[0-9][0-9]?[0-9]?\\]')
+    }
+
+    # Make dataframe
+    pmid2 <- data_frame(article_node = pmid_path2,
+                        pmid = pmid)
+
+    #-- Publication status --------------------------------------------------#
+
+    # Define vector for publication status
+    status <- vector(mode = 'character',
+                     length = length(status_path))
+
+    for(i in 1:length(status_path)) {
+        status[[i]] <- xml_text(
+            xml_find_first(record,
+                           status_path[[i]]))
+    }
+
+    # Make article marker for joins
+    ## Define vector for 'trimmed' year path
+    status_path2 <- vector(mode = 'character',
+                           length = length(status_path))
+
+    for(i in 1:length(status_path)) {
+        status_path2[[i]] <- 
+            str_extract(status_path[[i]],
+                        '/PubmedArticleSet/PubmedArticle\\[[0-9][0-9]?[0-9]?\\]')
+    }
+
+    # Make dataframe
+    status2 <- data_frame(article_node = status_path2,
+                          publication_status = status) %>%
+        # Edit text
+        mutate(publication_status = ifelse(
+            is.na(publication_status),
+            yes = NA,
+            no = ifelse(
+                publication_status == 'ppublish',
+                yes = 'print copy',
+                no = 'ahead of print')))
+    
+    #-- Year / month / day published ----------------------------------------#
+
+    # Define vector for publication year
+    year_published <- vector(mode = 'character',
+                             length = length(year_published_path))
+
+    for(i in 1:length(year_published_path)) {
+        year_published[[i]] <- xml_text(
+            xml_find_first(record,
+                           year_published_path[[i]]))
+    }
+    
+    # Define vector for publication month
+    month_published <- vector(mode = 'character',
+                              length = length(month_published_path))
+
+    for(i in 1:length(month_published_path)) {
+        month_published[[i]] <- xml_text(
+            xml_find_first(record,
+                           month_published_path[[i]]))
+    }
+    
+    # Define vector for publication day (default = 1st of the month)
+    day_published <- rep('01', length(year_published_path))
+
+    # Make article marker for joins
+    ## Define vector for 'trimmed' year path
+    year_published_path2 <- vector(mode = 'character',
+                                   length = length(year_published_path))
+
+    for(i in 1:length(year_published_path)) {
+        year_published_path2[[i]] <- 
+            str_extract(year_published_path[[i]],
+                        '/PubmedArticleSet/PubmedArticle\\[[0-9][0-9]?[0-9]?\\]')
+    }
+
+    # Make dataframe
+    year_published2 <- data_frame(article_node = year_published_path2,
+                                  year_published = year_published,
+                                  month_published = month_published,
+                                  day_published = day_published) %>%
+        # Convert to date
+        mutate(date_published = paste(year_published,
+                                      month_published,
+                                      day_published,
+                                      sep = '-'),
+               date_published = ymd(date_published)) %>%
+        # Select required columns
+        select(article_node, date_published)
+    
+    #-- Year / month / day online -------------------------------------------#
+
+    # Define vector for online publication year
+    year_online <- vector(mode = 'character',
+                          length = length(year_online_path))
+
+    for(i in 1:length(year_online_path)) {
+        year_online[[i]] <- xml_text(
+            xml_find_first(record,
+                           year_online_path[[i]]))
+    }
+    
+    # Define vector for online publication year
+    month_online <- vector(mode = 'character',
+                           length = length(month_online_path))
+
+    for(i in 1:length(month_online_path)) {
+        month_online[[i]] <- xml_text(
+            xml_find_first(record,
+                           month_online_path[[i]]))
+    }
+    
+    # Define vector for online publication year
+    day_online <- vector(mode = 'character',
+                         length = length(day_online_path))
+
+    for(i in 1:length(day_online_path)) {
+        day_online[[i]] <- xml_text(
+            xml_find_first(record,
+                           day_online_path[[i]]))
+    }
+
+    # Make article marker for joins
+    ## Define vector for 'trimmed' year path
+    year_online_path2 <- vector(mode = 'character',
+                                length = length(year_online_path))
+
+    for(i in 1:length(year_online_path)) {
+        year_online_path2[[i]] <- 
+            str_extract(year_online_path[[i]],
+                        '/PubmedArticleSet/PubmedArticle\\[[0-9][0-9]?[0-9]?\\]')
+    }
+
+    # Make dataframe
+    year_online2 <- data_frame(article_node = year_online_path2,
+                               year_online = year_online,
+                               month_online = month_online,
+                               day_online = day_online) %>%
+        # Convert to date
+        mutate(date_online = paste(year_online,
+                                   month_online,
+                                   day_online,
+                                   sep = '-'),
+               date_online = ymd(date_online)) %>%
+        # Select required columns
+        select(article_node, date_online)
+    
+    #-- Year / month / day entrez -------------------------------------------#
+
+    # Define vector for entrez publication year
+    year_entrez <- vector(mode = 'character',
+                          length = length(year_entrez_path))
+
+    for(i in 1:length(year_entrez_path)) {
+        year_entrez[[i]] <- xml_text(
+            xml_find_first(record,
+                           year_entrez_path[[i]]))
+    }
+    
+    # Define vector for entrez publication year
+    month_entrez <- vector(mode = 'character',
+                           length = length(month_entrez_path))
+
+    for(i in 1:length(month_entrez_path)) {
+        month_entrez[[i]] <- xml_text(
+            xml_find_first(record,
+                           month_entrez_path[[i]]))
+    }
+    
+    # Define vector for entrez publication year
+    day_entrez <- vector(mode = 'character',
+                         length = length(day_entrez_path))
+
+    for(i in 1:length(day_entrez_path)) {
+        day_entrez[[i]] <- xml_text(
+            xml_find_first(record,
+                           day_entrez_path[[i]]))
+    }
+
+    # Make article marker for joins
+    ## Define vector for 'trimmed' year path
+    year_entrez_path2 <- vector(mode = 'character',
+                                length = length(year_entrez_path))
+
+    for(i in 1:length(year_entrez_path)) {
+        year_entrez_path2[[i]] <- 
+            str_extract(year_entrez_path[[i]],
+                        '/PubmedArticleSet/PubmedArticle\\[[0-9][0-9]?[0-9]?\\]')
+    }
+
+    # Make dataframe
+    year_entrez2 <- data_frame(article_node = year_entrez_path2,
+                               year_entrez = year_entrez,
+                               month_entrez = month_entrez,
+                               day_entrez = day_entrez) %>%
+        # Convert to date
+        mutate(date_entrez = paste(year_entrez,
+                                   month_entrez,
+                                   day_entrez,
+                                   sep = '-'),
+               date_entrez = ymd(date_entrez)) %>%
+        # Select required columns
+        select(article_node, date_entrez)
+    
+    # Put it all together #
+    #######################
+    
+    #-- Make into dataframe ----------------------------------------------#
+
+    # Join 'short' dataframes (<=100 entries)
+    record <- pmid2 %>%
+        left_join(publisher2,
+                  by = 'article_node') %>%
+        left_join(journal2,
+                  by = 'article_node') %>%
+        left_join(volume2,
+                  by = 'article_node') %>%
+        left_join(issue2,
+                  by = 'article_node') %>%
+        left_join(status2,
+                  by = 'article_node') %>%
+        left_join(year_online2,
+                  by = 'article_node') %>%
+        left_join(year_entrez2,
+                  by = 'article_node') %>%
+        left_join(year_published2,
+                  by = 'article_node') %>%
+        select(pmid,
+               publisher,
+               journal, 
+               volume,
+               issue,
+               publication_status, 
+               date_online,
+               date_entrez,
+               date_published) 
+    
+    #-- Output -----------------------------------------------------------#
+    
+    return(record)
+
+}
+
+############################################################
+#                                                          #
+#       Generate dataframe from downloaded xml record      #
+#                                                          #
+############################################################
+
+df <- map_df(record,
+             parse_record)
+
+############################################################
+#                                                          #
+#                    Clean-up dataframe                    #
+#                                                          #
+############################################################
+
+df <- df %>%
+    # Remove 'date_online' column (use complete 'date_entrez' data instead)
+    select(-date_online) %>%
+    # Make a 'year_entrez' and 'year_published' column
+    mutate(year_entrez = as.numeric(str_extract(date_entrez,
+                                                pattern = '[0-9]{4}')),
+           year_published = as.numeric(str_extract(date_published,
+                                                   pattern = '[0-9]{4}'))) %>%
+    # Fix journal names
+    mutate(journal = fct_recode(as.factor(journal),
+                                `Clin J Pain` = 'clin j pain',
+                                `Eur J Pain` = 'eur j pain',
+                                `J Pain` = 'j pain',
+                                PAIN = 'pain'))
+
+# Generate 'print copy data'
+df_print <- df %>%
+    # Only want papers that have completed the publication cycle
+    filter(publication_status != 'ahead of print') %>%
+    # Remove 'date_published' = NA 
+    filter(!is.na(date_published)) %>%
+    # Remove 'year_published' > 2016
+    filter(year_published < 2017) %>%
+    # Make an interval column ('time to print' in days)
+    mutate(interval = as.numeric(date_published - date_entrez)) %>%
+    # Remove interval values < 1
+    filter(interval >= 1)
+
+# Generate 'ahead of print' data
+df_ahead <- df %>%
+    filter(publication_status != 'print copy')
+
+# Clean-up environment
+rm(list = c('base_url',
+            'database_query',
+            'database_query2',
+            'i',
+            'parse_record',
+            'pmid_path',
+            'pmids',
+            'pubmed_query',
+            'record', 
+            'record_count',
+            'search_get',
+            'search_query',
+            'splitter',
+            'splitter_list',
+            'terms'))
+
+```
+
+#### Caveats
+I mentioned at the start that this was a very **crude analysis**, and the primary reasons for this statement are as follows: 
+
+i. The PubMed database has errors, and I made no attempt to verify the data retrieved from PubMed against data available through the publishers. 
+
+ii. PubMed xml records follow a template, but the template is not applied consistently across all records. These inconsistencies make programmatically extracting the data susceptible to errors and missing data. For example, the XPath for the print publication year and month is typically _//PubDate/Year_ and _//PubDate/Month_, respectively. But, in some records these individual year and month nodes are missing and instead a single date string of the form 'YEAR Month-Month' is provided at the path _//PubDate/MedlineDate_. Similarly, all records include a _//PubMedPubDate[@PubStatus = 'entrez']_ node from which the date an article was added to the Entrez database can be extracted, but only some records provide information on the date the publisher first released the e-publication _(//ArticleDate[@DateType = 'Electronic'])_.
+
+## Median 'time to print'
+
+The figure below shows the median time in days between an article being recorded as an _'epub ahead of print'_ and then as a _'print copy'_ on the PubMed database. The data are shown as a heatmap, with the colour getting darker (more purple) as the time between _epub_ and _print_ increases. A quick scan of the plot reveals that the Clinical Journal of Pain (Clin J Pain) and the European Journal of Pain (Eur J Pain) take the longest, while the time take by PAIN and the Journal of Pain (J Pain) is relatively short.
+
+```{r heatmap}
+
+############################################################
+#                                                          #
+#                      Plot heatmap                        #
+#                                                          #
+############################################################
+
+# Summarise data for plotting 
+## Median 'time to print' by journal and year
+df_heat <- df_print %>%
+    group_by(journal, year_entrez) %>%
+    rename(year = year_entrez) %>%
+    summarise(median = round(median(interval))) %>%
+    # Add tooltip
+    mutate(tooltip = paste0('<b>', journal, '</b> <br>',
+                            '<em>Time to print:</em> ', median, ' days')) %>%
+    ungroup() %>%
+    mutate(journal = fct_relevel(journal, 
+                                 'Clin J Pain', 
+                                 'Eur J Pain', 
+                                 'PAIN', 
+                                 'J Pain'))
+
+# ggplot
+gg_heat <- ggplot(data = df_heat) +
+    aes(x = year, 
+        y = journal, 
+        fill = median, 
+        tooltip = tooltip, 
+        data_id = journal) +
+    geom_tile_interactive() +
+    scale_fill_viridis(direction = -1, 
+                       name = 'Days\n') +
+    labs(caption = "Interactive figure, 'click' on the data for more detailed information",
+         x = '\nYear\n') +
+    theme(panel.background = element_blank(),
+          axis.ticks = element_blank(),
+          axis.title.x = element_text(size = 14),
+          axis.title.y = element_blank(),
+          axis.text.y = element_text(size = 12),
+          axis.text.x = element_text(size = 12, 
+                                     angle = 60,
+                                     hjust = 1),
+          panel.grid = element_blank()) 
+
+# Tooltip css
+tooltip_css <- 'font-family:arial;background-color:#eaeaea;padding:10px;border-radius:10px 20px 10px 20px;'
+hover_css <- 'fill:#FFFFFF;'
+
+ggiraph(code = print(gg_heat),
+        tooltip_extra_css = tooltip_css,
+        hover_css = hover_css,
+        tooltip_offx = 10, 
+        tooltip_offy = -10,
+        tooltip_opacity = 1,
+        width = 0.65,
+        height_svg = 4,
+        width_svg = 5)
+
+```
+
+## Variability in the 'time to print'
+
+The box-and-whisker plot below gives some idea about the spread of the _'time to print'_ for each of the journals over the past few years. Clearly there are errors in the PubMed database. I cannot believe that the Clinical Journal of Pain took 529 days to transition one article from _epub_ to _print_ in 2014. Nor can I believe that only one day was needed for the Journal of Pain to transition six _epubs_ to _print_ in 2013. But, pruning the data for 'outliers' didn't shift the median time to publication substantially, so I decided to present the data warts and all. 
+
+```{r process_data_and_boxplot}
+
+############################################################
+#                                                          #
+#                      Summary stats                       #
+#                                                          #
+############################################################
+
+# Generate boxplot summary stats for 'time to print' (days) interval 
+summary_stats <- df_print %>%
+    select(journal, 
+           year_entrez, 
+           interval,
+           pmid) %>%
+    rename(year = year_entrez) %>%
+    group_by(journal, year) %>%
+    summarise(median = round(median(interval)),
+              Q25 = round(quantile(interval, 0.25)),
+              Q75 = round(quantile(interval, 0.75)),
+              lower_whisker = round(boxplot.stats(interval)$stats[1]),
+              upper_whisker = round(boxplot.stats(interval)$stats[5]),
+              outliers = paste(sort(unique(boxplot.stats(interval)$out)), 
+                               collapse = ','),
+              outlier_length = length(unique(boxplot.stats(interval)$out))) %>%
+    mutate(tooltip = paste0('<span style="font-size:10pt;font-family:Arial,Helvetica,sans-serif"><b>', 
+                            journal, ' (', year, ')<b> <br>', 
+                            '<span style="font-weight:normal">', 
+                            '<em>Median: </em>', 
+                            median, ' days <br>',
+                            '<em>Interquartile range: </em>', 
+                            Q25, ' to ', Q75, ' days <br>',
+                            '<em>Whiskers: </em>', 
+                            lower_whisker, ' to ', upper_whisker, ' days',
+                            '</span>',
+                            '</span>'))
+              
+# Convert summary_stats outlier data into dataframe
+summary_outliers <- summary_stats %>%
+    select(journal,
+           year,
+           outliers,
+           outlier_length) %>%
+    separate(outliers, 
+             into = LETTERS[1:max(.$outlier_length)],
+             extra = 'warn',
+             fill = 'right') %>%
+    gather(key = marker,
+           value = outlier,
+           -journal,
+           -year) %>%
+    mutate(outlier = as.numeric(
+        ifelse(!is.na(outlier) | outlier != '', 
+               yes = outlier,
+               no = NA))) %>%
+    select(-marker) %>%
+    mutate(interval = outlier)
+
+pmid <- df_print %>%
+    rename(year = year_entrez) %>%
+    select(journal, year, interval, pmid) %>%
+    right_join(summary_outliers) %>%
+    # Remove incomplete rows
+    filter(complete.cases(.)) %>%
+    # Convert pmids to a character string
+    group_by(journal, year, interval) %>%
+    summarise(link_list = paste(pmid, collapse = ', '))
+
+# Bring summary_outliers and pmid together 
+summary_outliers <- summary_outliers %>%
+    right_join(pmid) %>%
+    select(-interval) %>%
+    mutate(tooltip = paste0('<span style="font-size:10pt;font-family:Arial,Helvetica,sans-serif"><b>', 
+                            journal, ' (', year, ')<b><br>',
+                            '<span style="font-weight:normal">',
+                            '<em>Outlier(s):</em> ',
+                            outlier, 
+                            ' days <br>',
+                            '<em>PMID(s):</em> ',
+                            link_list,
+                            '</span>',
+                            '</span>')) %>%
+    select(-link_list)
+
+############################################################
+#                                                          #
+#                           Plot                           #
+#                                                          #
+############################################################
+
+gg <- ggplot() +
+    aes(x = factor(year),
+        colour = journal,
+        fill = journal) +
+    # Outliers
+    geom_point_interactive(data = summary_outliers,
+                           aes(y = outlier, 
+                               tooltip = tooltip,
+                               data_id = tooltip),
+                           size = 2) +
+    # Whiskers
+    geom_segment_interactive(data = summary_stats,
+                          aes(y = lower_whisker,
+                              yend = upper_whisker,
+                              xend = as.factor(year),
+                              tooltip = tooltip,
+                              data_id = tooltip), 
+                          size = 0.8) +
+    # IQR
+    geom_rect_interactive(data = summary_stats,
+                          aes(ymin = Q25,
+                              ymax = Q75,
+                              tooltip = tooltip,
+                              data_id = tooltip),
+                          xmin = rep(c(0.6, 1.6, 2.6, 3.6), times = 4),
+                          xmax = rep(c(1.4, 2.4, 3.4, 4.4), times = 4)) +
+    # Median
+    geom_segment_interactive(data = summary_stats,
+                          aes(y = median,
+                              yend = median,
+                              tooltip = tooltip,
+                              data_id = tooltip),
+                          x = rep(c(0.6, 1.6, 2.6, 3.6), times = 4),
+                          xend = rep(c(1.4, 2.4, 3.4, 4.4), times = 4),
+                          size = 1.3) +
+    labs(caption = "Interactive figure, 'click' on the data for more detailed information",
+         y = 'Time to print (days)\n',
+         x = '\nYear\n') +
+    scale_y_continuous(limits = c(-5, 605), 
+                       breaks = c(0, 100, 200, 300, 400, 500, 600),
+                       labels = c(0, 100, 200, 300, 400, 500, 600),
+                       expand = c(0,0)) +
+    scale_colour_manual(values = c('#000000', '#E69F00', '#0072B2', '#009E73')) +
+    scale_fill_manual(values = c('#4c4c4c', '#edbb4c', '#4c9cc9', '#4cbb9d')) +
+    facet_grid(.~journal) +
+    theme(legend.position = 'none',
+          panel.background = element_blank(),
+          axis.ticks = element_blank(),
+          axis.title = element_text(size = 16),
+          axis.text.y = element_text(size = 14),
+          axis.text.x = element_text(size = 14, 
+                                     angle = 60,
+                                     hjust = 1),
+          panel.grid.major = element_line(colour = '#999999',
+                                          size = 0.1))
+# Tooltip css
+tooltip_css <- 'font-family:arial;background-color:#eaeaea;padding:10px;border-radius:10px 20px 10px 20px;'
+hover_css <- 'fill:#FFFFFF;'
+
+ggiraph(code = print(gg),
+        tooltip_extra_css = tooltip_css,
+        hover_css = hover_css,
+        tooltip_offx = 10, 
+        tooltip_offy = -10,
+        tooltip_opacity = 1,
+        width = 0.65,
+        height_svg = 6,
+        width_svg = 6)
+```
+
+You could be mischievous with these data and say that the two top-ranked journals (by impact factor) are the top-ranked journals partially because they are streets ahead of the other two journals in terms of getting articles from electronic to print format. But another possibility is that the _'lesser'_ two journals have more papers to print compared to the Journal of Pain and PAIN. That is, does the elitism inherent in the impact factor system afford the Journal of Pain and PAIN greater scope to reject submissions _(something I am a little too familiar with for my liking)_, giving them fewer articles to process?
+
+```{r article_no}
+# Calculate the median number of articles per issue
+issue_no <- df_print %>%
+    group_by(journal, year_entrez, volume, issue) %>%
+    # Number of articles by journal/year/volume/issue
+    summarise(article_no = n()) %>%
+    # Average number of articles per issue per journal
+    group_by(journal) %>%
+    summarise(median = round(median(article_no)))
+
+# Calculate the median number of 'ahead of print' articles at the end of 2016
+ahead_no <- df_ahead %>%
+    group_by(journal) %>%
+    summarise(`'ahead of print' articles (n; 31 Dec 2016)` = n())
+    
+
+# Add to table 1
+tab_df2 <- tab_df %>% 
+    select(Journal, `Frequency (issues per year)`) %>%
+    rename(`Issues per year (n)` = `Frequency (issues per year)`) %>%
+    bind_cols(issue_no[2], ahead_no[2]) %>%
+    mutate(`Articles per year (n; median)` = 
+               median * `Issues per year (n)`) %>%
+    rename(`Articles per issue (n; median)` = median) %>%
+    select(Journal, 
+           `Articles per year (n; median)`, 
+           `Issues per year (n)`,
+           `Articles per issue (n; median)`,
+           `'ahead of print' articles (n; 31 Dec 2016)`)
+
+# Print table
+knitr::kable(x = tab_df2,
+             align = c('l', 'l', 'l'),
+             caption = '<b>Table 2.</b> Journal outputs')
+
+```
+
+Other than the European Journal of Pain, which publishes 10 issues per year, the other three journals publish 12 issues per year (Table 2). Yet despite having the lowest issue frequency of the four journals, the European Journal of Pain publishes the second greatest number of articles per issue (median = 14 articles) and hence it is competitive with regards to total number of printed articles per year (median = 140 articles). At the end of 2016 (31 December) the European Journal of Pain had the lowest number of papers of all four journals in _'epub ahead of print'_ format (n = 19 articles). The low number of _'epub ahead of print'_ articles is at odds with the slow _time to print_ data, and the slower issue rate of the journal does not explain the delay in _'time to print'_[^1]. That is, if you miss being published in an issue of the European Journal of Pain, there is a longer wait until the next issue compared to the other three journals, but only by a few days.
+
+[^1]: The final 2016 issue of European Journal of Pain was published in November 2016. The other three journals published an issue in December 2016.
+
+The long _time to print_ for Clinical Journal of Pain isn't easy to explain either. Comparing the data the Clinical Journal of Pain and the Journal of Pain (Table 2), the two journals have comparable issue frequency (12 per year), median articles per issue, and hence total number of articles published per year. Yet, the Clinical Journal of Pain has over three times to number of _'epub ahead of print'_ articles than the Journal of Pain. What ever the reason for the slow _time to print_ speed of the Clinical Journal of Pain, they need to find a solution; increasing the number of articles per issue is the obvious solution. 
+
+## Closing remarks
+
+The unrefined nature of this analysis combined with the falliblity of the PubMed database when it comes to dates means that there may be some inaccuracies in the data presented here. Nevertheless, I think the data is strong enough to conclude that the two top-ranked journals (PAIN and Journal of Pain) are quicker at converting articles from _'epub ahead of print'_ to _'print copy'_ compared to the two lower-ranked journals. The reasons for the differences are not obvious, and I do not believe it is a publisher issue[^2]. What ever the reason, I don't think it is acceptable for journals such as the European Journal of Pain and Clinical Journal of Pain to take on average half to three-quarters to of a year to bring an article out in 'print'. 
+
+[^2]: Clinical Journal of Pain (slowest _'time to print'_) and PAIN (second fastest _'time to print'_) are both publihsed by Lippincott Williams & Wilkins. 
+
+****
+
+## tl;dr
+
+I have had excellent experiences with all four journals, and these data are in no way a reflection of the excellent work done by the editorial and copy-editing staff of these journals. Indeed, the issue of _time to print_ for these four journals is in my experience not an indicator of the time it takes for an article to go from accepted to being available online with a DOI, and is only an issue for those of us with weird funding mechanisms. 
+
+****
+
+## Session information
+```{r session_info}
+sessionInfo()
+```
