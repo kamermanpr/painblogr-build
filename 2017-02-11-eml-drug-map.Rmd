@@ -464,6 +464,7 @@ Classification of medicines as first-, second-, or third-line was based on the r
 &Dagger;: weak opioid = tramadol; topical agents = 5\% lidocaine patch and 8\% capsaicin patch  
 
 &sect;: strong opioids = morphine and oxycodone; other = botulinium toxin A
+
 </div>
 
 ## About
@@ -474,12 +475,11 @@ To raise awareness of the plight of people in developing countries who suffer fr
 
 The space available on the storyboard for the map was very limited, so to mark the submission of an application for the inclusion of _gabapentin_ (a first-line medicine for managing neuropathic pain) on the WHO Model List of Essential Medicines, I have reposted the map as a standalone item. The application was made by the International Association for the Study of Pain [(IASP)](//www.iasp-pain.org/){ target="_blank" }, the Neuropathic Pain Special Interest Group of the IASP [(NeuPSIG)](//www.iasp-pain.org/SIG/NeuropathicPain){ target="_blank" }, and the International Association of Hospice and Palliative Care [(IAHPC)](//hospicecare.com){ target="_blank" }, and you can download the application [here](//www.who.int/selection_medicines/committees/expert/21/applications/gabapentin_ad/en/){ target="_blank" } and all the information used to generate the application [here](//dx.doi.org/10.6084/m9.figshare.3814206){ target="_blank" }.
 
-
 ****
 
 ## tl;dr
 
-Get the data and geojson used in this plot [here](){ target="_blank" }
+Get the RMarkdown script, data and geojson used to generate this (and all other) painblogR posts [here](//github.com/kamermanpr/painblogr-build){ target="_blank" }
 
 ### Citations
 
@@ -488,7 +488,6 @@ Kamerman PR, Wadley AL, Davis KD, Hietaharju A, Jain P, Kopf A, Meyer A-C, Raja 
 
 #### Manuscript
 Kamerman PR, Wadley AL, Davis KD, Hietaharju A, Jain P, Kopf A, Meyer A-C, Raja SN, Rice ASC, Smith BH, Treede R-D, Wiffen PJ. World Health Organization essential medicines lists: where are the drugs to treat neuropathic pain? _PAIN_ **156**: 793–797, 2015. DOI: [10.1097/01.j.pain.0000460356.94374.a1](//dx.doi.org/10.1097/01.j.pain.0000460356.94374.a1){ target="_blank" }
-
 
 ****
 
