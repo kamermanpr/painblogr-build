@@ -28,7 +28,7 @@ library(ggiraph)
 opts_chunk$set(echo = TRUE,
                warning = FALSE,
                message = FALSE,
-               cache = TRUE,
+               cache = FALSE,
                fig.path = './figures/',
                dev = 'svg',
                tidy = FALSE)
@@ -87,9 +87,9 @@ extr <- data_frame(Neuropathy = c('Yes', 'Yes', 'No', 'No'),
                    N = c(sn_ddX_exposed, sn_ddX_naive, sn_free_ddX_exposed, sn_free_ddX_naive))
 
 # Tabulate
-pander(extr, caption = 'Summary of data extracted from Table 1 of Ellis et al. (2010)',
-       justify = 'left',
-       split.tables = Inf)
+kable(extr, 
+       caption = 'Summary of data extracted from Table 1 of Ellis et al. (2010)',
+       align = 'lll')
 ```
 
 Once I had extracted the data, I used the data to construct simulated datasets of the number of participants with *(sn)* and without *(sn\_free)* sensory neuropathy in the **ddX-naive** and **ddX-exposed** groups.<br><br>
@@ -130,9 +130,9 @@ sim <- data_frame(Group = c('ddX_exposure', 'ddX_naive'),
     mutate(`Prevalence (%)` = round(100 * (`Neuropathy (n)` / `Total (n)`)))
 
 # Tabulate
-pander(sim, caption = 'Summary of neuropathy prevalence in simulated datasets',
-       justify = 'left',
-       split.tables = Inf)
+kable(sim, 
+       caption = 'Summary of neuropathy prevalence in simulated datasets',
+       align = 'lrrrr')
 
 ```
 
@@ -208,9 +208,9 @@ df2 <- df %>%
     rename(`Lower 95% CI` = Lower_95CI,
            `Upper 95% CI` = Upper_95CI)
 # Step 3: Print table
-pander(df2, caption = 'Neuropathy prevalence (95% bootstrap confidence interval) in simulated datasets',
-       justify = 'left',
-       split.tables = Inf)
+kable(df2, 
+      caption = 'Neuropathy prevalence (95% bootstrap confidence interval) in simulated datasets',
+       align = 'lrrrrrr')
 
 ############################################################
 #                                                          #
@@ -304,11 +304,21 @@ ddX_exposure <- df_chi[[1]]
 sn_status <- df_chi[[2]]
 
 # Perform chi-square with simulated p-value, and tabulate output
-pander(chisq.test(x = ddX_exposure, 
-                  y = sn_status,
-                  simulate.p.value = TRUE, B = 999),
-    justify = 'left',
-    split.tables = Inf)
+fish.1 <- fisher.test(x = ddX_exposure,
+                      y = sn_status,
+                      simulate.p.value = TRUE, 
+                      B = 2000)
+
+fish.2 <- data_frame(Estimate = fish.1$estimate, 
+                     `95% CI` = paste0(round(fish.1$conf.int[1], 3), ' to ',
+                                       round(fish.1$conf.int[2], 3)),
+                     `P value` = ifelse(fish.1$p.value < 0.001, 
+                                        yes = '< 0.001', 
+                                        no = fish.1$p.value))
+kable(fish.2,
+      caption = paste0(fish.1$method, ': ', fish.1$data.name),
+      digits = 3,
+      align = 'r')
 ```
 
 ### Is the neuropathy still painful?
@@ -357,9 +367,9 @@ extr_pain <- data_frame(Pain = c('Yes', 'Yes', 'No', 'No'),
                          pain_free_ddX_exposed, pain_free_ddX_naive))
 
 # Tabulate
-pander(extr_pain, caption = 'Summary of data extracted from Table 2 of Ellis et al. (2010)',
-       justify = 'left',
-       split.tables = Inf)
+kable(extr_pain, 
+      caption = 'Summary of data extracted from Table 2 of Ellis et al. (2010)',
+       align = 'l')
 ```
 
 Following data extraction, I simulated datasets of the number of participants with *(pain)* and without *(pain\_free)* painful sensory neuropathy in the *ddX-naive* and *ddX-exposed* groups, and then calculated and plotted bootstrap 95% confidence intervals.<br><br>
@@ -400,9 +410,9 @@ sim <- data_frame(Group = c('ddX_exposure', 'ddX_naive'),
     mutate(`Prevalence (%)` = round(100 * (`Pain (n)` / `Total (n)`)))
 
 # Tabulate
-pander(sim, caption = 'Summary of pain prevalence in simulated datasets',
-       justify = 'left',
-       split.tables = Inf)
+kable(sim, 
+      caption = 'Summary of pain prevalence in simulated datasets',
+      justify = 'l')
 
 ```
 
@@ -461,9 +471,9 @@ df2_pain <- df_pain %>%
            `Upper 95% CI` = Upper_95CI)
 
 # Step 3: Print table
-pander(df2_pain, caption = 'Painful neuropathy prevalence (95% bootstrap confidence interval) in simulated datasets',
-       justify = 'left',
-       split.tables = Inf)
+kable(df2_pain, 
+      caption = 'Painful neuropathy prevalence (95% bootstrap confidence interval) in simulated datasets',
+      align = 'lrrrrrr')
 
 ############################################################
 #                                                          #
@@ -559,11 +569,21 @@ ddX_exposure <- df_pain_chi[[1]]
 pain_status <- df_pain_chi[[2]]
 
 # Perform chi-square with simulated p-value, and tabulate output
-pander(chisq.test(x = ddX_exposure, 
-                  y = pain_status,
-                  simulate.p.value = TRUE, B = 999),
-    justify = 'left',
-    split.tables = Inf)
+fish.1 <- fisher.test(x = ddX_exposure,
+                      y = pain_status,
+                      simulate.p.value = TRUE, 
+                      B = 2000)
+
+fish.2 <- data_frame(Estimate = fish.1$estimate, 
+                     `95% CI` = paste0(round(fish.1$conf.int[1], 3), ' to ',
+                                       round(fish.1$conf.int[2], 3)),
+                     `P value` = ifelse(fish.1$p.value < 0.001, 
+                                        yes = '< 0.001', 
+                                        no = fish.1$p.value))
+kable(fish.2,
+      caption = paste0(fish.1$method, ': ', fish.1$data.name),
+      digits = 3,
+      align = 'r')
 ```
 
 ### Take-home message
