@@ -46,7 +46,7 @@ tab_df <- data_frame(Journal = c('<a href="http://journals.lww.com/clinicalpain/
 
 # Print table
 knitr::kable(x = tab_df,
-             align = c('l', 'l', 'l', 'l'),
+             align = 'lrrr',
              caption = '<b>Table 1.</b> Journals included in assessment')
 
 ```
@@ -54,7 +54,10 @@ knitr::kable(x = tab_df,
 ### Getting the data
 I obtained the electronic and print publication dates of articles for the past four years from <a href="https://www.ncbi.nlm.nih.gov/pubmed" target="_blank">PubMed</a>. Beyond the usual web browser method of searching PubMed, you can remotely access the full database through the user-friendly and well-documented Entrez Programming Utilities API (<a href="https://www.ncbi.nlm.nih.gov/books/NBK25501/" target="_blank">E-utilities</a>). In _R_ you can make these queries to the PubMed database directly using packages such as <a href="https://cran.r-project.org/web/packages/xml2/index.html" target="_blank">xml2</a>, or if you are not familiar with using web APIs, the guys at <a href="https://ropensci.org/" target="_blank">rOpenSci</a> have given us the excellent <a href="https://ropensci.org/tutorials/rentrez_tutorial.html" target="_blank">rentrez</a> package. I have used the direct approach here (see code below). 
 
-```{r get_data, cache = TRUE}
+```{r get_data, eval = FALSE}
+# Set eval = FALSE after first run so as to speed-up knit on future run
+# First run used to save data outputs from this chunk to file, which can 
+# be read into memory in future runs.
 
 ############################################################
 #                                                          #
@@ -670,8 +673,8 @@ df_print <- df %>%
     filter(interval >= 1)
 
 # Generate 'ahead of print' data
-df_ahead <- df %>%
-    filter(publication_status != 'print copy')
+# df_ahead <- df %>%
+    # filter(publication_status != 'print copy')
 
 # Clean-up environment
 rm(list = c('base_url',
@@ -690,6 +693,8 @@ rm(list = c('base_url',
             'splitter_list',
             'terms'))
 
+# readr::write_rds(df, './_data/2017-02-05-publication-time/df.rds')
+# readr::write_rds(df_print, './_data/2017-02-05-publication-time/df_print.rds')
 ```
 
 #### Caveats
@@ -704,6 +709,9 @@ ii. PubMed xml records follow a template, but the template is not applied consis
 The figure below shows the median time in days between an article being recorded as an _'epub ahead of print'_ and then as a _'print copy'_ on the PubMed database. The data are shown as a heatmap, with the colour getting darker (more purple) as the time between _epub_ and _print_ increases. A quick scan of the plot reveals that the Clinical Journal of Pain (Clin J Pain) and the European Journal of Pain (Eur J Pain) take the longest, while the time take by PAIN and the Journal of Pain (J Pain) is relatively short.
 
 ```{r heatmap}
+# Read in saved outputs from get_data chunk
+df <- readr::read_rds('./_data/2017-02-05-publication-time/df.rds')
+df_print <- readr::read_rds('./_data/2017-02-05-publication-time/df_print.rds')
 
 ############################################################
 #                                                          #
@@ -737,7 +745,7 @@ gg_heat <- ggplot(data = df_heat) +
     geom_tile_interactive() +
     scale_fill_viridis(direction = -1, 
                        name = 'Days\n') +
-    labs(caption = "Interactive figure, 'click' on the data for more detailed information",
+    labs(caption = "(Interactive figure, 'click' on the data for more detailed information)",
          x = '\nYear\n') +
     theme(panel.background = element_blank(),
           axis.ticks = element_blank(),
@@ -747,6 +755,7 @@ gg_heat <- ggplot(data = df_heat) +
           axis.text.x = element_text(size = 12, 
                                      angle = 60,
                                      hjust = 1),
+          plot.subtitle = element_text(size = 8),
           panel.grid = element_blank()) 
 
 # Tooltip css
@@ -759,7 +768,6 @@ ggiraph(code = print(gg_heat),
         tooltip_offx = 10, 
         tooltip_offy = -10,
         tooltip_opacity = 1,
-        width = 0.65,
         height_svg = 4,
         width_svg = 5)
 
@@ -893,7 +901,7 @@ gg <- ggplot() +
                           x = rep(c(0.6, 1.6, 2.6, 3.6), times = 4),
                           xend = rep(c(1.4, 2.4, 3.4, 4.4), times = 4),
                           size = 1.3) +
-    labs(caption = "Interactive figure, 'click' on the data for more detailed information",
+    labs(caption = "(Interactive figure, 'click' on the data for more detailed information)\n",
          y = 'Time to print (days)\n',
          x = '\nYear\n') +
     scale_y_continuous(limits = c(-5, 605), 
@@ -906,11 +914,13 @@ gg <- ggplot() +
     theme(legend.position = 'none',
           panel.background = element_blank(),
           axis.ticks = element_blank(),
-          axis.title = element_text(size = 16),
-          axis.text.y = element_text(size = 14),
-          axis.text.x = element_text(size = 14, 
+          axis.title = element_text(size = 20),
+          axis.text.y = element_text(size = 18),
+          axis.text.x = element_text(size = 18, 
                                      angle = 60,
                                      hjust = 1),
+          strip.text = element_text(size = 18),
+          plot.caption = element_text(size = 16),
           panel.grid.major = element_line(colour = '#999999',
                                           size = 0.1))
 # Tooltip css
@@ -923,9 +933,8 @@ ggiraph(code = print(gg),
         tooltip_offx = 10, 
         tooltip_offy = -10,
         tooltip_opacity = 1,
-        width = 0.65,
-        height_svg = 6,
-        width_svg = 6)
+        height_svg = 7,
+        width_svg = 8)
 ```
 
 You could be mischievous with these data and say that the two top-ranked journals (by impact factor) are the top-ranked journals partially because they are streets ahead of the other two journals in terms of getting articles from electronic to print format. But another possibility is that the _'lesser'_ two journals have more papers to print compared to the Journal of Pain and PAIN. That is, does the elitism inherent in the impact factor system afford the Journal of Pain and PAIN greater scope to reject submissions _(something I am a little too familiar with for my liking)_, giving them fewer articles to process?
@@ -941,37 +950,34 @@ issue_no <- df_print %>%
     summarise(median = round(median(article_no)))
 
 # Calculate the median number of 'ahead of print' articles at the end of 2016
-ahead_no <- df_ahead %>%
-    group_by(journal) %>%
-    summarise(`'ahead of print' articles (n; 31 Dec 2016)` = n())
+# ahead_no <- df_ahead %>%
+    # group_by(journal) %>%
+    # summarise(`'ahead of print' articles (n; 31 Dec 2016)` = n())
     
 
 # Add to table 1
 tab_df2 <- tab_df %>% 
     select(Journal, `Frequency (issues per year)`) %>%
     rename(`Issues per year (n)` = `Frequency (issues per year)`) %>%
-    bind_cols(issue_no[2], ahead_no[2]) %>%
+    bind_cols(issue_no[2]) %>% # bind_cols(issue_no[2], ahead_no[2]) %>%
     mutate(`Articles per year (n; median)` = 
                median * `Issues per year (n)`) %>%
     rename(`Articles per issue (n; median)` = median) %>%
     select(Journal, 
            `Articles per year (n; median)`, 
            `Issues per year (n)`,
-           `Articles per issue (n; median)`,
-           `'ahead of print' articles (n; 31 Dec 2016)`)
+           `Articles per issue (n; median)`) # `'ahead of print' articles (n; 31 Dec 2016)`)
 
 # Print table
 knitr::kable(x = tab_df2,
-             align = c('l', 'l', 'l'),
+             align = 'lrrr',
              caption = '<b>Table 2.</b> Journal outputs')
 
 ```
 
-Other than the European Journal of Pain, which publishes 10 issues per year, the other three journals publish 12 issues per year (Table 2). Yet despite having the lowest issue frequency of the four journals, the European Journal of Pain publishes the second greatest number of articles per issue (median = 14 articles) and hence it is competitive with regards to total number of printed articles per year (median = 140 articles). At the end of 2016 (31 December) the European Journal of Pain had the lowest number of papers of all four journals in _'epub ahead of print'_ format (n = 19 articles). The low number of _'epub ahead of print'_ articles is at odds with the slow _time to print_ data, and the slower issue rate of the journal does not explain the delay in _'time to print'_[^1]. That is, if you miss being published in an issue of the European Journal of Pain, there is a longer wait until the next issue compared to the other three journals, but only by a few days.
+Other than the European Journal of Pain, which publishes 10 issues per year, the other three journals publish 12 issues per year (Table 2). Yet despite having the lowest issue frequency of the four journals, the European Journal of Pain publishes the second greatest number of articles per issue (median = 14 articles) and hence it is competitive with regards to total number of printed articles per year (median = 140 articles). The reduced number of issues per year does means that if you miss being published in an issue of the European Journal of Pain, there is a longer wait until the next issue compared to the other three journals. However this delay does not account for the magnitude in the difference in _time to print_ between the European Journal of Pain, and the Journal of Pain and PAIN. 
 
-[^1]: The final 2016 issue of European Journal of Pain was published in November 2016. The other three journals published an issue in December 2016.
-
-The long _time to print_ for Clinical Journal of Pain isn't easy to explain either. Comparing the data the Clinical Journal of Pain and the Journal of Pain (Table 2), the two journals have comparable issue frequency (12 per year), median articles per issue, and hence total number of articles published per year. Yet, the Clinical Journal of Pain has over three times to number of _'epub ahead of print'_ articles than the Journal of Pain. What ever the reason for the slow _time to print_ speed of the Clinical Journal of Pain, they need to find a solution; increasing the number of articles per issue is the obvious solution. 
+The long _time to print_ for Clinical Journal of Pain isn't easy to explain either. Comparing the data of the Clinical Journal of Pain and the Journal of Pain (Table 2), the two journals have comparable issue frequency (12 per year), median articles per issue, and hence total number of articles published per year, but vastly different _time to print_ data. What ever the reason for the slow _time to print_ speed of the Clinical Journal of Pain, they need to find a solution; increasing the number of articles per issue is the obvious solution. 
 
 ## Closing remarks
 
