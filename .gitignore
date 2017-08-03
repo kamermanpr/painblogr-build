@@ -24,3 +24,6 @@ _site/
 _data/publications.csv
 _data/publications.R
 *_cache/
+
+_data/.DS_Store
+.DS_Store
