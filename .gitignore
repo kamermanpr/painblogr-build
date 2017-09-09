@@ -1,28 +1,12 @@
 .Rproj.user
 .Rhistory
 .RData
-
+.nojekyll
+.DS_Store
 *.html
 *.txt
-
-about_me.Rmd
-archive.Rmd
-biostatistics.Rmd
-CNAME
-favicon.ico
-index.Rmd
-publications.Rmd
-
-.nojekyll
+*_cache/
+_site/
 _site.yml
 
-images/
-css/
-_includes/
-_templates/
-_site/
-_data/publications.csv
-_data/publications.R
-*_cache/
 
-.DS_Store
