@@ -1,0 +1,6 @@
+---
+title: 'Page'
+output:
+    html_document:
+        template: '/_templates/default.html'
+---

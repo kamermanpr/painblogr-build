@@ -1,0 +1,41 @@
+---
+title: 'About Me'
+output:
+    html_document:
+        template: './_templates/default.html'
+---
+
+![](./images/about_me.png){ style="float:left;margin:0;padding:16px 16px 0px 0px;" width=180px }
+
+### Peter Kamerman
+
+I am a physiologist with a keen interest in the open science movement, and in recent years I have started teaching myself [R](https://www.r-project.org){ target="_blank" } and complementary tools to help me meet my open science goals.
+
+I am based at the [University of the Witwatersrand](https://www.wits.ac.za){ target="_blank" }, Johannesburg, where I teach for the School of Physiology, and conduct research under the banner of the [Brain Function Research Group](https://www.wits.ac.za/physiology/research-entities/brain-function-research-group){ target="_blank" }; an amalgam of investigators interested in topics related to functions of the brain, and physiological and biochemical processes in which the central nervous system plays a key regulatory role. My teaching involves undergraduate and postgraduate teaching in systems-based physiology and pathophysiology, with a focus on neuroscience. For my research, I lead an active research programme in the field of HIV-related pain with a primary focus on the epidemiology, genetics and pathophysiology of HIV-associated sensory neuropathy.
+
+In my free-time I like nothing better than to hit the trails on my mountain bike.
+
+****
+
+<!-- contact icons -->
+<p class="inline-block">
+<b>Contact me:</b>
+&emsp;
+<a href="mailto:peter.kamerman@gmail.com" target="_blank" style="font-size:20px;"><i class="fa fa-envelope" style="color:#000000;vertical-align:middle;" title="Email me" ></i></a>
+&emsp;
+<a href="//twitter.com/painblogR" target="_blank" style="font-size:25px;"><i class="fa fa-twitter" style="color:#000000;vertical-align:middle;" title="Follow me on Twitter"></i></a>
+&emsp;&emsp;&emsp;&emsp;
+<b>My repositories:</b>
+&emsp;
+<a href="//github.com/kamermanpr" target="_blank" style="font-size:25px;"><i class="fa fa-github" style="color:#000000;vertical-align:middle;" title="GitHub"></i></a>
+&emsp;
+<a href="//figshare.com/authors/Peter_Kamerman/830537" target="_blank" style="font-size:25px;"><i class="ai ai-figshare" style="color:#000000;vertical-align:middle;" title="Figshare"></i></a>
+&emsp;&emsp;&emsp;&emsp;
+<b>My research profile</b>
+&emsp;
+<a href="//orcid.org/0000-0002-3103-5295" target="_blank" style="font-size:25px;"><i class="ai ai-orcid" style="color:#000000;vertical-align:middle;" title="ORCID"></i></a>
+&emsp;
+<a href="//scholar.google.com/citations?user=vlXRD0UAAAAJ&hl=en" target="_blank" style="font-size:25px;"><i class="ai ai-google-scholar" style="color:#000000;vertical-align:middle;" title="Google Scholar"></i></a>
+&emsp;
+<a href="//www.researchgate.net/profile/Peter_Kamerman" target="_blank" style="font-size:25px;"><i class="ai ai-researchgate" style="color:#000000;vertical-align:middle;" title="ResearchGate"></i></a>
+</p>

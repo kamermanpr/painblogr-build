@@ -1,0 +1,77 @@
+---
+title: Publications & Reprints
+output:
+  html_document:
+    template: './_templates/default.html'
+---
+
+<br>
+
+```{r echo = FALSE, warning = FALSE, message = FALSE, results = 'asis'}
+
+# Load packages
+library(tidyverse)
+library(stringr)
+library(DT)
+library(htmltools)
+
+# Get data
+publist <- read_csv('_data/publications.csv',
+                    trim_ws = TRUE)
+
+# Add markdown links
+## DOI
+publist$DOI <- as.character(publist$DOI)
+doi_link <- function(data){
+    for(i in seq_along(data$Publications))
+        if(!is.na(data[i, 3])){
+            data[i, 2] <- gsub(data[i, 3],
+                            paste0("<a href=\"http://dx.doi.org/", data[i, 3], "\" target=\"_blank\">", data[i, 3], "</a>"),
+                            data[i, 2],
+                            fixed = TRUE)
+        }
+    data
+}
+publist_link <- doi_link(publist)
+
+## PMID
+publist_link$PMID <- as.character(publist_link$PMID)
+pmid_link <- function(data){
+    for(i in seq_along(data$Publications))
+        if(!is.na(data[i, 4])){
+            data[i, 2] <- gsub(data[i, 4],
+                               paste0("<a href=\"http://www.ncbi.nlm.nih.gov/pubmed/", data[i, 4], "\" target=\"_blank\">", data[i, 4], "</a>"),
+                               data[i, 2],
+                               fixed = TRUE)
+        }
+    data
+}
+
+publist_link <- pmid_link(publist_link)
+
+# Clean-up
+final <- publist_link %>%
+    select(Number, Publications, Link) %>%
+    rename(PDF = Link, Publication = Publications)
+
+# Make table
+datatable(final,
+          # tailor the caption using htmltools
+          caption = tags$caption(
+              style = 'caption-side:top; text-align:left;
+              color:#000000',
+              h3('Table 1: Peer-reviewed journal articles')),
+          # list options
+          options = list(
+              columnDefs = list(
+                  list(className = 'dt-left',
+                       targets = c(0, 1, 2))),
+              pageLength = 10,
+              lengthMenu = c(10, 20, 40)),
+          # remove rownames
+          rownames = FALSE,
+          # don't escape html
+          escape = FALSE,
+          # bootsrap styling
+          style = 'bootstrap')
+```

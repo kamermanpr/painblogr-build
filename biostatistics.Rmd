@@ -1,0 +1,313 @@
+---
+title: 'Introduction to biostatistics'
+output:
+  html_document:
+    template: './_templates/default.html'
+    toc: true
+    toc_float: true
+---
+
+## About
+
+An introductory course on data handling and biostatistics for students studying towards a Bachelor of Health Sciences (BHSc) Honours in Physiology at the University of the Witwatersrand, South Africa. The course is based around the statistical programming language [_R_](//www.r-project.org).
+
+The aims of the course are to introduce participants to the basics of data wrangling, plotting, and reproducible data analysis and reporting. These aims are explored using the statistical computing programme [_R_](//www.r-project.org/) in the [_RStudio_](//www.rstudio.com) integrated development environment (IDE), and [_git_](//git-scm.com/) (with the [_GitHub_](//github.com/) web-based _git_ repository hosting service) for version control. The reason for choosing these apps is that they are free _(as in beer and as in speech)_, and have well-established and active user and developer communities. You need a basic working knowledge of the _command line_, _R_ and _git_ to complete the course. So if you are not familiar with these apps, I suggest that you complete some free online courses before starting ([see examples below](#free-courses)).
+
+## Course assessment
+
+The _year mark_ for the course will constitute 40% of the total course mark, and will be assessed by a series of 6 short assignments, each worth 10 marks. The biostatistics examination will constitute the remaining 60% of the total mark for the course. Assignments must be submitted by 23:59 on the due date. No extensions will be granted, and 10% will be deducted from the assignment mark for each day the assignment is late. 
+
+The table below provides a link to the assignments and indicates the due date for each assignment. _Note: Dropbox (where the files are located) no longer renders html files, so until I find another free host that will render the files, clicking the link will download the associated file, which you can then open in your browser._ 
+
+| Assignment 	| Link            	| Submission deadline 	|
+|------------	|-----------------	|---------------------	|
+| 1          	| [access link](https://www.dropbox.com/s/iwza4nw2lbmfha3/assignment-1.html?dl=1) 	| TBA        	|
+| 2          	| [access link](https://www.dropbox.com/s/w0tcn07bvhhmfrh/assignment-2.html?dl=1) 	| TBA        	|
+| 3          	| [access link](https://www.dropbox.com/s/5oglx0yjsee5lu9/assignment-3.html?dl=1) 	| TBA        	|
+| 4          	| [access link](https://www.dropbox.com/s/q367xn0ul6hatwf/assignment-4.html?dl=1) 	| TBA        	|
+| 5          	| [access link](https://www.dropbox.com/s/9obhqs79pym5chi/assignment-5.html?dl=1) 	| TBA       	|
+| 6          	| [access link](https://www.dropbox.com/s/apdd6e7x1aytyry/assignment-6.html?dl=1) 	| TBA       	|
+
+## Lectures
+Lecture slides are best viewed on Safari. 
+
+_Note: Dropbox (where the files are located) no longer renders html files, so until I find another free host that will render the files, clicking the link will download a zip file, which you can then unzip and double-click on the html file to open the presentation in your browser._ 
+
+|Lecture       |Content                                |Slides                                                          |
+|:--------------|:--------------------------------------|:------------------------------------------------------------------------|
+|Introduction   |Course overview                        |<a href='https://www.dropbox.com/s/25dq2xiv99vk16a/biostats_introduction.zip?dl=1' target='_blank'>Slideshow (1MB)</a> |
+|Lecture 1 |Basic concepts and tools for reproducible research|<a href='https://www.dropbox.com/s/hpc1grcbon049y8/biostats_lecture_1.zip?dl=1' target='_blank'>Slideshow (2MB)<a/> |
+|Lecture 2 |Data munging|<a href='https://www.dropbox.com/s/g23kn3ir9bpcwuz/biostats_lecture_2.zip?dl=1' target='_blank'>Slideshow (730kB)</a> |
+|Lecture 3 |Things to know before you start data analysis|<a href='https://www.dropbox.com/s/xco1wokqe5jvfk4/biostats_lecture_3.zip?dl=1' target='_blank'>Slideshow (7.4MB)</a> |
+|Lecture 4 |A (very brief) introduction to data presentation|<a href='https://www.dropbox.com/s/96pq36lb6l3sc7z/biostats_lecture_4.zip?dl=1' target='_blank'>Slideshow (4.2MB)</a> |
+|Lecture 5 and 6 |Cookbook of commonly used statistical tests|<a href='https://www.dropbox.com/s/my787nbhd4u0e51/biostats_lecture_5.zip?dl=1' target='_blank'>Slideshow (58MB)</a> |
+|Lecture 7 |Confidence intervals|<a href='https://www.dropbox.com/s/nwpbaw5q6kajq1s/biostats_lecture_7.zip?dl=1' target='_blank'>Slideshow (5.3MB)</a> |
+|Lecture 8 |Correlation and regression|<a href='https://www.dropbox.com/s/n9m99546nxsqlqg/biostats_lecture_8.zip?dl=1' target='_blank'>Slideshow (2.8MB)</a> |
+
+## Tutorials
+
+These tutorials do not count for course credit, but give you a chance to get hands-on experience applying what you learn in the lectures. The tutorials will take place with the course instructor in the computer laboratory immediately after the relevant lecture has finished. You may work alone or in groups. You may also work through them tutorials in your own time. 
+
+|Tutorial                   |files                                |
+|:--------------------------|:------------------------------------|
+|Tutorial 1 |Complete the `swirl` course: **'R Programming'** |
+|Tutorial 2 | RMarkdown and knitr ([download instructions](//dl.dropboxusercontent.com/u/11805474/PHSL4005-biostats/assignments/assignment-1.md?dl=1)) |
+|Tutorial 3 |Complete the `swirl` course: **'Getting and Cleaning Data'** |
+|Tutorial 4 |Complete the `swirl` course: **'Exploratory Data Analysis'**<br>_(sections: 5, 7, 8, 9, 10)_ |
+|Tutorial 5 | Complete the `swirl` course: **'Statistical Inference'** |
+|Tutorial 6 | Complete the `swirl` course: **'Regression Models'** |
+
+The majority of the tutorials are deployed through the _R_ package [`swirl`](//swirlstats.com). The `swirl` package was developed by the Swirl Development Team, and includes a suite of step-by-step interactive training courses on _R_, which are aimed primarily at the novice and intermediate _R_ user.
+
+Follow the instructions below to access `swirl` courses:
+
+```{r eval = FALSE}
+# Re-type or copy and paste the text below into the R console, 
+# pressing 'Enter' after each step.
+
+# If you haven't already installed swirl
+install.packages('swirl')
+
+# Load the 'swirl' package
+library(swirl)
+
+# Launch a 'swirl' session and follow the prompts
+swirl()
+```
+
+To install `swirl` courses:
+
+```{r eval = FALSE}
+# Re-type or copy and paste the text below into the R console, 
+# pressing 'Enter' after each step.
+
+# Load the 'swirl' package
+library(swirl)
+
+# Download a course from the 'swirl' github repository
+install_from_swirl('Course Name Here')
+
+# Launch a 'swirl' session and follow the prompts
+swirl()
+```
+
+## Resources
+
+### Visualizing statistics
+
+I strongly recommend that all students go play around with the interactive plots at [_Seeing Theory_](http://students.brown.edu/seeing-theory/), a project designed and created by Daniel Kunin with support from Brown University's Royce Fellowship Program and National Science Foundation group STATS4STEM. The goal of the project is to make statistics more accessible to a wider range of students through interactive visualizations. 
+
+### Software downloads
+
+- [_R_](//cran.r-project.org) (available for: Windows, Mac, and Linux)
+
+- [_RStudio Desktop_](//www.rstudio.com/products/rstudio/download/) (available for: Windows, Mac, and Linux. Only install after you have installed _R_)
+
+- [_git_](//git-scm.com/downloads) (available for: Windows, Mac, and Linux)
+
+- [_Github desktop client_](//desktop.github.com) (available for: Windows and Mac only)
+
+Once you have downloaded and installed _R_ and _RStudio_, I recommend that you install the following _R_ packages (you may need others during the course, but the suggested packages will get you through all activities in the course):
+
+- `car`, `coin`, `devtools`, `kableExtra`, `knitr`, `RColorBrewer`, `rmarkdown`, `swirl`, `svglite`, `tidyverse`, `vcd`, `vcdExtra` [^1] 
+
+[^1]: The `tidyverse` package bundles a series of essential packages for importing, munging and visualising data (e.g., `dplyr`, `forcats`, `ggplot2`, `lubridate`, `purrr`, `readr`, `stringr`, `tidyr`).
+
+Install the packages from the _R_ console:
+
+```{r eval = FALSE}
+# Re-type or copy and paste the appropriate text into the R console 
+# and press 'Enter'.
+
+install.packages(c('car', 'coin', 'devtools', 'kableExtra', 
+                   'knitr', 'RColorBrewer', 'rmarkdown', 
+                   'swirl', 'svglite', 'tidyverse', 
+                   'vcd', 'vcdExtra'))
+```
+
+### Offline installation of recommended packages and swirl courses 
+
+If you are working behind a corporate proxy you may experience problems installing packages from the CRAN servers. To help you get the packages required for this course, I have written a package that will install the packages and swirl tutorials from a local source. 
+
+The package is called `biostatSetup`, and to reduce the package size (it's essentially a mini CRAN repository), I have cteated three versions for each of the major operating systems: `biostatSetupSrc` for Linux, `biostatSetupMacOS` for Mac, and `biostatSetupWindows` for Windows. 
+
+_Please note that the package was developed for R v3.3. If you have a lower version of R, please upgrade your version before installing the package._
+
+**Installing and using biostatSetup**
+
+##### 1. Download the relevant version using these URLs
+
+- Linux: [`biostatSetupSrc`](https://www.dropbox.com/s/6ml0ep3oee47yhu/biostatSetupSrc_0.1.0.tar.gz?dl=1)
+
+- macOS: [`biostatSetupMacOS`](https://www.dropbox.com/s/dr3meb6r0104248/biostatSetupMacOS_0.1.0.tgz?dl=1)
+
+- Windows: [`biostatSetupWindows`](https://www.dropbox.com/s/mfhg8ll88vkrzq6/biostatSetupWindows_0.1.0.zip?dl=1)
+
+##### 2. Install the package
+
+Install the package from the _R_ console:
+
+```{r eval = FALSE}
+# Re-type or copy and paste the appropriate text into the R console 
+# and press 'Enter'.
+
+# Remember to change 'path_to_file' to the reflect where the downloaded 
+# file is located on your system.
+
+# Linux
+install.packages('path_to_file',
+                 repos = NULL,
+                 type = 'source')
+
+# macOS
+install.packages('path_to_file',
+                 repos = NULL,
+                 type = 'mac.binary.mavericks')
+
+# Windows
+install.packages('path_to_file',
+                 repos = NULL,
+                 type = 'win.binary')
+```
+
+##### 3. Load the package
+
+```{r eval = FALSE}
+# Re-type or copy and paste the appropriate text into the R console 
+# and press 'Enter'.
+
+# Linux
+library(biostatSetupLinux)
+
+# macOS
+library(biostatSetupMacOS)
+
+# Windows
+library(biostatSetupWinows)
+```
+
+##### 4. Install packages
+
+```{r eval = FALSE}
+# Re-type or copy and paste the appropriate text into the R console 
+# and press 'Enter'.
+
+install_pkgs()
+```
+
+##### 5. Install swirl tutorials
+
+```{r eval = FALSE}
+# Re-type or copy and paste the appropriate text into the R console 
+# and press 'Enter'.
+
+install_swirl_tuts()
+```
+
+### Free courses
+
+##### _R_ online
+
+- [Introduction to _R_](//www.datacamp.com/courses/free-introduction-to-r) by datacamp.com
+
+- [_R_ Programming](//www.codeschool.com/courses/try-r) by codeschool.com  
+
+- [_R_ for Data Science](//r4ds.had.co.nz) by Garrett Grolemund and Hadley Wickham
+
+##### _git_ online
+
+- [Try _git_](//www.codeschool.com/courses/try-git) by codeschool.com 
+
+- [Learn _git_](//www.codecademy.com/learn/learn-git) by codecademy.com
+
+##### Other
+
+- [Learn the _Command Line_](//www.codecademy.com/learn/learn-the-command-line) by codecademy.com  
+
+### Cheat-sheets
+
+Remembering the specifics of every command is impossible, so there is no shame in looking-up this information. So here are links to some useful cheatsheets:  
+
+##### _R / RStudio_
+
+- [_Base R_](//www.rstudio.com/wp-content/uploads/2016/10/r-cheat-sheet-3.pdf) (source: Mhairi McNeill via rstudio.com)  
+
+- [_Importing data_](//github.com/rstudio/cheatsheets/raw/master/source/pdfs/data-import-cheatsheet.pdf) (source: rstudio.com)  
+
+- [_Data wrangling_](//github.com/rstudio/cheatsheets/raw/master/source/pdfs/data-transformation-cheatsheet.pdf) with _dplyr_ and _tidyr_ (source: rstudio.com)   
+
+- [_Data visualization_](//www.rstudio.com/wp-content/uploads/2016/11/ggplot2-cheatsheet-2.1.pdf) with _ggplot2_ (source: rstudio.com)  
+
+- [_Regular expressions_](//www.rstudio.com/wp-content/uploads/2016/09/RegExCheatsheet.pdf) (source: Ian Kopacka via rstudio.com)  
+
+- [_RMarkdown cheatsheet_](//www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf) (source: rstudio.com)  
+
+- [_RStudio IDE_](//www.rstudio.com/wp-content/uploads/2016/01/rstudio-IDE-cheatsheet.pdf) (source: rstudio.com) 
+
+##### _git_
+
+- [_git_](//www.git-tower.com/blog/git-cheat-sheet/) (source: git-tower.com) 
+
+- [_git_](//training.github.com/kit/downloads/github-git-cheat-sheet.pdf) (source: github.com)
+
+- [_git_ the simple guide](//rogerdudler.github.io/git-guide/) (interactive)
+
+- [_git_ workflow overview](//www.git-tower.com/blog/workflow-of-version-control/) (source: git-tower.com) 
+
+##### Miscellaneous
+
+- [_Command line_](//www.git-tower.com/blog/command-line-cheat-sheet/) (source: git-tower.com)
+
+## Configuring git
+
+**Global configuration**  
+
+You need to configure _git_ after you install it. If you are going to be the only one using the computer, then open _Terminal_ (OSX and Linux) or _Git Bash_ (Windows) and enter the following text _(substituting your username and email address as required)_:
+
+```
+git config --global user.name "Your Name"
+git config --global user.email your@email.com
+```
+
+**Local project configuration**  
+
+If you configure your computer using the `--global` tag, you only have to enter this information once. Thereafter, _git_ will assume that all commands are being eneterd by you. As you may expect then, configuring your user details with the `--global` tag is not a good idea if the computer you use has multiple users working, for example, through a 'Guest Account'. In that situation, rather individually set the user configuration for each directory (project) you initiate as follows: 
+
+- Open _Terminal_ (OSX and Linux) or _Git Bash_ (Windows) and navigate to the directory you want to initiate as a repository;
+
+- Enter the following text _(substituting your username and email address as required)_:
+
+```
+git init
+git config user.name "Your Name"
+git config user.email your@email.com
+```
+
+Your user information will only be associated with the repository you initiated. 
+
+## Proxy problems
+
+If you are working behind a corporate proxy, you may run into problems with pushing _git_ commits to your _remote_. The following options should help solve the problem.
+
+_(NOTE: All settings can be set specifically for the local project by omitting the `--global` tag.)_  
+
+Enter the follwing commands in the _Terminal_ (OSX or Linux) or _Git Bash_ (Windows):
+
+```
+git config --global http.proxy http://proxyserver.com:8080
+git config --global https.proxy https://proxy.server.com:8080
+```
+
+Remember to:
+
+- Change _proxy.server.com_ to the address of your proxy server
+
+- Change _8080_ to the proxy port configured on your proxy server
+
+If you want to clear your proxy settings (e.g., if you are working on a laptop that you use at home and at work), enter the following commands in _Terminal_ or _Git Bash_:
+
+```
+git config --global --unset http.proxy
+git config --global --unset https.proxy
+```
+

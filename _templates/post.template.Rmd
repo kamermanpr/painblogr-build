@@ -1,0 +1,30 @@
+---
+post_title: 'post_title' # customize directory
+post_author: 'Peter Kamerman' # customize directory
+post_date: 'January 2016' # customize directory
+post_image: './images/post_dir/post_image.png' # customize directory
+permalink:  'post_url.html' # customize directory
+description: 'Description' # customize directory
+output:
+    html_document:
+        template: './_templates/posts.html'
+		#code_folding: hide
+		#toc: true
+		#toc_depth: 2
+		#toc_float: true
+			#collapsed: true
+			#smooth_scroll: true
+---
+
+```{r setup, include = FALSE}
+# Load packages
+package(svglite)
+
+# knitr options
+knitr::opts_chunk$set(echo = TRUE,
+                      warning = FALSE,
+					  message = FALSE,
+					  fig.path = '/images/post_dir/', # customize directory
+					  fig.retina = 2,
+					  dev = 'svg')
+```
