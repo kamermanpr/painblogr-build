@@ -2,7 +2,7 @@
 post_title: 'HIV neuropathy: down, but not out'
 post_author: 'Peter Kamerman'
 post_date: '22 February 2016'
-post_image: './images/posts/hivsn-2016/footprint-sand.jpg'
+post_image: './images/posts/2016-02-22-hiv-neuropathy-down-but-not-out/post-image.png'
 permalink:  '2016-02-22-hiv-neuropathy-down-but-not-out.html'
 description: 'New, less toxic HIV treatments mean HIV-sensory neuropathy and its painful consequences are decreasing in prevalence, but they are by no means gone.'
 output:
@@ -43,7 +43,7 @@ Because of their toxicity *(not just neuropathy, but a suite of other complicati
 #### Enter the CHARTER study
 One source of data that may shed light on problem is the National Institutes of Health (NIH)-funded CNS HIV Anti-Retroviral Therapy Effects Research [(CHARTER)](http://www.charternntc.org) study. The study is a prospective, multi-centre study in the US reporting on central (brain and spinal cord) and peripheral nervous system complications of HIV infections in cross-sectional (~1600 participants) and longitudinal (~650 participants) cohorts; all participants undergo comprehensive neurological and neurobehavioural assessment. In 2010, Ronald Ellis and colleagues published a fascinating paper describing the prevalence of HIV neuropathy in 1539 HIV-infected individuals enrolled between 2003 and 2007 *([Ellis et al., Arch Neurol 67: 552-558, 2010. DOI: 10.1001/archneurol.2010.76](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3924778/))*. They reported that **57%** (881/1539) of participants had HIV neuropathy *(defined as the presence of at least 1 abnormal clinical sign of neuropathy - reduced/absent vibration or pin-prick sensation in the feet and toes, or reduced ankle reflexes)*. But, despite providing the data (see Table 1 below) they did not report whether the prevalence of HIV neuropathy differed between patients depending on their exposure to neurotoxic antiretroviral drugs.<br><br>
 
-![](./images/posts/hivsn-2016/ellis-2010-table1.jpg){ style="display:block;margin-right:auto;margin-left:auto;max-width:100%;" }
+![](./images/posts/2016-02-22-hiv-neuropathy-down-but-not-out/ellis-2010-table1.jpg){ style="display:block;margin-right:auto;margin-left:auto;max-width:100%;" }
 
 <br><br>
 
@@ -324,7 +324,7 @@ kable(fish.2,
 ### Is the neuropathy still painful?
 As I mentioned earlier, pain is a common symptom of the neuropathy, and this pain causes significant dysfuction and distress. Consequently, having shown that exposure to newer, less neurotoxic treatments is associated with reduced prevalence of HIV neuropathy compared with older drugs, it stands to reason that when neuropathy is present, the severity of the neuropathy associated with these newer drugs may be less than that induced by the older drugs. Therefore, I also looked at the frequency of painful symptoms in **ddX-exposed** and **ddX-naive** patients reported on by Ellis and colleagues (2010) that had at least one clinical sign of peripheral nerve damage (i.e., only patients who had a neuropathy). This new analysis followed exactly the same procedures as those described above, except that I took the data from Table 2 of Ellis *et al.* (2010) (see below). So, other than showing which data I extracted from Table 2, I have not shown the *R* scripts for this section (your can find the full *.Rmd* file on [GitHub](http://github.com/kamermanpr/second-look-PAIN/ellis-2010))<br><br>
 
-![](./images/posts/hivsn-2016/ellis-2010-table2.jpg){ style="display:block;margin-right:auto;margin-left:auto;max-width:100%;" }
+![](./images/posts/2016-02-22-hiv-neuropathy-down-but-not-out/ellis-2010-table2.jpg){ style="display:block;margin-right:auto;margin-left:auto;max-width:100%;" }
 
 <br><br>
 

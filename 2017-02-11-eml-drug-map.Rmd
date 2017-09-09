@@ -2,7 +2,7 @@
 post_title: "Too few medicines to treat neuropathic pain on national essential medicines lists"
 post_author: 'Peter Kamerman'
 post_date: '11 February 2017'
-post_image: './images/posts/eml-drug-map-2017/tablets.png'
+post_image: './images/posts/eml-drug-map-2017/post-image.png'
 permalink:  '2017-02-11-eml-drug-map.html'
 description: "An interactive map of which medicines recommended for the treatment of neuropathic pain are listed on national essential medicines lists."
 output:

@@ -2,7 +2,7 @@
 post_title: "From epub to print copy, which of the traditional 'pain' journals is the quickest?"
 post_author: 'Peter Kamerman'
 post_date: '5 February 2017'
-post_image: './images/posts/publication-time-2017/books.png'
+post_image: './images/posts/2017-02-05-publication-time/post-image.png'
 permalink:  '2017-02-05-publication-time.html'
 description: "Which of the traditional pain journals has the fastest conversion from epub to print copy?"
 output:

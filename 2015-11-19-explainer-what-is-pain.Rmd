@@ -21,7 +21,7 @@ Pain scientists are reasonably agreed that pain is an unpleasant feeling in our 
 ## How does pain work?
 Our body contains specialised nerves that detect potentially dangerous changes in temperature, chemical balance or pressure. These “danger detectors” (or “nociceptors”) send alerts to the brain, but they cannot send pain to the brain because _all_ pain is made _by_ the brain.
 
-![www.shutterstock.com -1](https://62e528761d0685343e1c-f3d1b99a743ffa4142d9d7f1978d9686.ssl.cf2.rackcdn.com/files/101649/width237/image-20151112-9388-1n9pswo.jpg)
+![www.shutterstock.com](https://62e528761d0685343e1c-f3d1b99a743ffa4142d9d7f1978d9686.ssl.cf2.rackcdn.com/files/101649/width237/image-20151112-9388-1n9pswo.jpg)
 
 When you’re injured, the brain makes an educated guess which part of the body is in danger and produces the pain there. Pain is not actually coming from the wrist you broke, or the ankle you sprained. Pain is the result of the brain evaluating information, including danger data from the danger detection system, cognitive data such as expectations, previous exposure, cultural and social norms and [beliefs](http://www.amazon.co.uk/Explain-Edition-Lorimer-Moseley-Butler/dp/B00GGY23A4), and other [sensory data](http://www.ncbi.nlm.nih.gov/pubmed/17449180) such as what you see, hear and otherwise sense.
 
@@ -40,7 +40,7 @@ They alert the brain and mobilise inflammatory mechanisms that increase blood fl
 
 Local anaesthetic renders these danger detectors useless, so danger messages are not triggered. As such, we can be pain-free despite major tissue trauma, such as being cut into for an operation. Just because pain comes from the brain, it doesn’t mean it’s all in your head.
 
-![www.shutterstock.com -2](https://62e528761d0685343e1c-f3d1b99a743ffa4142d9d7f1978d9686.ssl.cf2.rackcdn.com/files/101653/width237/image-20151112-9400-1tgwbuo.jpg)
+![www.shutterstock.com](https://62e528761d0685343e1c-f3d1b99a743ffa4142d9d7f1978d9686.ssl.cf2.rackcdn.com/files/101653/width237/image-20151112-9400-1tgwbuo.jpg)
 
 Inflammation, on the other hand, renders these danger detectors more sensitive, so they respond to situations that are not actually dangerous. For example, when you move an inflamed joint, it hurts a long way before the tissues of the joint are actually stressed.
 

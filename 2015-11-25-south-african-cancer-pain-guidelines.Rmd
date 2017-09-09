@@ -2,7 +2,7 @@
 post_title: 'Hot off the press: South African cancer pain guidelines'
 post_author: 'Peter Kamerman'
 post_date: '25 November 2015'
-post_image: './images/posts/ship.jpg'
+post_image: './images/posts/2015-11-25-south-african-cancer-pain-guidelines/post-image.jpg'
 permalink:  '2015-11-25-south-african-cancer-pain-guidelines.html'
 description: 'Get the first edition of the South African cancer pain guideline.'
 output:
@@ -13,7 +13,7 @@ output:
 <br>
 
 The first South African guideline for the management of cancer pain was published yesterday, and is available at [figshare.com](http://figshare.com/articles/Guide_to_treatment_of_cancer_pain_in_South_Africa/1612170).
-<!--read more-->
+
 While palliation of cancer pain is being increasingly taught in South African medical schools, there is still a significant deficit in knowledge and experience on how to approach the assessment and management of pain in people with cancer. These deficits are magnified when it comes to managing children with cancer pain.
 
 To provide a reference guide for healthcare professionals involved in the care of people with cancer pain, the Pain Society of South Africa ([PainSA](http://www.painsa.org)) and the Hospice Palliative Care Association ([HPCA](http://www.hpca.co.za)) of South Africa brought together a panel of experts to review international best practice, and to adapt these practices for local conditions. Because cancer pain in children is an often neglected, they also included a dedicated section on the assessment and management of paediatric cancer pain.
@@ -32,7 +32,7 @@ One of the authors, Dr David Webb noted,
 
 It will be interesting to see how SHIP is received by the pain community.
 
-![Stepwise Healthcare Interventions for Pain (SHIP)](./images/posts/ship.jpg)
+![Stepwise Healthcare Interventions for Pain (SHIP)](./images/posts/2015-11-25-south-african-cancer-pain-guidelines/post-image.jpg)
 
 ***
 

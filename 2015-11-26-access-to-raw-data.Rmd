@@ -2,7 +2,7 @@
 post_title: 'Access to raw data from preclinical studies'
 post_author: 'Peter Kamerman'
 post_date: '26 November 2015'
-post_image: './images/posts/open_access.jpg'
+post_image: './images/posts/2015-11-26-access-to-raw-data/post-image.png'
 permalink:  '2015-11-26-access-to-raw-data.html'
 description: 'Make sure to publish your data with your paper. Its the right thing to do.'
 output:

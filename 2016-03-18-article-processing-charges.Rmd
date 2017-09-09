@@ -2,7 +2,7 @@
 post_title: 'Quick comment: Article Processing Charges (APC)'
 post_author: 'Peter Kamerman'
 post_date: '18 March 2016'
-post_image: './images/posts/open_access.jpg'
+post_image: './images/posts/2016-03-18-article-processing-charges/post-image.png'
 permalink:  '2016-03-18-article-processing-charges.html'
 description: 'Open access through article processing fees. Yet another barrier for scientists from developing countries wanting to publish?'
 output:
@@ -18,14 +18,14 @@ If you look on the major publishing houses' websites, many waiver the APC for in
 
 <br>
 <div style="margin:auto;width:80%;">
-<img src="./images/posts/hinari.jpg" style="display:block;margin-right:auto;margin-left:auto;max-width:100%;"><br><p><em>Figure 1. Low and lower middle-income countries falling under the HINARI Access to Research in Health Programme (blue and orange) can request article processing charges to be waived by many of the major publishing groups.</em></p>
+<img src="./images/posts/2016-03-18-article-processing-charges/hinari.jpg" style="display:block;margin-right:auto;margin-left:auto;max-width:100%;"><br><p><em>Figure 1. Low and lower middle-income countries falling under the HINARI Access to Research in Health Programme (blue and orange) can request article processing charges to be waived by many of the major publishing groups.</em></p>
 </div><br>
 
 This stance on APC by most publishers should be applauded, but where does that leave investigators from upper-middle income countries (e.g., South Africa, China, Brazil) and the poorer high-income countries (e.g., Russia, Croatia, Poland)? Research funding in these countries is well below the OECD average (Figure 2.), and as such research grants in these countries tend to be significantly smaller than those issued in countries in the upper echelons of the high-income category (e.g., USA, Germany, Australia). Indeed, for low-value grants the APC can be a significant proportion of the grant funding available to a researcher.
 
 <br>
 <div style="margin:auto;width:80%;">
-<img src="./images/posts/r-n-d.jpg" style="display:block;margin-right:auto;margin-left:auto;max-width:100%;"><br><p><em>Figure 2. Spending on research and development as a percentage of gross domestic product and total amount (US$ millions). Black line: OECD average, Orange: South Africa, Purple: Tukey, Red: Mexico, Blue: Romania.</em></p>
+<img src="./images/posts/2016-03-18-article-processing-charges/r-n-d.jpg" style="display:block;margin-right:auto;margin-left:auto;max-width:100%;"><br><p><em>Figure 2. Spending on research and development as a percentage of gross domestic product and total amount (US$ millions). Black line: OECD average, Orange: South Africa, Purple: Tukey, Red: Mexico, Blue: Romania.</em></p>
 </div><br>
 
 For example, the South African Medical Research Council offers research grants of up to ~US$13,000 direct costs per annum, and researchers may only hold one of these grants at any time. Thus a US$2,000 APC is 15% of the annual value of the grant. If you compare that to a holder of an NIH R01 grant with a modular budget of US$250 000 for direct costs, the APC is 0.8% of the annual grant value.

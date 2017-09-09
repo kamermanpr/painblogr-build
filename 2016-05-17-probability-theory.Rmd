@@ -2,7 +2,7 @@
 post_title: 'The gganimate package in action: Probability theory'
 post_author: 'Peter Kamerman'
 post_date: '17 May 2016'
-post_image: './images/posts/dice.png'
+post_image: './images/posts/2016-05-17-probability-theory/post-image.png'
 permalink:  '2016-05-17-probability-theory.html'
 description: 'Using the gganimate package to illustrate the central limit theorem, and law of large numbers.'
 output:
@@ -24,12 +24,12 @@ The central limit theorem provides a shortcut to knowing the sampling distributi
 The central limit theorem states that the sampling distribution of an independent, random variable is normal or near-normal if a sufficiently large number of (equal-sized) samples are taken. If the sampling distribution for a statistic follows a normal or near-normal distribution we can make probability statements about the range of values in which the statistic lies. For example, there is a 68% probability that the sample statistic is within 1 standard deviation of the population value, and a 95% probability that it lies within about 2 standard deviations (see figure below). In the case of the sampling distribution, the standard deviation of the distribution is also called the _standard error_.
 
 <!-- Use html to allow control over plot dimensions (480 x 480px) -->
-<img src="./images/posts/normal-distr.png"
+<img src="./images/posts/2016-05-17-probability-theory/normal-distr.png"
 style="height:343px;width:480px; display:block;margin-right:auto;margin-left:auto">
 
 The size of the standard error also allows us to gauge the precision of the sample statistic, and this _'width'_ of the sampling distribution is dependent on the size of the samples. From a technical point of view, the standard error of the sample statistic is equal to the standard deviation of the population divided by the square root of the sample size ($se = \frac{\sigma}{\sqrt{n}}$). Basically, as the size of each sample increases the samples are more likely to be representative of the population, and therefore variability around the point estimate should decrease. The figure below shows the effect of increasing sample size on the precision of the standard error.
 
-<img src="./images/posts/sem-plot.png" style="height:480px;width:480px;display:block;margin-right:auto;margin-left:auto">
+<img src="./images/posts/2016-05-17-probability-theory/sem-plot.png" style="height:480px;width:480px;display:block;margin-right:auto;margin-left:auto">
 
 This leads us to the _law of large numbers_. At a simplistic level, the central limit theorem tells us about the shape of the sampling distribution, while the law of large numbers tells us where the centre of the distribution lies. From the law of large numbers we can show that the cumulative result from a large number of trials/samples tends towards the true value in the population. That is, the probability of an unusual outcome becomes smaller as the number of trials/samples increases. This convergence in probability is also called the _weak law of large numbers_.
 
@@ -83,7 +83,7 @@ ggsave('original-distr.png', distr.plot)
 ```
 
 <!-- Use html to allow control over plot dimensions (480 x 480px) -->
-<img src="./images/posts/original-distr.png" style="height:480px;width:480px;display:block;margin-right:auto;margin-left:auto;">
+<img src="./images/posts/2016-05-17-probability-theory/original-distr.png" style="height:480px;width:480px;display:block;margin-right:auto;margin-left:auto;">
 
 ### The central limit theorem in action
 To demonstrate the central limit theorem, I took 5000 samples (without replacement) of _n_ = 200 each from the 'population' of 200,000, and calculated the mean for each sample. I then tabulated the frequency at which sample means occurred across the 5000 samples, and used these data to plot a frequency histogram. However, in addition to the usual ggplot2 code, I added the gganimate aesthetic functions (**'frame'** and **'cumulative'**) to the geom\_bar aesthetics. Adding these new aesthetics allowed the gg_animate function to take the ggplot2 object and to sequentially add the frequency bins of sample means as frames in an animation ('frame'), and for each frame to built cumulatively on the previous one ('cumulative = TRUE').  
@@ -140,7 +140,7 @@ gg_animate(clt, interval = 0.2, 'central-limit.gif')
 
 The output is shown in the next figure, and as you can see, despite the samples being obtained from a right-skewed distribution, the distribution of sample means is roughly normal, and centred around the mean of the population (orange line).
 
-<img src="./images/posts/central-limit.gif"
+<img src="./images/posts/2016-05-17-probability-theory/central-limit.gif"
 style="display:block;margin-right:auto;margin-left:auto;max-width:100%;">
 
 ### The law of large numbers in action
@@ -184,7 +184,7 @@ gg_animate(lln, interval = 0.2, 'law-large-numbers.gif')
 
 The resulting figure is shown below, and shows the cumulative mean of sample means getting closer to the population mean as the number of samples increases.
 
-<img src="./images/posts/law-large-numbers.gif"
+<img src="./images/posts/2016-05-17-probability-theory/law-large-numbers.gif"
 style="display:block;margin-right:auto;margin-left:auto;max-width:100%;">
 
 So there you have it, the central limit theorem and the law of large numbers graphically illustrated using the awesome gganimate package in combination with ggplot2. Making the creation of animated ggplots simple.

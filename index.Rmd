@@ -7,7 +7,7 @@ output:
             before_body: './_includes/jumbotron.html'
 ---
 
-![](./images/posts/eml-drug-map-2017/tablets.png){ style="float:left;margin-left:auto;margin-right:auto;padding:16px 16px 20px 0px;" width=200px }
+![](./images/posts/2017-02-11-eml-drug-map/post-image.png){ style="float:left;margin-left:auto;margin-right:auto;padding:16px 16px 20px 0px;" width=200px }
 
 ### Too few medicines to treat neuropathic pain on national essential medicines lists
 
@@ -21,7 +21,7 @@ An interactive map of which medicines recommended for the treatment of neuropath
 
 ****
 
-![](./images/posts/publication-time-2017/books.png){ style="float:left;margin-left:auto;margin-right:auto;padding:16px 16px 100px 0px;" width=200px }
+![](./images/posts/2017-02-05-publication-time/post-image.png){style="float:left;margin-left:auto;margin-right:auto;padding:16px 16px 100px 0px;" width=200px }
 
 ### From epub to print copy, which of the traditional 'pain' journals is the quickest?
 
