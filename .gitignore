@@ -6,8 +6,6 @@
 *.html
 *.txt
 *_cache/
-_site/
-flexdashboard-outputs/
 _site.yml
 
 
