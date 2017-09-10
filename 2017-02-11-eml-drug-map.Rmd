@@ -434,24 +434,20 @@ leaflet(data = geo_data,
               pal = pal_income, 
               values = ~ imf,
               title = "International Monetary Fund (IMF) <br>income category", 
-              className = 'info-small legend-small',
               opacity = 1) %>%
     addLegend("bottomleft", 
               pal = pal_third, 
               values = ~ factor_third,
-              title = "No. of 3rd-line classes on NEML <br><em>(strong opioid, other)<sup>&sect;</sup></em>", 
-              className = 'info-small legend-small',
+              title = "No. of 3rd-line classes on NEML <br><em>(strong opioid, other)<sup>&sect;</sup></em>",
               opacity = 1) %>%
     addLegend("bottomleft", 
               pal = pal_second,
               values = ~ factor_second,
               title = "No. of 2nd-line classes on NEML <br><em>(weak opioid, topical agents)<sup>&Dagger;</sup></em>",
-              className = 'info-small legend-small',
               opacity = 1) %>%
     addLegend("bottomleft", 
               pal = pal_first, values = ~ factor_first,
               title = "No. of 1st-line classes on NEML <br><em>(TCA, &alpha;2&delta;-ligand, SNRI)<sup>&dagger;</sup></em>",
-              className = 'info-small legend-small', 
               opacity = 1)
 
 ```
