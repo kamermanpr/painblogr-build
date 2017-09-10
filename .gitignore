@@ -1,11 +1,7 @@
 .Rproj.user
 .Rhistory
 .RData
-.nojekyll
 .DS_Store
-*.html
-*.txt
 *_cache/
-_site.yml
 
 
