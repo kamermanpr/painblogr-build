@@ -7,7 +7,7 @@ output:
 
 ### 2016
 
-- 19 September 2016 [Neuropathic pain: So many people, but where are the drugs?](http://painblogr.org/neuropathic-pain-storyboard-2016/)
+- 19 September 2016 [Neuropathic pain: So many people, but where are the drugs?](http://painblogr.org/2016-09-19-neuropathic-pain-storyboard.html)
 
 - 17 May 2016 [The gganimate package in action: Probability theory](2016-05-17-probability-theory.html)  
 
