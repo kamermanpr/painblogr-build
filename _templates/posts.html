@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" $if(lang)$ lang="$lang$" xml:lang="$lang$" $endif$>
+
+<!-- Head --------------------------------------------------------->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="generator" content="pandoc"/>
+	$if(theme)$$else$
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	$endif$
+	$for(author-meta)$
+    <meta name="author" content="$author-meta$" />
+	$endfor$
+
+	$for(header-includes)$ $header-includes$ $endfor$
+
+	$if(highlightjs)$
+	<style type="text/css">
+		code {
+			white-space: pre;
+		}
+	</style>
+	<link rel="stylesheet" href="$highlightjs$/$if(highlightjs-theme)$$highlightjs-theme$$else$default$endif$.css" $if(html5)$$else$type="text/css" $endif$/>
+	<script src="$highlightjs$/highlight.js"></script>
+	$if(theme)$
+	<style type="text/css">
+		pre:not([class]) {
+			background-color: white;
+		}
+	</style>
+	$endif$
+	<script type="text/javascript">
+		if (window.hljs && document.readyState && document.readyState === "complete") {
+			window.setTimeout(function() {
+				hljs.initHighlighting();
+			}, 0);
+		}
+	</script>
+	$endif$
+
+	$if(highlighting-css)$
+	<style type="text/css">
+		code {
+			white-space: pre;
+		}
+	</style>
+	<style type="text/css">
+		$highlighting-css$ $if(code_folding)$ div.sourceCode {
+			overflow-x: visible;
+		}
+		$endif$
+	</style>
+
+	$if(theme)$
+	<style type="text/css">
+		pre:not([class]) {
+			background-color: white;
+		}
+	</style>
+	$endif$ $endif$ $if(abstract)$
+	<style type="text/css">
+		p.abstract {
+			text-align: center;
+			font-weight: bold;
+		}
+
+		div.abstract {
+			margin: auto;
+			width: 90%;
+		}
+	</style>
+	$endif$ $if(theme)$
+	<style type="text/css">
+		h1 {
+			font-size: 34px;
+		}
+
+		h1.title {
+			font-size: 38px;
+		}
+
+		h2 {
+			font-size: 30px;
+		}
+
+		h3 {
+			font-size: 24px;
+		}
+
+		h4 {
+			font-size: 18px;
+		}
+
+		h5 {
+			font-size: 16px;
+		}
+
+		h6 {
+			font-size: 12px;
+		}
+
+		.table th:not([align]) {
+			text-align: left;
+		}
+
+		$if(source_embed)$ #rmd-source-code {
+			display: none;
+		}
+		$endif$
+	</style>
+	$endif$
+
+	$for(css)$
+	<link rel="stylesheet" href="$css$" $if(html5)$$else$type="text/css" $endif$/> $endfor$ $if(pagedtablejs)$
+	<link rel="stylesheet" href="$pagedtablejs$/css/pagedtable.css" $if(html5)$$else$type="text/css" $endif$/>
+	<script src="$pagedtablejs$/js/pagedtable.js"></script>
+	$endif$
+
+    <!-- Latest maxdcn font-awesome and academicons -->
+    <link rel="stylesheet" href="./css/font-awesome-4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./css/academicons-1.7.0/css/academicons.min.css">
+
+    <!-- custom css -->
+    $for(css)$
+    <link rel="stylesheet" href="$css$" $if(html5)$$else$type="text/css" $endif$/>
+	$endfor$
+
+    <!-- Include these sections here, otherwise YAML headings not inserted -->
+    <!-- Google analytics -->
+    <script>
+        (function(i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function() {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-71613331-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+    <!-- SEO -->
+    <title>$if(post_title)$$post_title$$else$$name$$endif$</title>
+    <meta name="description" content="$if(description)$$description$$endif$">
+    <link rel="author" href="https://plus.google.com/u/0/103355314187199079295" />
+    <meta name="robots" content="robots.txt">
+    <link rel="canonical" href="http://painblogr.org/$if(permalink)$$permalink$$endif$">
+
+    <!-- Twittercard -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@painblogR">
+    <meta name="twitter:creator" content="@painblogR">
+    <meta name="twitter:title" content="$if(post_title)$$post_title$$else$$name$$endif$">
+    <meta name="twitter:description" content="$if(description)$$description$$endif$">
+    <meta name="twitter:image" content="$if(post_image)$$post_image$$else$$image$$endif$">
+    <meta name="twitter:url" content="http://painblogr.org/$if(permalink)$$permalink$$endif$">
+
+    <!-- Opengraph -->
+    <meta property="og:title" content="$if(post_title)$$post_title$$else$$name$$endif$">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="http://painblogr.org/$if(permalink)$$permalink$$endif$">
+    <meta property="og:image" content="$if(post_image)$$post_image$$else$$image$$endif$">
+    <meta property="og:description" content="$if(description)$$description$$endif$">
+    <meta property="og:site_name" content="painblogR">
+    <meta property="fb:admins" content="668546729">
+    <meta property="fb:app_id" content="1666329553623083">
+</head>
+
+<!-- Body --------------------------------------------------------->
+
+<body>
+    <!-- Navigation bar -->
+    <nav class="navbar navbar-fixed-top" role="navigation" , style="background-color:#FFFFFF;border-bottom: 1px solid #CCCCCC;">
+        <div class="container-fluid" id="navfluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar-collapse" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <img src="./images/capsaicin.png" alt="logo" , style="max-height:60px;padding-top:5px;">
+                <span class="site-title"><a href="http://painblogr.org" style="color:#000000;font-size:250%;vertical-align:middle;">
+				painblogR</a></span>&emsp;
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-navbar-collapse">
+                <ul class="nav navbar-nav" style="display:table-row;padding-top:7px">
+                    <li style="display:table-cell;float:none;vertical-align:middle;font-size:16px;"><a href="http://painblogr.org">Home</a></li>
+                    <li style="display:table-cell;float:none;vertical-align:middle;font-size:16px;"><a href="./archive.html">Archive</a></li>
+                    <li class="dropdown" style="display:table-cell;float:none;vertical-align:middle;font-size:16px;">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">About<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="./about_me.html">About me</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="./publications.html">Publications & Reprints </a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" style="display:table-cell;float:none;vertical-align:middle;font-size:16px;">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Teaching<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="http://painblogr.org/biostatistics/">Introduction to Biostatistics</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <!-- /. nav-collapse -->
+        </div>
+        <!-- /. container-fluid -->
+    </nav>
+
+	<!-- Extras -->
+	$if(theme)$
+	<style type = "text/css">
+		code {
+  			color: inherit;
+  			background-color: rgba(0, 0, 0, 0.04);
+		}
+		img {
+  			max-width:100%;
+  			height: auto;
+		}
+		.tabbed-pane {
+  			padding-top: 12px;
+		}
+		button.code-folding-btn:focus {
+  			outline: none;
+		}
+	</style>
+
+	<div class="container-fluid main-container">
+		<!-- tabsets -->
+		<script src="$navigationjs$/tabsets.js"></script>
+		<script>
+			$$(document).ready(function () {
+  			window.buildTabsets("$idprefix$TOC");
+			});
+		</script>
+
+		<!-- code folding -->
+		$if(code_menu)$
+		<style type="text/css">
+			code-folding-btn { margin-bottom: 4px; }
+		</style>
+		<script src="$navigationjs$/codefolding.js"></script>
+			$if(source_embed)$
+				<script src="$navigationjs$/FileSaver.min.js"></script>
+				<script src="$navigationjs$/sourceembed.js"></script>
+			$endif$
+		<script>
+
+		$$(document).ready(function () {
+			$if(source_embed)$
+  			window.initializeSourceEmbed("$source_embed$");
+			$endif$
+
+			$if(code_folding)$
+  			window.initializeCodeFolding("$code_folding$" === "show");
+			$endif$
+		});
+		</script>
+		$endif$
+
+		$if(toc_float)$
+		<script>
+			$$(document).ready(function ()  {
+    		// move toc-ignore selectors from section div to header
+    		$$('div.section.toc-ignore')
+        		.removeClass('toc-ignore')
+        		.children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+    		// establish options
+    		var options = {
+      			selectors: "$toc_selectors$",
+      			theme: "bootstrap3",
+      			context: '.toc-content',
+      			hashGenerator: function (text) {
+        			return text.replace(/[.\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      		},
+      		ignoreSelector: ".toc-ignore",
+      		scrollTo: 0
+    		};
+			$if(toc_collapsed)$
+    		options.showAndHide = true;
+			$else$
+    		options.showAndHide = false;
+			$endif$
+$if(toc_smooth_scroll)$
+    options.smoothScroll = true;
+$else$
+    options.smoothScroll = false;
+$endif$
+    // tocify
+    var toc = $$("#$idprefix$TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+#$idprefix$TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#$idprefix$TOC {
+  position: relative;
+  width: 100%;
+}
+}
+$if(toc_print)$
+$else$
+@media print {
+#$idprefix$TOC {
+  display: none !important;
+}
+}
+$endif$
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+div.main-container {
+  max-width: 1200px;
+}
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+.tocify-subheader .tocify-item {
+  font-size: 0.9em;
+  padding-left: 5px;
+}
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+$if(toc_collapsed)$
+$else$
+.tocify-subheader {
+  display: inline;
+}
+.tocify-subheader .tocify-item {
+  font-size: 0.95em;
+  padding-left: 10px;
+}
+$endif$
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="$idprefix$TOC" class="tocify">
+</div>
+</div>
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+$endif$
+$endif$
+$for(include-before)$
+$include-before$
+$endfor$
+$if(theme)$
+<div class="fluid-row" id="$idprefix$header">
+$if(code_menu)$
+<div class="btn-group pull-right">
+<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu" style="min-width: 50px;">
+$if(code_folding)$
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+$if(source_embed)$
+<li role="separator" class="divider"></li>
+$endif$
+$endif$
+$if(source_embed)$
+<li><a id="rmd-download-source" href="#">Download Rmd</a></li>
+$endif$
+</ul>
+</div>
+$endif$
+$endif$
+
+    <!-- Main text --->
+    <div class="container-fluid" id="mainbody">
+        $for(include-before)$ $include-before$ $endfor$ $if(post_title)$
+
+        <h1>$post_title$</h1>$endif$ $if(post_author)$
+
+        <h4>$post_author$</h4>$endif$ $if(post_date)$
+
+        <em>$post_date$</em>$endif$ $body$
+
+        <!-- Include these sections here, otherwise YAML headings not inserted -->
+        <!-- Share -->
+        <div class="share">
+            <p style="display:inline-block">
+                <hr>
+                <h3>Share</h3>&ensp;
+                <a href="mailto:?subject=$post_title$&body=Hi, I thought you might like this post I found on painblogR:%0D%0A%0D%0Ahttp://painblogr.org/$permalink$.%0D%0A%0D%0ABest regards" target="_blank"><i class="fa fa-envelope" style="color:#000000;vertical-align:middle;" title="Share on email" ></i></a>&ensp;
+                <a href="https://twitter.com/intent/tweet?url=http://painblogr.org/$permalink$&text=$post_title$&via=painblogR" rel="nofollow" target="_blank" title="Share on Twitter"><i class="fa fa-twitter" style="color:#000000;vertical-align:middle;"></i></a>&ensp;
+                <a href="https://facebook.com/sharer.php?u=http://painblogr.org/$permalink$" rel="nofollow" target="_blank" title="Share on Facebook"><i class="fa fa-facebook" style="color:#000000;vertical-align:middle;"></i></a>&ensp;
+                <a href="https://plus.google.com/share?url=http://painblogr.org/$permalink$" rel="nofollow" target="_blank" title="Share on Google+"><i class="fa fa-google-plus" style="color:#000000;vertical-align:middle;"></i></a>&ensp;
+                <a href="https://www.linkedin.com/shareArticle?mini=true&url=http://painblogr.org/$permalink$" rel="nofollow" target="_blank" title="Share on LinkedIn"><i class="fa fa-linkedin" style="color:#000000;vertical-align:middle;"></i></a>
+            </p>
+        </div>
+
+        <!-- Disqus -->
+        <div class="comments">
+            <hr>
+            <h3>Comments</h3>
+            <div id="disqus_thread"></div>
+            <script>
+                var disqus_config = function() {
+                    this.page.url = 'http://painblogr.org/$permalink$'
+                    this.page.identifier = '/$permalink$'
+                };
+
+                (function() {
+                    var d = document,
+                        s = d.createElement('script');
+
+                    s.src = '//painblogr.disqus.com/embed.js';
+                    s.setAttribute('data-timestamp', +new Date());
+                    (d.head || d.body).appendChild(s);
+                })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+            </noscript>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        $for(include-after)$ $include-after$ $endfor$
+    </footer>
+</body>
+
+<!-- extras ------------------------------------------------------->
+<!-- Mathjax -->
+$if(mathjax-url)$
+<script>
+    (function() {
+        var script = document.createElement("script");
+        script.type = "text/javascript";
+        script.src = "$mathjax-url$";
+        document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+</script>
+$endif$
+
+</html>

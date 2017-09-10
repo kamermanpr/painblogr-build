@@ -1,0 +1,11 @@
+name: painblogR.org
+output_dir: "_site"
+image: './images/capsaicin.png'
+output:
+    html_document:
+        theme: yeti
+        css: './css/custom.css'
+        highlight: haddock
+        mathjax: default
+        include:
+            after_body: './_includes/footer.html'
