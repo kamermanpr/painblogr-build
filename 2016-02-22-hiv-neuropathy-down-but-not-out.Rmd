@@ -28,7 +28,6 @@ library(ggiraph)
 opts_chunk$set(echo = TRUE,
                warning = FALSE,
                message = FALSE,
-               cache = TRUE,
                fig.path = './figures/',
                dev = 'svg',
                tidy = FALSE)
