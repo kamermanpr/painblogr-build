@@ -7,7 +7,7 @@ output:
             before_body: './_includes/jumbotron.html'
 ---
 
-![](./images/posts/2017-10-18-purrring-through-bootstraps/post-image.jpg){ style="float:left;margin-left:auto;margin-right:auto;padding:16px 16px 20px 0px;" width=200px }
+![](./images/posts/2017-10-18-purrring-through-bootstraps/post-image.jpg){ style="float:left;margin-left:auto;margin-right:auto;padding:16px 16px 40px 0px;" width=200px }
 
 ### 'purrr'-ing through bootstrap confidence intervals
 
