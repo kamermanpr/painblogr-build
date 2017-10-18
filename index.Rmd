@@ -17,7 +17,7 @@ _18 October 2017_
 
 A _"how-to"_ example of integrating the calculation 95% confidence intervals using the `boot` package into your tidy workflow.
 
-<a class="btn btn-primary" href="https://www.painblogr.org/2017-10-18-purring-through-bootstraps.html" target="_blank">Read more <i class="fa fa-arrow-circle-o-right fa-2x" style="vertical-align: middle;" aria-hidden="true"></i></a>
+<a class="btn btn-primary" href="https://www.painblogr.org/2017-10-18-purrring-through-bootstraps.html" target="_blank">Read more <i class="fa fa-arrow-circle-o-right fa-2x" style="vertical-align: middle;" aria-hidden="true"></i></a>
 
 ****
 
