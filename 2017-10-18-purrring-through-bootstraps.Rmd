@@ -59,7 +59,7 @@ iris_nest <- iris %>%
     tidyr::nest()
 ```
 
-If we print the resulting **iris_nest** dataframe (see below), the original 150 x 5 **iris** dataframe has been transformed into a 3 x 2 dataframe, with the 1^st^ column being our nesting variable _"Species"_, and the 2^nd^ column (named _"data"_ by default) being a list-column of 50 x 4 dataframes (<tibble [50 x 4]>). 
+If we print the resulting **iris_nest** dataframe (see below), the original 150 x 5 **iris** dataframe has been transformed into a 3 x 2 dataframe, with the 1^st^ column being our nesting variable _"Species"_, and the 2^nd^ column (named _"data"_ by default) being a list-column of 50 x 4 dataframes (\<tibble [50 x 4]\>). 
 
 ```{r iris_nest_1}
 # Print "iris_nest"

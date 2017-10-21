@@ -289,7 +289,7 @@ iris_nest &lt;-<span class="st"> </span>iris <span class="op">%&gt;%</span>
 <span class="st">    </span>dplyr<span class="op">::</span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="co"># Then I nest the dataframe</span>
 <span class="st">    </span>tidyr<span class="op">::</span><span class="kw">nest</span>()</code></pre></div>
-<p>If we print the resulting <strong>iris_nest</strong> dataframe (see below), the original 150 x 5 <strong>iris</strong> dataframe has been transformed into a 3 x 2 dataframe, with the 1<sup>st</sup> column being our nesting variable <em>“Species”</em>, and the 2<sup>nd</sup> column (named <em>“data”</em> by default) being a list-column of 50 x 4 dataframes (<tibble [50 x 4]>).</p>
+<p>If we print the resulting <strong>iris_nest</strong> dataframe (see below), the original 150 x 5 <strong>iris</strong> dataframe has been transformed into a 3 x 2 dataframe, with the 1<sup>st</sup> column being our nesting variable <em>“Species”</em>, and the 2<sup>nd</sup> column (named <em>“data”</em> by default) being a list-column of 50 x 4 dataframes (&lt;tibble [50 x 4]&gt;).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Print &quot;iris_nest&quot;</span>
 iris_nest</code></pre></div>
 <pre><code>## # A tibble: 3 x 2
@@ -429,7 +429,7 @@ prints &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class=
 ##  $ R   : int 10000
 ##  $ t0  : num 1.5
 ##  $ call: language boot::boot.ci(boot.out = .x, conf = 0.95, type = &quot;bca&quot;)
-##  $ bca : num [1, 1:5] 0.95 115.43 9506.46 1.4 1.5
+##  $ bca : num [1, 1:5] 0.95 118.63 9516.92 1.4 1.5
 ##   ..- attr(*, &quot;dimnames&quot;)=List of 2
 ##   .. ..$ : NULL
 ##   .. ..$ : chr [1:5] &quot;conf&quot; &quot;&quot; &quot;&quot; &quot;&quot; ...
