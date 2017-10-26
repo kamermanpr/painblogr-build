@@ -254,9 +254,9 @@ code > span.in { color: #008000; } /* Information */  div.sourceCode {
         <h4>Peter Kamerman</h4> 
         <em>18 October 2017</em> <p><br></p>
 <p><img src="images/posts/2017-10-18-purrring-through-bootstraps/post-image.jpg" style="float:left;width:300px;height:auto;padding-right:20px;" /> Packages in the <a href="https://www.tidyverse.org/"><code>tidyverse</code></a> provide the backbone for much of the grunt work I do on new datasets. Just about all my needs for importing, wrangling, plotting, and summarising the data can be accomplished from withn the <code>tidyverse</code>, and this functionality is augmented by the growing number of packages that play nicely with the <code>tidyverse</code>. For example, when it comes to generating bootstrap confidence intervals for a statistic (e.g., mean), there are packages such as <a href="https://cran.r-project.org/web/packages/broom/index.html"><code>broom</code></a> (see this <a href="https://cran.r-project.org/web/packages/broom/vignettes/bootstrapping.html">vignette</a>), <a href="https://cran.r-project.org/web/packages/tidyboot/index.html"><code>tidyboot</code></a>, and <a href="https://github.com/jtleek/slipper"><code>slipper</code></a>.</p>
-<p>To the best of my knowledge these packages calculate basic or percentile bootstrap confidence intervals, which are super easy to calculate and work well if the statistic you are calculating is well behaved (i.e., the bootstrap distribution is smooth, symmetrical, and centered on the observed statistic). But, if the bootstrap distribution of your statistic is not well behaved, a potential problem when you are dealing with small samples sizes (a situation I often find myself in), then you need of an interval that is a bit more robust <a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>. These more robust intervals, such as bias-corrected accelerated (BCa) confidence intervals, are much tricker to calculate than basic and percentile intervals, and that is where the <a href="https://cran.r-project.org/web/packages/boot/index.html"><code>boot</code></a> package comes in. The <code>boot</code> package gives you the option of calculating five types of non-parametric bootstrap confidence intervals (first-order normal approximation, basic, studentized, percentile, and BCa intervals); it’s the bomb.</p>
-<p>Yet, my use of <code>boot</code> to calculate confidence intervals has been thawted by the fact that <code>boot</code> doesn’t play nicely with routinely used <code>tidyverse</code> functions such as <code>dplyr::summarise</code>. I think the issue is related to the use of non-standard evaluation within <code>tidyverse</code> packages, but whatever the reason, I have always battled to integrate <code>boot</code> into my <code>tidyverse</code> workflow <a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a>.</p>
-<p>My troubles came to an end the other day when I realised that I could harness list-columns and the <a href="https://cran.r-project.org/web/packages/purrr/index.html"><code>purrr</code></a> package to use the <code>boot</code> package within the <code>tidyverse</code>. I must admit that I have long throught that list-columns were the Devil’s work, but maybe that was because I didn’t have a practical use for them until now. Whatever your throughts on list-columns, what follows is a reproducible example of using <code>purrr</code>, <a href="https://cran.r-project.org/web/packages/tidyr/index.html"><code>tidyr</code></a>, <a href="https://cran.r-project.org/web/packages/dplyr/index.html"><code>dplyr</code></a>, and <code>boot</code> to calculate BCa confidence intervals of median sepal width for each of the iris species in the <strong>iris</strong> dataset.</p>
+<p>To the best of my knowledge these packages calculate basic or percentile bootstrap confidence intervals, which are super easy to calculate and work well if the statistic you are calculating is well behaved (i.e., the bootstrap distribution is smooth, symmetrical, and centered on the observed statistic). But, if the bootstrap distribution of your statistic is not well behaved, a potential problem when you are dealing with small sample sizes (a situation I often find myself in), then you need an interval that is a bit more robust <a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>. These more robust intervals, such as bias-corrected accelerated (BCa) confidence intervals, are much tricker to calculate than basic and percentile intervals, and that is where the <a href="https://cran.r-project.org/web/packages/boot/index.html"><code>boot</code></a> package comes in. The <code>boot</code> package gives you the option of calculating five types of non-parametric bootstrap confidence intervals (first-order normal approximation, basic, studentized, percentile, and BCa intervals); it’s the bomb.</p>
+<p>Yet, my use of <code>boot</code> to calculate confidence intervals has been thwarted by the fact that <code>boot</code> doesn’t play nicely with routinely used <code>tidyverse</code> functions such as <code>dplyr::summarise</code>. I think the issue is related to the use of non-standard evaluation within <code>tidyverse</code> packages, but whatever the reason, I have always battled to integrate <code>boot</code> into my <code>tidyverse</code> workflow <a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a>.</p>
+<p>My troubles came to an end the other day when I realised that I could harness list-columns and the <a href="https://cran.r-project.org/web/packages/purrr/index.html"><code>purrr</code></a> package to use the <code>boot</code> package within the <code>tidyverse</code>. I must admit that I have long thought that list-columns were the Devil’s work, but maybe that was because I didn’t have a practical use for them until now. Whatever your thoughts on list-columns, what follows is a reproducible example of using <code>purrr</code>, <a href="https://cran.r-project.org/web/packages/tidyr/index.html"><code>tidyr</code></a>, <a href="https://cran.r-project.org/web/packages/dplyr/index.html"><code>dplyr</code></a>, and <code>boot</code> to calculate BCa confidence intervals of median sepal width for each of the iris species in the <strong>iris</strong> dataset.</p>
 <p>But, before getting down to calculating the confidence intervals, let’s get a feel for the <strong>iris</strong> dataset:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Top 6 rows of &quot;iris&quot;</span>
 <span class="kw">head</span>(iris)</code></pre></div>
@@ -336,7 +336,7 @@ iris_nest</code></pre></div>
 </div>
 <div id="take-a-bootstrap-sample" class="section level3">
 <h3>Take a bootstrap sample</h3>
-<p>Now that the data are nested, we can move on to bootstrapping the median sepal width. The first step when using <code>boot::boot</code> (the core function in the package, which performs the resampling) is to provide a user-defined function that calculates the statistic of interest. In this case I define a function <code>boot_median</code> that calculates the median of a dataset. In its simpilist form, this function has two parameters, <em>d</em> and <em>i</em>, where <em>d</em> is the data that will be used to sample from, and <em>i</em> is an index parameter used by the internals of <code>boot::boot</code> to take a random sample (with replacement) from <em>d</em>.</p>
+<p>Now that the data are nested, we can move on to bootstrapping the median sepal width. The first step when using <code>boot::boot</code> (the core function in the package, which performs the resampling) is to provide a user-defined function that calculates the statistic of interest. In this case I define a function <code>boot_median</code> that calculates the median of a dataset. In its simplist form, this function has two parameters, <em>d</em> and <em>i</em>, where <em>d</em> is the data that will be used to sample from, and <em>i</em> is an index parameter used by the internals of <code>boot::boot</code> to take a random sample (with replacement) from <em>d</em>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Define the bootstrap function</span>
 boot_median &lt;-<span class="st"> </span><span class="cf">function</span>(d, i) {
     <span class="kw">median</span>(d[i])
@@ -376,7 +376,7 @@ iris_nest <span class="op">%&lt;&gt;%</span>
                                          <span class="op">~</span><span class="st"> </span>boot<span class="op">::</span><span class="kw">boot.ci</span>(.x,
                                                          <span class="dt">conf =</span> <span class="fl">0.95</span>, <span class="co"># Interval width</span>
                                                          <span class="dt">type =</span> <span class="st">&quot;bca&quot;</span>)))  <span class="co"># Calculate a BCa interval</span></code></pre></div>
-<p>If you print <strong>iris_nest</strong>, there is now a 4<sup>th</sup> column, <em>“booted_ci”</em>, which is a list-column with each row containing the S3 “bootci” object (<S3 bootci>) output of <code>boot::boot.ci</code>.</p>
+<p>If you print <strong>iris_nest</strong>, there is now a 4<sup>th</sup> column, <em>“booted_ci”</em>, which is a list-column with each row containing the S3 “bootci” object (&lt;S3 bootci&gt;) output of <code>boot::boot.ci</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Print &quot;iris_nest&quot;</span>
 iris_nest</code></pre></div>
 <pre><code>## # A tibble: 3 x 4
@@ -385,7 +385,7 @@ iris_nest</code></pre></div>
 ## 1     setosa &lt;tibble [50 x 4]&gt; &lt;S3: boot&gt; &lt;S3: bootci&gt;
 ## 2 versicolor &lt;tibble [50 x 4]&gt; &lt;S3: boot&gt; &lt;S3: bootci&gt;
 ## 3  virginica &lt;tibble [50 x 4]&gt; &lt;S3: boot&gt; &lt;S3: bootci&gt;</code></pre>
-<p>As with the boostrap distribution plots, the content of these <S3 bootci> objects can be easily extracted by mapping the <code>print</code> function over the list-column (see below). But while this prints out a nice summary, the output is not in a readily usable form, and is definitely not in a tidy format.</p>
+<p>As with the bootstrap distribution plots, the content of these &lt;S3 bootci&gt; objects can be easily extracted by mapping the <code>print</code> function over the list-column (see below). But while this prints out a nice summary, the output is not in a readily usable form, and is definitely not in a tidy format.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot each &lt;S3: bootci&gt; object</span>
 prints &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map</span>(<span class="dt">.x =</span> iris_nest<span class="op">$</span>booted_ci, 
                      <span class="op">~</span><span class="st"> </span><span class="kw">print</span>(.x))</code></pre></div>
@@ -422,19 +422,19 @@ prints &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class=
 </div>
 <div id="make-it-tidy" class="section level3">
 <h3>Make it tidy</h3>
-<p>The last step is to get the information from the <S3 bootci> object into a tidy dataframe. And, again we use <code>purrr::map</code> within <code>dplyr::mutate</code> to add columns containing the relevant data extracted from each <S3 bootci> object in the <em>“booted_ci”</em> list-column. Because a <S3 bootci> object is simply a list, the information can be extracted using standard indexing (“$” and “[”). But, indexing requires knowing where the data are located in an object, and so we must inspect the structure of a <S3 bootci> object.</p>
+<p>The last step is to get the information from the &lt;S3 bootci&gt; object into a tidy dataframe. And, again we use <code>purrr::map</code> within <code>dplyr::mutate</code> to add columns containing the relevant data extracted from each &lt;S3 bootci&gt; object in the <em>“booted_ci”</em> list-column. Because a &lt;S3 bootci&gt; object is simply a list, the information can be extracted using standard indexing (“$” and “[”). But, indexing requires knowing where the data are located in an object, and so we must inspect the structure of the &lt;S3 bootci&gt; object.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Inspect the structure of an &lt;S3 bootci&gt; object</span>
 <span class="kw">str</span>(iris_nest<span class="op">$</span>booted_ci[[<span class="dv">1</span>]])</code></pre></div>
 <pre><code>## List of 4
 ##  $ R   : int 10000
 ##  $ t0  : num 1.5
 ##  $ call: language boot::boot.ci(boot.out = .x, conf = 0.95, type = &quot;bca&quot;)
-##  $ bca : num [1, 1:5] 0.95 122.76 9529.92 1.4 1.5
+##  $ bca : num [1, 1:5] 0.95 118.27 9515.8 1.4 1.5
 ##   ..- attr(*, &quot;dimnames&quot;)=List of 2
 ##   .. ..$ : NULL
 ##   .. ..$ : chr [1:5] &quot;conf&quot; &quot;&quot; &quot;&quot; &quot;&quot; ...
 ##  - attr(*, &quot;class&quot;)= chr &quot;bootci&quot;</code></pre>
-<p>The <S3 bootci> object is a list of length four, and the data to be extracted is located within <em>t0</em> (the observed value of the statistic), and the 4<sup>th</sup> and 5<sup>th</sup> elements of <em>bca</em> (the 2.5% and 97.5% confidence limits, respectively). With this information in hand, the relevent data can be extracted.</p>
+<p>The &lt;S3 bootci&gt; object is a list of length four, and the data to be extracted is located within <em>t0</em> (the observed value of the statistic), and the 4<sup>th</sup> and 5<sup>th</sup> elements of <em>bca</em> (the 2.5% and 97.5% confidence limits, respectively). With this information in hand, the relevant data can be extracted.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Add a three column called &quot;statistic&quot; (point estimate), &quot;lower_ci&quot; (2.5% CI), and </span>
 <span class="co"># &quot;upper_ci&quot; (97.5% CI), which are populated by data extracted using `purrr::map` </span>
 <span class="co"># from the &lt;S3 bootci&gt; objects in the &quot;booted_ci&quot; list-column. </span>
@@ -450,7 +450,7 @@ iris_booted &lt;-<span class="st"> </span>iris_nest <span class="op">%&gt;%</spa
 <span class="st">    </span>dplyr<span class="op">::</span><span class="kw">select</span>(<span class="op">-</span>data, <span class="op">-</span>booted, <span class="op">-</span>booted_ci) <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="co"># Unnest the dataframe</span>
 <span class="st">    </span>tidyr<span class="op">::</span><span class="kw">unnest</span>()</code></pre></div>
-<p>And for the “big reveal”, printing <strong>iris_booted</strong> gives a 3 x 4 dataframe with one class “factor” column (<em>“Species”</em>), and three class “double” columns (<em>“statistic”</em>, <em>“lower_ci”</em>, <em>“upper_ci”</em>). Each column contains data for one variable, and different observations of each variable are in a different rows. As such, the dataframe can be considered tidy and the data are easy to work with.</p>
+<p>And for the “big reveal”, printing <strong>iris_booted</strong> gives a 3 x 4 dataframe with one class “factor” column (<em>“Species”</em>), and three class “double” columns (<em>“statistic”</em>, <em>“lower_ci”</em>, <em>“upper_ci”</em>). Each column contains data for one variable, and different observations of each variable are in different rows. As such, the dataframe can be considered tidy and the data are easy to work with.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Print the tidy dataframe</span>
 iris_booted</code></pre></div>
 <pre><code>## # A tibble: 3 x 4
@@ -590,7 +590,7 @@ virginica
 <div id="session-information" class="section level2">
 <h2>Session information</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sessionInfo</span>()</code></pre></div>
-<pre><code>## R version 3.4.1 (2017-06-30)
+<pre><code>## R version 3.4.2 (2017-09-28)
 ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
 ## Running under: macOS Sierra 10.12.6
 ## 
@@ -609,13 +609,13 @@ virginica
 ## 
 ## loaded via a namespace (and not attached):
 ##  [1] Rcpp_0.12.13     xml2_1.1.1       knitr_1.17       bindr_0.1       
-##  [5] hms_0.3          rvest_0.3.2      tidyselect_0.2.1 R6_2.2.2        
+##  [5] hms_0.3          rvest_0.3.2      tidyselect_0.2.2 R6_2.2.2        
 ##  [9] rlang_0.1.2      httr_1.3.1       stringr_1.2.0    highr_0.6       
-## [13] dplyr_0.7.4      tools_3.4.1      htmltools_0.3.6  yaml_2.1.14     
+## [13] dplyr_0.7.4      tools_3.4.2      htmltools_0.3.6  yaml_2.1.14     
 ## [17] assertthat_0.2.0 rprojroot_1.2    digest_0.6.12    tibble_1.3.4    
-## [21] kableExtra_0.5.2 readr_1.1.1      purrr_0.2.3      tidyr_0.7.1     
+## [21] kableExtra_0.5.2 readr_1.1.1      purrr_0.2.4      tidyr_0.7.2     
 ## [25] glue_1.1.1       evaluate_0.10.1  rmarkdown_1.6    stringi_1.1.5   
-## [29] compiler_3.4.1   backports_1.1.1  boot_1.3-20      pkgconfig_2.0.1</code></pre>
+## [29] compiler_3.4.2   backports_1.1.1  boot_1.3-20      pkgconfig_2.0.1</code></pre>
 </div>
 <div class="footnotes">
 <hr />
