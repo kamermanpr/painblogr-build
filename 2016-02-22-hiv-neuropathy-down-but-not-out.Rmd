@@ -13,12 +13,7 @@ output:
 
 ```{r session_setup, include = FALSE}
 # Load packages
-library(ggplot2)
-library(scales)
-library(grid)
-library(readr)
-library(dplyr)
-library(tidyr)
+library(tidyverse)
 library(knitr)
 library(pander)
 library(svglite)
@@ -81,9 +76,9 @@ sn_free_ddX_naive <- 441 - 163
 #                                                          #
 ############################################################
 # Put into dataframe
-extr <- data_frame(Neuropathy = c('Yes', 'Yes', 'No', 'No'),
-                   ddX_exposure = c('Yes', 'No', 'Yes', 'No'),
-                   N = c(sn_ddX_exposed, sn_ddX_naive, sn_free_ddX_exposed, sn_free_ddX_naive))
+extr <- tibble(Neuropathy = c('Yes', 'Yes', 'No', 'No'),
+               ddX_exposure = c('Yes', 'No', 'Yes', 'No'),
+               N = c(sn_ddX_exposed, sn_ddX_naive, sn_free_ddX_exposed, sn_free_ddX_naive))
 
 # Tabulate
 kable(extr, 
@@ -119,13 +114,13 @@ ddX_exposed <- c(rep('sn', sn_ddX_exposed),
 #                                                          #
 ############################################################
 # Put into dataframe
-sim <- data_frame(Group = c('ddX_exposure', 'ddX_naive'),
-                     `Neuropathy (n)` = c(length(ddX_exposed[ddX_exposed == 'sn']), 
-                                          length(ddX_naive[ddX_naive == 'sn'])),
-                     `No neuropathy (n)` = c(length(ddX_exposed[ddX_exposed == 'sn_free']),
-                                             length(ddX_naive[ddX_naive == 'sn_free'])),
-                     `Total (n)` = c(length(ddX_exposed),
-                                     length(ddX_naive))) %>%
+sim <- tibble(Group = c('ddX_exposure', 'ddX_naive'),
+              `Neuropathy (n)` = c(length(ddX_exposed[ddX_exposed == 'sn']), 
+                                   length(ddX_naive[ddX_naive == 'sn'])),
+              `No neuropathy (n)` = c(length(ddX_exposed[ddX_exposed == 'sn_free']),
+                                      length(ddX_naive[ddX_naive == 'sn_free'])),
+              `Total (n)` = c(length(ddX_exposed),
+                              length(ddX_naive))) %>%
     mutate(`Prevalence (%)` = round(100 * (`Neuropathy (n)` / `Total (n)`)))
 
 # Tabulate
@@ -185,10 +180,10 @@ ddX_naive_4 <- quantile(ddX_naive_3,
 #                                                          #
 ############################################################
 # Step 1: Prepare dataframe of simulated datasets (bootstrap sample)
-df <- right_join(data_frame(N = 1:length(ddX_naive),
-                             ddX_naive = factor(ddX_naive)),
-                  data_frame(N = 1:length(ddX_exposed),
-                             ddX_exposed = factor(ddX_exposed))) %>% # make a dataframe
+df <- right_join(tibble(N = 1:length(ddX_naive),
+                        ddX_naive = factor(ddX_naive)),
+                 tibble(N = 1:length(ddX_exposed),
+                        ddX_exposed = factor(ddX_exposed))) %>% # make a dataframe
     gather(Group, Neuropathy, ddX_naive, ddX_exposed) %>% # gather columns
     select(Group, Neuropathy) %>% # select required columns
     filter(!is.na(Neuropathy)) %>% # remove NA from join
@@ -218,16 +213,16 @@ kable(df2,
 ############################################################
 # Step 1: Format 'df2' for plotting, including tooltip columns for 
 # interactive graph labelling
-Max <- data_frame(Max = c(max(ddX_exposed_3), max(ddX_naive_3)))
-Min <- data_frame(Min = c(min(ddX_exposed_3), min(ddX_naive_3)))
-tooltip_prev <- data_frame(tooltip_prev = c(paste0('Point prevalence: ', 
-                                                   df2$`Prevalence (%)`[1], '%'),
-                                            paste0('Point prevalence: ', 
-                                                   df2$`Prevalence (%)`[2], '%')))
-tooltip_95CI <- data_frame(tooltip_95CI = c(paste0('Bootstrap 95% CI: ', df2$`Lower 95% CI`[1], 
-                                                   ' to ', df2$`Upper 95% CI`[1], '%'),
-                                            paste0('Bootstrap 95% CI: ', df2$`Lower 95% CI`[2], 
-                                                   ' to ', df2$`Upper 95% CI`[2], '%')))
+Max <- tibble(Max = c(max(ddX_exposed_3), max(ddX_naive_3)))
+Min <- tibble(Min = c(min(ddX_exposed_3), min(ddX_naive_3)))
+tooltip_prev <- tibble(tooltip_prev = c(paste0('Point prevalence: ', 
+                                               df2$`Prevalence (%)`[1], '%'),
+                                        paste0('Point prevalence: ', 
+                                               df2$`Prevalence (%)`[2], '%')))
+tooltip_95CI <- tibble(tooltip_95CI = c(paste0('Bootstrap 95% CI: ', df2$`Lower 95% CI`[1], 
+                                               ' to ', df2$`Upper 95% CI`[1], '%'),
+                                        paste0('Bootstrap 95% CI: ', df2$`Lower 95% CI`[2], 
+                                               ' to ', df2$`Upper 95% CI`[2], '%')))
 
 df2_plot <- df2 %>%
     select(c(1,5:7)) %>%
@@ -290,10 +285,10 @@ From the plot, you can clearly see that there was a much (~30%) lower prevalence
 #                                                          #
 ############################################################
 # Organise data for chi-square test
-df_chi <- right_join(data_frame(N = 1:length(ddX_naive),
-                             ddX_naive = factor(ddX_naive)),
-                  data_frame(N = 1:length(ddX_exposed),
-                             ddX_exposed = factor(ddX_exposed))) %>%
+df_chi <- right_join(tibble(N = 1:length(ddX_naive),
+                            ddX_naive = factor(ddX_naive)),
+                     tibble(N = 1:length(ddX_exposed),
+                            ddX_exposed = factor(ddX_exposed))) %>%
     gather(Group, Neuropathy, ddX_naive, ddX_exposed) %>%
     mutate(Group = factor(Group),
            Neuropathy = factor(Neuropathy)) %>%
@@ -308,12 +303,12 @@ fish.1 <- fisher.test(x = ddX_exposure,
                       simulate.p.value = TRUE, 
                       B = 2000)
 
-fish.2 <- data_frame(Estimate = fish.1$estimate, 
-                     `95% CI` = paste0(round(fish.1$conf.int[1], 3), ' to ',
-                                       round(fish.1$conf.int[2], 3)),
-                     `P value` = ifelse(fish.1$p.value < 0.001, 
-                                        yes = '< 0.001', 
-                                        no = fish.1$p.value))
+fish.2 <- tibble(Estimate = fish.1$estimate, 
+                 `95% CI` = paste0(round(fish.1$conf.int[1], 3), ' to ',
+                                   round(fish.1$conf.int[2], 3)),
+                 `P value` = ifelse(fish.1$p.value < 0.001, 
+                                    yes = '< 0.001', 
+                                    no = fish.1$p.value))
 kable(fish.2,
       caption = paste0(fish.1$method, ': ', fish.1$data.name),
       digits = 3,
@@ -360,10 +355,10 @@ pain_free_ddX_naive <- 217 - 42
 #                                                          #
 ############################################################
 # Put into dataframe
-extr_pain <- data_frame(Pain = c('Yes', 'Yes', 'No', 'No'),
-                   ddX_exposure = c('Yes', 'No', 'Yes', 'No'),
-                   N = c(pain_ddX_exposed, pain_ddX_naive, 
-                         pain_free_ddX_exposed, pain_free_ddX_naive))
+extr_pain <- tibble(Pain = c('Yes', 'Yes', 'No', 'No'),
+                    ddX_exposure = c('Yes', 'No', 'Yes', 'No'),
+                    N = c(pain_ddX_exposed, pain_ddX_naive, 
+                          pain_free_ddX_exposed, pain_free_ddX_naive))
 
 # Tabulate
 kable(extr_pain, 
@@ -399,13 +394,13 @@ ddX_exposed_pain <- c(rep('pain', pain_ddX_exposed),
 #                                                          #
 ############################################################
 # Put into dataframe
-sim <- data_frame(Group = c('ddX_exposure', 'ddX_naive'),
-                     `Pain (n)` = c(length(ddX_exposed_pain[ddX_exposed_pain == 'pain']), 
-                                          length(ddX_naive_pain[ddX_naive_pain == 'pain'])),
-                     `No pain (n)` = c(length(ddX_exposed_pain[ddX_exposed_pain == 'pain_free']),
-                                             length(ddX_naive_pain[ddX_naive_pain == 'pain_free'])),
-                     `Total (n)` = c(length(ddX_exposed_pain),
-                                     length(ddX_naive_pain))) %>%
+sim <- tibble(Group = c('ddX_exposure', 'ddX_naive'),
+              `Pain (n)` = c(length(ddX_exposed_pain[ddX_exposed_pain == 'pain']),
+                             length(ddX_naive_pain[ddX_naive_pain == 'pain'])),
+              `No pain (n)` = c(length(ddX_exposed_pain[ddX_exposed_pain == 'pain_free']),
+                                length(ddX_naive_pain[ddX_naive_pain == 'pain_free'])),
+              `Total (n)` = c(length(ddX_exposed_pain),
+                              length(ddX_naive_pain))) %>%
     mutate(`Prevalence (%)` = round(100 * (`Pain (n)` / `Total (n)`)))
 
 # Tabulate
@@ -447,9 +442,9 @@ ddX_naive_pain_4 <- quantile(ddX_naive_pain_3,
 #                                                          #
 ############################################################
 # Step 1: Prepare dataframe of simulated datasets (bootstrap sample)
-df_pain <- right_join(data_frame(N = 1:length(ddX_naive_pain),
+df_pain <- right_join(tibble(N = 1:length(ddX_naive_pain),
                              ddX_naive = factor(ddX_naive_pain)),
-                  data_frame(N = 1:length(ddX_exposed_pain),
+                      tibble(N = 1:length(ddX_exposed_pain),
                              ddX_exposed = factor(ddX_exposed_pain))) %>% # make a dataframe
     gather(Group, Pain, ddX_naive, ddX_exposed) %>% # gather columns
     select(Group, Pain) %>% # select required columns
@@ -481,20 +476,20 @@ kable(df2_pain,
 ############################################################
 # Step 1: Format df2_pain for plotting, including tooltip columns 
 # for interactive graph labelling
-Max <- data_frame(Max = c(max(ddX_exposed_pain_3), max(ddX_naive_pain_3)))
-Min <- data_frame(Min = c(min(ddX_exposed_pain_3), min(ddX_naive_pain_3)))
-tooltip_prev <- data_frame(tooltip_prev = c(paste0('Point prevalence: ',
-                                        df2_pain$`Prevalence (%)`[1], '%'),
-                                 paste0('Point prevalence: ', 
-                                        df2_pain$`Prevalence (%)`[2], '%')))
-tooltip_95CI <- data_frame(tooltip_95CI = c(paste0('Bootstrap 95% CI: ',
-                                                   df2_pain$`Lower 95% CI`[1], 
-                                                   ' to ',
-                                                   df2_pain$`Upper 95% CI`[1], '%'),
-                                            paste0('Bootstrap 95% CI: ',
-                                                   df2_pain$`Lower 95% CI`[2], 
-                                                   ' to ',
-                                                   df2_pain$`Upper 95% CI`[2], '%')))
+Max <- tibble(Max = c(max(ddX_exposed_pain_3), max(ddX_naive_pain_3)))
+Min <- tibble(Min = c(min(ddX_exposed_pain_3), min(ddX_naive_pain_3)))
+tooltip_prev <- tibble(tooltip_prev = c(paste0('Point prevalence: ',
+                                               df2_pain$`Prevalence (%)`[1], '%'),
+                                        paste0('Point prevalence: ', 
+                                               df2_pain$`Prevalence (%)`[2], '%')))
+tooltip_95CI <- tibble(tooltip_95CI = c(paste0('Bootstrap 95% CI: ',
+                                               df2_pain$`Lower 95% CI`[1], 
+                                               ' to ',
+                                               df2_pain$`Upper 95% CI`[1], '%'),
+                                        paste0('Bootstrap 95% CI: ',
+                                               df2_pain$`Lower 95% CI`[2], 
+                                               ' to ',
+                                               df2_pain$`Upper 95% CI`[2], '%')))
 
 df2_pain_plot <- df2_pain %>%
     select(c(1,5:7)) %>%
@@ -555,10 +550,10 @@ From the plot, you can see that there was a slightly lower prevalence of painful
 #                                                          #
 ############################################################
 # Organise data for chi-square test
-df_pain_chi <- right_join(data_frame(N = 1:length(ddX_naive_pain),
-                             ddX_naive = factor(ddX_naive_pain)),
-                  data_frame(N = 1:length(ddX_exposed_pain),
-                             ddX_exposed = factor(ddX_exposed_pain))) %>%
+df_pain_chi <- right_join(tibble(N = 1:length(ddX_naive_pain),
+                                 ddX_naive = factor(ddX_naive_pain)),
+                          tibble(N = 1:length(ddX_exposed_pain),
+                                 ddX_exposed = factor(ddX_exposed_pain))) %>%
     gather(Group, Pain, ddX_naive, ddX_exposed) %>%
     mutate(Group = factor(Group),
            Pain = factor(Pain)) %>%
@@ -573,12 +568,12 @@ fish.1 <- fisher.test(x = ddX_exposure,
                       simulate.p.value = TRUE, 
                       B = 2000)
 
-fish.2 <- data_frame(Estimate = fish.1$estimate, 
-                     `95% CI` = paste0(round(fish.1$conf.int[1], 3), ' to ',
-                                       round(fish.1$conf.int[2], 3)),
-                     `P value` = ifelse(fish.1$p.value < 0.001, 
-                                        yes = '< 0.001', 
-                                        no = fish.1$p.value))
+fish.2 <- tibble(Estimate = fish.1$estimate, 
+                 `95% CI` = paste0(round(fish.1$conf.int[1], 3), ' to ',
+                                   round(fish.1$conf.int[2], 3)),
+                 `P value` = ifelse(fish.1$p.value < 0.001, 
+                                    yes = '< 0.001', 
+                                    no = fish.1$p.value))
 kable(fish.2,
       caption = paste0(fish.1$method, ': ', fish.1$data.name),
       digits = 3,
