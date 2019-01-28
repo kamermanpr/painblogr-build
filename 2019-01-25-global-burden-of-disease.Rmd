@@ -4,7 +4,7 @@ post_author: 'Peter Kamerman'
 post_date: '25 January 2019'
 post_image: './images/posts/2019-01-25-global-burden-of-disease/post-image.png'
 permalink:  '2019-01-25-global-burden-of-disease.html'
-description: ""
+description: "You may be paying for your longevity with extra years of poor health"
 output:
     html_document:
         template: './_templates/posts.html'
