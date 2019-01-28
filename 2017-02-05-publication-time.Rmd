@@ -15,16 +15,16 @@ output:
 # Load libraries
 library(xml2)
 library(tidyverse)
-library(stringr)
 library(lubridate)
-library(forcats)
-library(viridis)
+library(knitr)
 library(ggiraph)
 
 # Set global knitr chunck options
-knitr::opts_chunk$set(warning = FALSE,
-                      message = FALSE)
-
+opts_chunk$set(warning = FALSE,
+               message = FALSE,
+               fig.align = 'center',
+               fig.height = 4,
+               fig.width = 6)
 ```
 
 <br>
@@ -39,19 +39,19 @@ To help us decide which of the traditional pain-focused journals have the quicke
 
 ```{r journal_table}
 # Make a dataframe to populate the table
-tab_df <- data_frame(Journal = c('<a href="http://journals.lww.com/clinicalpain/pages/default.aspx" target="_blank">Clinical Journal of Pain</a>', '<a href="http://onlinelibrary.wiley.com/journal/10.1002/(ISSN)1532-2149" target="_blank">European Journal of Pain</a>', '<a href="http://www.jpain.org/home" target="_blank">Journal of Pain</a>', '<a href="http://journals.lww.com/pain/pages/default.aspx" target="_blank">PAIN</a>'), 
-                     `Impact factor` = c(2.7, 2.9, 4.5, 5.6),
-                     `Year started` = c(1985, 1997, 2000, 1975),
-                     `Frequency (issues per year)` = c(12, 10, 12, 12)) 
+tab_df <- tibble(Journal = c('<a href="http://journals.lww.com/clinicalpain/pages/default.aspx" target="_blank">Clinical Journal of Pain</a>', '<a href="http://onlinelibrary.wiley.com/journal/10.1002/(ISSN)1532-2149" target="_blank">European Journal of Pain</a>', '<a href="http://www.jpain.org/home" target="_blank">Journal of Pain</a>', '<a href="http://journals.lww.com/pain/pages/default.aspx" target="_blank">PAIN</a>'), 
+                 `Impact factor` = c(2.7, 2.9, 4.5, 5.6),
+                 `Year started` = c(1985, 1997, 2000, 1975),
+                 `Frequency (issues per year)` = c(12, 10, 12, 12)) 
 
 # Print table
-knitr::kable(x = tab_df,
-             align = 'lrrr',
-             caption = '<b>Table 1.</b> Journals included in assessment')
-
+kable(x = tab_df,
+      align = 'lrrr',
+      caption = '<b>Table 1.</b> Journals included in assessment')
 ```
 
 ### Getting the data
+
 I obtained the electronic and print publication dates of articles for the past four years from <a href="https://www.ncbi.nlm.nih.gov/pubmed" target="_blank">PubMed</a>. Beyond the usual web browser method of searching PubMed, you can remotely access the full database through the user-friendly and well-documented Entrez Programming Utilities API (<a href="https://www.ncbi.nlm.nih.gov/books/NBK25501/" target="_blank">E-utilities</a>). In _R_ you can make these queries to the PubMed database directly using packages such as <a href="https://cran.r-project.org/web/packages/xml2/index.html" target="_blank">xml2</a>, or if you are not familiar with using web APIs, the guys at <a href="https://ropensci.org/" target="_blank">rOpenSci</a> have given us the excellent <a href="https://ropensci.org/tutorials/rentrez_tutorial.html" target="_blank">rentrez</a> package. I have used the direct approach here (see code below). 
 
 ```{r get_data, eval = FALSE}
@@ -698,6 +698,7 @@ rm(list = c('base_url',
 ```
 
 #### Caveats
+
 I mentioned at the start that this was a very **crude analysis**, and the primary reasons for this statement are as follows: 
 
 i. The PubMed database has errors, and I made no attempt to verify the data retrieved from PubMed against data available through the publishers. 
@@ -710,8 +711,8 @@ The figure below shows the median time in days between an article being recorded
 
 ```{r heatmap}
 # Read in saved outputs from get_data chunk
-df <- readr::read_rds('./_data/2017-02-05-publication-time/df.rds')
-df_print <- readr::read_rds('./_data/2017-02-05-publication-time/df_print.rds')
+df <- read_rds('./_data/2017-02-05-publication-time/df.rds')
+df_print <- read_rds('./_data/2017-02-05-publication-time/df_print.rds')
 
 ############################################################
 #                                                          #
@@ -741,36 +742,31 @@ gg_heat <- ggplot(data = df_heat) +
         y = journal, 
         fill = median, 
         tooltip = tooltip, 
-        data_id = journal) +
+        data_id = tooltip) +
     geom_tile_interactive() +
-    scale_fill_viridis(direction = -1, 
-                       name = 'Days\n') +
-    labs(caption = "(Interactive figure, 'click' on the data for more detailed information)",
-         x = '\nYear\n') +
+    scale_fill_viridis_c(direction = -1, 
+                         name = 'Days\n') +
+    labs(caption = "(Interactive figure, 'hover' over plot elements for more detailed information)",
+         x = '\nYear') +
     theme(panel.background = element_blank(),
           axis.ticks = element_blank(),
           axis.title.x = element_text(size = 14),
           axis.title.y = element_blank(),
           axis.text.y = element_text(size = 12),
-          axis.text.x = element_text(size = 12, 
-                                     angle = 60,
-                                     hjust = 1),
-          plot.subtitle = element_text(size = 8),
+          axis.text.x = element_text(size = 12),
+          plot.caption = element_text(size = 8),
           panel.grid = element_blank()) 
 
-# Tooltip css
-tooltip_css <- 'font-family:arial;background-color:#eaeaea;padding:10px;border-radius:10px 20px 10px 20px;'
-hover_css <- 'fill:#FFFFFF;'
+gi_heat <- girafe(ggobj = gg_heat,
+                  height_svg = 5,
+                  width_svg = 6)
 
-ggiraph(code = print(gg_heat),
-        tooltip_extra_css = tooltip_css,
-        hover_css = hover_css,
-        tooltip_offx = 10, 
-        tooltip_offy = -10,
-        tooltip_opacity = 1,
-        height_svg = 4,
-        width_svg = 5)
-
+girafe_options(x = gi_heat,
+               opts_tooltip(css = 'font-family:arial;background-color:#eaeaea;
+                            padding:10px;border-radius:10px 20px 10px 20px;',
+                            opacity = 1,
+                            offx = 10, offy = -10), 
+               opts_hover(css = 'color:#FFFFFF;opacity:0.4;'))
 ```
 
 ## Variability in the 'time to print'
@@ -778,13 +774,11 @@ ggiraph(code = print(gg_heat),
 The box-and-whisker plot below gives some idea about the spread of the _'time to print'_ for each of the journals over the past few years. Clearly there are errors in the PubMed database. I cannot believe that the Clinical Journal of Pain took 529 days to transition one article from _epub_ to _print_ in 2014. Nor can I believe that only one day was needed for the Journal of Pain to transition six _epubs_ to _print_ in 2013. But, pruning the data for 'outliers' didn't shift the median time to publication substantially, so I decided to present the data warts and all. 
 
 ```{r process_data_and_boxplot}
-
 ############################################################
 #                                                          #
 #                      Summary stats                       #
 #                                                          #
 ############################################################
-
 # Generate boxplot summary stats for 'time to print' (days) interval 
 summary_stats <- df_print %>%
     select(journal, 
@@ -798,119 +792,56 @@ summary_stats <- df_print %>%
               Q75 = round(quantile(interval, 0.75)),
               lower_whisker = round(boxplot.stats(interval)$stats[1]),
               upper_whisker = round(boxplot.stats(interval)$stats[5]),
-              outliers = paste(sort(unique(boxplot.stats(interval)$out)), 
-                               collapse = ','),
-              outlier_length = length(unique(boxplot.stats(interval)$out))) %>%
-    mutate(tooltip = paste0('<span style="font-size:10pt;font-family:Arial,Helvetica,sans-serif"><b>', 
-                            journal, ' (', year, ')<b> <br>', 
-                            '<span style="font-weight:normal">', 
-                            '<em>Median: </em>', 
-                            median, ' days <br>',
-                            '<em>Interquartile range: </em>', 
-                            Q25, ' to ', Q75, ' days <br>',
-                            '<em>Whiskers: </em>', 
-                            lower_whisker, ' to ', upper_whisker, ' days',
-                            '</span>',
-                            '</span>'))
-              
-# Convert summary_stats outlier data into dataframe
-summary_outliers <- summary_stats %>%
-    select(journal,
-           year,
-           outliers,
-           outlier_length) %>%
-    separate(outliers, 
-             into = LETTERS[1:max(.$outlier_length)],
-             extra = 'warn',
-             fill = 'right') %>%
-    gather(key = marker,
-           value = outlier,
-           -journal,
-           -year) %>%
-    mutate(outlier = as.numeric(
-        ifelse(!is.na(outlier) | outlier != '', 
-               yes = outlier,
-               no = NA))) %>%
-    select(-marker) %>%
-    mutate(interval = outlier)
+              min = min(interval),
+              max = max(interval)) %>%
+    mutate(tooltip = paste0(paste0('<b>Time to print (days): ', 
+                                   journal, '</b> <br>',
+                            '<em>Median:</em> ', 
+                            median, '<br>',
+                            '<em>Minimum / Maximum:</em> ', 
+                            min, ' / ', max, '<br>',
+                            '<em>Inter-quartile range:</em> ', 
+                            Q25, ' to ', Q75, '<br>',
+                            '<em>Whisker range:</em> ', 
+                            lower_whisker, ' to ', 
+                            upper_whisker, '<br>'))) %>% 
+    ungroup() %>% 
+    select(journal, year, tooltip)
 
-pmid <- df_print %>%
-    rename(year = year_entrez) %>%
-    select(journal, year, interval, pmid) %>%
-    right_join(summary_outliers) %>%
-    # Remove incomplete rows
-    filter(complete.cases(.)) %>%
-    # Convert pmids to a character string
-    group_by(journal, year, interval) %>%
-    summarise(link_list = paste(pmid, collapse = ', '))
-
-# Bring summary_outliers and pmid together 
-summary_outliers <- summary_outliers %>%
-    right_join(pmid) %>%
-    select(-interval) %>%
-    mutate(tooltip = paste0('<span style="font-size:10pt;font-family:Arial,Helvetica,sans-serif"><b>', 
-                            journal, ' (', year, ')<b><br>',
-                            '<span style="font-weight:normal">',
-                            '<em>Outlier(s):</em> ',
-                            outlier, 
-                            ' days <br>',
-                            '<em>PMID(s):</em> ',
-                            link_list,
-                            '</span>',
-                            '</span>')) %>%
-    select(-link_list)
+df_print <- df_print %>% 
+    rename(year = year_entrez) %>% 
+    left_join(summary_stats)
 
 ############################################################
 #                                                          #
 #                           Plot                           #
 #                                                          #
 ############################################################
-
-gg <- ggplot() +
+gg_box <- df_print %>% 
+    mutate(journal = fct_relevel(journal, 
+                                 'Clin J Pain', 
+                                 'Eur J Pain', 
+                                 'PAIN', 
+                                 'J Pain')) %>% 
+    ungroup() %>% 
+    ggplot(.) +
     aes(x = factor(year),
+        y = interval,
+        fill = journal,
         colour = journal,
-        fill = journal) +
-    # Outliers
-    geom_point_interactive(data = summary_outliers,
-                           aes(y = outlier, 
-                               tooltip = tooltip,
-                               data_id = tooltip),
-                           size = 2) +
-    # Whiskers
-    geom_segment_interactive(data = summary_stats,
-                          aes(y = lower_whisker,
-                              yend = upper_whisker,
-                              xend = as.factor(year),
-                              tooltip = tooltip,
-                              data_id = tooltip), 
-                          size = 0.8) +
-    # IQR
-    geom_rect_interactive(data = summary_stats,
-                          aes(ymin = Q25,
-                              ymax = Q75,
-                              tooltip = tooltip,
-                              data_id = tooltip),
-                          xmin = rep(c(0.6, 1.6, 2.6, 3.6), times = 4),
-                          xmax = rep(c(1.4, 2.4, 3.4, 4.4), times = 4)) +
-    # Median
-    geom_segment_interactive(data = summary_stats,
-                          aes(y = median,
-                              yend = median,
-                              tooltip = tooltip,
-                              data_id = tooltip),
-                          x = rep(c(0.6, 1.6, 2.6, 3.6), times = 4),
-                          xend = rep(c(1.4, 2.4, 3.4, 4.4), times = 4),
-                          size = 1.3) +
-    labs(caption = "(Interactive figure, 'click' on the data for more detailed information)\n",
+        tooltip = tooltip,
+        data_id = tooltip) +
+    geom_boxplot_interactive() +
+    labs(caption = "(Interactive figure, 'hover' over plot elements for more detailed information)\n",
          y = 'Time to print (days)\n',
-         x = '\nYear\n') +
+         x = '\nYear') +
     scale_y_continuous(limits = c(-5, 605), 
                        breaks = c(0, 100, 200, 300, 400, 500, 600),
                        labels = c(0, 100, 200, 300, 400, 500, 600),
                        expand = c(0,0)) +
     scale_colour_manual(values = c('#000000', '#E69F00', '#0072B2', '#009E73')) +
     scale_fill_manual(values = c('#4c4c4c', '#edbb4c', '#4c9cc9', '#4cbb9d')) +
-    facet_grid(.~journal) +
+    facet_wrap(~ journal, ncol = 4) +
     theme(legend.position = 'none',
           panel.background = element_blank(),
           axis.ticks = element_blank(),
@@ -920,21 +851,20 @@ gg <- ggplot() +
                                      angle = 60,
                                      hjust = 1),
           strip.text = element_text(size = 18),
-          plot.caption = element_text(size = 16),
+          plot.caption = element_text(size = 12),
           panel.grid.major = element_line(colour = '#999999',
                                           size = 0.1))
-# Tooltip css
-tooltip_css <- 'font-family:arial;background-color:#eaeaea;padding:10px;border-radius:10px 20px 10px 20px;'
-hover_css <- 'fill:#FFFFFF;'
 
-ggiraph(code = print(gg),
-        tooltip_extra_css = tooltip_css,
-        hover_css = hover_css,
-        tooltip_offx = 10, 
-        tooltip_offy = -10,
-        tooltip_opacity = 1,
-        height_svg = 7,
-        width_svg = 8)
+gi_box <- girafe(ggobj = gg_box,
+                 height_svg = 7,
+                 width_svg = 9)
+
+girafe_options(x = gi_box,
+               opts_tooltip(css = 'font-family:arial;background-color:#eaeaea;
+                            padding:10px;border-radius:10px 20px 10px 20px;',
+                            opacity = 1,
+                            offx = 10, offy = -10), 
+               opts_hover(css = 'color:#FFFFFF;opacity:0.4;'))
 ```
 
 You could be mischievous with these data and say that the two top-ranked journals (by impact factor) are the top-ranked journals partially because they are streets ahead of the other two journals in terms of getting articles from electronic to print format. But another possibility is that the _'lesser'_ two journals have more papers to print compared to the Journal of Pain and PAIN. That is, does the elitism inherent in the impact factor system afford the Journal of Pain and PAIN greater scope to reject submissions _(something I am a little too familiar with for my liking)_, giving them fewer articles to process?
@@ -942,18 +872,12 @@ You could be mischievous with these data and say that the two top-ranked journal
 ```{r article_no}
 # Calculate the median number of articles per issue
 issue_no <- df_print %>%
-    group_by(journal, year_entrez, volume, issue) %>%
+    group_by(journal, year, volume, issue) %>%
     # Number of articles by journal/year/volume/issue
     summarise(article_no = n()) %>%
     # Average number of articles per issue per journal
     group_by(journal) %>%
     summarise(median = round(median(article_no)))
-
-# Calculate the median number of 'ahead of print' articles at the end of 2016
-# ahead_no <- df_ahead %>%
-    # group_by(journal) %>%
-    # summarise(`'ahead of print' articles (n; 31 Dec 2016)` = n())
-    
 
 # Add to table 1
 tab_df2 <- tab_df %>% 
@@ -969,10 +893,9 @@ tab_df2 <- tab_df %>%
            `Articles per issue (n; median)`) # `'ahead of print' articles (n; 31 Dec 2016)`)
 
 # Print table
-knitr::kable(x = tab_df2,
-             align = 'lrrr',
-             caption = '<b>Table 2.</b> Journal outputs')
-
+kable(x = tab_df2,
+      align = 'lrrr',
+      caption = '<b>Table 2.</b> Journal outputs')
 ```
 
 Other than the European Journal of Pain, which publishes 10 issues per year, the other three journals publish 12 issues per year (Table 2). Yet despite having the lowest issue frequency of the four journals, the European Journal of Pain publishes the second greatest number of articles per issue (median = 14 articles) and hence it is competitive with regards to total number of printed articles per year (median = 140 articles). The reduced number of issues per year does means that if you miss being published in an issue of the European Journal of Pain, there is a longer wait until the next issue compared to the other three journals. However this delay does not account for the magnitude in the difference in _time to print_ between the European Journal of Pain, and the Journal of Pain and PAIN. 
@@ -987,7 +910,7 @@ The unrefined nature of this analysis combined with the falliblity of the PubMed
 
 ****
 
-## tl;dr
+### Comment
 
 I have had excellent experiences with all four journals, and these data are in no way a reflection of the excellent work done by the editorial and copy-editing staff of these journals. Indeed, the issue of _time to print_ for these four journals is in my experience not an indicator of the time it takes for an article to go from accepted to being available online with a DOI, and is only an issue for those of us with weird funding mechanisms. 
 

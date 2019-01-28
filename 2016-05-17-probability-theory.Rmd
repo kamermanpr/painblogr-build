@@ -8,7 +8,7 @@ description: 'Using the gganimate package to illustrate the central limit theore
 output:
     html_document:
         template: './_templates/posts.html'
-        code_folding: hide
+        code_folding: show
 ---
 
 ```{r setup, include = FALSE}

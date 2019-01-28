@@ -28,6 +28,8 @@ opts_chunk$set(echo = TRUE,
                tidy = FALSE)
 ```
 
+<br>
+
 It has been a while since my last post *(I've been migrating the site from Wordpress to GitHub Pages)*, and I thought I would get back into the swing of things with a post on a topic close to my heart, **HIV-associated sensory neuropathy** (HIV-SN). The neuropathy *(damaged nerves)* affects the long sensory nerves from the hands and feet, producing reduced sensation. Somewhat counter-intuitively, this loss of sensation is often accompanied by chronic pain in the affected areas. The neuropathy is not fatal, but the loss of sensation, and particularly the pain, causes significant psychological, social, and economic problems for the person affected, their family/friends, and places a large burden on the healthcare system.
 
 The mechanisms underlying the development of the neuropathy have not been clearly described, but one of the major risk factors for the neuropathy is exposure to older generation antiretroviral drugs *(ddX: stavudine, didanosine, zalcitabine)*, which are toxic to neurones. Imagine starting a treatment that saves your life, but potentially leaves you with chronic, intractable pain.
@@ -43,9 +45,10 @@ One source of data that may shed light on problem is the National Institutes of 
 
 Since the data are available, I saw an opportunity to look at whether the prevalence of HIV neuropathy did indeed differ between HIV-positive patients from the CHARTER study who were on combination antiretroviral therapy (cART), but who had *never been exposed* **(ddX-naive)** to neurotoxic ddX drugs, and those who *had been exposed* **(ddX-exposed)** at some time-point in their treatment.<br><br>
 
-The analysis
-------------
+## The analysis
+
 ### Prevalence of HIV-SN
+
 The first step in the analysis involved extracting the relevant data from Table 1 of Ellis *et al.* (2010). Because the extraction only included a small number of data points I performed the extraction manually.
 
 ```{r extract_data}
@@ -271,6 +274,7 @@ extra_css <- "background-color:#000000;color:#FFFFFF;font-family:helvetica;paddi
 ggiraph(code = print(sn_plot), 
         tooltip_extra_css = extra_css)
 ```
+
 <p style="font-size:90%;max-width:70%;margin-left:auto;margin-right:auto;">
 <b>Figure 1.</b> Point prevalence (with 95% bootstrap confidence intervals) of HIV neuropathy in simulated datasets based on neuropathy prevalence reported by Ellis <em>et al.</em> (2010). Data are shown for patients were/had been on combination antiretroviral therapy (cART), but who have never been exposed to the neurotoxic antiretroviral drugs <em>(Never exposed to ddX; Orange)</em>, and patients who were/had been on cART, and who had been exposed to ddX <em>(Exposed to ddX; Blue)</em>.
 </p><br><br>
@@ -278,6 +282,7 @@ ggiraph(code = print(sn_plot),
 From the plot, you can clearly see that there was a much (~30%) lower prevalence of HIV neuropathy in those patients never exposed to neurotoxic ddX drugs compared to those who had been exposed *(if seeing isn't believing and you like to see a p-value, then see the table below)*. But, while the neuropathy was less common in patients treated with the newer drugs, almost half of the patient still had evidence of peripheral nerve damage; a substantial burden.<br><br>
 
 #### Significance testing
+
 ```{r chi_squared_prevalence, echo = FALSE}
 ############################################################
 #                                                          #
@@ -316,6 +321,7 @@ kable(fish.2,
 ```
 
 ### Is the neuropathy still painful?
+
 As I mentioned earlier, pain is a common symptom of the neuropathy, and this pain causes significant dysfuction and distress. Consequently, having shown that exposure to newer, less neurotoxic treatments is associated with reduced prevalence of HIV neuropathy compared with older drugs, it stands to reason that when neuropathy is present, the severity of the neuropathy associated with these newer drugs may be less than that induced by the older drugs. Therefore, I also looked at the frequency of painful symptoms in **ddX-exposed** and **ddX-naive** patients reported on by Ellis and colleagues (2010) that had at least one clinical sign of peripheral nerve damage (i.e., only patients who had a neuropathy). This new analysis followed exactly the same procedures as those described above, except that I took the data from Table 2 of Ellis *et al.* (2010) (see below). So, other than showing which data I extracted from Table 2, I have not shown the *R* scripts for this section (your can find the full *.Rmd* file on [GitHub](http://github.com/kamermanpr/second-look-PAIN/ellis-2010))<br><br>
 
 ![](./images/posts/2016-02-22-hiv-neuropathy-down-but-not-out/ellis-2010-table2.jpg){ style="display:block;margin-right:auto;margin-left:auto;max-width:100%;" }
@@ -537,6 +543,7 @@ extra_css <- "background-color:#000000;color:#FFFFFF;font-family:helvetica;paddi
 ggiraph(code = print(sn_pain), 
         tooltip_extra_css = extra_css)
 ```
+
 <p style="font-size:90%;max-width:70%;margin-right:auto;margin-left:auto;">
 <b>Figure 1.</b> Point prevalence (with 95% bootstrap confidence intervals) of painful HIV neuropathy in simulated datasets based on the prevalence of painfulperipheral neuropathy reported by Ellis <em>et al.</em> (2010). Data are shown for patients with a clinically diagnosed neuropathy, and were/had been on combination antiretroviral therapy (cART), but who have never been exposed to the neurotoxic antiretroviral drugs <em>(Never exposed to ddX; Orange)</em>, and patients who were/had been on cART, and who had been exposed to ddX <em>(Exposed to ddX; Blue)</em>.
 </p><br><br>
@@ -580,7 +587,8 @@ kable(fish.2,
       align = 'r')
 ```
 
-### Take-home message
+## Take-home message
+
 _**HIV neuropathy is not going to disappear anytime soon.**_   
 
 While the frequency of HIV neuropathy, and the painful symptoms of the neuropathy, was markedly reduced in patients on modern treatment regimens compared to those exposed to older, neurotoxic treatments, the burden of neuropathy (and pain) was *still unacceptably high*. These data indicate that the burden of this chronic complication of HIV infection may well decrease over time, but healthcare professionals still need to be cognisant that many of their patients, even if never exposed to ddX drugs, are still at risk of neuropathy, and its painful sequela. 
@@ -595,7 +603,7 @@ Peter Kamerman. (2016). HIV neuropathy: Going, going...but not gone. Figshare DO
 
 ****
 
-### Session information
+## Session information
 ```{r session_information, echo = FALSE}
 sessionInfo()
 rm(list = ls())

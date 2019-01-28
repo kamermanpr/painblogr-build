@@ -32,13 +32,11 @@ knitr::opts_chunk$set(warning = FALSE,
 <span style="font-size:90%;font-style:italic;"><b>Interactive plot:</b> Choose the drug class or IMF income category using the radio buttons in the top-right corner, and click on the country of interest to get more information.</span>
 
 ```{r choropleth}
-
 ############################################################
 #                                                          #
 #                      Load raw data                       #
 #                                                          #
 ############################################################
-
 access_data <- read_csv('./_data/2017-02-10-eml-drug-map/2015-neml-data.csv')
 
 ############################################################
@@ -46,7 +44,6 @@ access_data <- read_csv('./_data/2017-02-10-eml-drug-map/2015-neml-data.csv')
 #                      Prepare data                        #
 #                                                          #
 ############################################################
-
 # Create filtering objects
 drug_class <- c('Anticonvulsant', 'SNRI', 'TCA', 'Opioid', 'Topical')
 drug_name <- c('Gabapentin', 'Pregabalin', 'Duloxetine', 'Venlafaxine',
@@ -78,7 +75,6 @@ access_data <- access_data  %>%
 countries_access <- access_data$country
 
 #-- Extract first-line drugs per country -------------------------------------#
-
 first_line <- access_data %>%
     filter(drug %in% first_line) %>%
     mutate(grade = rep('first_line', nrow(.))) %>%
@@ -163,7 +159,6 @@ first_line <- access_data %>%
     tbl_df()
 
 #-- Extract second-line drugs per country ------------------------------------#
-
 second_line <- access_data %>%
     filter(drug %in% second_line) %>%
     mutate(grade = rep('second_line', nrow(.))) %>%
@@ -220,7 +215,6 @@ second_line <- access_data %>%
     tbl_df()
 
 #-- Extract third-line drugs per country -------------------------------------#
-
 third_line <- access_data %>%
     filter(drug %in% third_line) %>%
     mutate(grade = rep('third_line', nrow(.))) %>%
@@ -398,7 +392,6 @@ popup_NA <- paste0('<b>Country: </b>', geo_other$name,
 #                           Plot                           #
 #                                                          #
 ############################################################
-
 leaflet(data = geo_data,
         width = '100%',
         height = 600) %>%
@@ -472,7 +465,7 @@ The space available on the storyboard for the map was very limited, so to mark t
 
 ****
 
-## tl;dr
+### Access to anasyis script
 
 Get the RMarkdown script, data and geojson used to generate this (and all other) painblogR posts [here](//github.com/kamermanpr/painblogr-build){ target="_blank" }
 
@@ -487,6 +480,7 @@ Kamerman PR, Wadley AL, Davis KD, Hietaharju A, Jain P, Kopf A, Meyer A-C, Raja 
 ****
 
 ## Session information
+
 ```{r session_info}
 sessionInfo()
 ```

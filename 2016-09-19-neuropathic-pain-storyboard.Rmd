@@ -13,13 +13,8 @@ output:
 ```{r setup, include = FALSE, warning = FALSE, message = FALSE}
 # Load packages
 library(flexdashboard)
-library(dplyr)
-library(tibble)
-library(tidyr)
-library(ggplot2)
+library(tidyverse)
 library(ggiraph)
-library(viridis)
-library(scales)
 library(highcharter)
 library(leaflet)
 library(sp)
@@ -37,16 +32,18 @@ knitr::opts_chunk$set(warning = FALSE,
 load('./_data/2016-09-19-neuropathic-pain-storyboard/introduction_plot.RData')
 
 # Plot
-highchart() %>%
-    hc_add_series_treemap(introduction_tree,
-                          borderColor = '#FFFFFF',
-                          borderWidth = 2,
-                          dataLabels = 
-                              list(style = list(fontSize = '15px')),
-                          states = 
-                              list(hover = 
-                                       list(borderColor = '#000000'))) %>%
+hctreemap2(data = introduction_data,
+           group_vars = 'word',
+           size_var = 'freq',
+           color_var = 'rank',
+           borderColor = '#FFFFFF',
+           borderWidth = 2,
+           dataLabels = list(style = list(fontSize = '15px')),
+           states = list(hover = list(borderColor = '#000000'))) %>%
     hc_title(text = "What does neuropathic pain feel like?") %>% 
+    hc_colorAxis(showInLegend = FALSE,
+                 minColor = '#FFFFE5',
+                 maxColor = '#CC4C02') %>% 
     hc_tooltip(backgroundColor = '#333333', 
                borderRadius = 10,
                borderColor = '#999999',
@@ -70,24 +67,6 @@ This storyboard will introduce you to this unusual type of chronic pain and its 
 
 The plot shows the relative frequency of terms used by 89 individuals with various causes of nervous system injury (e.g., traumatic nerve injury, post-herpetic neuralgia, polyneuropathies, stroke pain; block size is proportional to frequency). _'Burning'_ was the most commonly used term, but most patients use several terms to describe their pain<a href="http://www.ncbi.nlm.nih.gov/pubmed/15733628" target="_blank"><sup>1</sup></a>.
 
-<!--
-****
-
-<div style="font-size:80%;font-style:italic;">
-Each page of the storyboard consists of three parts: 
-<ol type="1">
-<li>The upper navigation panel <span style="color:#FFFFFF;background:#68A4E5;border-radius:2px;padding-left:2px;padding-right:3px;">(the active panel is highlighted in blue)</span>.</li>
-<li>Two lower panels:
-<ol type="i">
-<li>The left panel includes an interactive plot (test it out by hovering your cursor over the coloured blocks in plot to the left).</li>
-<li>The right panel (this panel) includes additional commentary on the topic introduced in the navigation panel (top half), and additional information on the interactive plot (lower half).</li>
-</ol>
-</li>
-</ol>
-</div>
-
--->
-
 <p style="float:right;font-size:80%;">Created by: 
     <a href="https://www.painblogr.org" target="_blank">painblogR</a> 
     <img src="./images/ccby.png" height=18px></a>
@@ -103,35 +82,6 @@ load('./_data/2016-09-19-neuropathic-pain-storyboard/prevalence_plot.RData')
 prevalence_plot <- ggplot(data = plot_data[-7, ]) + # Omit 'All combined' data
     aes(fill = n_total, colour = n_total, 
         data_id = study, tooltip = tooltip) +
-    # All combined rectangle
-    #geom_rect(data = plot_data[7, ],
-    #          aes(xmin = 0.5, xmax = 6.5,
-    #              ymin = lowerCI, ymax = upperCI),
-    #          fill = '#FFFFFF', colour = '#FFFFFF',
-    #          alpha = 1) +
-    #geom_rect_interactive(data = plot_data[7, ],
-    #                      aes(xmin = 0.5, xmax = 6.5,
-    #                          ymin = lowerCI, ymax = upperCI,
-    #                          fill = n_total, data_id = study, 
-    #                          tooltip = tooltip),
-    #                      alpha = 0.5,
-    #                      linetype = 0) +
-    # All combined CI boundry
-    #geom_segment_interactive(data = plot_data[7, ],
-    #                         aes(x = 0.5, xend = 6.5, 
-    #                             y = upperCI, yend = upperCI,
-    #                             colour = n_total, data_id = study, 
-    #                             tooltip = tooltip),
-    #                         size = 0.2,
-    #                         linetype = 3) +
-    #geom_segment_interactive(data = plot_data[7, ],
-    #                         aes(x = 0.5, xend = 6.5, 
-    #                             y = lowerCI, yend = lowerCI,
-    #                             colour = n_total, data_id = study, 
-    #                             tooltip = tooltip),
-    #                         size = 0.2,
-    #                         linetype = 3) +
-    # All combined mean
     geom_segment_interactive(data = plot_data[7, ],
                              aes(x = 0.5, xend = 6.5, 
                                  y = bstrp_prev, yend = bstrp_prev,
@@ -155,12 +105,6 @@ prevalence_plot <- ggplot(data = plot_data[-7, ]) + # Omit 'All combined' data
     geom_segment_interactive(aes(x = xmin, xend = xmax,
                                  y = prevalence, yend = prevalence), 
                              size = 1) +
-    # Add overall mean
-    # geom_segment_interactive(data = plot_data[7, ],
-                             # aes(x = 0, xend = 7,
-                             #     y = prevalence, yend = prevalence), 
-                             # size = 2,
-                             # color = '#E69F00') +
     # Add max range bar
     geom_segment_interactive(aes(x = x_segment, xend = x_segment,
                                  y = upperCI, yend = max), 
@@ -177,16 +121,16 @@ prevalence_plot <- ggplot(data = plot_data[-7, ]) + # Omit 'All combined' data
                                  y = min, yend = min), 
                              size = 1) +
     # Set colours
-    scale_fill_viridis(name = 'Sample\nsize (n)\n',
-                       limits = c(0, 40000),
-                       breaks = c(0, 10000, 20000, 30000, 40000),
-                       labels = c("0", "10,000", "20,000", "30,000", "40,000"),
-                       end = 0.95, direction = -1) +
-    scale_color_viridis(name = 'Sample\nsize (n)\n',
-                       limits = c(0, 40000),
-                       breaks = c(0, 10000, 20000, 30000, 40000),
-                       labels = c("0", "10,000", "20,000", "30,000", "40,000"),
-                       end = 0.95, direction = -1) +
+    scale_fill_viridis_c(name = 'Sample\nsize (n)\n',
+                         limits = c(0, 40000),
+                         breaks = c(0, 10000, 20000, 30000, 40000),
+                         labels = c("0", "10,000", "20,000", "30,000", "40,000"),
+                         end = 0.95, direction = -1) +
+    scale_colour_viridis_c(name = 'Sample\nsize (n)\n',
+                           limits = c(0, 40000),
+                           breaks = c(0, 10000, 20000, 30000, 40000),
+                           labels = c("0", "10,000", "20,000", "30,000", "40,000"),
+                           end = 0.95, direction = -1) +
     # Set axis scales
     scale_y_continuous(limits = c(0, 0.1 + max(plot_data$max))) +
     scale_x_continuous(breaks = c(1, 2, 3, 4, 5, 6),
@@ -211,7 +155,6 @@ prevalence_plot <- ggplot(data = plot_data[-7, ]) + # Omit 'All combined' data
 # Make ggplot interactive with ggiraph htmlwidget
 ggiraph(code = {print(prevalence_plot)},
         width_svg = 8,
-        flexdashboard = TRUE,
         tooltip_extra_css = tooltip_css,
         tooltip_opacity = 1,
         hover_css = hover_css)
@@ -243,90 +186,6 @@ The _centre horizontal lines_ show the reported prevalence of neuropathic pain. 
     <a href="https://www.painblogr.org" target="_blank">painblogR</a> 
     <img src="./images/ccby.png" height=18px></a>
 </p>
-
-
-
-<!-- Extra panel
-
-### There is **significant variation** in the prevalence of neuropathic pain **within and between conditions** that cause damage to the somatosensory nervous system [$^REF$](http://www.ncbi.nlm.nih.gov/pubmed/18211592). {data-commentary-width=400}
-
-```{r conditions, echo = FALSE, eval = FALSE}
-# Load data
-load('./_data/2016-09-19-neuropathic-pain-storyboard/conditions_plot.RData')
-
-# Plot
-conditions_plot <- ggplot(plot_data) +
-    aes(fill = condition, colour = condition,
-        x = condition, data_id = condition, tooltip = tooltip) +
-    # Add white background rectangles
-    geom_rect(aes(ymin = lower_range, 
-                  ymax = upper_range), 
-              xmin = as.numeric(plot_data$condition) - 0.25,
-              xmax = as.numeric(plot_data$condition) + 0.25,
-              size = 1,
-              fill = '#FFFFFF',
-              color = '#FFFFFF',
-              alpha = 1) +
-    # Add interactive prevalence rectangles
-    geom_rect_interactive(aes(ymin = lower_range, 
-                              ymax = upper_range), 
-                          xmin = as.numeric(plot_data$condition) - 0.25,
-                          xmax = as.numeric(plot_data$condition) + 0.25,
-                          alpha = 0.6,
-                          size = 1) +
-    # Set scales
-    scale_y_continuous(limits = c(0, 100)) +
-    # Set colours
-    scale_fill_manual(values = pal) +
-    scale_colour_manual(values = pal) +
-    # Flip the plot 90-degrees
-    coord_flip() +
-    # Add labels
-    labs(title = 'Prevalence ranges of neuropathic pain reported\nfor various causes of nervous system injury',
-         y = '\nPercent painful neuropathy (%)') +
-    # Customize theme
-    theme(panel.background = element_blank(),
-          panel.grid.major = element_line(color = '#999999', size = 0.2),
-          legend.position = 'none',
-          plot.title = element_text(size = 16, family = 'Arial'),
-          axis.ticks = element_line(color = '#999999', size = 0.2),
-          axis.title.x = element_text(size = 16, family = 'Arial'),
-          axis.title.y = element_blank(),
-          axis.text.y = element_text(size = 14, family = 'Arial'),
-          axis.text.x = element_text(size = 14, family = 'Arial'))
-
-# Make ggplot interactive with ggiraph htmlwidget
-ggiraph(code = {print(conditions_plot)}, 
-        width_svg = 8, height_svg = 5,
-        tooltip_extra_css = tooltip_css,
-        tooltip_opacity = 1,
-        hover_css = hover_css)
-
-# Clear environment
-rm(list = ls())
-```
-
-****
-
-Not every case of damage to the somatosensory nervous system results in neuropathic pain. Indeed, why some people, but not others, develop neuropathic pain after a seemingly similar injury _(e.g., diabetic polyneuropathy)_ is unclear. 
-
-However, some causes of damage to the somatosensory nervous system are associated with greater risk of developing neuropathic pain. For example, the prevalence of neuropathic pain associated with stroke is much lower than that associated with nerve damage caused by HIV infection/treatment. 
-
-****
-
-##### **Interactive plot:** Prevalence of neuropathic pain across several common causes of nervous system injury
-
-The _horizontal bars_ show the range of prevalence values reported for various causes of central and peripheral nervous system injury [$^REF$](http://www.ncbi.nlm.nih.gov/pubmed/18211592). Note the differences in prevalence of neuropathic pain across the seven conditions, and the variation in prevalence reported within each condition. 
-
-<p style="font-size:80%;"><b>*</b> Values for HIV polyneuropathy and diabetic polyneuropathy report the percentage of individuals with HIV infection or diabetes mellitus as such, and not the subset of indivduals with those diasease that develop a neuropathy. <b>**</b> Values for post-herpetic neuralgia report the percentage of individuals with <em>Herpes zoster (shingles)</em> that go on to develop post-herpetic neuralgia.</p>  
-
-<p style="float:right;font-size:80%;">Created by: 
-    <a href="https://www.painblogr.org" target="_blank">painblogR</a> 
-    <img src="./images/ccby.png" height=18px></a>
-</p>
-
--->
-
 
 ### **3. Are we winning the war on neuropathic pain?** No. The burden of neuropathic pain is likely to increase in the future, with developing countries being worst affected. {data-commentary-width=400}
 
@@ -432,7 +291,6 @@ burden_plot <- ggplot(data = data_burden) +
 # Make ggplot interactive with ggiraph htmlwidget
 ggiraph(code = {print(burden_plot)},
         width_svg = 8,
-        flexdashboard = TRUE,
         tooltip_extra_css = tooltip_css,
         tooltip_opacity = 1,
         hover_css = hover_css)
@@ -552,8 +410,6 @@ Ratings of health-related quality of life from a population survey in Scotland<a
     <img src="./images/ccby.png" height=18px></a>
 </p>
 
-
-
 ### **5. Do we have effective medicines?** Neuropathic pain can be difficult to treat, but there are specific classes of drugs with proven efficacy in managing the pain<a href="http://www.ncbi.nlm.nih.gov/pubmed/25575710" target="_blank"><sup>10</sup></a>. {data-commentary-width=450}
 
 ```{r treatment}
@@ -607,16 +463,16 @@ nnt_plot <- ggplot(data = nnt_data) +
     scale_x_continuous(limits = c(0, 10),
                        breaks = c(0, 2, 4, 6, 8, 10)) +
     # Set colours
-    scale_fill_viridis(name = 'Number of trial\nparticipants\n',
-                       limits = c(0, 6000),
-                       breaks = c(0, 2000, 4000, 6000),
-                       labels = c("0", "2,000", "4,000", "6,000"),
-                       end = 0.9, direction = -1) +
-    scale_color_viridis(name = 'Number of trial\nparticipants\n',
-                       limits = c(0, 6000),
-                       breaks = c(0, 2000, 4000, 6000),
-                       labels = c("0", "2,000", "4,000", "6,000"),
-                       end = 0.90, direction = -1) +
+    scale_fill_viridis_c(name = 'Number of trial\nparticipants\n',
+                         limits = c(0, 6000),
+                         breaks = c(0, 2000, 4000, 6000),
+                         labels = c("0", "2,000", "4,000", "6,000"),
+                         end = 0.9, direction = -1) +
+    scale_colour_viridis_c(name = 'Number of trial\nparticipants\n',
+                           limits = c(0, 6000),
+                           breaks = c(0, 2000, 4000, 6000),
+                           labels = c("0", "2,000", "4,000", "6,000"),
+                           end = 0.90, direction = -1) +
     labs(title = 'Recommended first-line treatments for neuropathic pain\n',
          x = '\nNumber needed to treat (NNT, 95% CI)\u2020') +
     theme(panel.background = element_blank(),
@@ -635,14 +491,12 @@ nnt_plot <- ggplot(data = nnt_data) +
 # Make ggplot interactive with ggiraph htmlwidget
 ggiraph(code = print(nnt_plot),
         width_svg = 8,
-        flexdashboard = TRUE,
         tooltip_extra_css = tooltip_css,
         tooltip_opacity = 1,
         hover_css = hover_css)
 
 # Clear environment
 rm(list = ls())
-
 ````
 
 ****
@@ -661,18 +515,13 @@ A recent [GRADE](http://www.gradeworkinggroup.org) assessment of pharmacological
 
 ##### **Interactive plot:** Recommended first-line treatments for neuropathic pain
 
-Point estimates and 95% confidence intervals of the number needed to treat (NNT) for first-line therapies for neuropathic pain. The _shading colour_ quantifies the total number of people included in randomized control trials involving each drug/drug class.   
-
-
+Point estimates and 95% confidence intervals of the number needed to treat (NNT) for first-line therapies for neuropathic pain. The _shading colour_ quantifies the total number of people included in randomized control trials involving each drug/drug class.  
 <p style="font-size:80%;"><span style="font-size:100%">&dagger;</span>: [NNT](http://www.medicine.ox.ac.uk/bandolier/painres/download/whatis/nnt.pdf) quantifies the effectiveness of an intervention in terms of the number of people that need to be treated with a drug before one person achieves significant benefit relative to the control _(1 is the best NNT)_. Here, significant benefit was defined as at least 50% pain reduction compared to placebo, and NNT values > 11 were considered as no clinically significant benefit.</p>
-
 
 <p style="margin-bottom:2%;float:right;font-size:80%;">Created by: 
     <a href="https://www.painblogr.org" target="_blank">painblogR</a> 
     <img src="./images/ccby.png" height=18px></a>
 </p>
-
-
 
 ### **6. Are these medicines widely available?** No, national essential medicines lists of developing countries typically do not provide good coverage of the recommended medicines<a href="http://www.ncbi.nlm.nih.gov/pubmed/25894010" target="_blank"><sup>11</sup></a>. {data-commentary-width=400}
 
@@ -744,8 +593,6 @@ For each level of recommendation, the colour intensity quantifies the number of 
     <a href="https://www.painblogr.org" target="_blank">painblogR</a> 
     <img src="./images/ccby.png" height=18px></a>
 </p>
-
-
 
 ### **7. What can be done to increase treatment availability?** One option is to increase access by getting more classes of effective medications included on the WHO Model List of Essential Medicines. {data-commentary-width=400}
 
