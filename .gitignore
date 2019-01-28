@@ -3,5 +3,6 @@
 .RData
 .DS_Store
 *_cache/
+_data/.DS_Store
 
 
