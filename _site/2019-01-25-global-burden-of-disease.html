@@ -308,7 +308,7 @@ life &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class=
 ##  n obs: 280 
 ##  n variables: 9 
 ## 
-## ── Variable type:character ─────────────────────────────────────────────────────────────────────────────────────────────────
+## ── Variable type:character ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 ##  variable missing complete   n min max empty n_unique
 ##       age       0      280 280   7   7     0        1
 ##  location       0      280 280   7  15     0        5
@@ -316,7 +316,7 @@ life &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class=
 ##    metric       0      280 280   5   5     0        1
 ##       sex       0      280 280   4   6     0        2
 ## 
-## ── Variable type:numeric ───────────────────────────────────────────────────────────────────────────────────────────────────
+## ── Variable type:numeric ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 ##  variable missing   n    mean   sd     p25     p50     p75     hist
 ##     lower       0 280   57.48 6.44   51.94   58.66   62.78 ▃▃▇▅▆▇▇▆
 ##     upper       0 280   62.29 6.91   56.46   62.82   67.82 ▃▃▆▅▆▇▇▅
@@ -327,7 +327,7 @@ life &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class=
 ##  n obs: 280 
 ##  n variables: 9 
 ## 
-## ── Variable type:character ─────────────────────────────────────────────────────────────────────────────────────────────────
+## ── Variable type:character ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 ##  variable missing complete   n min max empty n_unique
 ##       age       0      280 280   7   7     0        1
 ##  location       0      280 280   7  15     0        5
@@ -335,7 +335,7 @@ life &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class=
 ##    metric       0      280 280   5   5     0        1
 ##       sex       0      280 280   4   6     0        2
 ## 
-## ── Variable type:numeric ───────────────────────────────────────────────────────────────────────────────────────────────────
+## ── Variable type:numeric ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 ##  variable missing   n    mean   sd     p25     p50     p75     hist
 ##     lower       0 280   68.88 7.87   62.6    68.93   75.15 ▃▅▇▇▇▇▆▅
 ##     upper       0 280   69.45 7.58   63.38   69.59   75.46 ▂▅▆▇▆▇▆▃
@@ -562,6 +562,9 @@ le_male &lt;-<span class="st"> </span>delta <span class="op">%&gt;%</span><span 
 <span class="st">    </span><span class="kw">transition_reveal</span>(year)
 
 le_male &lt;-<span class="st"> </span><span class="kw">animate</span>(<span class="dt">plot =</span> le_male, 
+                   <span class="dt">fps =</span> <span class="dv">10</span>,
+                   <span class="dt">nframes =</span> <span class="dv">150</span>,
+                   <span class="dt">duration =</span> <span class="dv">15</span>,
                    <span class="dt">end_pause =</span> <span class="dv">50</span>,
                    <span class="dt">res =</span> <span class="dv">150</span>,
                    <span class="dt">width =</span> <span class="dv">8</span>,
@@ -601,6 +604,9 @@ le_female &lt;-<span class="st"> </span>delta <span class="op">%&gt;%</span><spa
 <span class="st">    </span><span class="kw">transition_reveal</span>(year)
 
 le_female &lt;-<span class="st"> </span><span class="kw">animate</span>(<span class="dt">plot =</span> le_female, 
+                     <span class="dt">fps =</span> <span class="dv">10</span>, 
+                     <span class="dt">nframes =</span> <span class="dv">150</span>,
+                     <span class="dt">duration =</span> <span class="dv">15</span>,
                      <span class="dt">end_pause =</span> <span class="dv">50</span>,
                      <span class="dt">res =</span> <span class="dv">150</span>,
                      <span class="dt">width =</span> <span class="dv">8</span>,
@@ -703,7 +709,10 @@ perc_male &lt;-<span class="st"> </span>delta_spread <span class="op">%&gt;%</sp
           <span class="dt">strip.background =</span> <span class="kw">element_blank</span>()) <span class="op">+</span>
 <span class="st">    </span><span class="kw">transition_reveal</span>(year)
 
-perc_male &lt;-<span class="st"> </span><span class="kw">animate</span>(<span class="dt">plot =</span> perc_male, 
+perc_male &lt;-<span class="st"> </span><span class="kw">animate</span>(<span class="dt">plot =</span> perc_male,
+                     <span class="dt">fps =</span> <span class="dv">10</span>, 
+                     <span class="dt">nframes =</span> <span class="dv">150</span>,
+                     <span class="dt">duration =</span> <span class="dv">15</span>,
                      <span class="dt">end_pause =</span> <span class="dv">50</span>,
                      <span class="dt">res =</span> <span class="dv">150</span>,
                      <span class="dt">width =</span> <span class="dv">8</span>,
@@ -749,11 +758,14 @@ perc_female &lt;-<span class="st"> </span>delta_spread <span class="op">%&gt;%</
 <span class="st">    </span><span class="kw">transition_reveal</span>(year)
 
 perc_female &lt;-<span class="st"> </span><span class="kw">animate</span>(<span class="dt">plot =</span> perc_female, 
-                     <span class="dt">end_pause =</span> <span class="dv">50</span>,
-                     <span class="dt">res =</span> <span class="dv">150</span>,
-                     <span class="dt">width =</span> <span class="dv">8</span>,
-                     <span class="dt">height =</span> <span class="fl">2.75</span>,
-                     <span class="dt">units =</span> <span class="st">&#39;in&#39;</span>)
+                       <span class="dt">fps =</span> <span class="dv">10</span>, 
+                       <span class="dt">nframes =</span> <span class="dv">150</span>,
+                       <span class="dt">duration =</span> <span class="dv">15</span>,
+                       <span class="dt">end_pause =</span> <span class="dv">50</span>,
+                       <span class="dt">res =</span> <span class="dv">150</span>,
+                       <span class="dt">width =</span> <span class="dv">8</span>,
+                       <span class="dt">height =</span> <span class="fl">2.75</span>,
+                       <span class="dt">units =</span> <span class="st">&#39;in&#39;</span>)
 
 <span class="kw">anim_save</span>(<span class="dt">filename =</span> <span class="st">&#39;perc_female.gif&#39;</span>,
           <span class="dt">animation =</span> perc_female,
@@ -802,45 +814,29 @@ Males
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-##  [1] skimr_1.0.4           magrittr_1.5          geojsonio_0.6.0      
-##  [4] lubridate_1.7.4       xml2_1.2.0            sp_1.3-1             
-##  [7] leaflet_2.0.2         highcharter_0.7.0     flexdashboard_0.5.1.1
-## [10] gganimate_1.0.0       gdtools_0.1.7         bindrcpp_0.2.2       
-## [13] ggiraph_0.6.0         svglite_1.2.1         pander_0.6.3         
-## [16] knitr_1.21            forcats_0.3.0         stringr_1.3.1        
-## [19] dplyr_0.7.8           purrr_0.2.5           readr_1.3.1          
-## [22] tidyr_0.8.2           tibble_2.0.1          ggplot2_3.1.0        
-## [25] tidyverse_1.2.1      
+##  [1] bindrcpp_0.2.2  skimr_1.0.4     gganimate_1.0.0 magrittr_1.5   
+##  [5] forcats_0.3.0   stringr_1.3.1   dplyr_0.7.8     purrr_0.2.5    
+##  [9] readr_1.3.1     tidyr_0.8.2     tibble_2.0.1    ggplot2_3.1.0  
+## [13] tidyverse_1.2.1
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] nlme_3.1-137      sf_0.7-2          xts_0.11-2       
-##  [4] webshot_0.5.1     progress_1.2.0    httr_1.4.0       
-##  [7] tools_3.5.2       backports_1.1.3   utf8_1.1.4       
-## [10] rgdal_1.3-6       R6_2.3.0          DBI_1.0.0        
-## [13] rgeos_0.4-2       lazyeval_0.2.1    colorspace_1.4-0 
-## [16] withr_2.1.2.9000  tidyselect_0.2.5  prettyunits_1.0.2
-## [19] curl_3.3          compiler_3.5.2    cli_1.0.1        
-## [22] rvest_0.3.2       labeling_0.3      scales_1.0.0     
-## [25] classInt_0.3-1    digest_0.6.18     foreign_0.8-71   
-## [28] rmarkdown_1.11    pkgconfig_2.0.2   htmltools_0.3.6  
-## [31] highr_0.7         htmlwidgets_1.3   rlang_0.3.1      
-## [34] readxl_1.2.0      TTR_0.23-4        rstudioapi_0.9.0 
-## [37] quantmod_0.4-13   shiny_1.2.0       bindr_0.1.1      
-## [40] farver_1.1.0      generics_0.0.2    zoo_1.8-4        
-## [43] jsonlite_1.6      crosstalk_1.0.0   rlist_0.4.6.1    
-## [46] kableExtra_1.0.1  fansi_0.4.0       Rcpp_1.0.0       
-## [49] munsell_0.5.0     stringi_1.2.4     whisker_0.3-2    
-## [52] yaml_2.2.0        jqr_1.1.0         plyr_1.8.4       
-## [55] maptools_0.9-4    grid_3.5.2        promises_1.0.1   
-## [58] crayon_1.3.4      lattice_0.20-38   haven_2.0.0      
-## [61] geojson_0.3.0     hms_0.4.2         pillar_1.3.1     
-## [64] igraph_1.2.2      boot_1.3-20       glue_1.3.0       
-## [67] evaluate_0.12     V8_1.5            data.table_1.12.0
-## [70] modelr_0.1.2      tweenr_1.0.1      httpuv_1.4.5.1   
-## [73] cellranger_1.1.0  gtable_0.2.0      assertthat_0.2.0 
-## [76] xfun_0.4          mime_0.6          xtable_1.8-3     
-## [79] broom_0.5.1       e1071_1.7-0.1     later_0.7.5      
-## [82] class_7.3-14      viridisLite_0.3.0 units_0.6-2</code></pre>
+##  [1] progress_1.2.0    tidyselect_0.2.5  xfun_0.4         
+##  [4] haven_2.0.0       lattice_0.20-38   colorspace_1.4-0 
+##  [7] generics_0.0.2    htmltools_0.3.6   yaml_2.2.0       
+## [10] utf8_1.1.4        rlang_0.3.1       pillar_1.3.1     
+## [13] glue_1.3.0        withr_2.1.2.9000  tweenr_1.0.1     
+## [16] modelr_0.1.2      readxl_1.2.0      bindr_0.1.1      
+## [19] plyr_1.8.4        munsell_0.5.0     gtable_0.2.0     
+## [22] cellranger_1.1.0  rvest_0.3.2       evaluate_0.12    
+## [25] knitr_1.21        fansi_0.4.0       broom_0.5.1      
+## [28] Rcpp_1.0.0        scales_1.0.0      backports_1.1.3  
+## [31] jsonlite_1.6      farver_1.1.0      hms_0.4.2        
+## [34] digest_0.6.18     stringi_1.2.4     grid_3.5.2       
+## [37] cli_1.0.1         tools_3.5.2       lazyeval_0.2.1   
+## [40] crayon_1.3.4      pkgconfig_2.0.2   prettyunits_1.0.2
+## [43] xml2_1.2.0        lubridate_1.7.4   assertthat_0.2.0 
+## [46] rmarkdown_1.11    httr_1.4.0        rstudioapi_0.9.0 
+## [49] R6_2.3.0          nlme_3.1-137      compiler_3.5.2</code></pre>
 </div>
 <div class="footnotes">
 <hr />
