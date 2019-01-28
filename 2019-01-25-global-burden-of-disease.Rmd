@@ -327,6 +327,9 @@ le_male <- delta %>%
     transition_reveal(year)
 
 le_male <- animate(plot = le_male, 
+                   fps = 10,
+                   nframes = 150,
+                   duration = 15,
                    end_pause = 50,
                    res = 150,
                    width = 8,
@@ -366,6 +369,9 @@ le_female <- delta %>%
     transition_reveal(year)
 
 le_female <- animate(plot = le_female, 
+                     fps = 10, 
+                     nframes = 150,
+                     duration = 15,
                      end_pause = 50,
                      res = 150,
                      width = 8,
@@ -468,7 +474,10 @@ perc_male <- delta_spread %>%
           strip.background = element_blank()) +
     transition_reveal(year)
 
-perc_male <- animate(plot = perc_male, 
+perc_male <- animate(plot = perc_male,
+                     fps = 10, 
+                     nframes = 150,
+                     duration = 15,
                      end_pause = 50,
                      res = 150,
                      width = 8,
@@ -514,16 +523,20 @@ perc_female <- delta_spread %>%
     transition_reveal(year)
 
 perc_female <- animate(plot = perc_female, 
-                     end_pause = 50,
-                     res = 150,
-                     width = 8,
-                     height = 2.75,
-                     units = 'in')
+                       fps = 10, 
+                       nframes = 150,
+                       duration = 15,
+                       end_pause = 50,
+                       res = 150,
+                       width = 8,
+                       height = 2.75,
+                       units = 'in')
 
 anim_save(filename = 'perc_female.gif',
           animation = perc_female,
           path = './images/posts/2019-01-25-global-burden-of-disease')
 ```
+
 <div style="margin-left:auto;margin-right:auto;max-width:80%;">
 <div style="border-width:thin;border-style:solid;border-color:#E29EA7;">
 <!-- Females -->
@@ -554,6 +567,7 @@ Hopefully you find the analysis useful. If you have any suggestions on how to im
 ----
 
 ## Session information
+
 ```{r session_info}
 sessionInfo()
 ```
