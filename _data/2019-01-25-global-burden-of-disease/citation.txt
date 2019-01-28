@@ -1,0 +1,11 @@
+GBD Results tool:
+Use the following to cite data included in this download:
+Global Burden of Disease Collaborative Network.
+Global Burden of Disease Study 2016 (GBD 2016) Results.
+Seattle, United States: Institute for Health Metrics and Evaluation (IHME), 2017.
+Available from http://ghdx.healthdata.org/gbd-results-tool.
+
+WHO estimates of the global burden of foodborne diseases
+https://www.who.int/foodsafety/areas_work/foodborne-diseases/ferg/en/
+
+GBD 2017 DALYs and HALE Collaborators. Global, regional, and national disability-adjusted life-years (DALYs) for 359 diseases and injuries and healthy life expectancy (HALE) for 195 countries and territories, 1990-2017: a systematic analysis for the Global Burden of Disease Study 2017. Lancet 2018;392:1859–1922. doi:10.1016/S0140-6736(18)32335-3.
