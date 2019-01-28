@@ -10,6 +10,8 @@ output:
 
 - 11 February 2017 [Too few medicines to treat neuropathic pain on national essential medicines lists](https://www.painblogr.org/2017-02-11-eml-drug-map.html)
 
+- 18 October 2017 ['purrr'-ing through bootstrap confidence intervals](https://www.painblogr.org/2017-10-18-purrring-through-bootstraps.html)
+
 ### 2016
 
 - 19 September 2016 [Neuropathic pain: So many people, but where are the drugs?](https://www.painblogr.org/2016-09-19-neuropathic-pain-storyboard.html)
