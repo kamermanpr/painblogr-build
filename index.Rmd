@@ -17,8 +17,7 @@ _25 January 2019_
 
 I have analysed Global Burden of Disease data to see whether our increasing life expectancy over the past three decades is time spent in healthy or poor health.
 
-<a class="btn btn-primary" href="https://www.painblogr.org/2019-01-25-global-burden-of-disease.html" target="_blank">Read more <i class="fa fa-arrow-circle-o-right fa-2x" style="vertical-align: middle;" aria-hidden="true"></i></a>
-
+<a class="btn btn-primary" href="https://www.painblogr.org/2019-01-25-global-burden-of-disease.html" target="_blank">Read more <i class="fa fa-arrow-circle-o-right fa-2x" style="vertical-align: middle;" aria-hidden="true"></i></a><br>
 
 ****
 
