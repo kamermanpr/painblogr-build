@@ -16,7 +16,8 @@
  <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
  <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
  <script src="site_libs/navigation-1.1/tabsets.js"></script>
- <script src="site_libs/navigation-1.1/codefolding.js"></script> 
+ <script src="site_libs/navigation-1.1/codefolding.js"></script>
+ <script src="site_libs/kePrint-0.0.1/kePrint.js"></script> 
 
 	
 		<style type="text/css">
@@ -271,11 +272,11 @@ code > span.in { color: #008000; } /* Information */  div.sourceCode {
 dplyr<span class="op">::</span><span class="kw">glimpse</span>(iris)</code></pre></div>
 <pre><code>## Observations: 150
 ## Variables: 5
-## $ Sepal.Length &lt;dbl&gt; 5.1, 4.9, 4.7, 4.6, 5.0, 5.4, 4.6, 5.0, 4.4, 4.9,...
-## $ Sepal.Width  &lt;dbl&gt; 3.5, 3.0, 3.2, 3.1, 3.6, 3.9, 3.4, 3.4, 2.9, 3.1,...
-## $ Petal.Length &lt;dbl&gt; 1.4, 1.4, 1.3, 1.5, 1.4, 1.7, 1.4, 1.5, 1.4, 1.5,...
-## $ Petal.Width  &lt;dbl&gt; 0.2, 0.2, 0.2, 0.2, 0.2, 0.4, 0.3, 0.2, 0.2, 0.1,...
-## $ Species      &lt;fctr&gt; setosa, setosa, setosa, setosa, setosa, setosa, ...</code></pre>
+## $ Sepal.Length &lt;dbl&gt; 5.1, 4.9, 4.7, 4.6, 5.0, 5.4, 4.6, 5.0, 4.4, 4.9, 5…
+## $ Sepal.Width  &lt;dbl&gt; 3.5, 3.0, 3.2, 3.1, 3.6, 3.9, 3.4, 3.4, 2.9, 3.1, 3…
+## $ Petal.Length &lt;dbl&gt; 1.4, 1.4, 1.3, 1.5, 1.4, 1.7, 1.4, 1.5, 1.4, 1.5, 1…
+## $ Petal.Width  &lt;dbl&gt; 0.2, 0.2, 0.2, 0.2, 0.2, 0.4, 0.3, 0.2, 0.2, 0.1, 0…
+## $ Species      &lt;fct&gt; setosa, setosa, setosa, setosa, setosa, setosa, set…</code></pre>
 <p>As you can see, <strong>iris</strong> is a dataframe consisting of five columns, and 150 rows. The first four columns report sepal and petal dimensions of irises, and the fifth column provides the names of the three species of iris associated with each measurement (50 measurements per species).</p>
 <div id="nesting-the-data" class="section level3">
 <h3>Nesting the data</h3>
@@ -293,11 +294,11 @@ iris_nest &lt;-<span class="st"> </span>iris <span class="op">%&gt;%</span>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Print &quot;iris_nest&quot;</span>
 iris_nest</code></pre></div>
 <pre><code>## # A tibble: 3 x 2
-##      Species              data
-##       &lt;fctr&gt;            &lt;list&gt;
-## 1     setosa &lt;tibble [50 x 4]&gt;
-## 2 versicolor &lt;tibble [50 x 4]&gt;
-## 3  virginica &lt;tibble [50 x 4]&gt;</code></pre>
+##   Species    data             
+##   &lt;fct&gt;      &lt;list&gt;           
+## 1 setosa     &lt;tibble [50 × 4]&gt;
+## 2 versicolor &lt;tibble [50 × 4]&gt;
+## 3 virginica  &lt;tibble [50 × 4]&gt;</code></pre>
 <p>Inspecting the tibbles in the list-column (see below) reveals that each row of the list-column contains the sepal and petal dimensions for the iris species named in the corresponding row of the <em>“Species”</em> column.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Print the top six rows of the each row in the &quot;data&quot; list-column</span>
 <span class="kw">lapply</span>(iris_nest<span class="op">$</span>data, head)</code></pre></div>
@@ -306,20 +307,20 @@ iris_nest</code></pre></div>
 ##   Sepal.Length Sepal.Width Petal.Length Petal.Width
 ##          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;
 ## 1          5.1         3.5          1.4         0.2
-## 2          4.9         3.0          1.4         0.2
+## 2          4.9         3            1.4         0.2
 ## 3          4.7         3.2          1.3         0.2
 ## 4          4.6         3.1          1.5         0.2
-## 5          5.0         3.6          1.4         0.2
+## 5          5           3.6          1.4         0.2
 ## 6          5.4         3.9          1.7         0.4
 ## 
 ## [[2]]
 ## # A tibble: 6 x 4
 ##   Sepal.Length Sepal.Width Petal.Length Petal.Width
 ##          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;
-## 1          7.0         3.2          4.7         1.4
+## 1          7           3.2          4.7         1.4
 ## 2          6.4         3.2          4.5         1.5
 ## 3          6.9         3.1          4.9         1.5
-## 4          5.5         2.3          4.0         1.3
+## 4          5.5         2.3          4           1.3
 ## 5          6.5         2.8          4.6         1.5
 ## 6          5.7         2.8          4.5         1.3
 ## 
@@ -327,12 +328,12 @@ iris_nest</code></pre></div>
 ## # A tibble: 6 x 4
 ##   Sepal.Length Sepal.Width Petal.Length Petal.Width
 ##          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;
-## 1          6.3         3.3          6.0         2.5
+## 1          6.3         3.3          6           2.5
 ## 2          5.8         2.7          5.1         1.9
-## 3          7.1         3.0          5.9         2.1
+## 3          7.1         3            5.9         2.1
 ## 4          6.3         2.9          5.6         1.8
-## 5          6.5         3.0          5.8         2.2
-## 6          7.6         3.0          6.6         2.1</code></pre>
+## 5          6.5         3            5.8         2.2
+## 6          7.6         3            6.6         2.1</code></pre>
 </div>
 <div id="take-a-bootstrap-sample" class="section level3">
 <h3>Take a bootstrap sample</h3>
@@ -354,11 +355,11 @@ iris_nest <span class="op">%&lt;&gt;%</span>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Print &quot;iris_nest&quot;</span>
 iris_nest</code></pre></div>
 <pre><code>## # A tibble: 3 x 3
-##      Species              data     booted
-##       &lt;fctr&gt;            &lt;list&gt;     &lt;list&gt;
-## 1     setosa &lt;tibble [50 x 4]&gt; &lt;S3: boot&gt;
-## 2 versicolor &lt;tibble [50 x 4]&gt; &lt;S3: boot&gt;
-## 3  virginica &lt;tibble [50 x 4]&gt; &lt;S3: boot&gt;</code></pre>
+##   Species    data              booted    
+##   &lt;fct&gt;      &lt;list&gt;            &lt;list&gt;    
+## 1 setosa     &lt;tibble [50 × 4]&gt; &lt;S3: boot&gt;
+## 2 versicolor &lt;tibble [50 × 4]&gt; &lt;S3: boot&gt;
+## 3 virginica  &lt;tibble [50 × 4]&gt; &lt;S3: boot&gt;</code></pre>
 <p>It’s always wise to inspect the bootstrap distribution of a statistic, which we can do graphically by plotting the contents of each of the &lt;S3: boot&gt; objects contained in the <em>“booted”</em> list-column. This task can be achieved by mapping the <code>plot</code> function over the list-column. Each output contains two side-by-side plots, the left plot shows a histogram of the bootstrap replicates, and the right plot shows a Q-Q plot (using normal quantiles) of the bootstrap replicates.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot each &lt;S3: boot&gt; object</span>
 ## Note: Saved to an object (plots) to stop the summary being printed
@@ -368,7 +369,7 @@ plots &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="
 </div>
 <div id="calculate-the-confidence-interval" class="section level3">
 <h3>Calculate the confidence interval</h3>
-<p>Clearly the bootstrap distribution of median sepal width for all three species of iris is “lumpy” and “skew”, and we proceed to calculate BCa intervals. To calculate the intervals, we repeat the procedure used to generate the bootstrap sample in the previous step, but this time we shall map <code>boot::boot.ci</code> over each row of the &lt;S3: boot&gt; objects contained in the <em>“booted”</em> list-column. The <code>boot::boot.ci</code> function generates the confidence interval using the bootstrap replicates generated by <code>boot::boot</code>, with the user defining which type of interval shopuld be calculated (first-order normal approximation, basic, studentized, percentile, or BCa).</p>
+<p>Clearly the bootstrap distribution of median sepal width for all three species of iris is “lumpy” and “skew”. Yes, I could have chosen a better illustrative dataset to analyse, but for our purpose of this blog post we proceed to calculate BCa intervals. To calculate the intervals, we repeat the procedure used to generate the bootstrap sample in the previous step, but this time we shall map <code>boot::boot.ci</code> over each row of the &lt;S3: boot&gt; objects contained in the <em>“booted”</em> list-column. The <code>boot::boot.ci</code> function generates the confidence interval using the bootstrap replicates generated by <code>boot::boot</code>, with the user defining which type of interval shopuld be calculated (first-order normal approximation, basic, studentized, percentile, or BCa).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Add a list column called &quot;booted_ci&quot; containing the object produced by `</span>
 <span class="co"># applying `boot::boot.ci` over the data in the &quot;booted&quot; list-column.</span>
 iris_nest <span class="op">%&lt;&gt;%</span>
@@ -380,11 +381,11 @@ iris_nest <span class="op">%&lt;&gt;%</span>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Print &quot;iris_nest&quot;</span>
 iris_nest</code></pre></div>
 <pre><code>## # A tibble: 3 x 4
-##      Species              data     booted    booted_ci
-##       &lt;fctr&gt;            &lt;list&gt;     &lt;list&gt;       &lt;list&gt;
-## 1     setosa &lt;tibble [50 x 4]&gt; &lt;S3: boot&gt; &lt;S3: bootci&gt;
-## 2 versicolor &lt;tibble [50 x 4]&gt; &lt;S3: boot&gt; &lt;S3: bootci&gt;
-## 3  virginica &lt;tibble [50 x 4]&gt; &lt;S3: boot&gt; &lt;S3: bootci&gt;</code></pre>
+##   Species    data              booted     booted_ci   
+##   &lt;fct&gt;      &lt;list&gt;            &lt;list&gt;     &lt;list&gt;      
+## 1 setosa     &lt;tibble [50 × 4]&gt; &lt;S3: boot&gt; &lt;S3: bootci&gt;
+## 2 versicolor &lt;tibble [50 × 4]&gt; &lt;S3: boot&gt; &lt;S3: bootci&gt;
+## 3 virginica  &lt;tibble [50 × 4]&gt; &lt;S3: boot&gt; &lt;S3: bootci&gt;</code></pre>
 <p>As with the bootstrap distribution plots, the content of these &lt;S3 bootci&gt; objects can be easily extracted by mapping the <code>print</code> function over the list-column (see below). But while this prints out a nice summary, the output is not in a readily usable form, and is definitely not in a tidy format.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot each &lt;S3: bootci&gt; object</span>
 prints &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class="kw">map</span>(<span class="dt">.x =</span> iris_nest<span class="op">$</span>booted_ci, 
@@ -429,7 +430,7 @@ prints &lt;-<span class="st"> </span>purrr<span class="op">::</span><span class=
 ##  $ R   : int 10000
 ##  $ t0  : num 1.5
 ##  $ call: language boot::boot.ci(boot.out = .x, conf = 0.95, type = &quot;bca&quot;)
-##  $ bca : num [1, 1:5] 0.95 118.27 9515.8 1.4 1.5
+##  $ bca : num [1, 1:5] 0.95 121 9524.48 1.4 1.5
 ##   ..- attr(*, &quot;dimnames&quot;)=List of 2
 ##   .. ..$ : NULL
 ##   .. ..$ : chr [1:5] &quot;conf&quot; &quot;&quot; &quot;&quot; &quot;&quot; ...
@@ -454,16 +455,16 @@ iris_booted &lt;-<span class="st"> </span>iris_nest <span class="op">%&gt;%</spa
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Print the tidy dataframe</span>
 iris_booted</code></pre></div>
 <pre><code>## # A tibble: 3 x 4
-##      Species statistic lower_ci upper_ci
-##       &lt;fctr&gt;     &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-## 1     setosa      1.50      1.4     1.50
-## 2 versicolor      4.35      4.1     4.50
-## 3  virginica      5.55      5.2     5.65</code></pre>
+##   Species    statistic lower_ci upper_ci
+##   &lt;fct&gt;          &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+## 1 setosa          1.5       1.4     1.5 
+## 2 versicolor      4.35      4.1     4.5 
+## 3 virginica       5.55      5.2     5.65</code></pre>
 <p>So, by using the <code>purrr</code> package, it is possible to easily integrate the calculation of bootstrap intervals using the <code>boot</code> package into your tidy workflow. Obviously the steps I describe here can be simplified, but hopefully giving a step-by-step guide will be helpful to someone out there.</p>
 <hr />
 </div>
-<div id="tldr" class="section level2">
-<h2>tl;dr</h2>
+<div id="extra" class="section level3">
+<h3>Extra</h3>
 <p>If you are drafting a report and want to make a pretty table of the data, then you simply need to pass the data through <code>knitr::kable</code> (with <code>kableExtra</code> if you want some extra bells and whistles).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Using `knitr::kable` only</span>
 knitr<span class="op">::</span><span class="kw">kable</span>(<span class="dt">x =</span> iris_booted, 
@@ -515,13 +516,13 @@ knitr<span class="op">::</span><span class="kw">kable</span>(<span class="dt">x 
 <table>
 <thead>
 <tr>
-<th style="text-align:center; border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;" colspan="1">
-<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px;">
+<th style="border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
 Species
 </div>
 </th>
-<th style="text-align:center; border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;" colspan="3">
-<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px;">
+<th style="border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
 Sepal width (mm)
 </div>
 </th>
@@ -590,13 +591,13 @@ virginica
 <div id="session-information" class="section level2">
 <h2>Session information</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sessionInfo</span>()</code></pre></div>
-<pre><code>## R version 3.4.2 (2017-09-28)
+<pre><code>## R version 3.5.2 (2018-12-20)
 ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
-## Running under: macOS Sierra 10.12.6
+## Running under: macOS Mojave 10.14.2
 ## 
 ## Matrix products: default
-## BLAS: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRblas.0.dylib
-## LAPACK: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRlapack.dylib
+## BLAS: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRblas.0.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRlapack.dylib
 ## 
 ## locale:
 ## [1] en_GB.UTF-8/en_GB.UTF-8/en_GB.UTF-8/C/en_GB.UTF-8/en_GB.UTF-8
@@ -605,17 +606,44 @@ virginica
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] bindrcpp_0.2 magrittr_1.5
+##  [1] magrittr_1.5          geojsonio_0.6.0       lubridate_1.7.4      
+##  [4] xml2_1.2.0            sp_1.3-1              leaflet_2.0.2        
+##  [7] highcharter_0.7.0     flexdashboard_0.5.1.1 gganimate_1.0.0      
+## [10] gdtools_0.1.7         bindrcpp_0.2.2        ggiraph_0.6.0        
+## [13] svglite_1.2.1         pander_0.6.3          knitr_1.21           
+## [16] forcats_0.3.0         stringr_1.3.1         dplyr_0.7.8          
+## [19] purrr_0.2.5           readr_1.3.1           tidyr_0.8.2          
+## [22] tibble_2.0.1          ggplot2_3.1.0         tidyverse_1.2.1      
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Rcpp_0.12.13     xml2_1.1.1       knitr_1.17       bindr_0.1       
-##  [5] hms_0.3          rvest_0.3.2      tidyselect_0.2.2 R6_2.2.2        
-##  [9] rlang_0.1.2      httr_1.3.1       stringr_1.2.0    highr_0.6       
-## [13] dplyr_0.7.4      tools_3.4.2      htmltools_0.3.6  yaml_2.1.14     
-## [17] assertthat_0.2.0 rprojroot_1.2    digest_0.6.12    tibble_1.3.4    
-## [21] kableExtra_0.5.2 readr_1.1.1      purrr_0.2.4      tidyr_0.7.2     
-## [25] glue_1.1.1       evaluate_0.10.1  rmarkdown_1.6    stringi_1.1.5   
-## [29] compiler_3.4.2   backports_1.1.1  boot_1.3-20      pkgconfig_2.0.1</code></pre>
+##  [1] nlme_3.1-137      sf_0.7-2          xts_0.11-2       
+##  [4] webshot_0.5.1     progress_1.2.0    httr_1.4.0       
+##  [7] tools_3.5.2       backports_1.1.3   utf8_1.1.4       
+## [10] rgdal_1.3-6       R6_2.3.0          DBI_1.0.0        
+## [13] rgeos_0.4-2       lazyeval_0.2.1    colorspace_1.4-0 
+## [16] withr_2.1.2.9000  tidyselect_0.2.5  prettyunits_1.0.2
+## [19] curl_3.3          compiler_3.5.2    cli_1.0.1        
+## [22] rvest_0.3.2       labeling_0.3      scales_1.0.0     
+## [25] classInt_0.3-1    digest_0.6.18     foreign_0.8-71   
+## [28] rmarkdown_1.11    pkgconfig_2.0.2   htmltools_0.3.6  
+## [31] highr_0.7         htmlwidgets_1.3   rlang_0.3.1      
+## [34] readxl_1.2.0      TTR_0.23-4        rstudioapi_0.9.0 
+## [37] quantmod_0.4-13   shiny_1.2.0       bindr_0.1.1      
+## [40] farver_1.1.0      generics_0.0.2    zoo_1.8-4        
+## [43] jsonlite_1.6      crosstalk_1.0.0   rlist_0.4.6.1    
+## [46] kableExtra_1.0.1  fansi_0.4.0       Rcpp_1.0.0       
+## [49] munsell_0.5.0     stringi_1.2.4     whisker_0.3-2    
+## [52] yaml_2.2.0        jqr_1.1.0         plyr_1.8.4       
+## [55] maptools_0.9-4    grid_3.5.2        promises_1.0.1   
+## [58] crayon_1.3.4      lattice_0.20-38   haven_2.0.0      
+## [61] geojson_0.3.0     hms_0.4.2         pillar_1.3.1     
+## [64] igraph_1.2.2      boot_1.3-20       glue_1.3.0       
+## [67] evaluate_0.12     V8_1.5            data.table_1.12.0
+## [70] modelr_0.1.2      tweenr_1.0.1      httpuv_1.4.5.1   
+## [73] cellranger_1.1.0  gtable_0.2.0      assertthat_0.2.0 
+## [76] xfun_0.4          mime_0.6          xtable_1.8-3     
+## [79] broom_0.5.1       e1071_1.7-0.1     later_0.7.5      
+## [82] class_7.3-14      viridisLite_0.3.0 units_0.6-2</code></pre>
 </div>
 <div class="footnotes">
 <hr />

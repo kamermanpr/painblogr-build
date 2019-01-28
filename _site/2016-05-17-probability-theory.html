@@ -15,7 +15,8 @@
  <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
  <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
  <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
- <script src="site_libs/navigation-1.1/tabsets.js"></script> 
+ <script src="site_libs/navigation-1.1/tabsets.js"></script>
+ <script src="site_libs/navigation-1.1/codefolding.js"></script> 
 
 	
 		<style type="text/css">
@@ -53,7 +54,10 @@ code > span.do { color: #008000; } /* Documentation */
 code > span.an { color: #008000; } /* Annotation */
 code > span.cv { color: #008000; } /* CommentVar */
 code > span.at { } /* Attribute */
-code > span.in { color: #008000; } /* Information */ 
+code > span.in { color: #008000; } /* Information */  div.sourceCode {
+			overflow-x: visible;
+		}
+		
 	</style>
 
 		<style type="text/css">
@@ -222,59 +226,160 @@ code > span.in { color: #008000; } /* Information */
 		</script>
 
 		<!-- code folding -->
+				<style type="text/css">
+			code-folding-btn { margin-bottom: 4px; }
+		</style>
+		<script src="/codefolding.js"></script>
+					<script>
+
+		$(document).ready(function () {
+			
+			  			window.initializeCodeFolding("show" === "show");
+					});
+		</script>
 		
 		<div class="fluid-row" id="header">
+<div class="btn-group pull-right">
+<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
 
     <!-- Main text --->
     <div class="container-fluid" id="mainbody">
          
         <h1>The gganimate package in action: Probability theory</h1> 
         <h4>Peter Kamerman</h4> 
-        <em>17 May 2016</em> <p><br></p>
+        <em>17 May 2016</em> <p><em>(I updated this post on 27 January 2019 to reflect the new <code>gganimate</code> API that <a href="//github.com/thomasp85/gganimate">Thomas Pedersen</a> introduced)</em></p>
 <div id="background" class="section level2">
 <h2>Background</h2>
-<p><em>(You can grab the full R script from <a href="https://github.com/kamermanpr/miscellaneous/tree/master/central-limit-n-large-numbers">GitHub</a>, or view the RMarkdown output - with code - at <a href="//beta.rstudioconnect.com/kamermanpr/central-limit-n-large-numbers/">RStudio Connect</a>).</em></p>
-<p>I have wanted to try David Robinson’s (<span class="citation">@drob</span>) <a href="//github.com/dgrtwo/gganimate">gganimate</a> package since I came across it a few months ago. The package extends Hadley Wickham’s (<span class="citation">@hadleywickham</span>) <a href="//github.com/hadley/ggplot2">ggplot2</a> package by adding a <em>‘frame’</em> aesthetic that provides a time factor to geoms, allowing them to be animated.</p>
-<p>Recently, the opportunity to put the package through its paces arose while I was preparing materials for an <a href="//painblogr.org/biostatistics/">introductory biostatistics</a> tutorial for undergrad students. I wanted to demonstrate the <em>central limit theorem</em> and <em>law of large numbers</em>, and thought that animations would help deliver the message.</p>
-<p>The central limit theorem provides a shortcut to knowing the sampling distribution, which is the probability distribution of a statistic (e.g., mean, proportion) for all possible samples from a population. The theorem is one of the cornerstones of probability theory because it allows you to make statements about the sampling distribution for a particular statistic without having to sample the entire population. As such, it forms the basis of statistical inference.</p>
-<p>The central limit theorem states that the sampling distribution of an independent, random variable is normal or near-normal if a sufficiently large number of (equal-sized) samples are taken. If the sampling distribution for a statistic follows a normal or near-normal distribution we can make probability statements about the range of values in which the statistic lies. For example, there is a 68% probability that the sample statistic is within 1 standard deviation of the population value, and a 95% probability that it lies within about 2 standard deviations (see figure below). In the case of the sampling distribution, the standard deviation of the distribution is also called the <em>standard error</em>.</p>
-<!-- Use html to allow control over plot dimensions (480 x 480px) -->
-<p><img src="images/posts/2016-05-17-probability-theory/normal-distr.png"
-style="height:343px;width:480px; display:block;margin-right:auto;margin-left:auto"></p>
-<p>The size of the standard error also allows us to gauge the precision of the sample statistic, and this <em>‘width’</em> of the sampling distribution is dependent on the size of the samples. From a technical point of view, the standard error of the sample statistic is equal to the standard deviation of the population divided by the square root of the sample size (<span class="math inline">\(se = \frac{\sigma}{\sqrt{n}}\)</span>). Basically, as the size of each sample increases the samples are more likely to be representative of the population, and therefore variability around the point estimate should decrease. The figure below shows the effect of increasing sample size on the precision of the standard error.</p>
-<p><img src="images/posts/2016-05-17-probability-theory/sem-plot.png" style="height:480px;width:480px;display:block;margin-right:auto;margin-left:auto"></p>
+<p>I have wanted to try David Robinson’s <em>(and now also Thomas Pedersen)</em> <a href="//github.com/thomasp85/gganimate">gganimate</a> package since I came across it a few months ago. The package extends Hadley Wickham’s <a href="//ggplot2.tidyverse.org/index.html">ggplot2</a> package by including the description of animation. It does this by providing a range of new grammar classes that can be added to the plot object in order to customise how it should change with time.</p>
+<ul>
+<li><code>transition_*()</code> defines how the data should be spread out and how it relates to itself across time.</li>
+<li><code>view_*()</code> defines how the positional scales should change along the animation.</li>
+<li><code>shadow_*()</code> defines how data from other points in time should be presented in the given point in time.</li>
+<li><code>enter_*()</code>/<code>exit_*()</code> defines how new data should appear and how old data should disappear during the course of the animation.</li>
+<li><code>ease_aes()</code> defines how different aesthetics should be eased during transitions.</li>
+</ul>
+<p>Recently, the opportunity to put one of the package’s <code>transition_*()</code> functions to work while I was preparing materials for an <a href="//painblogr.org/biostatistics/">introductory biostatistics</a> tutorial for undergrad students. I wanted to demonstrate the <em>central limit theorem</em> and <em>law of large numbers</em>, and thought that animations would help deliver the message.</p>
+<p>The <em>central limit theorem</em> provides a shortcut to knowing the sampling distribution, which is the probability distribution of a statistic (e.g., mean, proportion) for all possible samples from a population. The theorem is one of the cornerstones of probability theory because it allows you to make statements about the sampling distribution for a particular statistic without having to sample the entire population. As such, it forms the basis of statistical inference.</p>
+<p>The <em>central limit theorem</em> states that the sampling distribution of an independent, random variable is normal or near-normal if a sufficiently large number of (equal-sized) samples are taken. If the sampling distribution for a statistic follows a normal or near-normal distribution we can make probability statements about the range of values in which the statistic lies. For example, there is a 68% probability that the sample statistic is within 1 standard deviation of the population value, and a 95% probability that it lies within about 2 standard deviations (see figure below). In the case of the sampling distribution, the standard deviation of the distribution is also called the <em>standard error</em>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Generate data for a standard normal distribution and 1/2 SD range</span>
+<span class="kw">set.seed</span>(<span class="dv">2019</span>)
+density &lt;-<span class="st"> </span><span class="kw">density</span>(<span class="kw">rnorm</span>(<span class="dv">100000</span>), <span class="dt">n =</span> <span class="dv">100</span>)
+density &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">x =</span> density<span class="op">$</span>x,
+                  <span class="dt">y =</span> density<span class="op">$</span>y)
+
+density_sd &lt;-<span class="st"> </span>density <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">filter</span>(x <span class="op">&gt;=</span><span class="st"> </span><span class="op">-</span><span class="dv">1</span> <span class="op">&amp;</span><span class="st"> </span>x <span class="op">&lt;=</span><span class="st"> </span><span class="dv">1</span>)
+
+density_sd2 &lt;-<span class="st"> </span>density <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">filter</span>(x <span class="op">&gt;=</span><span class="st"> </span><span class="op">-</span><span class="dv">2</span> <span class="op">&amp;</span><span class="st"> </span>x <span class="op">&lt;=</span><span class="st"> </span><span class="dv">2</span>)
+
+<span class="co"># Plot</span>
+<span class="kw">ggplot</span>() <span class="op">+</span>
+<span class="st">    </span><span class="kw">aes</span>(<span class="dt">x =</span> x,
+        <span class="dt">y =</span> y) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_area</span>(<span class="dt">data =</span> density_sd2,
+              <span class="dt">fill =</span> <span class="st">&#39;#66AAD0&#39;</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_area</span>(<span class="dt">data =</span> density_sd,
+              <span class="dt">fill =</span> <span class="st">&#39;#0072B2&#39;</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">min</span>(density_sd<span class="op">$</span>x), 
+                     <span class="dt">xend =</span> <span class="kw">max</span>(density_sd<span class="op">$</span>x), 
+                     <span class="dt">y =</span> density_sd[density_sd<span class="op">$</span>x <span class="op">==</span><span class="st"> </span><span class="kw">min</span>(density_sd<span class="op">$</span>x), ]<span class="op">$</span>y, 
+                     <span class="dt">yend =</span> density_sd[density_sd<span class="op">$</span>x <span class="op">==</span><span class="st"> </span><span class="kw">min</span>(density_sd<span class="op">$</span>x), ]<span class="op">$</span>y),
+                 <span class="dt">size =</span> <span class="dv">1</span>,
+                 <span class="dt">colour =</span> <span class="st">&#39;#FFFFFF&#39;</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">min</span>(density_sd2<span class="op">$</span>x), 
+                     <span class="dt">xend =</span> <span class="kw">max</span>(density_sd2<span class="op">$</span>x), 
+                     <span class="dt">y =</span> density_sd2[density_sd2<span class="op">$</span>x <span class="op">==</span><span class="st"> </span><span class="kw">min</span>(density_sd2<span class="op">$</span>x), ]<span class="op">$</span>y, 
+                     <span class="dt">yend =</span> density_sd2[density_sd2<span class="op">$</span>x <span class="op">==</span><span class="st"> </span><span class="kw">min</span>(density_sd2<span class="op">$</span>x), ]<span class="op">$</span>y),
+                 <span class="dt">size =</span> <span class="dv">1</span>,
+                 <span class="dt">colour =</span> <span class="st">&#39;#FFFFFF&#39;</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_label</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">0</span>,
+                   <span class="dt">y =</span> density_sd[density_sd<span class="op">$</span>x <span class="op">==</span><span class="st"> </span><span class="kw">min</span>(density_sd<span class="op">$</span>x), ]<span class="op">$</span>y,
+                   <span class="dt">label =</span> <span class="st">&#39;1 SD: 68%&#39;</span>)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_label</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">0</span>,
+                   <span class="dt">y =</span> density_sd2[density_sd2<span class="op">$</span>x <span class="op">==</span><span class="st"> </span><span class="kw">min</span>(density_sd2<span class="op">$</span>x), ]<span class="op">$</span>y,
+                   <span class="dt">label =</span> <span class="st">&#39;1.96 SD: 95%&#39;</span>)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_line</span>(<span class="dt">data =</span> density) <span class="op">+</span>
+<span class="st">    </span><span class="kw">scale_x_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">4</span>, <span class="dv">4</span>)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&#39;</span><span class="ch">\n</span><span class="st">Standard deviation&#39;</span>,
+         <span class="dt">y =</span> <span class="st">&#39;Density</span><span class="ch">\n</span><span class="st">&#39;</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">theme</span>(<span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">17</span>),
+          <span class="dt">axis.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">17</span>),
+          <span class="dt">axis.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">17</span>),
+          <span class="dt">axis.ticks =</span> <span class="kw">element_blank</span>(),
+          <span class="dt">panel.grid.major =</span> <span class="kw">element_line</span>(<span class="dt">colour =</span> <span class="st">&#39;gray80&#39;</span>, 
+                                          <span class="dt">size =</span> <span class="fl">0.3</span>),
+          <span class="dt">panel.background =</span> <span class="kw">element_blank</span>())</code></pre></div>
+<p><img src="2016-05-17-probability-theory_files/figure-html/normal_distr-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>The size of the standard error also allows us to gauge the precision of the sample statistic, and this <em>‘width’</em> of the sampling distribution is dependent on the size of the samples. From a technical point of view, the standard error of the sample statistic is equal to the standard deviation of the population divided by the square root of the sample size (<span class="math inline">\(se = \frac{\sigma}{\sqrt{n}}\)</span>). Basically, as the size of a sample increases the samples are more likely to be representative of the population, and therefore variability around the point estimate should decrease. The figure below shows the effect of increasing sample size on the precision of the standard error.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Generate data of SEM as sample size from a std normal population increases</span>
+<span class="kw">set.seed</span>(<span class="dv">2019</span>)
+population &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">200000</span>)
+interval &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">5</span>, <span class="dt">to =</span> <span class="dv">1000</span>, <span class="dt">by =</span> <span class="dv">50</span>), 
+              <span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">1050</span>, <span class="dt">to =</span> <span class="dv">10000</span>, <span class="dt">by =</span> <span class="dv">1000</span>), <span class="dv">10000</span>)
+sem &lt;-<span class="st"> </span><span class="kw">numeric</span>(<span class="kw">length</span>(interval))
+
+<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(interval)){
+    sem[[i]] &lt;-<span class="st"> </span><span class="kw">sd</span>(<span class="kw">sample</span>(<span class="dt">x =</span> population, <span class="dt">size =</span> interval[[i]]) <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(interval[[i]]))
+    sem
+}
+
+sem_plot &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">x =</span> interval, <span class="dt">y =</span> sem)
+
+<span class="co"># Plot</span>
+<span class="kw">ggplot</span>(sem_plot) <span class="op">+</span>
+<span class="st">    </span><span class="kw">aes</span>(<span class="dt">x =</span> x,
+        <span class="dt">y =</span> y) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_line</span>(<span class="dt">colour =</span> <span class="st">&#39;#0072B2&#39;</span>,
+              <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>, 
+               <span class="dt">colour =</span> <span class="st">&quot;#E69F00&quot;</span>, 
+               <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">scale_x_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">10000</span>),
+                       <span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">500</span>, <span class="dv">1000</span>, 
+                                  <span class="dv">2500</span>, <span class="dv">5000</span>, <span class="dv">7500</span>, <span class="dv">10000</span>),
+                       <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&#39;0&#39;</span>, <span class="st">&#39;500&#39;</span>, <span class="st">&#39;1000&#39;</span>, 
+                                  <span class="st">&#39;2500&#39;</span>, <span class="st">&#39;5000&#39;</span>, <span class="st">&#39;7500&#39;</span>, <span class="st">&#39;10000&#39;</span>)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">scale_y_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.12</span>),
+                       <span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.04</span>, <span class="fl">0.08</span>, <span class="fl">0.12</span>)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&#39;Standard error of the mean vs. sample size&#39;</span>,
+         <span class="dt">subtitle =</span> <span class="st">&#39;(Population: N = 200 000, mean = 0, SD = 1)&#39;</span>,
+         <span class="dt">x =</span> <span class="st">&#39;Sample size&#39;</span>, 
+         <span class="dt">y =</span> <span class="st">&#39;Standard error of the mean</span><span class="ch">\n</span><span class="st">&#39;</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">theme</span>(<span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">17</span>),
+          <span class="dt">axis.text.y =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">17</span>),
+          <span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">17</span>, <span class="dt">angle =</span> <span class="dv">45</span>, <span class="dt">hjust =</span> <span class="dv">1</span>, <span class="dt">vjust =</span> <span class="dv">1</span>),
+          <span class="dt">axis.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">17</span>),
+          <span class="dt">axis.ticks =</span> <span class="kw">element_blank</span>(),
+          <span class="dt">panel.grid.major =</span> <span class="kw">element_line</span>(<span class="dt">colour =</span> <span class="st">&#39;gray80&#39;</span>, 
+                                          <span class="dt">size =</span> <span class="fl">0.3</span>),
+          <span class="dt">panel.background =</span> <span class="kw">element_blank</span>())</code></pre></div>
+<p><img src="2016-05-17-probability-theory_files/figure-html/SEM_reduction-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>This leads us to the <em>law of large numbers</em>. At a simplistic level, the central limit theorem tells us about the shape of the sampling distribution, while the law of large numbers tells us where the centre of the distribution lies. From the law of large numbers we can show that the cumulative result from a large number of trials/samples tends towards the true value in the population. That is, the probability of an unusual outcome becomes smaller as the number of trials/samples increases. This convergence in probability is also called the <em>weak law of large numbers</em>.</p>
 </div>
 <div id="gganimate-the-theories-in-action" class="section level2">
 <h2>gganimate: the theories in action</h2>
-<p>I used the <em>gg_animate</em> function from the <em>gganimate</em> package to put the two theories into action.</p>
+<p>I used the <code>transition_reveal()</code> function from the <code>gganimate</code> package to put the two theories into motion.</p>
 <div id="our-population" class="section level3">
 <h3>Our population</h3>
-<p>The central limit theorem holds across different distributions, and to illustrate this point I started with a population generated by taking a random sample (<em>N</em> = 200,000) from the exponential distribution (right-skewed) with rate 1.</p>
+<p>The <em>central limit theorem</em> holds across different distributions, and to illustrate this point I started with a population generated by taking a random sample (<em>N</em> = 200,000) from the exponential distribution (right-skewed) with rate 1.</p>
 <p>The density distribution of this dataset is shown in the figure below (the mean is marked by the orange line), and it served as the population from which samples were taken to demonstrate the central limit theorem and the law of large numbers.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
-###############
-<span class="co"># Load packages</span>
-###############
-<span class="kw">library</span>(gganimate) <span class="co"># Get it: devtools::install_github(&quot;dgrtwo/gganimate&quot;)</span>
-<span class="kw">library</span>(ggplot2)
-<span class="kw">library</span>(dplyr)
-<span class="kw">library</span>(tidyr)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Generate data using a random sample from the exponential distribution</span>
+<span class="kw">set.seed</span>(<span class="dv">2019</span>)
+distr &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">data =</span> <span class="kw">rexp</span>(<span class="dv">200000</span>))
 
-#########################
-<span class="co"># Right-skewed population</span>
-#########################
-
-<span class="co"># Create a right-skewed dataset</span>
-foo &lt;-<span class="st"> </span><span class="kw">rexp</span>(<span class="dv">200000</span>)
-
-<span class="co"># Convert &#39;foo&#39; into a data.frame for plotting</span>
-distr &lt;-<span class="st"> </span><span class="kw">data_frame</span>(<span class="dt">data =</span> foo)
-
-<span class="co"># Plot the original right-skewed distribution</span>
-distr.plot &lt;-<span class="st"> </span><span class="kw">ggplot</span>(distr, <span class="kw">aes</span>(data)) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_density</span>(<span class="dt">fill =</span> <span class="st">&#39;#0072B2&#39;</span>, <span class="dt">colour =</span> <span class="st">&#39;#0072B2&#39;</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="kw">mean</span>(foo), <span class="dt">colour =</span> <span class="st">&quot;#E69F00&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span>
+<span class="co"># Plot</span>
+<span class="kw">ggplot</span>(distr, <span class="kw">aes</span>(data)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_density</span>(<span class="dt">fill =</span> <span class="st">&#39;#0072B2&#39;</span>, 
+                 <span class="dt">colour =</span> <span class="st">&#39;#0072B2&#39;</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="kw">mean</span>(distr<span class="op">$</span>data), 
+               <span class="dt">colour =</span> <span class="st">&quot;#E69F00&quot;</span>, 
+               <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span>
 <span class="st">    </span><span class="kw">scale_x_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">14</span>),
                        <span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">10</span>, <span class="dv">12</span>, <span class="dv">14</span>)) <span class="op">+</span>
 <span class="st">    </span><span class="kw">scale_y_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),
@@ -284,122 +389,140 @@ distr.plot &lt;-<span class="st"> </span><span class="kw">ggplot</span>(distr, <
           <span class="dt">axis.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">17</span>),
           <span class="dt">axis.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">17</span>),
           <span class="dt">axis.ticks =</span> <span class="kw">element_blank</span>(),
-          <span class="dt">panel.grid.major =</span> <span class="kw">element_line</span>(<span class="dt">colour =</span> <span class="st">&#39;gray80&#39;</span>, <span class="dt">size =</span> <span class="fl">0.3</span>),
-          <span class="dt">panel.background =</span> <span class="kw">element_blank</span>())
-
-<span class="co"># Save the plot</span>
-<span class="kw">ggsave</span>(<span class="st">&#39;original-distr.png&#39;</span>, distr.plot)</code></pre></div>
-<!-- Use html to allow control over plot dimensions (480 x 480px) -->
-<p><img src="images/posts/2016-05-17-probability-theory/original-distr.png" style="height:480px;width:480px;display:block;margin-right:auto;margin-left:auto;"></p>
+          <span class="dt">panel.grid.major =</span> <span class="kw">element_line</span>(<span class="dt">colour =</span> <span class="st">&#39;gray80&#39;</span>, 
+                                          <span class="dt">size =</span> <span class="fl">0.3</span>),
+          <span class="dt">panel.background =</span> <span class="kw">element_blank</span>())</code></pre></div>
+<p><img src="2016-05-17-probability-theory_files/figure-html/skewed_population-1.png" width="480" style="display: block; margin: auto;" /></p>
 </div>
 <div id="the-central-limit-theorem-in-action" class="section level3">
 <h3>The central limit theorem in action</h3>
-<p>To demonstrate the central limit theorem, I took 5000 samples (without replacement) of <em>n</em> = 200 each from the ‘population’ of 200,000, and calculated the mean for each sample. I then tabulated the frequency at which sample means occurred across the 5000 samples, and used these data to plot a frequency histogram. However, in addition to the usual ggplot2 code, I added the gganimate aesthetic functions (<strong>‘frame’</strong> and <strong>‘cumulative’</strong>) to the geom_bar aesthetics. Adding these new aesthetics allowed the gg_animate function to take the ggplot2 object and to sequentially add the frequency bins of sample means as frames in an animation (‘frame’), and for each frame to built cumulatively on the previous one (‘cumulative = TRUE’).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
-#######################
-<span class="co"># Central limit theorem</span>
-#######################
-
+<p>To demonstrate the central limit theorem, I took 5000 samples (without replacement) of <em>n</em> = 200 each from the ‘population’ of 200,000, and calculated the mean for each sample. I then tabulated the frequency at which sample means occurred across the 5000 samples, and used these data to plot a frequency histogram. However, in addition to the usual ggplot2 code, I added the function <code>gganimate::transition_reveal(along = sample)</code> to the final line of the plot code. Adding this additional function allows the <code>gganimate::animate()</code> function to take the <code>ggplot2</code> object and to sequentially add the frequency bins of sample means as frames in an animation.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Generate data</span>
 <span class="co"># Create an empty list, and a &#39;for loop&#39; counter</span>
-bar &lt;-<span class="st"> </span><span class="kw">list</span>()
+lst &lt;-<span class="st"> </span><span class="kw">list</span>()
 cnt &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">5000</span>
 
-<span class="co"># Take 5000 samples of n = 200 from &#39;foo&#39; and make a list of sample means.</span>
+<span class="co"># Take 5000 samples of n = 200 from &#39;population&#39; and make a list of sample means.</span>
+<span class="kw">set.seed</span>(<span class="dv">2019</span>)
 <span class="cf">for</span>(i <span class="cf">in</span> cnt){
-    bar[[i]] &lt;-<span class="st"> </span><span class="kw">mean</span>(<span class="kw">sample</span>(foo, <span class="dt">size =</span> <span class="dv">200</span>))
+    lst[[i]] &lt;-<span class="st"> </span><span class="kw">mean</span>(<span class="kw">sample</span>(population, <span class="dt">size =</span> <span class="dv">200</span>))
+}
 
-<span class="co"># Process data in &#39;bar&#39; for plotting</span>
+<span class="co"># Process data in &#39;lst&#39; for plotting</span>
 ## Unlist and round to reduce the number of bins for CLT plot
-baz &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">unlist</span>(bar), <span class="dv">2</span>)
+lst2 &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">unlist</span>(lst), <span class="dv">2</span>)
 
 ## cross-tabulate the data to get frequency bins
-boo &lt;-<span class="st"> </span><span class="kw">xtabs</span>(<span class="op">~</span>baz)
+tab &lt;-<span class="st"> </span><span class="kw">xtabs</span>(<span class="op">~</span>lst2)
 
 ## Extract the names (&#39;bins&#39;)
-nam &lt;-<span class="st"> </span><span class="kw">names</span>(boo)
+nam &lt;-<span class="st"> </span><span class="kw">names</span>(tab)
 
 ## Make data.frame for plotting
-bee &lt;-<span class="st"> </span><span class="kw">data_frame</span>(<span class="dt">sample =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(boo)),
-                  <span class="dt">mean =</span> <span class="kw">as.numeric</span>(nam),
-                  <span class="dt">freq =</span> <span class="kw">as.numeric</span>(boo))
+df &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">sample =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(tab)),
+             <span class="dt">mean =</span> <span class="kw">as.numeric</span>(nam),
+             <span class="dt">freq =</span> <span class="kw">as.numeric</span>(tab))
 
 <span class="co"># Plot the data</span>
-clt &lt;-<span class="st"> </span><span class="kw">ggplot</span>(bee, <span class="kw">aes</span>(<span class="dt">y =</span> freq, <span class="dt">x =</span> mean, <span class="dt">frame =</span> sample)) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(<span class="dt">cumulative =</span> <span class="ot">TRUE</span>), <span class="dt">stat =</span> <span class="st">&#39;identity&#39;</span>,
-             <span class="dt">fill =</span> <span class="st">&#39;#0072B2&#39;</span>, <span class="dt">colour =</span> <span class="st">&#39;#0072B2&#39;</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="kw">mean</span>(foo), <span class="dt">colour =</span> <span class="st">&quot;#E69F00&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw">scale_x_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="fl">0.7</span>, <span class="fl">1.3</span>),
-                       <span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dt">from =</span> <span class="fl">0.7</span>, <span class="dt">to =</span> <span class="fl">1.3</span>, <span class="dt">by =</span> <span class="fl">0.1</span>)) <span class="op">+</span>
-<span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&#39;bin counter =&#39;</span>,
-         <span class="dt">x =</span> <span class="st">&#39;</span><span class="ch">\n</span><span class="st">Sample mean&#39;</span>, <span class="dt">y =</span> <span class="st">&#39;Frequency</span><span class="ch">\n</span><span class="st">&#39;</span>) <span class="op">+</span>
+clt &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> df) <span class="op">+</span>
+<span class="st">    </span><span class="kw">aes</span>(<span class="dt">y =</span> freq, 
+        <span class="dt">x =</span> mean,
+        <span class="dt">group =</span> sample) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&#39;identity&#39;</span>,
+             <span class="dt">fill =</span> <span class="st">&#39;#0072B2&#39;</span>, 
+             <span class="dt">colour =</span> <span class="st">&#39;#0072B2&#39;</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="kw">mean</span>(population), 
+               <span class="dt">colour =</span> <span class="st">&quot;#E69F00&quot;</span>, 
+               <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">scale_x_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span><span class="fl">0.3</span>, <span class="fl">0.3</span>),
+                       <span class="dt">breaks =</span> <span class="kw">c</span>(<span class="op">-</span><span class="fl">0.3</span>, <span class="op">-</span><span class="fl">0.2</span>, <span class="op">-</span><span class="fl">0.1</span>, <span class="dv">0</span>, <span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span>)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">scale_y_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">300</span>),
+                       <span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">100</span>, <span class="dv">200</span>, <span class="dv">300</span>)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&#39;</span><span class="ch">\n</span><span class="st">Sample mean&#39;</span>, 
+         <span class="dt">y =</span> <span class="st">&#39;Frequency</span><span class="ch">\n</span><span class="st">&#39;</span>) <span class="op">+</span>
 <span class="st">    </span><span class="kw">theme</span>(<span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">20</span>),
           <span class="dt">axis.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">20</span>),
           <span class="dt">axis.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">20</span>),
           <span class="dt">axis.ticks =</span> <span class="kw">element_blank</span>(),
-          <span class="dt">panel.grid.major =</span> <span class="kw">element_line</span>(<span class="dt">colour =</span> <span class="st">&#39;gray80&#39;</span>, <span class="dt">size =</span> <span class="fl">0.3</span>),
-          <span class="dt">panel.background =</span> <span class="kw">element_blank</span>())
+          <span class="dt">panel.grid.major =</span> <span class="kw">element_line</span>(<span class="dt">colour =</span> <span class="st">&#39;gray80&#39;</span>,
+                                          <span class="dt">size =</span> <span class="fl">0.3</span>),
+          <span class="dt">panel.background =</span> <span class="kw">element_blank</span>()) <span class="op">+</span>
+<span class="st">    </span><span class="kw">transition_reveal</span>(<span class="dt">along =</span> sample)
 
-<span class="co"># Animate plots with gg_animate</span>
-<span class="kw">gg_animate</span>(clt, <span class="dt">interval =</span> <span class="fl">0.2</span>, <span class="st">&#39;central-limit.gif&#39;</span>)</code></pre></div>
+<span class="co"># Animate plots with animate</span>
+clt_animate &lt;-<span class="st"> </span><span class="kw">animate</span>(clt, 
+                       <span class="dt">res =</span> <span class="dv">150</span>,
+                       <span class="dt">width =</span> <span class="dv">7</span>,
+                       <span class="dt">height =</span> <span class="dv">7</span>,
+                       <span class="dt">units =</span> <span class="st">&#39;in&#39;</span>) 
+
+<span class="co"># Save the output</span>
+<span class="kw">anim_save</span>(<span class="dt">filename =</span> <span class="st">&#39;central-limit.gif&#39;</span>,
+          <span class="dt">animation =</span> clt_animate, 
+          <span class="dt">path =</span> <span class="st">&#39;./images/posts/2016-05-17-probability-theory&#39;</span>)</code></pre></div>
 <p>The output is shown in the next figure, and as you can see, despite the samples being obtained from a right-skewed distribution, the distribution of sample means is roughly normal, and centred around the mean of the population (orange line).</p>
 <p><img src="images/posts/2016-05-17-probability-theory/central-limit.gif"
-style="display:block;margin-right:auto;margin-left:auto;max-width:100%;"></p>
+style="display:block;margin-right:auto;margin-left:auto;max-width:50%;"></p>
 </div>
 <div id="the-law-of-large-numbers-in-action" class="section level3">
 <h3>The law of large numbers in action</h3>
-<p>To illustrate the law of large numbers, I took the 5000 sample means I had generated and calculated a cumulative mean across the samples. The cumulative mean was then plotted against the sample number in ggplot2, with the gganimate <strong>‘frame’</strong> and <strong>‘cumulative’</strong> aesthetics added to geom_line, which allowed gg_animate to depict the changing cumulative mean across increasing sample number as frames in the animation.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
-######################
-<span class="co"># Law of large numbers</span>
-######################
-
-<span class="co"># Process the data in &#39;bar&#39; for plotting</span>
-## Unlist
-baz_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">unlist</span>(bar)
-
+<p>To illustrate the <em>law of large numbers</em>, I took the 5000 sample means I had generated and calculated a cumulative mean across the samples. The cumulative mean was then plotted against the sample number in <code>ggplot2</code> with the function <code>gganimate::transition_reveal()</code> animating the plot by sequentially adding the cumulative mean as the number of resamples increased.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Process the data in &#39;lst2&#39; for plotting</span>
 ## Calculate the cumulative mean for plotting
-zoot &lt;-<span class="st"> </span>baz_<span class="dv">2</span> <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">data_frame</span>(<span class="dt">mean =</span> .) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">cmean =</span> <span class="kw">round</span>(<span class="kw">cummean</span>(mean),<span class="dv">4</span>),
+cumm_df &lt;-<span class="st"> </span>lst2 <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">tibble</span>(<span class="dt">mean =</span> .) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">cmean =</span> <span class="kw">round</span>(<span class="kw">cummean</span>(mean), <span class="dv">4</span>),
            <span class="dt">count =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(mean)) <span class="op">%&gt;%</span>
-<span class="st">    </span><span class="kw">select</span>(count, mean, cmean)
+<span class="st">    </span><span class="kw">select</span>(count, mean, cmean) 
+
+## Create a reduced cumm_df dataset
+index &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">0</span>, 
+             <span class="dt">to =</span> <span class="kw">nrow</span>(cumm_df), 
+             <span class="dt">by =</span> <span class="dv">50</span>)
+index[<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="dv">1</span>
+
+cumm_short &lt;-<span class="st"> </span>cumm_df <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">filter</span>(count <span class="op">%in%</span><span class="st"> </span>index)
 
 <span class="co"># Plot the data</span>
-lln &lt;-<span class="st"> </span><span class="kw">ggplot</span>(zoot_short, <span class="kw">aes</span>(<span class="dt">y =</span> cmean, <span class="dt">x =</span> count)) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">frame =</span> count, <span class="dt">cumulative =</span> <span class="ot">TRUE</span>),
-              <span class="dt">colour =</span> <span class="st">&#39;#0072B2&#39;</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="kw">mean</span>(foo), <span class="dt">colour =</span> <span class="st">&quot;#E69F00&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&#39;Sample counter =&#39;</span>,
-         <span class="dt">x =</span> <span class="st">&#39;</span><span class="ch">\n</span><span class="st">Sample number&#39;</span>, <span class="dt">y =</span> <span class="st">&#39;Cumulative mean</span><span class="ch">\n</span><span class="st">&#39;</span>) <span class="op">+</span>
+lln &lt;-<span class="st"> </span><span class="kw">ggplot</span>(cumm_short, 
+              <span class="kw">aes</span>(<span class="dt">y =</span> cmean, 
+                  <span class="dt">x =</span> count)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_line</span>(<span class="dt">colour =</span> <span class="st">&#39;#0072B2&#39;</span>,
+              <span class="dt">size =</span> <span class="fl">0.8</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="kw">mean</span>(population), 
+               <span class="dt">colour =</span> <span class="st">&quot;#E69F00&quot;</span>, 
+               <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&#39;</span><span class="ch">\n</span><span class="st">Sample number&#39;</span>, 
+         <span class="dt">y =</span> <span class="st">&#39;Cumulative mean</span><span class="ch">\n</span><span class="st">&#39;</span>) <span class="op">+</span>
 <span class="st">    </span><span class="kw">theme</span>(<span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">20</span>),
           <span class="dt">axis.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">20</span>),
           <span class="dt">axis.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">20</span>),
           <span class="dt">axis.ticks =</span> <span class="kw">element_blank</span>(),
           <span class="dt">panel.grid.major =</span> <span class="kw">element_line</span>(<span class="dt">colour =</span> <span class="st">&#39;gray80&#39;</span>, <span class="dt">size =</span> <span class="fl">0.3</span>),
-          <span class="dt">panel.background =</span> <span class="kw">element_blank</span>())
+          <span class="dt">panel.background =</span> <span class="kw">element_blank</span>()) <span class="op">+</span>
+<span class="st">    </span><span class="kw">transition_reveal</span>(<span class="dt">along =</span> count)
 
 <span class="co"># Animate plots with gg_animate</span>
-<span class="kw">gg_animate</span>(lln, <span class="dt">interval =</span> <span class="fl">0.2</span>, <span class="st">&#39;law-large-numbers.gif&#39;</span>)</code></pre></div>
+lln_animate &lt;-<span class="st"> </span><span class="kw">animate</span>(lln, 
+                       <span class="dt">res =</span> <span class="dv">150</span>,
+                       <span class="dt">width =</span> <span class="dv">7</span>,
+                       <span class="dt">height =</span> <span class="dv">7</span>,
+                       <span class="dt">units =</span> <span class="st">&#39;in&#39;</span>) 
+
+<span class="co"># Save the output</span>
+<span class="kw">anim_save</span>(<span class="dt">filename =</span> <span class="st">&#39;law-large-numbers.gif&#39;</span>,
+          <span class="dt">animation =</span> lln_animate, 
+          <span class="dt">path =</span> <span class="st">&#39;./images/posts/2016-05-17-probability-theory&#39;</span>)</code></pre></div>
 <p>The resulting figure is shown below, and shows the cumulative mean of sample means getting closer to the population mean as the number of samples increases.</p>
 <p><img src="images/posts/2016-05-17-probability-theory/law-large-numbers.gif"
-style="display:block;margin-right:auto;margin-left:auto;max-width:100%;"></p>
+style="display:block;margin-right:auto;margin-left:auto;max-width:50%;"></p>
 <p>So there you have it, the central limit theorem and the law of large numbers graphically illustrated using the awesome gganimate package in combination with ggplot2. Making the creation of animated ggplots simple.</p>
 <hr />
 </div>
-</div>
-<div id="tldr" class="section level2">
-<h2>tl;dr</h2>
-<div id="github" class="section level4">
-<h4>GitHub</h4>
-<p>You can clone the full <em>RMarkdown</em> file from <a href="//github.com/kamermanpr/miscellaneous/tree/master/central-limit-n-large-numbers">GitHub</a>, or view the file at <a href="//beta.rstudioconnect.com/kamermanpr/central-limit-n-large-numbers/">RStudio Connect</a>.</p>
-</div>
-<div id="ggplot2-extensions" class="section level4">
-<h4>ggplot2 extensions</h4>
-<p>You can find more extensions for ggplot from <a href="//www.ggplot2-exts.org/index.html">ggplot2 extensions</a>.</p>
-</div>
-<div id="oops" class="section level4">
-<h4>Oops</h4>
-<p>The little I know about stats is dangerous, so if you spot an error please let me know by submitting an <a href="//github.com/kamermanpr/miscellaneous/issues">issue</a> on GitHub or by adding a comment below.</p>
+<div id="oops" class="section level3">
+<h3>Oops</h3>
+<p>The little I know about stats is dangerous, so if you spot an error please let me know by submitting an <a href="//github.com/kamermanpr/painblogr-build/issues">issue</a> on GitHub or by adding a comment below.</p>
 </div>
 </div>
 
