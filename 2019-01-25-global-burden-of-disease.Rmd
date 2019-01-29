@@ -4,7 +4,7 @@ post_author: 'Peter Kamerman'
 post_date: '25 January 2019'
 post_image: './images/posts/2019-01-25-global-burden-of-disease/post-image.png'
 permalink:  '2019-01-25-global-burden-of-disease.html'
-description: "You may be paying for your longevity with extra years of poor health"
+description: "Are we paying for our increasing longevity with extra years of poor health?"
 output:
     html_document:
         template: './_templates/posts.html'
@@ -49,7 +49,7 @@ knitr::opts_chunk$set(warning = FALSE,
 
 ## Background
 
-A recent article in _The Lancet_[^1] reported that in most cases, increases in life expectancy that have occured over the past 28 years (1990 to 2017) are associated with a disproportionate increase in years spend in poor health compared to years of good health. They made this assessment using data from the Global Burden of Diseases, Injuries, and Risk Factors Study 2017 (GBD 2017). The GBD 2017 data, which are freely available for download from the [Global Burden of Disease Exchange](http://ghdx.healthdata.org/gbd-2017), includes estimates of years of lost life and years lived with disability based on 359 causes of death and disability across 195 countries and territories. Two key indices that are calculated are _total life expectancy_ and _healthy life expectancy (HALE; years of good health)_. 
+A recent article in _The Lancet_[^1] reported that the increase in life expectancy that has occurred over the past 28 years (1990 to 2017) is associated with a disproportionate relative increase in time spent in poor health compared to good health. They reached this conclusion after analysing data on _total life expectancy_ and _healthy life expectancy (HALE; years of good health)_ from the Global Burden of Diseases, Injuries, and Risk Factors Study 2017 (GBD 2017). The GBD Study, assesses mortality and disability based on 359 causes of death and disability across 195 countries and territories (GBD data are freely available for download from the [Global Burden of Disease Exchange](http://ghdx.healthdata.org/gbd-2017). 
 
 The figure below is taken directly from the article in _The Lancet_ and shows _HALE_ and _years of poor health_ ( _total life expectancy_ - _HALE_ ) for females (<span style="color:#ED0000FF;">red lines</span>) and males (<span style="color:#00468BFF;">blue lines</span>) across socio-demographic index quintiles (High, High-middle, Middle, Middle-low, and Low SDI).
 
@@ -59,15 +59,15 @@ The figure below is taken directly from the article in _The Lancet_ and shows _H
 
 [^1]: GBD 2017 DALYs and HALE Collaborators. Global, regional, and national disability-adjusted life-years (DALYs) for 359 diseases and injuries and healthy life expectancy (HALE) for 195 countries and territories, 1990-2017: a systematic analysis for the Global Burden of Disease Study 2017. _Lancet_ **392**:1859–1922, 2018. doi: [10.1016/S0140-6736(18)32335-3](https://doi.org/10.1016/S0140-6736(18)32335-3).
 
-The figure shows an upward trend in _HALE_ and _years of poor health_ over the past 28 years, for males and females across the five socio-demographic quintiles. But, it is hard to see from the plot whether the rate of increase in _years of poor health_ is greater than that for _HALE_; a key finding in the paper. That is, the plot does not aid the interpretation of the findings by a reader.
+The figure shows an upward trend in _HALE_ and _years of poor health_ over the past 28 years, for males and females across the five socio-demographic quintiles. But, it is hard to descern from the plot whether the rate of increase in _years of poor health_ is greater than that for _HALE_; a key finding of the research. That is, the figure does not accomplish the reason for having a plot, which is to provide a visual aid for interpreting the findings.
 
-So I decided to play with the data myself to to see if I could generate a more informative graphical depiction of the findings. 
+So I decided to play with the data myself to see if I could generate more informative plots. 
 
-To achieve this aim, I decided to: 
+I approached this task by: 
 
-1. recapitulate the plot from the article, but with an extra panel showing _total life expectancy_. This plot would confirm whether I had downloaded the correct data, and the extra panel would help contextualize changes in _HALE_ and _years of poor health_ data with _total life expectancy_; and
+1. Recapitulating the plot from the article, but with an extra panel showing _total life expectancy_. I decided on this plot because I wanted to confirm that I had downloaded the correct data, and I felt that the _total life expectancy_ panel would help contextualize changes in _HALE_ and _years of poor health_ data; and by
 
-2. to compare the rate of increase in _years of poor health_ and _HALE_ since 1990 using animated plots, thus providing a clearer picture of the relative contribution of the two measures to inceases in _total life expectancy_ over the past 28 years. 
+2. Comparing the cummulative year-over-year percent change in _years of poor health_ and _HALE_ since 1990. I felt that using the cummulative year-over-year change would allow direct comparison of the long-term trends of two variables measured on the same scale (years), but which have vastly different magnitudes (_HALE_ contributes 80 to 90% of _total life expectancy_). As an bonus, I decided to animate these plots to get a feel for the new [`gganimate`](https://github.com/thomasp85/gganimate) API.
 
 ----
 
@@ -121,22 +121,22 @@ data <- life %>%
 glimpse(data)
 ```
 
-The data looked in good order so I proceeded with my two aims.
+The data looked in good order, and only needed some minor cleaning.
 
 ----
 
 ## Analysis
 
-### Aim 1
+#### Step 1
 **Recapitulate the plot from the article, but with an extra panel showing _total life expectancy_.**
 
-I used the cleaned data to calculate the _years of poor health_[^2], and then generated separate plots for _total life expectancy_,  _HALE_, and _years of poor health_ by sex and socio-demographic index quintile. 
+I used the cleaned data to calculate the _years of poor health_[^2], and then generated separate plots for _total life expectancy_,  _HALE_, and _years of poor health_. For each plot, I presented the data by sex and socio-demographic index quintile. 
 
-Finally, I pieced the individuals plots together and formated the visual look using html/css (after bumping my head repeatedly against a brick wall trying to get the desired look using the `patchwork` and `cowplot` packages; my usual go to packages for multiplots). 
+Finally, I pieced the individuals plots together and formated the visual look using `html/css` (after bumping my head repeatedly against a brick wall trying to get the desired look using the `patchwork` and `cowplot` packages; my usual go to packages for multiplots). 
 
 [^2]: _years of poor health = total life expectancy - HALE_
 
-```{r objective_1, eval = FALSE}
+```{r step_1, eval = FALSE}
 ############################################################
 #                                                          #
 #        Calculate years of poor health since birth        #
@@ -276,20 +276,14 @@ HALE=Healthy life expectancy, SDI=Socio-demographic index
 </div>
 </div>
 
-Comparing this updated figure with that from the article, I was satisfied that I had reproduced the original figure (but with a _total life expectancy_ panel). From **Revised figure 1**, it is clear that _total life expectancy_, _HALE_, and _years of poor health_ increased over time for both sexes, and across all socio-demographic quintiles. Although the trend curves for males and females are roughly parallel for all three measures (with the curves for females shifted upwards relative to those of their male counterparts), there is a progressive reduction in the magnitude of this male/female difference as you move from High SDI countries to Low SDI countries, particularly for _total life expectancy_ and _HALE_. 
+Comparing my figure to the figure from the article, I was satisfied that I had reproduced the original figure (but with a _total life expectancy_ panel). From **Revised figure 1**, it is clear that _total life expectancy_, _HALE_, and _years of poor health_ increased over time for both sexes, and across all socio-demographic quintiles. Although the trend curves for males and females are roughly parallel for all three measures (with the curves for females shifted upwards relative to those of their male counterparts), there is a progressive reduction in the magnitude of this male/female difference as you move from High SDI countries to Low SDI countries, particularly for _total life expectancy_ and _HALE_. 
 
-I feel that presenting _total life expectancy_ data in the figure added value. For example, in Low SDI countries, _total life expectancy_ has consistently been only slightly greater in females than in males, yet _HALE_ in males and females over the same time-period is almost identical, and so the slightly greater _total life expectancy_ in females must primarily reflect more _years of poor health_ in females compared to males. 
+I feel that presenting _total life expectancy_ data in the figure added value. For example, with the addition of _total life expectancy_ data, it is apparent that in Low SDI countries, _total life expectancy_ has consistently been slightly greater in females than in males, yet _HALE_ in males and females over the same time-period is almost identical. So, the marginally greater _total life expectancy_ in females must reflect more _years of poor health_ compared to males. 
 
-### Aim 2
-**Compare the rate of increase in _years of poor health_ and _HALE_ over time using animated plots.**
+### Step 2
+**Compare cummulative year-over-year percent change in _years of poor health_ and _HALE_ for the past 28 years.**
 
-To my mind, the best way to present the data in a way that: 
-
-1) corrected for the very large difference between _HALE_ and _years of poor health_ in 1990 (~ 38 to 57 years depending on SDI quintile and sex), and
-
-2) accentuated changes in _HALE_ and _years of poor health_ relative to each other over time,
-
-was by calculating the cumulative year-over-year percentage change in _HALE_ and _years of poor health_ between 1990 and 2017. Another option would be to plot mean-centered _HALE_ and _years of poor health_ values over time. 
+There were several ways I could have analysed and plotted these data. For example, I could have used: sequential year-over-year percent change data, mean-centered data, or the yearly absolute difference between _HALE_ and _years of poor health_. But I chose to use cummulative year-over-year percent change because I felt it was the best option for presenting the data. As a relative measure, it corrects for the very large absolute difference between _HALE_ and _years of poor health_ (~ 38 to 57 years in 1990, depending on SDI quintile and sex), and allows the assessment of the cummulative effect the yearly fluctuations in _HALE_ and _years of poor health_.
 
 ```{r objective_2, eval = FALSE}
 ############################################################
@@ -554,15 +548,13 @@ HALE=Healthy life expectancy, SDI=Socio-demographic index
 </p>
 </div>
 
-### Summary
+I'm quite please with the way the plots of cummulative year-over-year percent change in _HALE_ and _years of poor health_ came out. I think that compared to the original figure from the publication, it is now much clearer how the relative rate of growth in _HALE_ and _years of poor health_ has changed over the past three decades. While _total life expectancy_ has followed a relatively smooth upward trajectory between 1990 and 2017 (for both sexes and across SDI quintiles), the relative rate of growth of _HALE_ and _years of poor health_ to this increase in _total life expectancy_ has see significant shifts over time. Moreover, these shifts are not consistent across SDI quintiles.  
 
-I'm quite please with the way the relative rates of increase in _HALE_ and _years of poor health_ have changed over the past 28 years, while _total life expectancy_ has followed a relatively smooth upward trajectory over the same period. Differences in the _HALE_ and _years of poor health_ curves over time and across SDI quintiles, together with the similarity in the curves across the sexes, are clearly discernable; something that cannot be said about the figure from the original article. 
-
-At the two extremes are the High and Low SDI quintiles. High SDI quintile has seen a dramatic increase in the cumulative year-over-year percent change in _years of poor healthy_ relative to _HALE_, with the two curves separating as early as the early 1990s in males and early 2000s in females. In the Low SDI quintile, the two curves tracked each other until the mid-1990s in females and mid-2000s for males, after which the cumulative year-over-year percent change in _HALE_ outstripped that for _years of poor healthy_. The longterm trends in the Low SDI quintile are desirable, while those in the High SDI quntile are not. 
+At the two extremes are the High and Low SDI quintiles. The High SDI quintile has seen a dramatic increase in the cumulative year-over-year percent change in _years of poor healthy_ relative to _HALE_, with the two curves separating as early as the early 1990s in males and early 2000s in females. The faster rate of growth in _years of poor health_ than _HALE_ means that _years of poor health_ is contributing proportionately more to the rise in _total life expectancy_ than _HALE_ is. In the Low SDI quintile, we see the opposite trend, with the _years of poor healthy_ and _HALE_ curves tracking each other until the mid-1990s in females and mid-2000s for males, after which the cumulative rate of growth in _HALE_ outstripped that for _years of poor healthy_. The long-term trends in the Low SDI quintile are desirable, while those in the High SDI quntile are not. 
 
 The remaining quintiles show a graded shift in cumulative year-over-year percent change in _HALE_ and _years of poor health_ from the situation in the High SDI quintile to the Low SDI quintile.
 
-Hopefully you find the analysis useful. If you have any suggestions on how to improve the blog post, please add a comment below.
+Hopefully you find the analysis useful. If you have any suggestions on how to improve the blog post, please DM me on Twitter (<a href="https://twitter.com/painblogR" target="_blank">@painblogR</a>), send me an email (<a href="mailto:peter.kamerman@gmail.com">peter.kamerman@gmail.com</a>), or log and issue on the painblogR github repo for this site (<a href="https://github.com/kamermanpr/painblogr-build/issues" target="_blank">kamermanpr/painblogr-build</a>).
 
 ----
 
