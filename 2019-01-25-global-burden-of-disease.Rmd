@@ -550,7 +550,7 @@ anim_save(filename = 'perc_female.gif',
 <img src='./images/posts/2019-01-25-global-burden-of-disease/perc_male.gif'>
 </div>
 <p style="font-size:80%;font-style:italic;width:100%;">
-<b>Figure 3: Total life expectancy (top panel for each sex), and the cumulative year-over-year percent change in years of good health and 'years of poor health' (bottom panel for each sex) for females (top two panels) and males (bottom two panels), and each SDI quintile</b><br>
+<b>Figure 3: Total life expectancy (top panel for each sex), and the cumulative year-over-year percent change in 'years of good health' and 'years of poor health' (bottom panel for each sex) for females (top two panels) and males (bottom two panels), and each SDI quintile</b><br>
 SDI=Socio-demographic index
 </p>
 </div>
