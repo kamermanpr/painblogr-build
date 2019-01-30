@@ -49,9 +49,9 @@ knitr::opts_chunk$set(warning = FALSE,
 
 ## Background
 
-A recent article in _The Lancet_[^1] reported that the increase in life expectancy that has occurred over the past 28 years (1990 to 2017) is associated with a disproportionate relative increase in time spent in poor health compared to good health. They reached this conclusion after analysing data on _total life expectancy_ and _healthy life expectancy (HALE; years of good health)_ from the Global Burden of Diseases, Injuries, and Risk Factors Study 2017 (GBD 2017). The GBD Study, assesses mortality and disability based on 359 causes of death and disability across 195 countries and territories (GBD data are freely available for download from the [Global Burden of Disease Exchange](http://ghdx.healthdata.org/gbd-2017). 
+A recent article in _The Lancet_[^1] reported that the increase in life expectancy that has occurred over the past 28 years (1990 to 2017) is associated with a disproportionate relative increase in time spent in poor health compared to good health. The authors reached this conclusion after analysing data on _total life expectancy_ and _healthy life expectancy (HALE; years of good health)_ from the Global Burden of Diseases, Injuries, and Risk Factors Study 2017 (GBD 2017). The GBD Study, assesses mortality and disability based on 359 causes of death and disability across 195 countries and territories (GBD data are freely available for download from the [Global Burden of Disease Exchange](http://ghdx.healthdata.org/gbd-2017). 
 
-The figure below is taken directly from the article in _The Lancet_ and shows _HALE_ and _years of poor health_ ( _total life expectancy_ - _HALE_ ) for females (<span style="color:#ED0000FF;">red lines</span>) and males (<span style="color:#00468BFF;">blue lines</span>) across socio-demographic index quintiles (High, High-middle, Middle, Middle-low, and Low SDI).
+The figure below is taken directly from the article in _The Lancet_ and shows _years of good health_ and _years of poor health_ (_total life expectancy_ - _years of good health_) for females (<span style="color:#ED0000FF;">red lines</span>) and males (<span style="color:#00468BFF;">blue lines</span>) across socio-demographic index quintiles (High, High-middle, Middle, Middle-low, and Low SDI).
 
 <div style="margin-left:auto;margin-right:auto;width:80%;">
 <img src='./images/posts/2019-01-25-global-burden-of-disease/GBD_fig_1.png'>
@@ -59,15 +59,15 @@ The figure below is taken directly from the article in _The Lancet_ and shows _H
 
 [^1]: GBD 2017 DALYs and HALE Collaborators. Global, regional, and national disability-adjusted life-years (DALYs) for 359 diseases and injuries and healthy life expectancy (HALE) for 195 countries and territories, 1990-2017: a systematic analysis for the Global Burden of Disease Study 2017. _Lancet_ **392**:1859–1922, 2018. doi: [10.1016/S0140-6736(18)32335-3](https://doi.org/10.1016/S0140-6736(18)32335-3).
 
-The figure shows an upward trend in _HALE_ and _years of poor health_ over the past 28 years, for males and females across the five socio-demographic quintiles. But, it is hard to descern from the plot whether the rate of increase in _years of poor health_ is greater than that for _HALE_; a key finding of the research. That is, the figure does not accomplish the reason for having a plot, which is to provide a visual aid for interpreting the findings.
+The figure shows an upward trend in _years of good health_ and _years of poor health_ over the past 28 years, for males and females across the five socio-demographic quintiles. But, it is hard to discern from the plot whether the rate of increase in _years of poor health_ is greater than the rate of increase in _years of good health_, even though this was a key finding of the research. That is, the figure does not accomplish the reason for having a plot, which is to provide a visual aid for interpreting the findings.
 
 So I decided to play with the data myself to see if I could generate more informative plots. 
 
 I approached this task by: 
 
-1. Recapitulating the plot from the article, but with an extra panel showing _total life expectancy_. I decided on this plot because I wanted to confirm that I had downloaded the correct data, and I felt that the _total life expectancy_ panel would help contextualize changes in _HALE_ and _years of poor health_ data; and by
+1. Recapitulating the plot from the article, but with an extra panel showing _total life expectancy_. I decided on this plot because I wanted to confirm that I had downloaded the correct data, and I felt that the _total life expectancy_ panel would help contextualize changes in _years of good health_ and _years of poor health_ data; and by
 
-2. Comparing the cummulative year-over-year percent change in _years of poor health_ and _HALE_ since 1990. I felt that using the cummulative year-over-year change would allow direct comparison of the long-term trends of two variables measured on the same scale (years), but which have vastly different magnitudes (_HALE_ contributes 80 to 90% of _total life expectancy_). As an bonus, I decided to animate these plots to get a feel for the new [`gganimate`](https://github.com/thomasp85/gganimate) API.
+2. Comparing the cumulative year-over-year percent change in _years of poor health_ and _years of good health_ since 1990. I felt that using the cumulative year-over-year change would allow direct comparison of the long-term trends of two variables measured on the same scale (years), but which have vastly different magnitudes (_years of good health_ contributes 80 to 90% of _total life expectancy_). As an bonus, I decided to animate these plots to get a feel for the new [`gganimate`](https://github.com/thomasp85/gganimate) API.
 
 ----
 
@@ -75,7 +75,7 @@ I approached this task by:
 
 First I had to get and clean the data.
 
-I manually downloaded the data from the Global Burden of Disease Exchange website using their [query tool](http://ghdx.healthdata.org/gbd-results-tool) (as far as I know, the site does not have an API to remotely query and retrieve data). I then imported the two _\*.csv_ files I had downloaded (one for _HALE_, and one for _total life expectancy_), and performed a cursory inspection and a basic clean-up of the data, the code and outputs of which are shown below. 
+I manually downloaded the data from the Global Burden of Disease Exchange website using their [query tool](http://ghdx.healthdata.org/gbd-results-tool) (as far as I know, the site does not have an API to remotely query and retrieve data). I then imported the two _\*.csv_ files I had downloaded (one for _years of good health_, and one for _total life expectancy_), and performed a cursory inspection and a basic clean-up of the data, the code and outputs of which are shown below. 
 
 ```{r clean_data}
 ############################################################
@@ -83,7 +83,7 @@ I manually downloaded the data from the Global Burden of Disease Exchange websit
 #                       Import data                        #
 #                                                          #
 ############################################################
-# HALE
+# years of good health
 hale <- read_csv('_data/2019-01-25-global-burden-of-disease/hale-1990-2017.csv') 
 # Life expectancy
 life <- read_csv('_data/2019-01-25-global-burden-of-disease/life-expectancy-1990-2017.csv')
@@ -106,10 +106,13 @@ data <- life %>%
     bind_rows(hale) %>% 
     # Select required columns
     select(measure, location, sex, year, metric, val) %>% 
-    # Recode HALE category labels
+    # Recode measure category labels
     mutate(measure = str_replace_all(measure,
                                      pattern = 'HALE \\(Healthy life expectancy\\)',
-                                     replacement = 'Years healthy')) %>% 
+                                     replacement = 'Years of good health')) %>% 
+    mutate(measure = str_replace_all(measure,
+                                     pattern = 'Life expectancy',
+                                     replacement = 'Total life expectancy')) %>% 
     # Order location variable (socio-demographic quintile)
     mutate(location = factor(location,
                              levels = c('High SDI', 'High-middle SDI',
@@ -128,13 +131,14 @@ The data looked in good order, and only needed some minor cleaning.
 ## Analysis
 
 #### Step 1
+
 **Recapitulate the plot from the article, but with an extra panel showing _total life expectancy_.**
 
-I used the cleaned data to calculate the _years of poor health_[^2], and then generated separate plots for _total life expectancy_,  _HALE_, and _years of poor health_. For each plot, I presented the data by sex and socio-demographic index quintile. 
+I used the cleaned data to calculate the _years of poor health_[^2], and then generated separate plots for _total life expectancy_,  _years of good health_, and _years of poor health_. For each plot, I presented the data by sex and socio-demographic index quintile. 
 
-Finally, I pieced the individuals plots together and formated the visual look using `html/css` (after bumping my head repeatedly against a brick wall trying to get the desired look using the `patchwork` and `cowplot` packages; my usual go to packages for multiplots). 
+Finally, I pieced the individual plots together and formated the visual look using `html/css` (after bumping my head repeatedly against a brick wall trying to get the desired look using the `patchwork` and `cowplot` packages; my usual go to packages for multiplots). 
 
-[^2]: _years of poor health = total life expectancy - HALE_
+[^2]: _years of poor health = total life expectancy - years of good health_
 
 ```{r step_1, eval = FALSE}
 ############################################################
@@ -147,7 +151,7 @@ delta <- data %>%
     spread(key = measure, 
            value = val) %>% 
     # Calculate years unhealthy 
-    mutate(`Years unhealthy` = `Life expectancy` - `Years healthy`) %>% 
+    mutate(`Years of poor health` = `Total life expectancy` - `Years of good health`) %>% 
     # Gather measures again
     gather(key = measure, 
            value = val,
@@ -162,7 +166,7 @@ delta <- data %>%
 
 ## Total life expectancy
 le <- delta %>% 
-    filter(measure == 'Life expectancy') %>% 
+    filter(measure == 'Total life expectancy') %>% 
     ggplot(data = .) +
     aes(x = year,
         y = val,
@@ -173,7 +177,7 @@ le <- delta %>%
                        limits = c(50, 85),
                        expand = c(0, 0)) +
     scale_colour_manual(values = c('#ED0000', '#00468B')) +
-    labs(title = 'Life expectancy at birth',
+    labs(title = 'Total life expectancy at birth',
          y = 'Years of life') +
     facet_wrap(~ location, 
                ncol = 5) +
@@ -195,9 +199,9 @@ ggsave(filename = 'le.png',
        height = 2.2,
        units = 'in')
 
-## HALE
+## Years of good health
 healthy <- delta %>% 
-    filter(measure == 'Years healthy') %>% 
+    filter(measure == 'Years of good health') %>% 
     ggplot(data = .) +
     aes(x = year,
         y = val,
@@ -208,7 +212,7 @@ healthy <- delta %>%
                        limits = c(40, 75),
                        expand = c(0, 0)) +
     scale_colour_manual(values = c('#ED0000', '#00468B')) +
-    labs(title = 'HALE at birth',
+    labs(title = 'Years of good health at birth',
          y = 'Years of life') +
     facet_wrap(~ location, 
                ncol = 5) +
@@ -229,7 +233,7 @@ ggsave(filename = 'healthy.png',
 
 ## Poor health
 unhealthy <- delta %>% 
-    filter(measure == 'Years unhealthy') %>% 
+    filter(measure == 'Years of poor health') %>% 
     ggplot(data = .) +
     aes(x = year,
         y = val,
@@ -240,7 +244,7 @@ unhealthy <- delta %>%
                        limits = c(6, 13),
                        expand = c(0, 0)) +
     scale_colour_manual(values = c('#ED0000', '#00468B')) +
-    labs(title = 'Years of poor health from birth',
+    labs(title = 'Years of poor health at birth',
          x = 'Year',
          y = 'Years of life') +
     facet_wrap(~ location, 
@@ -270,20 +274,21 @@ ggsave(filename = 'unhealthy.png',
 <img src='./images/posts/2019-01-25-global-burden-of-disease/unhealthy.png'>
 </div>
 <p style="font-size:90%;font-style:italic;">
-<b>Revised figure 1: Trends of life expectancy at birth, HALE at birth, and years of poor health from birth by SDI quintile and sex, 1990-2017</b><br>
-HALE=Healthy life expectancy, SDI=Socio-demographic index
+<b>Revised figure 1: Trends of total life expectancy at birth, years of good health at birth, and years of poor health at birth by SDI quintile and sex, 1990-2017</b><br>
+SDI=Socio-demographic index
 </p>
 </div>
 </div>
 
-Comparing my figure to the figure from the article, I was satisfied that I had reproduced the original figure (but with a _total life expectancy_ panel). From **Revised figure 1**, it is clear that _total life expectancy_, _HALE_, and _years of poor health_ increased over time for both sexes, and across all socio-demographic quintiles. Although the trend curves for males and females are roughly parallel for all three measures (with the curves for females shifted upwards relative to those of their male counterparts), there is a progressive reduction in the magnitude of this male/female difference as you move from High SDI countries to Low SDI countries, particularly for _total life expectancy_ and _HALE_. 
+Comparing my figure to the figure from the article, I was satisfied that I had reproduced the original figure (but with a _total life expectancy_ panel). From **Revised figure 1**, it is clear that _total life expectancy_, _years of good health_, and _years of poor health_ increased over time for both sexes, and across all socio-demographic quintiles. Although the trend curves for males and females are roughly parallel for all three measures (with the curves for females shifted upwards relative to those of their male counterparts), there is a progressive reduction in the magnitude of this male/female difference as you move from High SDI countries to Low SDI countries, particularly for _total life expectancy_ and _years of good health_. 
 
-I feel that presenting _total life expectancy_ data in the figure added value. For example, with the addition of _total life expectancy_ data, it is apparent that in Low SDI countries, _total life expectancy_ has consistently been slightly greater in females than in males, yet _HALE_ in males and females over the same time-period is almost identical. So, the marginally greater _total life expectancy_ in females must reflect more _years of poor health_ compared to males. 
+I feel that presenting _total life expectancy_ data in the figure added value. For example, with the addition of _total life expectancy_ data, it is apparent that in Low SDI countries, _total life expectancy_ has consistently been slightly greater in females than in males, yet _years of good health_ in males and females over the same time-period is almost identical. So, the marginally greater _total life expectancy_ in females must reflect more _years of poor health_ compared to males. 
 
 ### Step 2
-**Compare cummulative year-over-year percent change in _years of poor health_ and _HALE_ for the past 28 years.**
 
-There were several ways I could have analysed and plotted these data. For example, I could have used: sequential year-over-year percent change data, mean-centered data, or the yearly absolute difference between _HALE_ and _years of poor health_. But I chose to use cummulative year-over-year percent change because I felt it was the best option for presenting the data. As a relative measure, it corrects for the very large absolute difference between _HALE_ and _years of poor health_ (~ 38 to 57 years in 1990, depending on SDI quintile and sex), and allows the assessment of the cummulative effect the yearly fluctuations in _HALE_ and _years of poor health_.
+**Compare cumulative year-over-year percent change in _years of poor health_ and _years of good health_ for the past 28 years.**
+
+There were several ways I could have analysed and plotted these data. For example, I could have used: sequential year-over-year percent change data, mean-centered data, or the yearly absolute difference between _years of good health_ and _years of poor health_. But I chose to use cumulative year-over-year percent change because I felt it was the best option for presenting the data. As a relative measure, it corrects for the very large absolute difference between _years of good health_ and _years of poor health_ (~ 38 to 57 years in 1990, depending on SDI quintile and sex), and allows the assessment of the cumulative effect the yearly fluctuations in _years of good health_ and _years of poor health_.
 
 ```{r objective_2, eval = FALSE}
 ############################################################
@@ -295,7 +300,7 @@ There were several ways I could have analysed and plotted these data. For exampl
 # Males
 le_male <- delta %>% 
     filter(sex == 'Male') %>% 
-    filter(measure == 'Life expectancy') %>% 
+    filter(measure == 'Total life expectancy') %>% 
     ggplot(data = .) +
     aes(x = year,
         y = val) +
@@ -304,7 +309,7 @@ le_male <- delta %>%
     scale_y_continuous(breaks = c(50, 60, 70, 80),
                        limits = c(50, 85),
                        expand = c(0, 0)) +
-    labs(title = 'Life expectancy at birth',
+    labs(title = 'Total life expectancy at birth',
          y = 'Years of life') +
     facet_wrap(~ location, 
                ncol = 5) +
@@ -337,7 +342,7 @@ anim_save(filename = 'le_male.gif',
 # Females
 le_female <- delta %>% 
     filter(sex == 'Female') %>% 
-    filter(measure == 'Life expectancy') %>% 
+    filter(measure == 'Total life expectancy') %>% 
     ggplot(data = .) +
     aes(x = year,
         y = val) +
@@ -346,7 +351,7 @@ le_female <- delta %>%
     scale_y_continuous(breaks = c(50, 60, 70, 80),
                        limits = c(50, 85),
                        expand = c(0, 0)) +
-    labs(title = 'Life expectancy at birth',
+    labs(title = 'Total life expectancy at birth',
          y = 'Years of life') +
     facet_wrap(~ location, 
                ncol = 5) +
@@ -394,9 +399,9 @@ baseline_1990 <- delta_spread %>%
     # Extract 1990 values 
     filter(year == 1990) %>% 
     # Rename columns
-    rename(`Life expectancy 1990` = `Life expectancy`,
-           `Years healthy 1990` = `Years healthy`,
-           `Years unhealthy 1990` = `Years unhealthy`) %>% 
+    rename(`Total life expectancy 1990` = `Total life expectancy`,
+           `Years of good health 1990` = `Years of good health`,
+           `Years of poor unhealth 1990` = `Years of poor health`) %>% 
     # Remove unneeded column
     select(-metric, -year)
 
@@ -407,38 +412,40 @@ delta_spread %<>%
 ############################################################
 #                                                          #
 #       Cumulative year-on-year percent change for         #
-#             HALE and 'years of poor health'              #
+#    'years of good health' and 'years of poor health'     #
 #                                                          #
 ############################################################
 delta_spread %<>% 
     # Year-over-year change for each subgroup
     group_by(location, sex) %>% 
-    mutate(p_yoy_healthy = 100 * ((`Years healthy` - lag(`Years healthy`)) / lag(`Years healthy`)),
-           p_yoy_unhealthy = 100 * ((`Years unhealthy` - lag(`Years unhealthy`)) / lag(`Years unhealthy`))) %>% 
+    mutate(p_yoy_good_health = 100 * ((`Years of good health` - 
+                                           lag(`Years of good health`)) / lag(`Years of good health`)),
+           p_yoy_poor_health = 100 * ((`Years of poor health` - 
+                                           lag(`Years of poor health`)) / lag(`Years of poor health`))) %>%
     # Remove lag calc <NA> for 1990, and add cumulative yoy change for each subgroup
-    mutate(p_yoy_healthy = ifelse(year == 1990,
+    mutate(p_yoy_good_health = ifelse(year == 1990,
                                   yes = 0,
-                                  no = p_yoy_healthy),
-           p_yoy_unhealthy = ifelse(year == 1990,
+                                  no = p_yoy_good_health),
+           p_yoy_poor_health = ifelse(year == 1990,
                                     yes = 0,
-                                    no = p_yoy_unhealthy)) %>% 
-    mutate(p_cumm_yoy_healthy = cumsum(p_yoy_healthy), 
-           p_cumm_yoy_unhealthy = cumsum(p_yoy_unhealthy)) %>% 
+                                    no = p_yoy_poor_health)) %>% 
+    mutate(p_cum_yoy_good_health = cumsum(p_yoy_good_health), 
+           p_cum_yoy_poor_health = cumsum(p_yoy_poor_health)) %>% 
     ungroup()
 
 ############################################################
 #                                                          #
 #           Plot year-on-year percent change for           #
-#             HALE and 'years of poor health'              #
+#    'years of good health' and 'years of poor health'     #
 #                                                          #
 ############################################################
 # Males
 perc_male <- delta_spread %>% 
     filter(sex == 'Male') %>% 
-    # Gather cumm_yoy_* columns
+    # Gather cum_yoy_* columns
     gather(key = 'key',
            value = 'value',
-           p_cumm_yoy_healthy, p_cumm_yoy_unhealthy) %>% 
+           p_cum_yoy_good_health, p_cum_yoy_poor_health) %>% 
     # Plot
     ggplot(data = .) +
     aes(x = year,
@@ -448,9 +455,9 @@ perc_male <- delta_spread %>%
     scale_x_continuous(breaks = c(1990, 1995, 2000, 2005, 2010, 2017)) +
     scale_y_continuous(limits = c(-5, 20),
                        breaks = c(-5, 0, 5, 10, 15, 20)) +
-    scale_colour_manual(labels = c('HALE', 'Years of\npoor health'), 
+    scale_colour_manual(labels = c('years of\ngood health', 'Years of\npoor health'), 
                         values = c('#56B4E9', '#E69F00')) +
-    labs(title = "Cumulative year-over-year percent change in HALE and 'years of poor health'",
+    labs(title = "Cumulative year-over-year percent change in 'years of good health' and 'years of poor health'",
          x = 'Year',
          y = "Cumulative change (%)") +
     facet_wrap(~ location, 
@@ -487,7 +494,7 @@ perc_female <- delta_spread %>%
     filter(sex == 'Female') %>% 
     gather(key = 'key',
            value = 'value',
-           p_cumm_yoy_healthy, p_cumm_yoy_unhealthy) %>% 
+           p_cum_yoy_good_health, p_cum_yoy_poor_health) %>% 
     # Plot
     ggplot(data = .) +
     aes(x = year,
@@ -497,9 +504,9 @@ perc_female <- delta_spread %>%
     scale_x_continuous(breaks = c(1990, 1995, 2000, 2005, 2010, 2017)) +
     scale_y_continuous(limits = c(-5, 20),
                        breaks = c(-5, 0, 5, 10, 15, 20)) +
-    scale_colour_manual(labels = c('HALE', 'Years of\npoor health'), 
+    scale_colour_manual(labels = c('Years of\ngood health', 'Years of\npoor health'), 
                         values = c('#56B4E9', '#E69F00')) +
-    labs(title = "Cumulative year-over-year percent change in HALE and 'years of poor health'",
+    labs(title = "Cumulative year-over-year percent change in 'years of good health' and 'years of poor health'",
          x = 'Year',
          y = "Cumulative change (%)") +
     facet_wrap(~ location, 
@@ -543,18 +550,20 @@ anim_save(filename = 'perc_female.gif',
 <img src='./images/posts/2019-01-25-global-burden-of-disease/perc_male.gif'>
 </div>
 <p style="font-size:80%;font-style:italic;width:100%;">
-<b>Figure 3: Total life expectancy (top panel for each sex), and the Cumulative year-over-year percent change in HALE and 'years of poor health' (bottom panel for each sex) for females (top two panels) and males (bottom two panels), and each SDI quintile</b><br>
-HALE=Healthy life expectancy, SDI=Socio-demographic index
+<b>Figure 3: Total life expectancy (top panel for each sex), and the cumulative year-over-year percent change in years of good health and 'years of poor health' (bottom panel for each sex) for females (top two panels) and males (bottom two panels), and each SDI quintile</b><br>
+SDI=Socio-demographic index
 </p>
 </div>
 
-I'm quite please with the way the plots of cummulative year-over-year percent change in _HALE_ and _years of poor health_ came out. I think that compared to the original figure from the publication, it is now much clearer how the relative rate of growth in _HALE_ and _years of poor health_ has changed over the past three decades. While _total life expectancy_ has followed a relatively smooth upward trajectory between 1990 and 2017 (for both sexes and across SDI quintiles), the relative rate of growth of _HALE_ and _years of poor health_ to this increase in _total life expectancy_ has see significant shifts over time. Moreover, these shifts are not consistent across SDI quintiles.  
+I'm quite pleased with the way the plots of cumulative year-over-year percent change in _years of good health_ and _years of poor health_ came out. I think that compared to the original figure from the publication, it is now much clearer how the relative rate of growth in _years of good health_ and _years of poor health_ has changed over the past three decades. That is, you can now see one of the key finds of the paper, and you can now appreciate the relative changes in the rate of growth in _years of good health_ and _years of poor health_ over time and between SDI quintiles. 
 
-At the two extremes are the High and Low SDI quintiles. The High SDI quintile has seen a dramatic increase in the cumulative year-over-year percent change in _years of poor healthy_ relative to _HALE_, with the two curves separating as early as the early 1990s in males and early 2000s in females. The faster rate of growth in _years of poor health_ than _HALE_ means that _years of poor health_ is contributing proportionately more to the rise in _total life expectancy_ than _HALE_ is. In the Low SDI quintile, we see the opposite trend, with the _years of poor healthy_ and _HALE_ curves tracking each other until the mid-1990s in females and mid-2000s for males, after which the cumulative rate of growth in _HALE_ outstripped that for _years of poor healthy_. The long-term trends in the Low SDI quintile are desirable, while those in the High SDI quntile are not. 
+While _total life expectancy_ has followed a relatively smooth upward trajectory between 1990 and 2017 (for both sexes and across SDI quintiles), the relative rate of growth of _years of good health_ and _years of poor health_ to this increase in _total life expectancy_ has see significant shifts over time. And, these shifts are not consistent across SDI quintiles.  
 
-The remaining quintiles show a graded shift in cumulative year-over-year percent change in _HALE_ and _years of poor health_ from the situation in the High SDI quintile to the Low SDI quintile.
+At the two extremes are the High and Low SDI quintiles. The High SDI quintile has seen a dramatic increase in the cumulative year-over-year percent change in _years of poor health_ relative to _years of good health_, with the two curves separating as early as the early 1990s in males and early 2000s in females. The faster rate of growth in _years of poor health_ than _years of good health_ means that _years of poor health_ is contributing proportionately more to the rise in _total life expectancy_ than _years of good health_ is. In the Low SDI quintile, we see the opposite trend, with the _years of poor healthy_ and _years of good health_ curves tracking each other until the mid-1990s in females and mid-2000s for males, after which the cumulative rate of growth in _years of good health_ outstripped that for _years of poor health_. The long-term trends in the Low SDI quintile are desirable, while those in the High SDI quintile are not. 
 
-Hopefully you find the analysis useful. If you have any suggestions on how to improve the blog post, please DM me on Twitter (<a href="https://twitter.com/painblogR" target="_blank">@painblogR</a>), send me an email (<a href="mailto:peter.kamerman@gmail.com">peter.kamerman@gmail.com</a>), or log and issue on the painblogR github repo for this site (<a href="https://github.com/kamermanpr/painblogr-build/issues" target="_blank">kamermanpr/painblogr-build</a>).
+The remaining quintiles show a graded shift in cumulative year-over-year percent change in _years of good health_ and _years of poor health_ from the situation in the High SDI quintile to the Low SDI quintile.
+
+Hopefully you find the analysis useful. If you have any suggestions on how to improve the blog post, please DM me on Twitter (<a href="https://twitter.com/painblogR" target="_blank">@painblogR</a>), send me an email (<a href="mailto:peter.kamerman@gmail.com">peter.kamerman@gmail.com</a>), or log an issue on the painblogR github repo for this site (<a href="https://github.com/kamermanpr/painblogr-build/issues" target="_blank">kamermanpr/painblogr-build</a>).
 
 ----
 

@@ -270,30 +270,30 @@ code > span.in { color: #008000; } /* Information */  div.sourceCode {
 <p><br></p>
 <div id="background" class="section level2">
 <h2>Background</h2>
-<p>A recent article in <em>The Lancet</em><a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> reported that the increase in life expectancy that has occurred over the past 28 years (1990 to 2017) is associated with a disproportionate relative increase in time spent in poor health compared to good health. They reached this conclusion after analysing data on <em>total life expectancy</em> and <em>healthy life expectancy (HALE; years of good health)</em> from the Global Burden of Diseases, Injuries, and Risk Factors Study 2017 (GBD 2017). The GBD Study, assesses mortality and disability based on 359 causes of death and disability across 195 countries and territories (GBD data are freely available for download from the <a href="http://ghdx.healthdata.org/gbd-2017">Global Burden of Disease Exchange</a>.</p>
-<p>The figure below is taken directly from the article in <em>The Lancet</em> and shows <em>HALE</em> and <em>years of poor health</em> ( <em>total life expectancy</em> - <em>HALE</em> ) for females (<span style="color:#ED0000FF;">red lines</span>) and males (<span style="color:#00468BFF;">blue lines</span>) across socio-demographic index quintiles (High, High-middle, Middle, Middle-low, and Low SDI).</p>
+<p>A recent article in <em>The Lancet</em><a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> reported that the increase in life expectancy that has occurred over the past 28 years (1990 to 2017) is associated with a disproportionate relative increase in time spent in poor health compared to good health. The authors reached this conclusion after analysing data on <em>total life expectancy</em> and <em>healthy life expectancy (HALE; years of good health)</em> from the Global Burden of Diseases, Injuries, and Risk Factors Study 2017 (GBD 2017). The GBD Study, assesses mortality and disability based on 359 causes of death and disability across 195 countries and territories (GBD data are freely available for download from the <a href="http://ghdx.healthdata.org/gbd-2017">Global Burden of Disease Exchange</a>.</p>
+<p>The figure below is taken directly from the article in <em>The Lancet</em> and shows <em>years of good health</em> and <em>years of poor health</em> (<em>total life expectancy</em> - <em>years of good health</em>) for females (<span style="color:#ED0000FF;">red lines</span>) and males (<span style="color:#00468BFF;">blue lines</span>) across socio-demographic index quintiles (High, High-middle, Middle, Middle-low, and Low SDI).</p>
 <div style="margin-left:auto;margin-right:auto;width:80%;">
 <p><img src='images/posts/2019-01-25-global-burden-of-disease/GBD_fig_1.png'></p>
 </div>
-<p>The figure shows an upward trend in <em>HALE</em> and <em>years of poor health</em> over the past 28 years, for males and females across the five socio-demographic quintiles. But, it is hard to descern from the plot whether the rate of increase in <em>years of poor health</em> is greater than that for <em>HALE</em>; a key finding of the research. That is, the figure does not accomplish the reason for having a plot, which is to provide a visual aid for interpreting the findings.</p>
+<p>The figure shows an upward trend in <em>years of good health</em> and <em>years of poor health</em> over the past 28 years, for males and females across the five socio-demographic quintiles. But, it is hard to discern from the plot whether the rate of increase in <em>years of poor health</em> is greater than the rate of increase in <em>years of good health</em>, even though this was a key finding of the research. That is, the figure does not accomplish the reason for having a plot, which is to provide a visual aid for interpreting the findings.</p>
 <p>So I decided to play with the data myself to see if I could generate more informative plots.</p>
 <p>I approached this task by:</p>
 <ol style="list-style-type: decimal">
-<li><p>Recapitulating the plot from the article, but with an extra panel showing <em>total life expectancy</em>. I decided on this plot because I wanted to confirm that I had downloaded the correct data, and I felt that the <em>total life expectancy</em> panel would help contextualize changes in <em>HALE</em> and <em>years of poor health</em> data; and by</p></li>
-<li><p>Comparing the cummulative year-over-year percent change in <em>years of poor health</em> and <em>HALE</em> since 1990. I felt that using the cummulative year-over-year change would allow direct comparison of the long-term trends of two variables measured on the same scale (years), but which have vastly different magnitudes (<em>HALE</em> contributes 80 to 90% of <em>total life expectancy</em>). As an bonus, I decided to animate these plots to get a feel for the new <a href="//github.com/thomasp85/gganimate"><code>gganimate</code></a> API.</p></li>
+<li><p>Recapitulating the plot from the article, but with an extra panel showing <em>total life expectancy</em>. I decided on this plot because I wanted to confirm that I had downloaded the correct data, and I felt that the <em>total life expectancy</em> panel would help contextualize changes in <em>years of good health</em> and <em>years of poor health</em> data; and by</p></li>
+<li><p>Comparing the cumulative year-over-year percent change in <em>years of poor health</em> and <em>years of good health</em> since 1990. I felt that using the cumulative year-over-year change would allow direct comparison of the long-term trends of two variables measured on the same scale (years), but which have vastly different magnitudes (<em>years of good health</em> contributes 80 to 90% of <em>total life expectancy</em>). As an bonus, I decided to animate these plots to get a feel for the new <a href="https://github.com/thomasp85/gganimate"><code>gganimate</code></a> API.</p></li>
 </ol>
 <hr />
 </div>
 <div id="download-import-and-clean-data" class="section level2">
 <h2>Download, import, and clean data</h2>
 <p>First I had to get and clean the data.</p>
-<p>I manually downloaded the data from the Global Burden of Disease Exchange website using their <a href="http://ghdx.healthdata.org/gbd-results-tool">query tool</a> (as far as I know, the site does not have an API to remotely query and retrieve data). I then imported the two <em>*.csv</em> files I had downloaded (one for <em>HALE</em>, and one for <em>total life expectancy</em>), and performed a cursory inspection and a basic clean-up of the data, the code and outputs of which are shown below.</p>
+<p>I manually downloaded the data from the Global Burden of Disease Exchange website using their <a href="http://ghdx.healthdata.org/gbd-results-tool">query tool</a> (as far as I know, the site does not have an API to remotely query and retrieve data). I then imported the two <em>*.csv</em> files I had downloaded (one for <em>years of good health</em>, and one for <em>total life expectancy</em>), and performed a cursory inspection and a basic clean-up of the data, the code and outputs of which are shown below.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">############################################################
 <span class="co">#                                                          #</span>
 <span class="co">#                       Import data                        #</span>
 <span class="co">#                                                          #</span>
 ############################################################
-<span class="co"># HALE</span>
+<span class="co"># years of good health</span>
 hale &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&#39;_data/2019-01-25-global-burden-of-disease/hale-1990-2017.csv&#39;</span>) 
 <span class="co"># Life expectancy</span>
 life &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&#39;_data/2019-01-25-global-burden-of-disease/life-expectancy-1990-2017.csv&#39;</span>)
@@ -308,7 +308,7 @@ life &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class=
 ##  n obs: 280 
 ##  n variables: 9 
 ## 
-## ── Variable type:character ───────────────────────────────────────────────────────────────────────────────────────────
+## ── Variable type:character ───────────────────────────────────────────────────────────────────────────
 ##  variable missing complete   n min max empty n_unique
 ##       age       0      280 280   7   7     0        1
 ##  location       0      280 280   7  15     0        5
@@ -316,7 +316,7 @@ life &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class=
 ##    metric       0      280 280   5   5     0        1
 ##       sex       0      280 280   4   6     0        2
 ## 
-## ── Variable type:numeric ─────────────────────────────────────────────────────────────────────────────────────────────
+## ── Variable type:numeric ─────────────────────────────────────────────────────────────────────────────
 ##  variable missing   n    mean   sd     p25     p50     p75     hist
 ##     lower       0 280   57.48 6.44   51.94   58.66   62.78 ▃▃▇▅▆▇▇▆
 ##     upper       0 280   62.29 6.91   56.46   62.82   67.82 ▃▃▆▅▆▇▇▅
@@ -327,7 +327,7 @@ life &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class=
 ##  n obs: 280 
 ##  n variables: 9 
 ## 
-## ── Variable type:character ───────────────────────────────────────────────────────────────────────────────────────────
+## ── Variable type:character ───────────────────────────────────────────────────────────────────────────
 ##  variable missing complete   n min max empty n_unique
 ##       age       0      280 280   7   7     0        1
 ##  location       0      280 280   7  15     0        5
@@ -335,7 +335,7 @@ life &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class=
 ##    metric       0      280 280   5   5     0        1
 ##       sex       0      280 280   4   6     0        2
 ## 
-## ── Variable type:numeric ─────────────────────────────────────────────────────────────────────────────────────────────
+## ── Variable type:numeric ─────────────────────────────────────────────────────────────────────────────
 ##  variable missing   n    mean   sd     p25     p50     p75     hist
 ##     lower       0 280   68.88 7.87   62.6    68.93   75.15 ▃▅▇▇▇▇▆▅
 ##     upper       0 280   69.45 7.58   63.38   69.59   75.46 ▂▅▆▇▆▇▆▃
@@ -351,10 +351,13 @@ data &lt;-<span class="st"> </span>life <span class="op">%&gt;%</span><span clas
 <span class="st">    </span><span class="kw">bind_rows</span>(hale) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">    </span><span class="co"># Select required columns</span>
 <span class="st">    </span><span class="kw">select</span>(measure, location, sex, year, metric, val) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">    </span><span class="co"># Recode HALE category labels</span>
+<span class="st">    </span><span class="co"># Recode measure category labels</span>
 <span class="st">    </span><span class="kw">mutate</span>(<span class="dt">measure =</span> <span class="kw">str_replace_all</span>(measure,
                                      <span class="dt">pattern =</span> <span class="st">&#39;HALE </span><span class="ch">\\</span><span class="st">(Healthy life expectancy</span><span class="ch">\\</span><span class="st">)&#39;</span>,
-                                     <span class="dt">replacement =</span> <span class="st">&#39;Years healthy&#39;</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
+                                     <span class="dt">replacement =</span> <span class="st">&#39;Years of good health&#39;</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">measure =</span> <span class="kw">str_replace_all</span>(measure,
+                                     <span class="dt">pattern =</span> <span class="st">&#39;Life expectancy&#39;</span>,
+                                     <span class="dt">replacement =</span> <span class="st">&#39;Total life expectancy&#39;</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">    </span><span class="co"># Order location variable (socio-demographic quintile)</span>
 <span class="st">    </span><span class="kw">mutate</span>(<span class="dt">location =</span> <span class="kw">factor</span>(location,
                              <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&#39;High SDI&#39;</span>, <span class="st">&#39;High-middle SDI&#39;</span>,
@@ -366,7 +369,7 @@ data &lt;-<span class="st"> </span>life <span class="op">%&gt;%</span><span clas
 <span class="kw">glimpse</span>(data)</code></pre></div>
 <pre><code>## Observations: 560
 ## Variables: 6
-## $ measure  &lt;chr&gt; &quot;Life expectancy&quot;, &quot;Life expectancy&quot;, &quot;Life expectancy&quot;…
+## $ measure  &lt;chr&gt; &quot;Total life expectancy&quot;, &quot;Total life expectancy&quot;, &quot;Tota…
 ## $ location &lt;ord&gt; High-middle SDI, High-middle SDI, High SDI, High SDI, L…
 ## $ sex      &lt;chr&gt; &quot;Male&quot;, &quot;Female&quot;, &quot;Male&quot;, &quot;Female&quot;, &quot;Male&quot;, &quot;Female&quot;, &quot;…
 ## $ year     &lt;dbl&gt; 2015, 2015, 2015, 2015, 2015, 2015, 2015, 2015, 2016, 2…
@@ -380,8 +383,8 @@ data &lt;-<span class="st"> </span>life <span class="op">%&gt;%</span><span clas
 <div id="step-1" class="section level4">
 <h4>Step 1</h4>
 <p><strong>Recapitulate the plot from the article, but with an extra panel showing <em>total life expectancy</em>.</strong></p>
-<p>I used the cleaned data to calculate the <em>years of poor health</em><a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a>, and then generated separate plots for <em>total life expectancy</em>, <em>HALE</em>, and <em>years of poor health</em>. For each plot, I presented the data by sex and socio-demographic index quintile.</p>
-<p>Finally, I pieced the individuals plots together and formated the visual look using <code>html/css</code> (after bumping my head repeatedly against a brick wall trying to get the desired look using the <code>patchwork</code> and <code>cowplot</code> packages; my usual go to packages for multiplots).</p>
+<p>I used the cleaned data to calculate the <em>years of poor health</em><a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a>, and then generated separate plots for <em>total life expectancy</em>, <em>years of good health</em>, and <em>years of poor health</em>. For each plot, I presented the data by sex and socio-demographic index quintile.</p>
+<p>Finally, I pieced the individual plots together and formated the visual look using <code>html/css</code> (after bumping my head repeatedly against a brick wall trying to get the desired look using the <code>patchwork</code> and <code>cowplot</code> packages; my usual go to packages for multiplots).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">############################################################
 <span class="co">#                                                          #</span>
 <span class="co">#        Calculate years of poor health since birth        #</span>
@@ -392,7 +395,7 @@ delta &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span><span cla
 <span class="st">    </span><span class="kw">spread</span>(<span class="dt">key =</span> measure, 
            <span class="dt">value =</span> val) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">    </span><span class="co"># Calculate years unhealthy </span>
-<span class="st">    </span><span class="kw">mutate</span>(<span class="st">`</span><span class="dt">Years unhealthy</span><span class="st">`</span> =<span class="st"> `</span><span class="dt">Life expectancy</span><span class="st">`</span> <span class="op">-</span><span class="st"> `</span><span class="dt">Years healthy</span><span class="st">`</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="st">`</span><span class="dt">Years of poor health</span><span class="st">`</span> =<span class="st"> `</span><span class="dt">Total life expectancy</span><span class="st">`</span> <span class="op">-</span><span class="st"> `</span><span class="dt">Years of good health</span><span class="st">`</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">    </span><span class="co"># Gather measures again</span>
 <span class="st">    </span><span class="kw">gather</span>(<span class="dt">key =</span> measure, 
            <span class="dt">value =</span> val,
@@ -407,7 +410,7 @@ delta &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span><span cla
 
 ## Total life expectancy
 le &lt;-<span class="st"> </span>delta <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">filter</span>(measure <span class="op">==</span><span class="st"> &#39;Life expectancy&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">filter</span>(measure <span class="op">==</span><span class="st"> &#39;Total life expectancy&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">ggplot</span>(<span class="dt">data =</span> .) <span class="op">+</span>
 <span class="st">    </span><span class="kw">aes</span>(<span class="dt">x =</span> year,
         <span class="dt">y =</span> val,
@@ -418,7 +421,7 @@ le &lt;-<span class="st"> </span>delta <span class="op">%&gt;%</span><span class
                        <span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">50</span>, <span class="dv">85</span>),
                        <span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="op">+</span>
 <span class="st">    </span><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&#39;#ED0000&#39;</span>, <span class="st">&#39;#00468B&#39;</span>)) <span class="op">+</span>
-<span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&#39;Life expectancy at birth&#39;</span>,
+<span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&#39;Total life expectancy at birth&#39;</span>,
          <span class="dt">y =</span> <span class="st">&#39;Years of life&#39;</span>) <span class="op">+</span>
 <span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>location, 
                <span class="dt">ncol =</span> <span class="dv">5</span>) <span class="op">+</span>
@@ -440,9 +443,9 @@ le &lt;-<span class="st"> </span>delta <span class="op">%&gt;%</span><span class
        <span class="dt">height =</span> <span class="fl">2.2</span>,
        <span class="dt">units =</span> <span class="st">&#39;in&#39;</span>)
 
-## HALE
+## Years of good health
 healthy &lt;-<span class="st"> </span>delta <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">filter</span>(measure <span class="op">==</span><span class="st"> &#39;Years healthy&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">filter</span>(measure <span class="op">==</span><span class="st"> &#39;Years of good health&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">ggplot</span>(<span class="dt">data =</span> .) <span class="op">+</span>
 <span class="st">    </span><span class="kw">aes</span>(<span class="dt">x =</span> year,
         <span class="dt">y =</span> val,
@@ -453,7 +456,7 @@ healthy &lt;-<span class="st"> </span>delta <span class="op">%&gt;%</span><span 
                        <span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">40</span>, <span class="dv">75</span>),
                        <span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="op">+</span>
 <span class="st">    </span><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&#39;#ED0000&#39;</span>, <span class="st">&#39;#00468B&#39;</span>)) <span class="op">+</span>
-<span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&#39;HALE at birth&#39;</span>,
+<span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&#39;Years of good health at birth&#39;</span>,
          <span class="dt">y =</span> <span class="st">&#39;Years of life&#39;</span>) <span class="op">+</span>
 <span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>location, 
                <span class="dt">ncol =</span> <span class="dv">5</span>) <span class="op">+</span>
@@ -474,7 +477,7 @@ healthy &lt;-<span class="st"> </span>delta <span class="op">%&gt;%</span><span 
 
 ## Poor health
 unhealthy &lt;-<span class="st"> </span>delta <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">filter</span>(measure <span class="op">==</span><span class="st"> &#39;Years unhealthy&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">filter</span>(measure <span class="op">==</span><span class="st"> &#39;Years of poor health&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">ggplot</span>(<span class="dt">data =</span> .) <span class="op">+</span>
 <span class="st">    </span><span class="kw">aes</span>(<span class="dt">x =</span> year,
         <span class="dt">y =</span> val,
@@ -485,7 +488,7 @@ unhealthy &lt;-<span class="st"> </span>delta <span class="op">%&gt;%</span><spa
                        <span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">6</span>, <span class="dv">13</span>),
                        <span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="op">+</span>
 <span class="st">    </span><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&#39;#ED0000&#39;</span>, <span class="st">&#39;#00468B&#39;</span>)) <span class="op">+</span>
-<span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&#39;Years of poor health from birth&#39;</span>,
+<span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&#39;Years of poor health at birth&#39;</span>,
          <span class="dt">x =</span> <span class="st">&#39;Year&#39;</span>,
          <span class="dt">y =</span> <span class="st">&#39;Years of life&#39;</span>) <span class="op">+</span>
 <span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>location, 
@@ -511,17 +514,17 @@ unhealthy &lt;-<span class="st"> </span>delta <span class="op">%&gt;%</span><spa
 <p><img src='images/posts/2019-01-25-global-burden-of-disease/le.png'> <img src='images/posts/2019-01-25-global-burden-of-disease/healthy.png'> <img src='images/posts/2019-01-25-global-burden-of-disease/unhealthy.png'></p>
 </div>
 <p style="font-size:90%;font-style:italic;">
-<b>Revised figure 1: Trends of life expectancy at birth, HALE at birth, and years of poor health from birth by SDI quintile and sex, 1990-2017</b><br> HALE=Healthy life expectancy, SDI=Socio-demographic index
+<b>Revised figure 1: Trends of total life expectancy at birth, years of good health at birth, and years of poor health at birth by SDI quintile and sex, 1990-2017</b><br> SDI=Socio-demographic index
 </p>
 </div>
 </div>
-<p>Comparing my figure to the figure from the article, I was satisfied that I had reproduced the original figure (but with a <em>total life expectancy</em> panel). From <strong>Revised figure 1</strong>, it is clear that <em>total life expectancy</em>, <em>HALE</em>, and <em>years of poor health</em> increased over time for both sexes, and across all socio-demographic quintiles. Although the trend curves for males and females are roughly parallel for all three measures (with the curves for females shifted upwards relative to those of their male counterparts), there is a progressive reduction in the magnitude of this male/female difference as you move from High SDI countries to Low SDI countries, particularly for <em>total life expectancy</em> and <em>HALE</em>.</p>
-<p>I feel that presenting <em>total life expectancy</em> data in the figure added value. For example, with the addition of <em>total life expectancy</em> data, it is apparent that in Low SDI countries, <em>total life expectancy</em> has consistently been slightly greater in females than in males, yet <em>HALE</em> in males and females over the same time-period is almost identical. So, the marginally greater <em>total life expectancy</em> in females must reflect more <em>years of poor health</em> compared to males.</p>
+<p>Comparing my figure to the figure from the article, I was satisfied that I had reproduced the original figure (but with a <em>total life expectancy</em> panel). From <strong>Revised figure 1</strong>, it is clear that <em>total life expectancy</em>, <em>years of good health</em>, and <em>years of poor health</em> increased over time for both sexes, and across all socio-demographic quintiles. Although the trend curves for males and females are roughly parallel for all three measures (with the curves for females shifted upwards relative to those of their male counterparts), there is a progressive reduction in the magnitude of this male/female difference as you move from High SDI countries to Low SDI countries, particularly for <em>total life expectancy</em> and <em>years of good health</em>.</p>
+<p>I feel that presenting <em>total life expectancy</em> data in the figure added value. For example, with the addition of <em>total life expectancy</em> data, it is apparent that in Low SDI countries, <em>total life expectancy</em> has consistently been slightly greater in females than in males, yet <em>years of good health</em> in males and females over the same time-period is almost identical. So, the marginally greater <em>total life expectancy</em> in females must reflect more <em>years of poor health</em> compared to males.</p>
 </div>
 <div id="step-2" class="section level3">
 <h3>Step 2</h3>
-<p><strong>Compare cummulative year-over-year percent change in <em>years of poor health</em> and <em>HALE</em> for the past 28 years.</strong></p>
-<p>There were several ways I could have analysed and plotted these data. For example, I could have used: sequential year-over-year percent change data, mean-centered data, or the yearly absolute difference between <em>HALE</em> and <em>years of poor health</em>. But I chose to use cummulative year-over-year percent change because I felt it was the best option for presenting the data. As a relative measure, it corrects for the very large absolute difference between <em>HALE</em> and <em>years of poor health</em> (~ 38 to 57 years in 1990, depending on SDI quintile and sex), and allows the assessment of the cummulative effect the yearly fluctuations in <em>HALE</em> and <em>years of poor health</em>.</p>
+<p><strong>Compare cumulative year-over-year percent change in <em>years of poor health</em> and <em>years of good health</em> for the past 28 years.</strong></p>
+<p>There were several ways I could have analysed and plotted these data. For example, I could have used: sequential year-over-year percent change data, mean-centered data, or the yearly absolute difference between <em>years of good health</em> and <em>years of poor health</em>. But I chose to use cumulative year-over-year percent change because I felt it was the best option for presenting the data. As a relative measure, it corrects for the very large absolute difference between <em>years of good health</em> and <em>years of poor health</em> (~ 38 to 57 years in 1990, depending on SDI quintile and sex), and allows the assessment of the cumulative effect the yearly fluctuations in <em>years of good health</em> and <em>years of poor health</em>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">############################################################
 <span class="co">#                                                          #</span>
 <span class="co">#           Plot animated versions of the total            #</span>
@@ -531,7 +534,7 @@ unhealthy &lt;-<span class="st"> </span>delta <span class="op">%&gt;%</span><spa
 <span class="co"># Males</span>
 le_male &lt;-<span class="st"> </span>delta <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">filter</span>(sex <span class="op">==</span><span class="st"> &#39;Male&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">filter</span>(measure <span class="op">==</span><span class="st"> &#39;Life expectancy&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">filter</span>(measure <span class="op">==</span><span class="st"> &#39;Total life expectancy&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">ggplot</span>(<span class="dt">data =</span> .) <span class="op">+</span>
 <span class="st">    </span><span class="kw">aes</span>(<span class="dt">x =</span> year,
         <span class="dt">y =</span> val) <span class="op">+</span>
@@ -540,7 +543,7 @@ le_male &lt;-<span class="st"> </span>delta <span class="op">%&gt;%</span><span 
 <span class="st">    </span><span class="kw">scale_y_continuous</span>(<span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">50</span>, <span class="dv">60</span>, <span class="dv">70</span>, <span class="dv">80</span>),
                        <span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">50</span>, <span class="dv">85</span>),
                        <span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="op">+</span>
-<span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&#39;Life expectancy at birth&#39;</span>,
+<span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&#39;Total life expectancy at birth&#39;</span>,
          <span class="dt">y =</span> <span class="st">&#39;Years of life&#39;</span>) <span class="op">+</span>
 <span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>location, 
                <span class="dt">ncol =</span> <span class="dv">5</span>) <span class="op">+</span>
@@ -573,7 +576,7 @@ le_male &lt;-<span class="st"> </span><span class="kw">animate</span>(<span clas
 <span class="co"># Females</span>
 le_female &lt;-<span class="st"> </span>delta <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">filter</span>(sex <span class="op">==</span><span class="st"> &#39;Female&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">filter</span>(measure <span class="op">==</span><span class="st"> &#39;Life expectancy&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">filter</span>(measure <span class="op">==</span><span class="st"> &#39;Total life expectancy&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">ggplot</span>(<span class="dt">data =</span> .) <span class="op">+</span>
 <span class="st">    </span><span class="kw">aes</span>(<span class="dt">x =</span> year,
         <span class="dt">y =</span> val) <span class="op">+</span>
@@ -582,7 +585,7 @@ le_female &lt;-<span class="st"> </span>delta <span class="op">%&gt;%</span><spa
 <span class="st">    </span><span class="kw">scale_y_continuous</span>(<span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">50</span>, <span class="dv">60</span>, <span class="dv">70</span>, <span class="dv">80</span>),
                        <span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">50</span>, <span class="dv">85</span>),
                        <span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="op">+</span>
-<span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&#39;Life expectancy at birth&#39;</span>,
+<span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&#39;Total life expectancy at birth&#39;</span>,
          <span class="dt">y =</span> <span class="st">&#39;Years of life&#39;</span>) <span class="op">+</span>
 <span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>location, 
                <span class="dt">ncol =</span> <span class="dv">5</span>) <span class="op">+</span>
@@ -630,9 +633,9 @@ baseline_<span class="dv">1990</span> &lt;-<span class="st"> </span>delta_spread
 <span class="st">    </span><span class="co"># Extract 1990 values </span>
 <span class="st">    </span><span class="kw">filter</span>(year <span class="op">==</span><span class="st"> </span><span class="dv">1990</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">    </span><span class="co"># Rename columns</span>
-<span class="st">    </span><span class="kw">rename</span>(<span class="st">`</span><span class="dt">Life expectancy 1990</span><span class="st">`</span> =<span class="st"> `</span><span class="dt">Life expectancy</span><span class="st">`</span>,
-           <span class="st">`</span><span class="dt">Years healthy 1990</span><span class="st">`</span> =<span class="st"> `</span><span class="dt">Years healthy</span><span class="st">`</span>,
-           <span class="st">`</span><span class="dt">Years unhealthy 1990</span><span class="st">`</span> =<span class="st"> `</span><span class="dt">Years unhealthy</span><span class="st">`</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">rename</span>(<span class="st">`</span><span class="dt">Total life expectancy 1990</span><span class="st">`</span> =<span class="st"> `</span><span class="dt">Total life expectancy</span><span class="st">`</span>,
+           <span class="st">`</span><span class="dt">Years of good health 1990</span><span class="st">`</span> =<span class="st"> `</span><span class="dt">Years of good health</span><span class="st">`</span>,
+           <span class="st">`</span><span class="dt">Years of poor unhealth 1990</span><span class="st">`</span> =<span class="st"> `</span><span class="dt">Years of poor health</span><span class="st">`</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">    </span><span class="co"># Remove unneeded column</span>
 <span class="st">    </span><span class="kw">select</span>(<span class="op">-</span>metric, <span class="op">-</span>year)
 
@@ -643,38 +646,40 @@ delta_spread <span class="op">%&lt;&gt;%</span>
 ############################################################
 <span class="co">#                                                          #</span>
 <span class="co">#       Cumulative year-on-year percent change for         #</span>
-<span class="co">#             HALE and &#39;years of poor health&#39;              #</span>
+<span class="co">#    &#39;years of good health&#39; and &#39;years of poor health&#39;     #</span>
 <span class="co">#                                                          #</span>
 ############################################################
 delta_spread <span class="op">%&lt;&gt;%</span><span class="st"> </span>
 <span class="st">    </span><span class="co"># Year-over-year change for each subgroup</span>
 <span class="st">    </span><span class="kw">group_by</span>(location, sex) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">p_yoy_healthy =</span> <span class="dv">100</span> <span class="op">*</span><span class="st"> </span>((<span class="st">`</span><span class="dt">Years healthy</span><span class="st">`</span> <span class="op">-</span><span class="st"> </span><span class="kw">lag</span>(<span class="st">`</span><span class="dt">Years healthy</span><span class="st">`</span>)) <span class="op">/</span><span class="st"> </span><span class="kw">lag</span>(<span class="st">`</span><span class="dt">Years healthy</span><span class="st">`</span>)),
-           <span class="dt">p_yoy_unhealthy =</span> <span class="dv">100</span> <span class="op">*</span><span class="st"> </span>((<span class="st">`</span><span class="dt">Years unhealthy</span><span class="st">`</span> <span class="op">-</span><span class="st"> </span><span class="kw">lag</span>(<span class="st">`</span><span class="dt">Years unhealthy</span><span class="st">`</span>)) <span class="op">/</span><span class="st"> </span><span class="kw">lag</span>(<span class="st">`</span><span class="dt">Years unhealthy</span><span class="st">`</span>))) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">p_yoy_good_health =</span> <span class="dv">100</span> <span class="op">*</span><span class="st"> </span>((<span class="st">`</span><span class="dt">Years of good health</span><span class="st">`</span> <span class="op">-</span><span class="st"> </span>
+<span class="st">                                           </span><span class="kw">lag</span>(<span class="st">`</span><span class="dt">Years of good health</span><span class="st">`</span>)) <span class="op">/</span><span class="st"> </span><span class="kw">lag</span>(<span class="st">`</span><span class="dt">Years of good health</span><span class="st">`</span>)),
+           <span class="dt">p_yoy_poor_health =</span> <span class="dv">100</span> <span class="op">*</span><span class="st"> </span>((<span class="st">`</span><span class="dt">Years of poor health</span><span class="st">`</span> <span class="op">-</span><span class="st"> </span>
+<span class="st">                                           </span><span class="kw">lag</span>(<span class="st">`</span><span class="dt">Years of poor health</span><span class="st">`</span>)) <span class="op">/</span><span class="st"> </span><span class="kw">lag</span>(<span class="st">`</span><span class="dt">Years of poor health</span><span class="st">`</span>))) <span class="op">%&gt;%</span>
 <span class="st">    </span><span class="co"># Remove lag calc &lt;NA&gt; for 1990, and add cumulative yoy change for each subgroup</span>
-<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">p_yoy_healthy =</span> <span class="kw">ifelse</span>(year <span class="op">==</span><span class="st"> </span><span class="dv">1990</span>,
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">p_yoy_good_health =</span> <span class="kw">ifelse</span>(year <span class="op">==</span><span class="st"> </span><span class="dv">1990</span>,
                                   <span class="dt">yes =</span> <span class="dv">0</span>,
-                                  <span class="dt">no =</span> p_yoy_healthy),
-           <span class="dt">p_yoy_unhealthy =</span> <span class="kw">ifelse</span>(year <span class="op">==</span><span class="st"> </span><span class="dv">1990</span>,
+                                  <span class="dt">no =</span> p_yoy_good_health),
+           <span class="dt">p_yoy_poor_health =</span> <span class="kw">ifelse</span>(year <span class="op">==</span><span class="st"> </span><span class="dv">1990</span>,
                                     <span class="dt">yes =</span> <span class="dv">0</span>,
-                                    <span class="dt">no =</span> p_yoy_unhealthy)) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">p_cumm_yoy_healthy =</span> <span class="kw">cumsum</span>(p_yoy_healthy), 
-           <span class="dt">p_cumm_yoy_unhealthy =</span> <span class="kw">cumsum</span>(p_yoy_unhealthy)) <span class="op">%&gt;%</span><span class="st"> </span>
+                                    <span class="dt">no =</span> p_yoy_poor_health)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">p_cum_yoy_good_health =</span> <span class="kw">cumsum</span>(p_yoy_good_health), 
+           <span class="dt">p_cum_yoy_poor_health =</span> <span class="kw">cumsum</span>(p_yoy_poor_health)) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">ungroup</span>()
 
 ############################################################
 <span class="co">#                                                          #</span>
 <span class="co">#           Plot year-on-year percent change for           #</span>
-<span class="co">#             HALE and &#39;years of poor health&#39;              #</span>
+<span class="co">#    &#39;years of good health&#39; and &#39;years of poor health&#39;     #</span>
 <span class="co">#                                                          #</span>
 ############################################################
 <span class="co"># Males</span>
 perc_male &lt;-<span class="st"> </span>delta_spread <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">filter</span>(sex <span class="op">==</span><span class="st"> &#39;Male&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">    </span><span class="co"># Gather cumm_yoy_* columns</span>
+<span class="st">    </span><span class="co"># Gather cum_yoy_* columns</span>
 <span class="st">    </span><span class="kw">gather</span>(<span class="dt">key =</span> <span class="st">&#39;key&#39;</span>,
            <span class="dt">value =</span> <span class="st">&#39;value&#39;</span>,
-           p_cumm_yoy_healthy, p_cumm_yoy_unhealthy) <span class="op">%&gt;%</span><span class="st"> </span>
+           p_cum_yoy_good_health, p_cum_yoy_poor_health) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">    </span><span class="co"># Plot</span>
 <span class="st">    </span><span class="kw">ggplot</span>(<span class="dt">data =</span> .) <span class="op">+</span>
 <span class="st">    </span><span class="kw">aes</span>(<span class="dt">x =</span> year,
@@ -684,9 +689,9 @@ perc_male &lt;-<span class="st"> </span>delta_spread <span class="op">%&gt;%</sp
 <span class="st">    </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">1990</span>, <span class="dv">1995</span>, <span class="dv">2000</span>, <span class="dv">2005</span>, <span class="dv">2010</span>, <span class="dv">2017</span>)) <span class="op">+</span>
 <span class="st">    </span><span class="kw">scale_y_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>, <span class="dv">20</span>),
                        <span class="dt">breaks =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>, <span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">20</span>)) <span class="op">+</span>
-<span class="st">    </span><span class="kw">scale_colour_manual</span>(<span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&#39;HALE&#39;</span>, <span class="st">&#39;Years of</span><span class="ch">\n</span><span class="st">poor health&#39;</span>), 
+<span class="st">    </span><span class="kw">scale_colour_manual</span>(<span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&#39;years of</span><span class="ch">\n</span><span class="st">good health&#39;</span>, <span class="st">&#39;Years of</span><span class="ch">\n</span><span class="st">poor health&#39;</span>), 
                         <span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&#39;#56B4E9&#39;</span>, <span class="st">&#39;#E69F00&#39;</span>)) <span class="op">+</span>
-<span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Cumulative year-over-year percent change in HALE and &#39;years of poor health&#39;&quot;</span>,
+<span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Cumulative year-over-year percent change in &#39;years of good health&#39; and &#39;years of poor health&#39;&quot;</span>,
          <span class="dt">x =</span> <span class="st">&#39;Year&#39;</span>,
          <span class="dt">y =</span> <span class="st">&quot;Cumulative change (%)&quot;</span>) <span class="op">+</span>
 <span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>location, 
@@ -723,7 +728,7 @@ perc_female &lt;-<span class="st"> </span>delta_spread <span class="op">%&gt;%</
 <span class="st">    </span><span class="kw">filter</span>(sex <span class="op">==</span><span class="st"> &#39;Female&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">gather</span>(<span class="dt">key =</span> <span class="st">&#39;key&#39;</span>,
            <span class="dt">value =</span> <span class="st">&#39;value&#39;</span>,
-           p_cumm_yoy_healthy, p_cumm_yoy_unhealthy) <span class="op">%&gt;%</span><span class="st"> </span>
+           p_cum_yoy_good_health, p_cum_yoy_poor_health) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">    </span><span class="co"># Plot</span>
 <span class="st">    </span><span class="kw">ggplot</span>(<span class="dt">data =</span> .) <span class="op">+</span>
 <span class="st">    </span><span class="kw">aes</span>(<span class="dt">x =</span> year,
@@ -733,9 +738,9 @@ perc_female &lt;-<span class="st"> </span>delta_spread <span class="op">%&gt;%</
 <span class="st">    </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">1990</span>, <span class="dv">1995</span>, <span class="dv">2000</span>, <span class="dv">2005</span>, <span class="dv">2010</span>, <span class="dv">2017</span>)) <span class="op">+</span>
 <span class="st">    </span><span class="kw">scale_y_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>, <span class="dv">20</span>),
                        <span class="dt">breaks =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>, <span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">20</span>)) <span class="op">+</span>
-<span class="st">    </span><span class="kw">scale_colour_manual</span>(<span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&#39;HALE&#39;</span>, <span class="st">&#39;Years of</span><span class="ch">\n</span><span class="st">poor health&#39;</span>), 
+<span class="st">    </span><span class="kw">scale_colour_manual</span>(<span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&#39;Years of</span><span class="ch">\n</span><span class="st">good health&#39;</span>, <span class="st">&#39;Years of</span><span class="ch">\n</span><span class="st">poor health&#39;</span>), 
                         <span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&#39;#56B4E9&#39;</span>, <span class="st">&#39;#E69F00&#39;</span>)) <span class="op">+</span>
-<span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Cumulative year-over-year percent change in HALE and &#39;years of poor health&#39;&quot;</span>,
+<span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Cumulative year-over-year percent change in &#39;years of good health&#39; and &#39;years of poor health&#39;&quot;</span>,
          <span class="dt">x =</span> <span class="st">&#39;Year&#39;</span>,
          <span class="dt">y =</span> <span class="st">&quot;Cumulative change (%)&quot;</span>) <span class="op">+</span>
 <span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>location, 
@@ -778,13 +783,14 @@ Males
 <p><img src='images/posts/2019-01-25-global-burden-of-disease/le_male.gif'> <img src='images/posts/2019-01-25-global-burden-of-disease/perc_male.gif'></p>
 </div>
 <p style="font-size:80%;font-style:italic;width:100%;">
-<b>Figure 3: Total life expectancy (top panel for each sex), and the Cumulative year-over-year percent change in HALE and ‘years of poor health’ (bottom panel for each sex) for females (top two panels) and males (bottom two panels), and each SDI quintile</b><br> HALE=Healthy life expectancy, SDI=Socio-demographic index
+<b>Figure 3: Total life expectancy (top panel for each sex), and the cumulative year-over-year percent change in years of good health and ‘years of poor health’ (bottom panel for each sex) for females (top two panels) and males (bottom two panels), and each SDI quintile</b><br> SDI=Socio-demographic index
 </p>
 </div>
-<p>I’m quite please with the way the plots of cummulative year-over-year percent change in <em>HALE</em> and <em>years of poor health</em> came out. I think that compared to the original figure from the publication, it is now much clearer how the relative rate of growth in <em>HALE</em> and <em>years of poor health</em> has changed over the past three decades. While <em>total life expectancy</em> has followed a relatively smooth upward trajectory between 1990 and 2017 (for both sexes and across SDI quintiles), the relative rate of growth of <em>HALE</em> and <em>years of poor health</em> to this increase in <em>total life expectancy</em> has see significant shifts over time. Moreover, these shifts are not consistent across SDI quintiles.</p>
-<p>At the two extremes are the High and Low SDI quintiles. The High SDI quintile has seen a dramatic increase in the cumulative year-over-year percent change in <em>years of poor healthy</em> relative to <em>HALE</em>, with the two curves separating as early as the early 1990s in males and early 2000s in females. The faster rate of growth in <em>years of poor health</em> than <em>HALE</em> means that <em>years of poor health</em> is contributing proportionately more to the rise in <em>total life expectancy</em> than <em>HALE</em> is. In the Low SDI quintile, we see the opposite trend, with the <em>years of poor healthy</em> and <em>HALE</em> curves tracking each other until the mid-1990s in females and mid-2000s for males, after which the cumulative rate of growth in <em>HALE</em> outstripped that for <em>years of poor healthy</em>. The long-term trends in the Low SDI quintile are desirable, while those in the High SDI quntile are not.</p>
-<p>The remaining quintiles show a graded shift in cumulative year-over-year percent change in <em>HALE</em> and <em>years of poor health</em> from the situation in the High SDI quintile to the Low SDI quintile.</p>
-<p>Hopefully you find the analysis useful. If you have any suggestions on how to improve the blog post, please DM me on Twitter (<a href="https://twitter.com/painblogR" target="_blank"><span class="citation">@painblogR</span></a>), send me an email (<a href="mailto:peter.kamerman@gmail.com">peter.kamerman@gmail.com</a>), or log and issue on the painblogR github repo for this site (<a href="https://github.com/kamermanpr/painblogr-build" target="_blank">kamermanpr/painblogr-build</a>).</p>
+<p>I’m quite pleased with the way the plots of cumulative year-over-year percent change in <em>years of good health</em> and <em>years of poor health</em> came out. I think that compared to the original figure from the publication, it is now much clearer how the relative rate of growth in <em>years of good health</em> and <em>years of poor health</em> has changed over the past three decades. That is, you can now see one of the key finds of the paper, and you can now appreciate the relative changes in the rate of growth in <em>years of good health</em> and <em>years of poor health</em> over time and between SDI quintiles.</p>
+<p>While <em>total life expectancy</em> has followed a relatively smooth upward trajectory between 1990 and 2017 (for both sexes and across SDI quintiles), the relative rate of growth of <em>years of good health</em> and <em>years of poor health</em> to this increase in <em>total life expectancy</em> has see significant shifts over time. And, these shifts are not consistent across SDI quintiles.</p>
+<p>At the two extremes are the High and Low SDI quintiles. The High SDI quintile has seen a dramatic increase in the cumulative year-over-year percent change in <em>years of poor health</em> relative to <em>years of good health</em>, with the two curves separating as early as the early 1990s in males and early 2000s in females. The faster rate of growth in <em>years of poor health</em> than <em>years of good health</em> means that <em>years of poor health</em> is contributing proportionately more to the rise in <em>total life expectancy</em> than <em>years of good health</em> is. In the Low SDI quintile, we see the opposite trend, with the <em>years of poor healthy</em> and <em>years of good health</em> curves tracking each other until the mid-1990s in females and mid-2000s for males, after which the cumulative rate of growth in <em>years of good health</em> outstripped that for <em>years of poor health</em>. The long-term trends in the Low SDI quintile are desirable, while those in the High SDI quintile are not.</p>
+<p>The remaining quintiles show a graded shift in cumulative year-over-year percent change in <em>years of good health</em> and <em>years of poor health</em> from the situation in the High SDI quintile to the Low SDI quintile.</p>
+<p>Hopefully you find the analysis useful. If you have any suggestions on how to improve the blog post, please DM me on Twitter (<a href="https://twitter.com/painblogR" target="_blank"><span class="citation">@painblogR</span></a>), send me an email (<a href="mailto:peter.kamerman@gmail.com">peter.kamerman@gmail.com</a>), or log an issue on the painblogR github repo for this site (<a href="https://github.com/kamermanpr/painblogr-build/issues" target="_blank">kamermanpr/painblogr-build</a>).</p>
 <hr />
 </div>
 </div>
@@ -834,7 +840,7 @@ Males
 <hr />
 <ol>
 <li id="fn1"><p>GBD 2017 DALYs and HALE Collaborators. Global, regional, and national disability-adjusted life-years (DALYs) for 359 diseases and injuries and healthy life expectancy (HALE) for 195 countries and territories, 1990-2017: a systematic analysis for the Global Burden of Disease Study 2017. <em>Lancet</em> <strong>392</strong>:1859–1922, 2018. doi: <a href="https://doi.org/10.1016/S0140-6736(18)32335-3">10.1016/S0140-6736(18)32335-3</a>.<a href="#fnref1">↩</a></p></li>
-<li id="fn2"><p><em>years of poor health = total life expectancy - HALE</em><a href="#fnref2">↩</a></p></li>
+<li id="fn2"><p><em>years of poor health = total life expectancy - years of good health</em><a href="#fnref2">↩</a></p></li>
 </ol>
 </div>
 
