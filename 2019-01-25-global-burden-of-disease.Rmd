@@ -49,11 +49,11 @@ knitr::opts_chunk$set(warning = FALSE,
 
 ## Background
 
-A recent article in _The Lancet_[^1] reported that the increase in life expectancy that has occurred over the past 28 years (1990 to 2017) is associated with a disproportionate relative increase in time spent in poor health compared to good health. The authors reached this conclusion after analysing data on _total life expectancy_ and _healthy life expectancy (HALE; years of good health)_ from the Global Burden of Diseases, Injuries, and Risk Factors Study 2017 (GBD 2017). The GBD Study, assesses mortality and disability based on 359 causes of death and disability across 195 countries and territories (GBD data are freely available for download from the [Global Burden of Disease Exchange](http://ghdx.healthdata.org/gbd-2017). 
+A recent article in _The Lancet_[^1] reported that the increase in life expectancy that has occurred over the past 28 years (1990 to 2017) is associated with a disproportionate relative increase in time spent in poor health compared to good health. The authors reached this conclusion after analysing data on _total life expectancy_ and _healthy life expectancy (HALE; years of good health)_ from the Global Burden of Diseases, Injuries, and Risk Factors Study 2017 (GBD 2017). The GBD Study, assesses mortality and disability based on 359 causes of death and disability across 195 countries and territories (GBD data are freely available for download from the [Global Burden of Disease Exchange](http://ghdx.healthdata.org/gbd-2017)). 
 
-The figure below is taken directly from the article in _The Lancet_ and shows _years of good health_ and _years of poor health_ (_total life expectancy_ - _years of good health_) for females (<span style="color:#ED0000FF;">red lines</span>) and males (<span style="color:#00468BFF;">blue lines</span>) across socio-demographic index quintiles (High, High-middle, Middle, Middle-low, and Low SDI).
+The figure below is taken directly from the article in _The Lancet_ and shows _years of good health_ and _years of poor health_ (_total life expectancy_ - _years of good health_) for females (<span style="color:#ED0000FF;">red lines</span>) and males (<span style="color:#00468BFF;">blue lines</span>) across socio-demographic index quintiles (High SDI, High-middle SDI, Middle SDI, Middle-low SDI, Low SDI).
 
-<div style="margin-left:auto;margin-right:auto;width:80%;">
+<div style="margin-left:auto;margin-right:auto;width:90%;">
 <img src='./images/posts/2019-01-25-global-burden-of-disease/GBD_fig_1.png'>
 </div>
 
@@ -267,7 +267,7 @@ ggsave(filename = 'unhealthy.png',
 ```
 
 <div>
-<div style="margin-left:auto;margin-right:auto;width:80%;">
+<div style="margin-left:auto;margin-right:auto;width:90%;">
 <div style="border-width:thin;border-style:solid;border-color:#E29EA7;">
 <img src='./images/posts/2019-01-25-global-burden-of-disease/le.png'>
 <img src='./images/posts/2019-01-25-global-burden-of-disease/healthy.png'>
@@ -538,7 +538,7 @@ anim_save(filename = 'perc_female.gif',
           path = './images/posts/2019-01-25-global-burden-of-disease')
 ```
 
-<div style="margin-left:auto;margin-right:auto;max-width:80%;">
+<div style="margin-left:auto;margin-right:auto;max-width:90%;">
 <div style="border-width:thin;border-style:solid;border-color:#E29EA7;">
 <!-- Females -->
 <h3 style="margin-top:0px">Females</h3>
@@ -579,7 +579,7 @@ perc_female <- delta_spread %>%
     filter(sex == 'Female') %>% 
     gather(key = 'key',
            value = 'value',
-           p_cumm_yoy_healthy, p_cumm_yoy_unhealthy) %>% 
+           p_cum_yoy_good_health, p_cum_yoy_poor_health) %>% 
     # Plot
     ggplot(data = .) +
     aes(x = year,
@@ -592,35 +592,30 @@ perc_female <- delta_spread %>%
     scale_colour_manual(labels = c('Years of good health', 'Years of poor health'), 
                         values = c('#56B4E9', '#E69F00')) +
     labs(title = "Cumulative year-over-year percent change in 'years of good health' and 'years of poor health'",
+         subtitle = '(SDI: Socio-demographic index)',
          x = 'Year',
-         y = "Cumulative YOY % change") +
+         y = "Cumulative change (%)") +
     facet_wrap(~ location, 
                ncol = 5) +
     theme_bw(base_size = 12) +
     theme(legend.title = element_blank(),
-          legend.position = c(0.15, 0.985),
+          legend.position = c(0.17, 0.985),
           legend.justification = c(0.99, 0.985),
           legend.margin = margin(t = 0, r = 0, b = 0, l = 0, unit = 'lines'),plot.title = element_text(size = 12, face = 'bold'),
           axis.text.x = element_text(angle = 45,
                                      hjust = 1,
                                      vjust = 1.1),
+          plot.subtitle = element_text(size = 10),
           panel.grid = element_blank(),
           strip.background = element_blank()) +
     transition_reveal(year)
 
 perc_female <- animate(plot = perc_female, 
                        end_pause = 50,
-                       res = 150,
-                       width = 12,
-                       height = 3.8,
+                       res = 120,
+                       width = 10,
+                       height = 3.3,
                        units = 'in')
-
-ggsave(filename = 'twitter_gif.png',
-       plot = perc_female,
-       path = './images/posts/2019-01-25-global-burden-of-disease',
-       width = 12,
-       height = 3.8,
-       units = 'in')
 
 anim_save(filename = 'twitter_gif.gif',
           animation = perc_female,
