@@ -2,7 +2,7 @@
 post_title: "When your 'golden years' are not so golden"
 post_author: 'Peter Kamerman'
 post_date: '25 January 2019'
-post_image: './images/posts/2019-01-25-global-burden-of-disease/post-image.png'
+post_image: './images/posts/2019-01-25-global-burden-of-disease/post-image.jpg'
 permalink:  '2019-01-25-global-burden-of-disease.html'
 description: "Are we paying for our increasing longevity with extra years of poor health?"
 output:
