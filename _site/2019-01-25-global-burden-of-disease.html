@@ -7,8 +7,8 @@
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="generator" content="pandoc"/>
-	
-	
+
+
 	 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
  <meta name="viewport" content="width=device-width, initial-scale=1" />
  <link href="site_libs/bootstrap-3.3.5/css/yeti.min.css" rel="stylesheet" />
@@ -16,9 +16,9 @@
  <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
  <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
  <script src="site_libs/navigation-1.1/tabsets.js"></script>
- <script src="site_libs/navigation-1.1/codefolding.js"></script> 
+ <script src="site_libs/navigation-1.1/codefolding.js"></script>
 
-	
+
 		<style type="text/css">
 		code {
 			white-space: pre;
@@ -57,7 +57,7 @@ code > span.at { } /* Attribute */
 code > span.in { color: #008000; } /* Information */  div.sourceCode {
 			overflow-x: visible;
 		}
-		
+
 	</style>
 
 		<style type="text/css">
@@ -98,17 +98,17 @@ code > span.in { color: #008000; } /* Information */  div.sourceCode {
 			text-align: left;
 		}
 
-		
+
 	</style>
-	
-		<link rel="stylesheet" href="css/custom.css" type="text/css" />  
+
+		<link rel="stylesheet" href="css/custom.css" type="text/css" />
     <!-- Latest maxdcn font-awesome and academicons -->
     <link rel="stylesheet" href="./css/font-awesome-4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="./css/academicons-1.7.0/css/academicons.min.css">
 
     <!-- custom css -->
         <link rel="stylesheet" href="css/custom.css" type="text/css" />
-	
+
     <!-- Include these sections here, otherwise YAML headings not inserted -->
     <!-- Google analytics -->
     <script>
@@ -141,14 +141,14 @@ code > span.in { color: #008000; } /* Information */  div.sourceCode {
     <meta name="twitter:creator" content="@painblogR">
     <meta name="twitter:title" content="When your ‘golden years’ are not so golden">
     <meta name="twitter:description" content="Are we paying for our increasing longevity with extra years of poor health?">
-    <meta name="twitter:image" content="<a href="https://www.painblogr.org/images/posts/2019-01-25-global-burden-of-disease/post-image.jpg" class="uri">https://www.painblogr.org/images/posts/2019-01-25-global-burden-of-disease/post-image.jpg</a>">
+    <meta name="twitter:image" content="https://www.painblogr.org/images/posts/2019-01-25-global-burden-of-disease/post-image.jpg">
     <meta name="twitter:url" content="https://www.painblogr.org/2019-01-25-global-burden-of-disease.html">
 
     <!-- Opengraph -->
     <meta property="og:title" content="When your ‘golden years’ are not so golden">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://www.painblogr.org/2019-01-25-global-burden-of-disease.html">
-    <meta property="og:image" content="<a href="https://www.painblogr.org/images/posts/2019-01-25-global-burden-of-disease/post-image.jpg" class="uri">https://www.painblogr.org/images/posts/2019-01-25-global-burden-of-disease/post-image.jpg</a>">
+    <meta property="og:image" content="https://www.painblogr.org/images/posts/2019-01-25-global-burden-of-disease/post-image.jpg">
     <meta property="og:description" content="Are we paying for our increasing longevity with extra years of poor health?">
     <meta property="og:site_name" content="painblogR">
     <meta property="fb:admins" content="668546729">
@@ -233,11 +233,11 @@ code > span.in { color: #008000; } /* Information */  div.sourceCode {
 					<script>
 
 		$(document).ready(function () {
-			
+
 			  			window.initializeCodeFolding("hide" === "show");
 					});
 		</script>
-		
+
 		<div class="fluid-row" id="header">
 <div class="btn-group pull-right">
 <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
@@ -249,9 +249,9 @@ code > span.in { color: #008000; } /* Information */  div.sourceCode {
 
     <!-- Main text --->
     <div class="container-fluid" id="mainbody">
-         
-        <h1>When your ‘golden years’ are not so golden</h1> 
-        <h4>Peter Kamerman</h4> 
+
+        <h1>When your ‘golden years’ are not so golden</h1>
+        <h4>Peter Kamerman</h4>
         <em>25 January 2019</em> <style>
 #img_center60 {
   display: block;
@@ -294,7 +294,7 @@ code > span.in { color: #008000; } /* Information */  div.sourceCode {
 <span class="co">#                                                          #</span>
 ############################################################
 <span class="co"># years of good health</span>
-hale &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&#39;_data/2019-01-25-global-burden-of-disease/hale-1990-2017.csv&#39;</span>) 
+hale &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&#39;_data/2019-01-25-global-burden-of-disease/hale-1990-2017.csv&#39;</span>)
 <span class="co"># Life expectancy</span>
 life &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&#39;_data/2019-01-25-global-burden-of-disease/life-expectancy-1990-2017.csv&#39;</span>)
 
@@ -305,9 +305,9 @@ life &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class=
 ############################################################
 <span class="kw">skim</span>(hale)</code></pre></div>
 <pre><code>## Skim summary statistics
-##  n obs: 280 
-##  n variables: 9 
-## 
+##  n obs: 280
+##  n variables: 9
+##
 ## ── Variable type:character ────────────────────────────────────────────────────────────────
 ##  variable missing complete   n min max empty n_unique
 ##       age       0      280 280   7   7     0        1
@@ -315,7 +315,7 @@ life &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class=
 ##   measure       0      280 280  30  30     0        1
 ##    metric       0      280 280   5   5     0        1
 ##       sex       0      280 280   4   6     0        2
-## 
+##
 ## ── Variable type:numeric ──────────────────────────────────────────────────────────────────
 ##  variable missing   n    mean   sd     p25     p50     p75     hist
 ##     lower       0 280   57.48 6.44   51.94   58.66   62.78 ▃▃▇▅▆▇▇▆
@@ -324,9 +324,9 @@ life &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class=
 ##      year       0 280 2003.5  8.09 1996.75 2003.5  2010.25 ▇▆▇▆▆▇▆▇</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">skim</span>(life)</code></pre></div>
 <pre><code>## Skim summary statistics
-##  n obs: 280 
-##  n variables: 9 
-## 
+##  n obs: 280
+##  n variables: 9
+##
 ## ── Variable type:character ────────────────────────────────────────────────────────────────
 ##  variable missing complete   n min max empty n_unique
 ##       age       0      280 280   7   7     0        1
@@ -334,7 +334,7 @@ life &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class=
 ##   measure       0      280 280  15  15     0        1
 ##    metric       0      280 280   5   5     0        1
 ##       sex       0      280 280   4   6     0        2
-## 
+##
 ## ── Variable type:numeric ──────────────────────────────────────────────────────────────────
 ##  variable missing   n    mean   sd     p25     p50     p75     hist
 ##     lower       0 280   68.88 7.87   62.6    68.93   75.15 ▃▅▇▇▇▇▆▅
@@ -392,12 +392,12 @@ data &lt;-<span class="st"> </span>life <span class="op">%&gt;%</span><span clas
 ############################################################
 delta &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">    </span><span class="co"># Spread the measure column</span>
-<span class="st">    </span><span class="kw">spread</span>(<span class="dt">key =</span> measure, 
+<span class="st">    </span><span class="kw">spread</span>(<span class="dt">key =</span> measure,
            <span class="dt">value =</span> val) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">    </span><span class="co"># Calculate years unhealthy </span>
 <span class="st">    </span><span class="kw">mutate</span>(<span class="st">`</span><span class="dt">Years of poor health</span><span class="st">`</span> =<span class="st"> `</span><span class="dt">Total life expectancy</span><span class="st">`</span> <span class="op">-</span><span class="st"> `</span><span class="dt">Years of good health</span><span class="st">`</span>) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">    </span><span class="co"># Gather measures again</span>
-<span class="st">    </span><span class="kw">gather</span>(<span class="dt">key =</span> measure, 
+<span class="st">    </span><span class="kw">gather</span>(<span class="dt">key =</span> measure,
            <span class="dt">value =</span> val,
            <span class="op">-</span>location, <span class="op">-</span>sex, <span class="op">-</span>year, <span class="op">-</span>metric)
 
@@ -423,7 +423,7 @@ le &lt;-<span class="st"> </span>delta <span class="op">%&gt;%</span><span class
 <span class="st">    </span><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&#39;#ED0000&#39;</span>, <span class="st">&#39;#00468B&#39;</span>)) <span class="op">+</span>
 <span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&#39;Total life expectancy at birth&#39;</span>,
          <span class="dt">y =</span> <span class="st">&#39;Years of life&#39;</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>location, 
+<span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>location,
                <span class="dt">ncol =</span> <span class="dv">5</span>) <span class="op">+</span>
 <span class="st">    </span><span class="kw">theme_bw</span>(<span class="dt">base_size =</span> <span class="dv">12</span>) <span class="op">+</span>
 <span class="st">    </span><span class="kw">theme</span>(<span class="dt">legend.title =</span> <span class="kw">element_blank</span>(),
@@ -434,11 +434,11 @@ le &lt;-<span class="st"> </span>delta <span class="op">%&gt;%</span><span class
           <span class="dt">axis.text.x =</span> <span class="kw">element_blank</span>(),
           <span class="dt">axis.title.x =</span> <span class="kw">element_blank</span>(),
           <span class="dt">panel.grid =</span> <span class="kw">element_blank</span>(),
-          <span class="dt">strip.background =</span> <span class="kw">element_blank</span>()) 
+          <span class="dt">strip.background =</span> <span class="kw">element_blank</span>())
 
 <span class="kw">ggsave</span>(<span class="dt">filename =</span> <span class="st">&#39;le.png&#39;</span>,
-       <span class="dt">plot =</span> le, 
-       <span class="dt">path =</span> <span class="st">&#39;./images/posts/2019-01-25-global-burden-of-disease&#39;</span>, 
+       <span class="dt">plot =</span> le,
+       <span class="dt">path =</span> <span class="st">&#39;./images/posts/2019-01-25-global-burden-of-disease&#39;</span>,
        <span class="dt">width =</span> <span class="dv">8</span>,
        <span class="dt">height =</span> <span class="fl">2.2</span>,
        <span class="dt">units =</span> <span class="st">&#39;in&#39;</span>)
@@ -458,7 +458,7 @@ healthy &lt;-<span class="st"> </span>delta <span class="op">%&gt;%</span><span 
 <span class="st">    </span><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&#39;#ED0000&#39;</span>, <span class="st">&#39;#00468B&#39;</span>)) <span class="op">+</span>
 <span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&#39;Years of good health at birth&#39;</span>,
          <span class="dt">y =</span> <span class="st">&#39;Years of life&#39;</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>location, 
+<span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>location,
                <span class="dt">ncol =</span> <span class="dv">5</span>) <span class="op">+</span>
 <span class="st">    </span><span class="kw">theme_bw</span>(<span class="dt">base_size =</span> <span class="dv">12</span>) <span class="op">+</span>
 <span class="st">    </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&#39;none&#39;</span>,
@@ -466,11 +466,11 @@ healthy &lt;-<span class="st"> </span>delta <span class="op">%&gt;%</span><span 
           <span class="dt">axis.title.x =</span> <span class="kw">element_blank</span>(),
           <span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">12</span>, <span class="dt">face =</span> <span class="st">&#39;bold&#39;</span>),
           <span class="dt">panel.grid =</span> <span class="kw">element_blank</span>(),
-          <span class="dt">strip.background =</span> <span class="kw">element_blank</span>()) 
+          <span class="dt">strip.background =</span> <span class="kw">element_blank</span>())
 
 <span class="kw">ggsave</span>(<span class="dt">filename =</span> <span class="st">&#39;healthy.png&#39;</span>,
-       <span class="dt">plot =</span> healthy, 
-       <span class="dt">path =</span> <span class="st">&#39;./images/posts/2019-01-25-global-burden-of-disease&#39;</span>, 
+       <span class="dt">plot =</span> healthy,
+       <span class="dt">path =</span> <span class="st">&#39;./images/posts/2019-01-25-global-burden-of-disease&#39;</span>,
        <span class="dt">width =</span> <span class="dv">8</span>,
        <span class="dt">height =</span> <span class="fl">2.2</span>,
        <span class="dt">units =</span> <span class="st">&#39;in&#39;</span>)
@@ -491,7 +491,7 @@ unhealthy &lt;-<span class="st"> </span>delta <span class="op">%&gt;%</span><spa
 <span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&#39;Years of poor health at birth&#39;</span>,
          <span class="dt">x =</span> <span class="st">&#39;Year&#39;</span>,
          <span class="dt">y =</span> <span class="st">&#39;Years of life&#39;</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>location, 
+<span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>location,
                <span class="dt">ncol =</span> <span class="dv">5</span>) <span class="op">+</span>
 <span class="st">    </span><span class="kw">theme_bw</span>(<span class="dt">base_size =</span> <span class="dv">12</span>) <span class="op">+</span>
 <span class="st">    </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&#39;none&#39;</span>,
@@ -500,11 +500,11 @@ unhealthy &lt;-<span class="st"> </span>delta <span class="op">%&gt;%</span><spa
                                      <span class="dt">hjust =</span> <span class="dv">1</span>,
                                      <span class="dt">vjust =</span> <span class="fl">1.1</span>),
           <span class="dt">panel.grid =</span> <span class="kw">element_blank</span>(),
-          <span class="dt">strip.background =</span> <span class="kw">element_blank</span>()) 
+          <span class="dt">strip.background =</span> <span class="kw">element_blank</span>())
 
 <span class="kw">ggsave</span>(<span class="dt">filename =</span> <span class="st">&#39;unhealthy.png&#39;</span>,
-       <span class="dt">plot =</span> unhealthy, 
-       <span class="dt">path =</span> <span class="st">&#39;./images/posts/2019-01-25-global-burden-of-disease&#39;</span>, 
+       <span class="dt">plot =</span> unhealthy,
+       <span class="dt">path =</span> <span class="st">&#39;./images/posts/2019-01-25-global-burden-of-disease&#39;</span>,
        <span class="dt">width =</span> <span class="dv">8</span>,
        <span class="dt">height =</span> <span class="fl">2.75</span>,
        <span class="dt">units =</span> <span class="st">&#39;in&#39;</span>)</code></pre></div>
@@ -545,7 +545,7 @@ le_male &lt;-<span class="st"> </span>delta <span class="op">%&gt;%</span><span 
                        <span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="op">+</span>
 <span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&#39;Total life expectancy at birth&#39;</span>,
          <span class="dt">y =</span> <span class="st">&#39;Years of life&#39;</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>location, 
+<span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>location,
                <span class="dt">ncol =</span> <span class="dv">5</span>) <span class="op">+</span>
 <span class="st">    </span><span class="kw">theme_bw</span>(<span class="dt">base_size =</span> <span class="dv">12</span>) <span class="op">+</span>
 <span class="st">    </span><span class="kw">theme</span>(<span class="dt">legend.title =</span> <span class="kw">element_blank</span>(),
@@ -559,7 +559,7 @@ le_male &lt;-<span class="st"> </span>delta <span class="op">%&gt;%</span><span 
           <span class="dt">strip.background =</span> <span class="kw">element_blank</span>()) <span class="op">+</span>
 <span class="st">    </span><span class="kw">transition_reveal</span>(year)
 
-le_male &lt;-<span class="st"> </span><span class="kw">animate</span>(<span class="dt">plot =</span> le_male, 
+le_male &lt;-<span class="st"> </span><span class="kw">animate</span>(<span class="dt">plot =</span> le_male,
                    <span class="dt">fps =</span> <span class="dv">10</span>,
                    <span class="dt">nframes =</span> <span class="dv">150</span>,
                    <span class="dt">duration =</span> <span class="dv">15</span>,
@@ -587,7 +587,7 @@ le_female &lt;-<span class="st"> </span>delta <span class="op">%&gt;%</span><spa
                        <span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="op">+</span>
 <span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&#39;Total life expectancy at birth&#39;</span>,
          <span class="dt">y =</span> <span class="st">&#39;Years of life&#39;</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>location, 
+<span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>location,
                <span class="dt">ncol =</span> <span class="dv">5</span>) <span class="op">+</span>
 <span class="st">    </span><span class="kw">theme_bw</span>(<span class="dt">base_size =</span> <span class="dv">12</span>) <span class="op">+</span>
 <span class="st">    </span><span class="kw">theme</span>(<span class="dt">legend.title =</span> <span class="kw">element_blank</span>(),
@@ -601,8 +601,8 @@ le_female &lt;-<span class="st"> </span>delta <span class="op">%&gt;%</span><spa
           <span class="dt">strip.background =</span> <span class="kw">element_blank</span>()) <span class="op">+</span>
 <span class="st">    </span><span class="kw">transition_reveal</span>(year)
 
-le_female &lt;-<span class="st"> </span><span class="kw">animate</span>(<span class="dt">plot =</span> le_female, 
-                     <span class="dt">fps =</span> <span class="dv">10</span>, 
+le_female &lt;-<span class="st"> </span><span class="kw">animate</span>(<span class="dt">plot =</span> le_female,
+                     <span class="dt">fps =</span> <span class="dv">10</span>,
                      <span class="dt">nframes =</span> <span class="dv">150</span>,
                      <span class="dt">duration =</span> <span class="dv">15</span>,
                      <span class="dt">end_pause =</span> <span class="dv">50</span>,
@@ -625,7 +625,7 @@ le_female &lt;-<span class="st"> </span><span class="kw">animate</span>(<span cl
 delta_spread &lt;-<span class="st"> </span>delta <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">    </span><span class="co"># Spread the measures column</span>
 <span class="st">    </span><span class="kw">spread</span>(<span class="dt">key =</span> measure,
-           <span class="dt">value =</span> val) 
+           <span class="dt">value =</span> val)
 
 <span class="co"># Extract 1990 values for each measure and for each subgroup</span>
 baseline_<span class="dv">1990</span> &lt;-<span class="st"> </span>delta_spread <span class="op">%&gt;%</span>
@@ -663,7 +663,7 @@ delta_spread <span class="op">%&lt;&gt;%</span><span class="st"> </span>
            <span class="dt">p_yoy_poor_health =</span> <span class="kw">ifelse</span>(year <span class="op">==</span><span class="st"> </span><span class="dv">1990</span>,
                                     <span class="dt">yes =</span> <span class="dv">0</span>,
                                     <span class="dt">no =</span> p_yoy_poor_health)) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">p_cum_yoy_good_health =</span> <span class="kw">cumsum</span>(p_yoy_good_health), 
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">p_cum_yoy_good_health =</span> <span class="kw">cumsum</span>(p_yoy_good_health),
            <span class="dt">p_cum_yoy_poor_health =</span> <span class="kw">cumsum</span>(p_yoy_poor_health)) <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">ungroup</span>()
 
@@ -689,12 +689,12 @@ perc_male &lt;-<span class="st"> </span>delta_spread <span class="op">%&gt;%</sp
 <span class="st">    </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">1990</span>, <span class="dv">1995</span>, <span class="dv">2000</span>, <span class="dv">2005</span>, <span class="dv">2010</span>, <span class="dv">2017</span>)) <span class="op">+</span>
 <span class="st">    </span><span class="kw">scale_y_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>, <span class="dv">20</span>),
                        <span class="dt">breaks =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>, <span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">20</span>)) <span class="op">+</span>
-<span class="st">    </span><span class="kw">scale_colour_manual</span>(<span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&#39;years of</span><span class="ch">\n</span><span class="st">good health&#39;</span>, <span class="st">&#39;Years of</span><span class="ch">\n</span><span class="st">poor health&#39;</span>), 
+<span class="st">    </span><span class="kw">scale_colour_manual</span>(<span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&#39;years of</span><span class="ch">\n</span><span class="st">good health&#39;</span>, <span class="st">&#39;Years of</span><span class="ch">\n</span><span class="st">poor health&#39;</span>),
                         <span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&#39;#56B4E9&#39;</span>, <span class="st">&#39;#E69F00&#39;</span>)) <span class="op">+</span>
 <span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Cumulative year-over-year percent change in &#39;years of good health&#39; and &#39;years of poor health&#39;&quot;</span>,
          <span class="dt">x =</span> <span class="st">&#39;Year&#39;</span>,
          <span class="dt">y =</span> <span class="st">&quot;Cumulative change (%)&quot;</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>location, 
+<span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>location,
                <span class="dt">ncol =</span> <span class="dv">5</span>) <span class="op">+</span>
 <span class="st">    </span><span class="kw">theme_bw</span>(<span class="dt">base_size =</span> <span class="dv">12</span>) <span class="op">+</span>
 <span class="st">    </span><span class="kw">theme</span>(<span class="dt">legend.title =</span> <span class="kw">element_blank</span>(),
@@ -710,7 +710,7 @@ perc_male &lt;-<span class="st"> </span>delta_spread <span class="op">%&gt;%</sp
 <span class="st">    </span><span class="kw">transition_reveal</span>(year)
 
 perc_male &lt;-<span class="st"> </span><span class="kw">animate</span>(<span class="dt">plot =</span> perc_male,
-                     <span class="dt">fps =</span> <span class="dv">10</span>, 
+                     <span class="dt">fps =</span> <span class="dv">10</span>,
                      <span class="dt">nframes =</span> <span class="dv">150</span>,
                      <span class="dt">duration =</span> <span class="dv">15</span>,
                      <span class="dt">end_pause =</span> <span class="dv">50</span>,
@@ -738,12 +738,12 @@ perc_female &lt;-<span class="st"> </span>delta_spread <span class="op">%&gt;%</
 <span class="st">    </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">1990</span>, <span class="dv">1995</span>, <span class="dv">2000</span>, <span class="dv">2005</span>, <span class="dv">2010</span>, <span class="dv">2017</span>)) <span class="op">+</span>
 <span class="st">    </span><span class="kw">scale_y_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>, <span class="dv">20</span>),
                        <span class="dt">breaks =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>, <span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">20</span>)) <span class="op">+</span>
-<span class="st">    </span><span class="kw">scale_colour_manual</span>(<span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&#39;Years of</span><span class="ch">\n</span><span class="st">good health&#39;</span>, <span class="st">&#39;Years of</span><span class="ch">\n</span><span class="st">poor health&#39;</span>), 
+<span class="st">    </span><span class="kw">scale_colour_manual</span>(<span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&#39;Years of</span><span class="ch">\n</span><span class="st">good health&#39;</span>, <span class="st">&#39;Years of</span><span class="ch">\n</span><span class="st">poor health&#39;</span>),
                         <span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&#39;#56B4E9&#39;</span>, <span class="st">&#39;#E69F00&#39;</span>)) <span class="op">+</span>
 <span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Cumulative year-over-year percent change in &#39;years of good health&#39; and &#39;years of poor health&#39;&quot;</span>,
          <span class="dt">x =</span> <span class="st">&#39;Year&#39;</span>,
          <span class="dt">y =</span> <span class="st">&quot;Cumulative change (%)&quot;</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>location, 
+<span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>location,
                <span class="dt">ncol =</span> <span class="dv">5</span>) <span class="op">+</span>
 <span class="st">    </span><span class="kw">theme_bw</span>(<span class="dt">base_size =</span> <span class="dv">12</span>) <span class="op">+</span>
 <span class="st">    </span><span class="kw">theme</span>(<span class="dt">legend.title =</span> <span class="kw">element_blank</span>(),
@@ -757,8 +757,8 @@ perc_female &lt;-<span class="st"> </span>delta_spread <span class="op">%&gt;%</
           <span class="dt">strip.background =</span> <span class="kw">element_blank</span>()) <span class="op">+</span>
 <span class="st">    </span><span class="kw">transition_reveal</span>(year)
 
-perc_female &lt;-<span class="st"> </span><span class="kw">animate</span>(<span class="dt">plot =</span> perc_female, 
-                       <span class="dt">fps =</span> <span class="dv">10</span>, 
+perc_female &lt;-<span class="st"> </span><span class="kw">animate</span>(<span class="dt">plot =</span> perc_female,
+                       <span class="dt">fps =</span> <span class="dv">10</span>,
                        <span class="dt">nframes =</span> <span class="dv">150</span>,
                        <span class="dt">duration =</span> <span class="dv">15</span>,
                        <span class="dt">end_pause =</span> <span class="dv">50</span>,
@@ -800,40 +800,40 @@ Males
 <pre><code>## R version 3.5.2 (2018-12-20)
 ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
 ## Running under: macOS Mojave 10.14.2
-## 
+##
 ## Matrix products: default
 ## BLAS: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRblas.0.dylib
 ## LAPACK: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRlapack.dylib
-## 
+##
 ## locale:
 ## [1] en_GB.UTF-8/en_GB.UTF-8/en_GB.UTF-8/C/en_GB.UTF-8/en_GB.UTF-8
-## 
+##
 ## attached base packages:
-## [1] stats     graphics  grDevices utils     datasets  methods   base     
-## 
+## [1] stats     graphics  grDevices utils     datasets  methods   base
+##
 ## other attached packages:
-##  [1] bindrcpp_0.2.2  skimr_1.0.4     gganimate_1.0.0 magrittr_1.5   
-##  [5] forcats_0.3.0   stringr_1.3.1   dplyr_0.7.8     purrr_0.3.0    
-##  [9] readr_1.3.1     tidyr_0.8.2     tibble_2.0.1    ggplot2_3.1.0  
+##  [1] bindrcpp_0.2.2  skimr_1.0.4     gganimate_1.0.0 magrittr_1.5
+##  [5] forcats_0.3.0   stringr_1.3.1   dplyr_0.7.8     purrr_0.3.0
+##  [9] readr_1.3.1     tidyr_0.8.2     tibble_2.0.1    ggplot2_3.1.0
 ## [13] tidyverse_1.2.1
-## 
+##
 ## loaded via a namespace (and not attached):
-##  [1] progress_1.2.0    tidyselect_0.2.5  xfun_0.4         
-##  [4] haven_2.0.0       lattice_0.20-38   colorspace_1.4-0 
-##  [7] generics_0.0.2    htmltools_0.3.6   yaml_2.2.0       
-## [10] utf8_1.1.4        rlang_0.3.1       pillar_1.3.1     
-## [13] glue_1.3.0        withr_2.1.2.9000  tweenr_1.0.1     
-## [16] modelr_0.1.2      readxl_1.2.0      bindr_0.1.1      
-## [19] plyr_1.8.4        munsell_0.5.0     gtable_0.2.0     
-## [22] cellranger_1.1.0  rvest_0.3.2       evaluate_0.12    
-## [25] knitr_1.21        fansi_0.4.0       broom_0.5.1      
-## [28] Rcpp_1.0.0        scales_1.0.0      backports_1.1.3  
-## [31] jsonlite_1.6      farver_1.1.0      hms_0.4.2        
-## [34] digest_0.6.18     stringi_1.2.4     grid_3.5.2       
-## [37] cli_1.0.1         tools_3.5.2       lazyeval_0.2.1   
+##  [1] progress_1.2.0    tidyselect_0.2.5  xfun_0.4
+##  [4] haven_2.0.0       lattice_0.20-38   colorspace_1.4-0
+##  [7] generics_0.0.2    htmltools_0.3.6   yaml_2.2.0
+## [10] utf8_1.1.4        rlang_0.3.1       pillar_1.3.1
+## [13] glue_1.3.0        withr_2.1.2.9000  tweenr_1.0.1
+## [16] modelr_0.1.2      readxl_1.2.0      bindr_0.1.1
+## [19] plyr_1.8.4        munsell_0.5.0     gtable_0.2.0
+## [22] cellranger_1.1.0  rvest_0.3.2       evaluate_0.12
+## [25] knitr_1.21        fansi_0.4.0       broom_0.5.1
+## [28] Rcpp_1.0.0        scales_1.0.0      backports_1.1.3
+## [31] jsonlite_1.6      farver_1.1.0      hms_0.4.2
+## [34] digest_0.6.18     stringi_1.2.4     grid_3.5.2
+## [37] cli_1.0.1         tools_3.5.2       lazyeval_0.2.1
 ## [40] crayon_1.3.4      pkgconfig_2.0.2   prettyunits_1.0.2
-## [43] xml2_1.2.0        lubridate_1.7.4   assertthat_0.2.0 
-## [46] rmarkdown_1.11    httr_1.4.0        rstudioapi_0.9.0 
+## [43] xml2_1.2.0        lubridate_1.7.4   assertthat_0.2.0
+## [46] rmarkdown_1.11    httr_1.4.0        rstudioapi_0.9.0
 ## [49] R6_2.3.0          nlme_3.1-137      compiler_3.5.2</code></pre>
 </div>
 <div class="footnotes">
@@ -913,7 +913,7 @@ Males
  			   </p>
  		   </div>
  	   </div>
- 	</div> 
+ 	</div>
     </footer>
 </body>
 
