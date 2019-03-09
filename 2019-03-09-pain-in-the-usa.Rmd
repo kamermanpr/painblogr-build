@@ -1,0 +1,578 @@
+---
+post_title: "Pain in the USA"
+post_author: 'Peter Kamerman'
+post_date: '9 March 2019'
+post_image: 'https://www.painblogr.org/images/posts/2019-02-09-pain-in-the-usa/post-image.jpg'
+permalink:  '2019-01-25-pain-in-the-usa.html'
+description: "Arthritic pain in the USA?"
+output:
+    html_document:
+        template: './_templates/posts.html'
+        code_folding: hide
+---
+
+```{r load-packages, include = FALSE}
+library(fiftystater) # For a map of the USA
+library(magrittr) # I like %<>%
+library(sf) # Simple features package for dealing with spatial data
+library(skimr) # Numeric summaries made simple
+library(survey) # Analysing complex sample designs
+library(tidyverse) # Data munging and plotting
+library(ggiraph) # Interactive plotting extension for ggplot2
+library(geofacet) # Expand ggplot facetting to geographic data
+    
+# Set chunk options
+knitr::opts_chunk$set(warning = FALSE,
+                      message = FALSE)
+```
+
+****
+
+## Overview
+
+The Behavioral Risk Factor Surveillance System (BRFSS) is an annual telephonic survey that takes place across all 50 states of the United States (US), the District of Columbia, Puerto Rico, Guam, and the US Virgin Islands. The goal of the survey is the collection of state and territory data on preventative health practices and risk behaviours that are linked to chronic diseases, injuries, and preventable infectious diseases. The survey is limited to non-institutionalized US/US territory residents who are $\geq$ 18 years old.[^1]
+
+[^1]: Source: [BRFSS website](http://www.cdc.gov/brfss/)
+
+The survey uses probability sampling methods to select the sample, and the sampling is stratified by state/territory. Within each state, sampling is based on random digit dialing, using records of household land-line numbers and cellphone numbers within each state (there is almost universal access to a land-line in US households). The sampling of cellphone numbers is by simple random sampling, while land-line number sampling uses disproportionate stratified sampling (DSS), which stratifies the sampling according to presumed housing density. Sampling is also geographically stratified within each state, and the timing of the calls is spread across the time of day, and across weekdays/weekends/holidays to accommodate the work schedules of potential participants. 
+
+Non-response and targeted under/over sampling of particular groups can introduce distortions in the data relative to the underlying population structure, hence weighting factors are calculated for the data. BRFSS weighting corrections are applied using a method called _raking_, and the stratification _(\_psu: population stratification unit)_ and weighting factors _(\_llcpwt: final weight)_ are provided in the _brfss2013_ dataset[^2]. Both the stratification and weighting of the data can be factored into an analysis using the [_'survey'_](https://cran.r-project.org/web/packages/survey/index.html) package.
+
+[^2]: Preparing 2013 BRFSS module data for analysis: [Link](http://www.cdc.gov/brfss/annual_data/2013/pdf/analysisofmodules_2013.pdf)
+
+****
+
+## Research questions
+
+I chose to focus on the data from the core questionnaire (mandatory across all states/territories) that deals with the presence of arthritic pain. Arthritic pain is the most common cause of chronic pain in the general population[^3], and it contributes to a lower quality of life. With the BRFSS dataset we have an opportunity to undertake an exploratory analysis of the burden of arthritis in a large, representative sample of the US adult population. 
+
+[^3]: Source: Breivik et al., 2006. DOI: [10.1016/j.ejpain.2005.06.009](http://dx.doi.org/10.1016/j.ejpain.2005.06.009)
+
+I limited the data analysed to the 50 US states. In all cases I analysed the data by state.
+
+Case ascertainment for arthritis was based on question _'havarth3'_ in the Chronic Health Conditions section of the BRFSS Main Survey. The question asks the following:
+
+- Has a doctor, nurse, or other health professional ever told you that you had any of the following? For each, tell me _'Yes'_, _'No'_, or you're _'Not sure'_:
+
+    (Ever told) you have some form of arthritis, rheumatoid arthritis, gout, lupus, or fibromyalgia? (Arthritis diagnoses include: rheumatism, polymyalgia rheumatica; osteoarthritis (not osteporosis); tendonitis, bursitis, bunion, tennis elbow; carpal tunnel syndrome, tarsal tunnel syndrome; joint infection, etc.)
+
+Only participants who answered 'Yes' or 'No' where included in the analyses _(n = 488,794)_.
+
+Because the analysis is based on 2013 data only, and I am not comparing across years, I have not adjusted (transformed) the data to a reference population (e.g., the US 2000 Standard Population). As such, prevalence estimates are crude (unadjusted) estimates. 
+
+**Question 1:**
+
+What is the crude prevalence of arthritis in each state?
+
+**Question 2:**
+
+What is the prevalence of arthritis in each state by age group?
+ 
+**Question 3:**
+
+What is the prevalence of arthritis in each state by sex?
+
+_**NOTE:** In line with the exploratory nature of the exercise, I only report the outcome of exploratory numerical and graphical analyses, and have not extended the analyses to include hypothesis tests or modelling._
+
+****
+
+## Data extraction and cleaning
+
+In preparation for the analysis I did the following:
+
+1. Imported the data into R;  
+2. Extract the required columns of data;  
+4. Generated a _survey design object_ (includes sample stratification and weighting information). 
+
+For part 2, I extracted the following columns to assess their suitability for analysis:
+
+**State (\_state):**  
+
+- state [categorical: names of states and territories]
+
+**Age (\_age\_g):**  
+
+- Age (in years) in six mutually exclusive groups? [categorical: Age 18 to 24, Age 25 to 34, Age 35 to 44, Age 45 to 54, Age 55 to 64, Age 65 or older]
+
+**Sex (sex):**  
+
+- Indicate sex of respondent [categorical: Male, Female]
+
+**Diagnosed with arthritis (havarth3):**  
+
+- Ever told you have arthritis? [categorical: Yes, No, NA = other/missing]
+
+In addition, I also extracted variables required for building the design object, namely, the **primary sampling unit (\_psu)**, **sample design stratification variable (\_ststr)**, and **final weight for landline And cellphone data (\_llcpwt)**.
+
+My initial cleaning steps included: i) selecting the columns I wanted; ii) Guam, Puerto Rico, and Washington DC; iii) cleaned the column names; iv) fixed some ordinal variables; and v) removed missing data from the design variables.
+
+```{r clean_data}
+#-- Import data --#
+load('_data/2019-03-09-pain-in-the-usa/brfss2013.RData')
+
+#-- Select columns --#
+brfss2013 %<>%
+    select(X_psu, X_llcpwt, X_ststr, # Stratification and weighting factors
+           X_state, # State and residency information
+           X_age_g, sex, # Demographics
+           havarth3) # Arthritis
+
+#-- Reduce to 50 states --#
+brfss2013 %<>%
+    # Filter out District of Columbia, Guam, Puerto Rico, and odd values (80, 0)
+    filter(!X_state %in% c('District of Columbia',
+                           'Guam', 'Puerto Rico',
+                           '80', '0')) %>%
+    # Remove resulting empty state factors
+    mutate(X_state = fct_drop(X_state))
+
+#-- Rename columns --#
+brfss2013 %<>%
+    rename(psu = X_psu,
+           llcpwt = X_llcpwt,
+           strata = X_ststr,
+           state = X_state,
+           age = X_age_g,
+           dx_arthritis = havarth3)
+
+#-- Order age factor levels --#
+brfss2013 %<>%
+    mutate(age = factor(age, 
+                        ordered = TRUE))
+
+#-- Remove missing survey design variables --#
+brfss2013 %<>%
+    filter(!is.na(psu)) %>%
+    filter(!is.na(strata)) %>% 
+    filter(!is.na(llcpwt))
+```
+
+After this preliminary clean of the data, I inspected the variables of interest and the survey design variables.
+
+### Tabular summary of variables of interest
+
+```{r tab_summary_1, results = 'asis'}
+brfss2013 %>% 
+    select(-psu, -strata, -llcpwt) %>% 
+    skim() %>% 
+    kable()
+```
+
+There are some missing data for arthritis diagnosis, but they only make-up a small percentage of the total survey population.
+
+### Survey design variables
+
+The sum of survey weight should approximate the population of the US. In this case the sum of the weights is `r as.integer(sum(brfss2013$llcpwt))`, and so I am satisfied with the weights. 
+
+The number of unique primary sampling units (PSU) is `r length(unique(brfss2013$psu))`, and the number of unique strata is `r length(unique(brfss2013$strata))`
+
+****
+
+## Generate a design object
+
+Generating a design object is a crucial part of analysing complex survey data because the design object factors in the stratification and weightings that are then incorporated into all subsequent analyses. 
+
+```{r survey_design, eval = FALSE}
+#-- Set options for control standard error estimation --#
+options(survey.lonely.psu = 'certainty')
+
+#-- Create survey design object --#
+brfss2013_design <- svydesign(ids = ~psu,
+                              weight = ~llcpwt,
+                              strata = ~strata,
+                              nest = TRUE,
+                              data = brfss2013)
+
+#-- Summary of the design --#
+brfss2013_design
+```
+
+```{r survey_designload, echo = FALSE}
+if(!file.exists('_data/2019-03-09-pain-in-the-usa/brfss2013_design.RData')) {
+    #-- Set options for control standard error estimation --#
+    options(survey.lonely.psu = 'certainty')
+
+    #-- Create survey design object --#
+    brfss2013_design <- svydesign(ids = ~psu,
+                              weight = ~llcpwt,
+                              strata = ~strata,
+                              nest = TRUE,
+                              data = brfss2013)
+    
+    #-- Write design object to file if it does not exist --#
+    write_rds(brfss2013_design, 
+              path = '_data/2019-03-09-pain-in-the-usa/brfss2013_design.RData', 
+              compress = 'gz')
+} else {
+    options( survey.lonely.psu = 'certainty' )
+    #-- Load saved design object --#
+    brfss2013_design <- read_rds('_data/2019-03-09-pain-in-the-usa/brfss2013_design.RData')
+}
+
+#-- Summary of the design --#
+brfss2013_design
+```
+
+****
+
+## Research questions
+
+### Question 1
+
+#### What is the prevalence of arthritis in each state?
+
+##### Generate the arthritis by state data
+
+```{r arthritis_state1, eval = FALSE}
+#-- Calculate proportion with arthritis by state --#
+arthritis_state <- svyby(formula = ~dx_arthritis, 
+                         by = ~state, 
+                         design = brfss2013_design, 
+                         FUN = svymean, 
+                         na.rm = TRUE)
+```
+
+
+```{r arthritis_LOAD1, echo = FALSE}
+if(!file.exists('_data/2019-03-09-pain-in-the-usa/arthritis_state.RData')) {
+    #-- Set options for control standard error estimation --#
+    options(survey.lonely.psu = 'certainty')
+
+    #-- Calculate proportion (95%CI) with arthritis by state --#
+    arthritis_state <- svyby(formula = ~dx_arthritis, 
+                             by = ~state, 
+                             design = brfss2013_design, 
+                             FUN = svymean, 
+                             na.rm = TRUE)
+    
+    #-- Write design object to file if it does not exist --#
+    write_rds(arthritis_state, 
+              path = '_data/2019-03-09-pain-in-the-usa/arthritis_state.RData', 
+              compress = 'gz')
+} else {
+    #-- Load saved design object --#
+    arthritis_state <- read_rds('_data/2019-03-09-pain-in-the-usa/arthritis_state.RData')
+}
+```
+
+##### Clean and plot the data
+
+```{r arthritis_state2}
+#-- Clean-up and convert to a percentage --#
+prop_state <- arthritis_state %>%
+    select(1:2) %>% 
+    set_names(c('state', 'proportion')) %>% 
+    mutate(state = as.character(state)) %>% 
+    mutate_if(is.numeric, list(~round(. * 100)))
+
+#-- Get conficence intervals --#
+ci_state <- confint(arthritis_state) %>% 
+    as.data.frame(.) %>% 
+    rownames_to_column() %>% 
+    mutate_if(is.numeric, list(~round(. * 100))) %>% 
+    set_names(c('state', 'proportion_low', 'proportion_upp')) %>% 
+    filter(str_detect(state, 'Yes')) %>% 
+    mutate(state = str_remove(state, ':.+')) 
+
+#-- Merge proportions and CI --#
+prop_state %<>% 
+    left_join(ci_state)
+    
+#-- Add interactive tooltip info --#
+prop_state %<>%
+    mutate(tooltip = paste0('<b>', state, '</b><br>',
+                            '<em>Prevalence of arthritis</em><br>',
+                            proportion, '% (95% CI: ',
+                            proportion_low, ' to ', 
+                            proportion_upp, ')')) 
+
+#-- Create a simple features (sf) map of the 50 US states --#
+map_us <- fifty_states %>% 
+    # Create map
+    st_as_sf(., 
+             coords = c("long", "lat"),
+             crs = "+proj=longlat +datum=WGS84 +no_defs") %>% 
+    group_by(id, piece) %>% 
+    summarise(do_union = FALSE) %>% 
+    st_cast("POLYGON") %>% 
+    st_cast("MULTIPOLYGON") %>% 
+    ungroup() %>% 
+    # Add a state column
+    mutate(state = str_to_title(id)) %>% 
+    # Remove old id column
+    select(-id)
+
+#-- Join map_us with arthritis_state --#
+map_state <- map_us %>%
+    left_join(prop_state) 
+
+# Plot
+gg_state <- ggplot(map_state) +
+    geom_sf_interactive(aes(tooltip = tooltip,
+                            fill = proportion), 
+             color = '#FFFFFF',
+             size = 0.25) +
+    scale_fill_viridis_c(name = 'Prevalence (%)',
+                         direction = -1) +
+    labs(title = 'Prevalence of diagnosed arthritis by US state*',
+         subtitle = '(adult non-institutionalized population)', 
+         caption = '* Move cursor over each state to see state-specific estimate and 95% confidence interval.') +
+    theme_void() +
+    theme(panel.grid = element_line(colour = '#FFFFFF'),
+          plot.caption = element_text(face = 'italic',
+                                      hjust = 0))
+
+ggiraph(ggobj = gg_state,
+        width = 1,
+        hover_css = 'cursor:pointer;
+        fill:#FFFFFF;
+        stroke:#000000;',
+        tooltip_extra_css = 'background-color:#000000;
+font-family:sans-serif,arial;
+font-size:80%;
+color:#FFFFFF;
+padding:10px;
+border-radius:10px 10px 10px 10px;')
+```
+
+### Question 2
+
+#### What is the prevalence of arthritis in each state by age group?
+
+##### Generate the arthritis by state for each age group data
+
+```{r arthritis_age1, eval = FALSE}
+#-- Calculate proportion (95%CI) with arthritis by state --#
+arthritis_age <- svyby(formula = ~dx_arthritis, 
+                       by = ~state + age, 
+                       design = brfss2013_design, 
+                       FUN = svymean, 
+                       na.rm = TRUE)
+```
+
+##### Clean and plot the data
+
+```{r arthritis_LOAD2, echo = FALSE}
+if(!file.exists('_data/2019-03-09-pain-in-the-usa/arthritis_age.RData')) {
+    #-- Set options for control standard error estimation --#
+    options(survey.lonely.psu = 'certainty')
+
+    #-- Calculate proportion (95%CI) with arthritis by state --#
+    arthritis_age <- svyby(formula = ~dx_arthritis, 
+                           by = ~state + age, 
+                           design = brfss2013_design, 
+                           FUN = svymean, 
+                           na.rm = TRUE)
+    
+    #-- Write design object to file if it does not exist --#
+    write_rds(arthritis_age, 
+              path = '_data/2019-03-09-pain-in-the-usa/arthritis_age.RData', 
+              compress = 'gz')
+} else {
+    #-- Load saved design object --#
+    arthritis_age <- read_rds('_data/2019-03-09-pain-in-the-usa/arthritis_age.RData')
+}
+```
+
+```{r arthritis_age2}
+#-- Clean-up and convert to a percentage --#
+prop_age <- arthritis_age %>%
+    select(1:3) %>% 
+    set_names(c('state', 'age', 'proportion')) %>% 
+    mutate(state = as.character(state)) %>% 
+    mutate_if(is.numeric, list(~round(. * 100)))
+
+#-- Get the confidence intervals --#
+ci_age <- confint(arthritis_age) %>% 
+    as.data.frame(.) %>% 
+    rownames_to_column() %>% 
+    mutate_if(is.numeric, list(~round(. * 100))) %>% 
+    set_names(c('state', 'proportion_low', 'proportion_upp')) %>% 
+    filter(str_detect(state, 'Yes')) %>% 
+    mutate(state = str_remove(state, ':.+')) %>% 
+    separate(col = state, 
+             into = c('state', 'age'),
+             sep = '\\.') %>% 
+    mutate(age = factor(age, ordered = TRUE))
+
+#-- Merge proportion and CI --#
+prop_age %<>% 
+    left_join(ci_age)
+
+
+#-- Add interactive tooltip info --#
+prop_age %<>%
+    mutate(tooltip = paste0('<b>', state, ': ', age, '</b><br>',
+                            '<em>Prevalence of arthritis</em><br>',
+                            proportion, '% (95% CI: ',
+                            proportion_low, ' to ', 
+                            proportion_upp, ')')) 
+
+#-- Join map_us with arthritis_state --#
+map_age <- map_us %>%
+    left_join(prop_age) %>% 
+    filter(!is.na(age))
+
+# Plot
+gg_age <- ggplot(map_age) +
+    geom_sf_interactive(aes(tooltip = tooltip,
+                            fill = proportion), 
+             color = '#FFFFFF',
+             size = 0.25) +
+    scale_fill_viridis_c(name = 'Prevalence (%)',
+                         direction = -1) +
+    labs(title = 'Prevalence of diagnosed arthritis by US state and age*',
+         subtitle = '(adult non-institutionalized population)', 
+         caption = '* Move cursor over each state to see state-specific estimate and 95% confidence interval.') +
+    facet_wrap(~age, ncol = 3) +
+    theme_void() +
+    theme(panel.grid = element_line(colour = '#FFFFFF'),
+          strip.text = element_text(size = 11,
+                                    margin = margin(t = 1, r = 0, b = 0.1, l = 0, unit = "line")),
+          plot.caption = element_text(face = 'italic',
+                                      hjust = 0))
+
+ggiraph(ggobj = gg_age,
+        width = 1,
+        hover_css = 'cursor:pointer;
+        fill:#FFFFFF;
+        stroke:#000000;',
+        tooltip_extra_css = 'background-color:#000000;
+font-family:sans-serif,arial;
+font-size:80%;
+color:#FFFFFF;
+padding:10px;
+border-radius:10px 10px 10px 10px;')
+```
+
+### Question 3
+
+#### What is the prevalence of arthritis in each state by sex?
+
+##### Generate the arthritis by state for each sex data
+
+```{r arthritis_sex1, eval = FALSE}
+#-- Calculate proportion (95%CI) with arthritis by state --#
+arthritis_sex <- svyby(formula = ~dx_arthritis, 
+                       by = ~state + sex, 
+                       design = brfss2013_design, 
+                       FUN = svymean, 
+                       na.rm = TRUE)
+```
+
+```{r arthritis_LOAD3, echo = FALSE}
+if(!file.exists('_data/2019-03-09-pain-in-the-usa/arthritis_sex.RData')) {
+    #-- Set options for control standard error estimation --#
+    options(survey.lonely.psu = 'certainty')
+
+    #-- Calculate proportion (95%CI) with arthritis by state --#
+    arthritis_sex <- svyby(formula = ~dx_arthritis, 
+                           by = ~state + sex, 
+                           design = brfss2013_design, 
+                           FUN = svymean, 
+                           na.rm = TRUE)
+    
+    #-- Write design object to file if it does not exist --#
+    write_rds(arthritis_sex, 
+              path = '_data/2019-03-09-pain-in-the-usa/arthritis_sex.RData', 
+              compress = 'gz')
+} else {
+    #-- Load saved design object --#
+    arthritis_sex <- read_rds('_data/2019-03-09-pain-in-the-usa/arthritis_sex.RData')
+}
+```
+
+
+##### Clean and plot the data
+
+```{r arthritis_sex2, fig.height = 8}
+#-- Clean-up and convert to a percentage --#
+prop_sex <- arthritis_sex %>%
+    select(1:3) %>% 
+    set_names(c('state', 'sex', 'proportion')) %>% 
+    mutate(state = as.character(state)) %>% 
+    mutate_if(is.numeric, list(~round(. * 100)))
+
+#-- Get the confidence intervals --#
+ci_sex <- confint(arthritis_sex) %>% 
+    as.data.frame(.) %>% 
+    rownames_to_column() %>% 
+    mutate_if(is.numeric, list(~round(. * 100))) %>% 
+    set_names(c('state', 'proportion_low', 'proportion_upp')) %>% 
+    filter(str_detect(state, 'Yes')) %>% 
+    mutate(state = str_remove(state, ':.+')) %>% 
+    separate(col = state, 
+             into = c('state', 'age'),
+             sep = '\\.') %>% 
+    mutate(age = factor(age, ordered = TRUE))
+
+#-- Merge proportion and CI --#
+prop_sex %<>% 
+    left_join(ci_sex)
+
+#-- Add interactive tooltip info --#
+prop_sex %<>%
+    mutate(tooltip = paste0('<b>', state, ': ', sex, '</b><br>',
+                            '<em>Prevalence of arthritis</em><br>',
+                            proportion, '% (95% CI: ',
+                            proportion_low, ' to ', 
+                            proportion_upp, ')')) 
+
+#-- Join map_us with arthritis_state --#
+map_sex <- map_us %>%
+    left_join(prop_sex) %>% 
+    filter(!is.na(sex))
+
+# Plot
+gg_sex <- ggplot(map_sex) +
+    geom_sf_interactive(aes(tooltip = tooltip,
+                            fill = proportion), 
+             color = '#FFFFFF',
+             size = 0.25) +
+    scale_fill_viridis_c(name = 'Prevalence (%)',
+                         direction = -1) +
+    labs(title = 'Prevalence of diagnosed arthritis by US state and sex*',
+         subtitle = '(adult non-institutionalized population)', 
+         caption = '* Move cursor over each state to see state-specific estimate and 95% confidence interval.') +
+    facet_wrap(~sex, ncol = 2) +
+    theme_void() +
+    theme(panel.grid = element_line(colour = '#FFFFFF'),
+          strip.text = element_text(size = 11,
+                                    margin = margin(t = 1, r = 0, b = 0.1, l = 0, unit = "line")),
+          plot.caption = element_text(face = 'italic',
+                                      hjust = 0))
+
+ggiraph(ggobj = gg_sex,
+        width = 1,
+        hover_css = 'cursor:pointer;
+        fill:#FFFFFF;
+        stroke:#000000;',
+        tooltip_extra_css = 'background-color:#000000;
+font-family:sans-serif,arial;
+font-size:80%;
+color:#FFFFFF;
+padding:10px;
+border-radius:10px 10px 10px 10px;')
+```
+
+****
+
+# Summary
+
+These data are by no means novel, but they nicely illustrate some key epidemiological patterns.
+
+Firstly, the prevalence of diagnosed arthritis differs substantially by state, with Eastern states tending to have a greater burden of disease. I did not directly address the question, but I suspect that differences in the age profile of states may play a major part in inter-state differences in disease burden. 
+
+I did however look at differences in arthritis across age groups. There is a marked increase in the prevalence of diagnosed cases of arthritis with increasing age. for example, the prevalence of arthritis in adults around the age of 20 years is about 2 to 5%, whereas the prevalence in disease is closer to 50% in people aged 65 years and older. There does not seem to be a sharp increase in the prevalence of arthritis at any particular age. Rather, the increased prevalence a appears to show a progress increase as age increases. 
+
+The last risk factor I looked at was the effect of sex on the prevalence of diagnosed cases of arthritis. Here, women showed a fairly marked increase in disease prevalence compared to men. The reasons for this difference is not understood. 
+
+****
+
+# Session information
+
+```{r session_info, echo = FALSE}
+sessionInfo()
+```
+
+
