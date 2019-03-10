@@ -9,6 +9,20 @@ output:
 
 <br>
 
+![](./images/posts/2019-03-09-pain-in-the-usa/post-image.jpg){ style="float:left;margin-left:auto;margin-right:auto;padding:16px 16px 20px 0px;" width=200px }
+
+### Arthritic pain in the USA
+
+**Peter Kamerman**
+
+_9 March 2019_
+
+I analysed Global Burden of Disease data to see whether our increasing life expectancy over the past three decades is extra time spent in good health or poor health.
+
+<a class="btn btn-primary" href="https://www.painblogr.org/2019-03-09-pain-in-the-usa.html" target="_blank">Read more <i class="fa fa-arrow-circle-o-right fa-2x" style="vertical-align: middle;" aria-hidden="true"></i></a><br>
+
+****
+
 ![](./images/posts/2019-01-25-global-burden-of-disease/post-image.jpg){ style="float:left;margin-left:auto;margin-right:auto;padding:16px 16px 20px 0px;" width=200px }
 
 ### When your ‘golden years’ are not so golden
@@ -21,16 +35,3 @@ I analysed Global Burden of Disease data to see whether our increasing life expe
 
 <a class="btn btn-primary" href="https://www.painblogr.org/2019-01-25-global-burden-of-disease.html" target="_blank">Read more <i class="fa fa-arrow-circle-o-right fa-2x" style="vertical-align: middle;" aria-hidden="true"></i></a><br>
 
-****
-
-![](./images/posts/2017-10-18-purrring-through-bootstraps/post-image.jpg){ style="float:left;margin-left:auto;margin-right:auto;padding:16px 16px 40px 0px;" width=200px }
-
-### 'purrr'-ing through bootstrap confidence intervals
-
-**Peter Kamerman**
-
-_18 October 2017_
-
-A _"how-to"_ example of integrating the calculation 95% confidence intervals using the `boot` package into your tidy workflow.
-
-<a class="btn btn-primary" href="https://www.painblogr.org/2017-10-18-purrring-through-bootstraps.html" target="_blank">Read more <i class="fa fa-arrow-circle-o-right fa-2x" style="vertical-align: middle;" aria-hidden="true"></i></a>
