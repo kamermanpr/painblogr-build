@@ -1,4 +1,4 @@
 User-Agent: *
-Disallow: /
+Disallow:
 
 Sitemap: https://www.painblogr.org/sitemap.xml
