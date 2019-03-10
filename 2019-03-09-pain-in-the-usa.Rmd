@@ -4,7 +4,7 @@ post_author: 'Peter Kamerman'
 post_date: '9 March 2019'
 post_image: 'https://www.painblogr.org/images/posts/2019-02-09-pain-in-the-usa/post-image.jpg'
 permalink:  '2019-01-25-pain-in-the-usa.html'
-description: "Arthritic pain in the USA?"
+description: "Using R and the 'survey' package to analyse data on athritis from the BRFSS survey"
 output:
     html_document:
         template: './_templates/posts.html'

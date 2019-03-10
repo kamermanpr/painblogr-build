@@ -11,13 +11,13 @@ output:
 
 ![](./images/posts/2019-03-09-pain-in-the-usa/post-image.jpg){ style="float:left;margin-left:auto;margin-right:auto;padding:16px 16px 20px 0px;" width=200px }
 
-### Arthritic pain in the USA
+### Arthritis in the USA
 
 **Peter Kamerman**
 
 _9 March 2019_
 
-I used the `survey` package to analyse data on athritis from the 2013 US Behavioral Risk Factor Surveillance System (BRFSS) survey.
+Using the `survey` package to analyse data on athritis from the 2013 US Behavioral Risk Factor Surveillance System (BRFSS) survey.
 
 <a class="btn btn-primary" href="https://www.painblogr.org/2019-03-09-pain-in-the-usa.html" target="_blank">Read more <i class="fa fa-arrow-circle-o-right fa-2x" style="vertical-align: middle;" aria-hidden="true"></i></a><br>
 
