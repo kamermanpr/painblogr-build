@@ -382,7 +382,7 @@ if(!file.exists('_data/2019-03-09-pain-in-the-usa/arthritis_age.rds')) {
 }
 ```
 
-```{r arthritis_age2}
+```{r arthritis_age2, fig.height = 10, fig.width = 8}
 #-- Clean-up and convert to a percentage --#
 prop_age <- arthritis_age %>%
     select(1:3) %>% 
@@ -496,7 +496,7 @@ if(!file.exists('_data/2019-03-09-pain-in-the-usa/arthritis_sex.rds')) {
 
 ##### Code to clean and plot the data
 
-```{r arthritis_sex2, fig.height = 8}
+```{r arthritis_sex2, fig.height = 10, fig.width = 8}
 #-- Clean-up and convert to a percentage --#
 prop_sex <- arthritis_sex %>%
     select(1:3) %>% 
