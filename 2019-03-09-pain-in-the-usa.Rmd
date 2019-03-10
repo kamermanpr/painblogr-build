@@ -1,5 +1,5 @@
 ---
-post_title: "Pain in the USA"
+post_title: "Arthritic pain in the USA"
 post_author: 'Peter Kamerman'
 post_date: '9 March 2019'
 post_image: 'https://www.painblogr.org/images/posts/2019-02-09-pain-in-the-usa/post-image.jpg'
@@ -108,7 +108,7 @@ My initial cleaning steps included: i) selecting the columns I wanted; ii) Guam,
 
 ```{r clean_data}
 #-- Import data --#
-load('_data/2019-03-09-pain-in-the-usa/brfss2013.RData')
+load(url('https://www.dropbox.com/s/al9wx65xywredzq/brfss2013.RData?dl=1'))
 
 #-- Select columns --#
 brfss2013 %<>%
@@ -168,7 +168,7 @@ The number of unique primary sampling units (PSU) is `r length(unique(brfss2013$
 
 ****
 
-## Generate a design object
+## Code to generate a design object
 
 Generating a design object is a crucial part of analysing complex survey data because the design object factors in the stratification and weightings that are then incorporated into all subsequent analyses. 
 
@@ -188,7 +188,7 @@ brfss2013_design
 ```
 
 ```{r survey_designload, echo = FALSE}
-if(!file.exists('_data/2019-03-09-pain-in-the-usa/brfss2013_design.RData')) {
+if(!file.exists('_data/2019-03-09-pain-in-the-usa/brfss2013_design.rds')) {
     #-- Set options for control standard error estimation --#
     options(survey.lonely.psu = 'certainty')
 
@@ -201,12 +201,14 @@ if(!file.exists('_data/2019-03-09-pain-in-the-usa/brfss2013_design.RData')) {
     
     #-- Write design object to file if it does not exist --#
     write_rds(brfss2013_design, 
-              path = '_data/2019-03-09-pain-in-the-usa/brfss2013_design.RData', 
+              path = '_data/2019-03-09-pain-in-the-usa/brfss2013_design.rds', 
               compress = 'gz')
 } else {
-    options( survey.lonely.psu = 'certainty' )
+    #-- Set options for control standard error estimation --#
+    options(survey.lonely.psu = 'certainty')
+
     #-- Load saved design object --#
-    brfss2013_design <- read_rds('_data/2019-03-09-pain-in-the-usa/brfss2013_design.RData')
+    brfss2013_design <- read_rds('_data/2019-03-09-pain-in-the-usa/brfss2013_design.rds')
 }
 
 #-- Summary of the design --#
@@ -221,7 +223,7 @@ brfss2013_design
 
 #### What is the prevalence of arthritis in each state?
 
-##### Generate the arthritis by state data
+##### Code to generate the arthritis by state data
 
 ```{r arthritis_state1, eval = FALSE}
 #-- Calculate proportion with arthritis by state --#
@@ -234,7 +236,7 @@ arthritis_state <- svyby(formula = ~dx_arthritis,
 
 
 ```{r arthritis_LOAD1, echo = FALSE}
-if(!file.exists('_data/2019-03-09-pain-in-the-usa/arthritis_state.RData')) {
+if(!file.exists('_data/2019-03-09-pain-in-the-usa/arthritis_state.rds')) {
     #-- Set options for control standard error estimation --#
     options(survey.lonely.psu = 'certainty')
 
@@ -247,15 +249,18 @@ if(!file.exists('_data/2019-03-09-pain-in-the-usa/arthritis_state.RData')) {
     
     #-- Write design object to file if it does not exist --#
     write_rds(arthritis_state, 
-              path = '_data/2019-03-09-pain-in-the-usa/arthritis_state.RData', 
+              path = '_data/2019-03-09-pain-in-the-usa/arthritis_state.rds', 
               compress = 'gz')
 } else {
+    #-- Set options for control standard error estimation --#
+    options(survey.lonely.psu = 'certainty')
+
     #-- Load saved design object --#
-    arthritis_state <- read_rds('_data/2019-03-09-pain-in-the-usa/arthritis_state.RData')
+    arthritis_state <- read_rds('_data/2019-03-09-pain-in-the-usa/arthritis_state.rds')
 }
 ```
 
-##### Clean and plot the data
+##### Code to clean and plot the data
 
 ```{r arthritis_state2}
 #-- Clean-up and convert to a percentage --#
@@ -339,7 +344,7 @@ border-radius:10px 10px 10px 10px;')
 
 #### What is the prevalence of arthritis in each state by age group?
 
-##### Generate the arthritis by state for each age group data
+##### Code to generate the arthritis by state for each age group data
 
 ```{r arthritis_age1, eval = FALSE}
 #-- Calculate proportion (95%CI) with arthritis by state --#
@@ -350,10 +355,10 @@ arthritis_age <- svyby(formula = ~dx_arthritis,
                        na.rm = TRUE)
 ```
 
-##### Clean and plot the data
+##### Code to clean and plot the data
 
 ```{r arthritis_LOAD2, echo = FALSE}
-if(!file.exists('_data/2019-03-09-pain-in-the-usa/arthritis_age.RData')) {
+if(!file.exists('_data/2019-03-09-pain-in-the-usa/arthritis_age.rds')) {
     #-- Set options for control standard error estimation --#
     options(survey.lonely.psu = 'certainty')
 
@@ -366,11 +371,14 @@ if(!file.exists('_data/2019-03-09-pain-in-the-usa/arthritis_age.RData')) {
     
     #-- Write design object to file if it does not exist --#
     write_rds(arthritis_age, 
-              path = '_data/2019-03-09-pain-in-the-usa/arthritis_age.RData', 
+              path = '_data/2019-03-09-pain-in-the-usa/arthritis_age.rds', 
               compress = 'gz')
 } else {
+    #-- Set options for control standard error estimation --#
+    options(survey.lonely.psu = 'certainty')
+
     #-- Load saved design object --#
-    arthritis_age <- read_rds('_data/2019-03-09-pain-in-the-usa/arthritis_age.RData')
+    arthritis_age <- read_rds('_data/2019-03-09-pain-in-the-usa/arthritis_age.rds')
 }
 ```
 
@@ -449,7 +457,7 @@ border-radius:10px 10px 10px 10px;')
 
 #### What is the prevalence of arthritis in each state by sex?
 
-##### Generate the arthritis by state for each sex data
+##### Code to generate the arthritis by state for each sex data
 
 ```{r arthritis_sex1, eval = FALSE}
 #-- Calculate proportion (95%CI) with arthritis by state --#
@@ -461,7 +469,7 @@ arthritis_sex <- svyby(formula = ~dx_arthritis,
 ```
 
 ```{r arthritis_LOAD3, echo = FALSE}
-if(!file.exists('_data/2019-03-09-pain-in-the-usa/arthritis_sex.RData')) {
+if(!file.exists('_data/2019-03-09-pain-in-the-usa/arthritis_sex.rds')) {
     #-- Set options for control standard error estimation --#
     options(survey.lonely.psu = 'certainty')
 
@@ -474,16 +482,19 @@ if(!file.exists('_data/2019-03-09-pain-in-the-usa/arthritis_sex.RData')) {
     
     #-- Write design object to file if it does not exist --#
     write_rds(arthritis_sex, 
-              path = '_data/2019-03-09-pain-in-the-usa/arthritis_sex.RData', 
+              path = '_data/2019-03-09-pain-in-the-usa/arthritis_sex.rds', 
               compress = 'gz')
 } else {
+    #-- Set options for control standard error estimation --#
+    options(survey.lonely.psu = 'certainty')
+
     #-- Load saved design object --#
-    arthritis_sex <- read_rds('_data/2019-03-09-pain-in-the-usa/arthritis_sex.RData')
+    arthritis_sex <- read_rds('_data/2019-03-09-pain-in-the-usa/arthritis_sex.rds')
 }
 ```
 
 
-##### Clean and plot the data
+##### Code to clean and plot the data
 
 ```{r arthritis_sex2, fig.height = 8}
 #-- Clean-up and convert to a percentage --#
