@@ -580,6 +580,12 @@ The last risk factor I looked at was the effect of sex on the prevalence of diag
 
 ****
 
+### Acknowledgements
+
+This post was inspired by an assignment in the Coursera _Introduction to Probability and Data_ topic in the [Statistics with R](https://www.coursera.org/specializations/statistics) Specialization offered through Duke University.
+
+****
+
 # Session information
 
 ```{r session_info, echo = FALSE}
