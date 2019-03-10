@@ -8,7 +8,7 @@ description: "Arthritic pain in the USA?"
 output:
     html_document:
         template: './_templates/posts.html'
-        code_folding: hide
+        code_folding: show
 ---
 
 ```{r load-packages, include = FALSE}
