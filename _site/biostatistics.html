@@ -25,21 +25,14 @@
         <link rel="stylesheet" href="css/custom.css" type="text/css" /> 
     <!-- Include these sections here, otherwise YAML headings not inserted -->
     <!-- Google analytics -->
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-71613331-1"></script>
     <script>
-        (function(i, s, o, g, r, a, m) {
-            i['GoogleAnalyticsObject'] = r;
-            i[r] = i[r] || function() {
-                (i[r].q = i[r].q || []).push(arguments)
-            }, i[r].l = 1 * new Date();
-            a = s.createElement(o),
-                m = s.getElementsByTagName(o)[0];
-            a.async = 1;
-            a.src = g;
-            m.parentNode.insertBefore(a, m)
-        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+     window.dataLayer = window.dataLayer || [];
+     function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
 
-        ga('create', 'UA-71613331-1', 'auto');
-        ga('send', 'pageview');
+    gtag('config', 'UA-71613331-1');
     </script>
 
     <!-- SEO -->
@@ -170,9 +163,9 @@
 <p><em>Note: Dropbox (where the files are located) no longer renders html files, so until I find another free host that will render the files, clicking the link will download a zip file, which you can then unzip and double-click on the html file to open the presentation in your browser.</em></p>
 <table>
 <colgroup>
-<col width="12%" />
+<col width="11%" />
 <col width="30%" />
-<col width="56%" />
+<col width="57%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -228,10 +221,10 @@
 <div id="tutorials" class="section level2">
 <h2>Tutorials</h2>
 <p>These tutorials do not count for course credit, but give you a chance to get hands-on experience applying what you learn in the lectures. The tutorials will take place with the course instructor in the computer laboratory immediately after the relevant lecture has finished. You may work alone or in groups. You may also work through them tutorials in your own time.</p>
-<table style="width:92%;">
+<table>
 <colgroup>
-<col width="38%" />
-<col width="52%" />
+<col width="42%" />
+<col width="57%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -268,29 +261,29 @@
 </table>
 <p>The majority of the tutorials are deployed through the <em>R</em> package <a href="//swirlstats.com"><code>swirl</code></a>. The <code>swirl</code> package was developed by the Swirl Development Team, and includes a suite of step-by-step interactive training courses on <em>R</em>, which are aimed primarily at the novice and intermediate <em>R</em> user.</p>
 <p>Follow the instructions below to access <code>swirl</code> courses:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Re-type or copy and paste the text below into the R console, </span>
-<span class="co"># pressing &#39;Enter&#39; after each step.</span>
-
-<span class="co"># If you haven&#39;t already installed swirl</span>
-<span class="kw">install.packages</span>(<span class="st">&#39;swirl&#39;</span>)
-
-<span class="co"># Load the &#39;swirl&#39; package</span>
-<span class="kw">library</span>(swirl)
-
-<span class="co"># Launch a &#39;swirl&#39; session and follow the prompts</span>
-<span class="kw">swirl</span>()</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># Re-type or copy and paste the text below into the R console, </span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co"># pressing &#39;Enter&#39; after each step.</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co"># If you haven&#39;t already installed swirl</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw">install.packages</span>(<span class="st">&#39;swirl&#39;</span>)</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="co"># Load the &#39;swirl&#39; package</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="kw">library</span>(swirl)</a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="co"># Launch a &#39;swirl&#39; session and follow the prompts</span></a>
+<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="kw">swirl</span>()</a></code></pre></div>
 <p>To install <code>swirl</code> courses:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Re-type or copy and paste the text below into the R console, </span>
-<span class="co"># pressing &#39;Enter&#39; after each step.</span>
-
-<span class="co"># Load the &#39;swirl&#39; package</span>
-<span class="kw">library</span>(swirl)
-
-<span class="co"># Download a course from the &#39;swirl&#39; github repository</span>
-<span class="kw">install_from_swirl</span>(<span class="st">&#39;Course Name Here&#39;</span>)
-
-<span class="co"># Launch a &#39;swirl&#39; session and follow the prompts</span>
-<span class="kw">swirl</span>()</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># Re-type or copy and paste the text below into the R console, </span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="co"># pressing &#39;Enter&#39; after each step.</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co"># Load the &#39;swirl&#39; package</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="kw">library</span>(swirl)</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="co"># Download a course from the &#39;swirl&#39; github repository</span></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="kw">install_from_swirl</span>(<span class="st">&#39;Course Name Here&#39;</span>)</a>
+<a class="sourceLine" id="cb2-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="co"># Launch a &#39;swirl&#39; session and follow the prompts</span></a>
+<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="kw">swirl</span>()</a></code></pre></div>
 </div>
 <div id="resources" class="section level2">
 <h2>Resources</h2>
@@ -308,16 +301,16 @@
 </ul>
 <p>Once you have downloaded and installed <em>R</em> and <em>RStudio</em>, I recommend that you install the following <em>R</em> packages (you may need others during the course, but the suggested packages will get you through all activities in the course):</p>
 <ul>
-<li><code>car</code>, <code>coin</code>, <code>devtools</code>, <code>kableExtra</code>, <code>knitr</code>, <code>RColorBrewer</code>, <code>rmarkdown</code>, <code>swirl</code>, <code>svglite</code>, <code>tidyverse</code>, <code>vcd</code>, <code>vcdExtra</code> <a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></li>
+<li><code>car</code>, <code>coin</code>, <code>devtools</code>, <code>kableExtra</code>, <code>knitr</code>, <code>RColorBrewer</code>, <code>rmarkdown</code>, <code>swirl</code>, <code>svglite</code>, <code>tidyverse</code>, <code>vcd</code>, <code>vcdExtra</code> <a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></li>
 </ul>
 <p>Install the packages from the <em>R</em> console:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Re-type or copy and paste the appropriate text into the R console </span>
-<span class="co"># and press &#39;Enter&#39;.</span>
-
-<span class="kw">install.packages</span>(<span class="kw">c</span>(<span class="st">&#39;car&#39;</span>, <span class="st">&#39;coin&#39;</span>, <span class="st">&#39;devtools&#39;</span>, <span class="st">&#39;kableExtra&#39;</span>, 
-                   <span class="st">&#39;knitr&#39;</span>, <span class="st">&#39;RColorBrewer&#39;</span>, <span class="st">&#39;rmarkdown&#39;</span>, 
-                   <span class="st">&#39;swirl&#39;</span>, <span class="st">&#39;svglite&#39;</span>, <span class="st">&#39;tidyverse&#39;</span>, 
-                   <span class="st">&#39;vcd&#39;</span>, <span class="st">&#39;vcdExtra&#39;</span>))</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># Re-type or copy and paste the appropriate text into the R console </span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co"># and press &#39;Enter&#39;.</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="kw">install.packages</span>(<span class="kw">c</span>(<span class="st">&#39;car&#39;</span>, <span class="st">&#39;coin&#39;</span>, <span class="st">&#39;devtools&#39;</span>, <span class="st">&#39;kableExtra&#39;</span>, </a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">                   <span class="st">&#39;knitr&#39;</span>, <span class="st">&#39;RColorBrewer&#39;</span>, <span class="st">&#39;rmarkdown&#39;</span>, </a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">                   <span class="st">&#39;swirl&#39;</span>, <span class="st">&#39;svglite&#39;</span>, <span class="st">&#39;tidyverse&#39;</span>, </a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">                   <span class="st">&#39;vcd&#39;</span>, <span class="st">&#39;vcdExtra&#39;</span>))</a></code></pre></div>
 </div>
 <div id="offline-installation-of-recommended-packages-and-swirl-courses" class="section level3">
 <h3>Offline installation of recommended packages and swirl courses</h3>
@@ -336,54 +329,54 @@
 <div id="install-the-package" class="section level5">
 <h5>2. Install the package</h5>
 <p>Install the package from the <em>R</em> console:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Re-type or copy and paste the appropriate text into the R console </span>
-<span class="co"># and press &#39;Enter&#39;.</span>
-
-<span class="co"># Remember to change &#39;path_to_file&#39; to the reflect where the downloaded </span>
-<span class="co"># file is located on your system.</span>
-
-<span class="co"># Linux</span>
-<span class="kw">install.packages</span>(<span class="st">&#39;path_to_file&#39;</span>,
-                 <span class="dt">repos =</span> <span class="ot">NULL</span>,
-                 <span class="dt">type =</span> <span class="st">&#39;source&#39;</span>)
-
-<span class="co"># macOS</span>
-<span class="kw">install.packages</span>(<span class="st">&#39;path_to_file&#39;</span>,
-                 <span class="dt">repos =</span> <span class="ot">NULL</span>,
-                 <span class="dt">type =</span> <span class="st">&#39;mac.binary.mavericks&#39;</span>)
-
-<span class="co"># Windows</span>
-<span class="kw">install.packages</span>(<span class="st">&#39;path_to_file&#39;</span>,
-                 <span class="dt">repos =</span> <span class="ot">NULL</span>,
-                 <span class="dt">type =</span> <span class="st">&#39;win.binary&#39;</span>)</code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># Re-type or copy and paste the appropriate text into the R console </span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co"># and press &#39;Enter&#39;.</span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co"># Remember to change &#39;path_to_file&#39; to the reflect where the downloaded </span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co"># file is located on your system.</span></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co"># Linux</span></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="kw">install.packages</span>(<span class="st">&#39;path_to_file&#39;</span>,</a>
+<a class="sourceLine" id="cb4-9" data-line-number="9">                 <span class="dt">repos =</span> <span class="ot">NULL</span>,</a>
+<a class="sourceLine" id="cb4-10" data-line-number="10">                 <span class="dt">type =</span> <span class="st">&#39;source&#39;</span>)</a>
+<a class="sourceLine" id="cb4-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co"># macOS</span></a>
+<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="kw">install.packages</span>(<span class="st">&#39;path_to_file&#39;</span>,</a>
+<a class="sourceLine" id="cb4-14" data-line-number="14">                 <span class="dt">repos =</span> <span class="ot">NULL</span>,</a>
+<a class="sourceLine" id="cb4-15" data-line-number="15">                 <span class="dt">type =</span> <span class="st">&#39;mac.binary.mavericks&#39;</span>)</a>
+<a class="sourceLine" id="cb4-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb4-17" data-line-number="17"><span class="co"># Windows</span></a>
+<a class="sourceLine" id="cb4-18" data-line-number="18"><span class="kw">install.packages</span>(<span class="st">&#39;path_to_file&#39;</span>,</a>
+<a class="sourceLine" id="cb4-19" data-line-number="19">                 <span class="dt">repos =</span> <span class="ot">NULL</span>,</a>
+<a class="sourceLine" id="cb4-20" data-line-number="20">                 <span class="dt">type =</span> <span class="st">&#39;win.binary&#39;</span>)</a></code></pre></div>
 </div>
 <div id="load-the-package" class="section level5">
 <h5>3. Load the package</h5>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Re-type or copy and paste the appropriate text into the R console </span>
-<span class="co"># and press &#39;Enter&#39;.</span>
-
-<span class="co"># Linux</span>
-<span class="kw">library</span>(biostatSetupLinux)
-
-<span class="co"># macOS</span>
-<span class="kw">library</span>(biostatSetupMacOS)
-
-<span class="co"># Windows</span>
-<span class="kw">library</span>(biostatSetupWinows)</code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># Re-type or copy and paste the appropriate text into the R console </span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co"># and press &#39;Enter&#39;.</span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co"># Linux</span></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="kw">library</span>(biostatSetupLinux)</a>
+<a class="sourceLine" id="cb5-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="co"># macOS</span></a>
+<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="kw">library</span>(biostatSetupMacOS)</a>
+<a class="sourceLine" id="cb5-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co"># Windows</span></a>
+<a class="sourceLine" id="cb5-11" data-line-number="11"><span class="kw">library</span>(biostatSetupWinows)</a></code></pre></div>
 </div>
 <div id="install-packages" class="section level5">
 <h5>4. Install packages</h5>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Re-type or copy and paste the appropriate text into the R console </span>
-<span class="co"># and press &#39;Enter&#39;.</span>
-
-<span class="kw">install_pkgs</span>()</code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># Re-type or copy and paste the appropriate text into the R console </span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="co"># and press &#39;Enter&#39;.</span></a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="kw">install_pkgs</span>()</a></code></pre></div>
 </div>
 <div id="install-swirl-tutorials" class="section level5">
 <h5>5. Install swirl tutorials</h5>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Re-type or copy and paste the appropriate text into the R console </span>
-<span class="co"># and press &#39;Enter&#39;.</span>
-
-<span class="kw">install_swirl_tuts</span>()</code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co"># Re-type or copy and paste the appropriate text into the R console </span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="co"># and press &#39;Enter&#39;.</span></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="kw">install_swirl_tuts</span>()</a></code></pre></div>
 </div>
 </div>
 <div id="free-courses" class="section level3">
@@ -478,7 +471,7 @@ git config --global --unset https.proxy</code></pre>
 <div class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p>The <code>tidyverse</code> package bundles a series of essential packages for importing, munging and visualising data (e.g., <code>dplyr</code>, <code>forcats</code>, <code>ggplot2</code>, <code>lubridate</code>, <code>purrr</code>, <code>readr</code>, <code>stringr</code>, <code>tidyr</code>).<a href="#fnref1">↩</a></p></li>
+<li id="fn1"><p>The <code>tidyverse</code> package bundles a series of essential packages for importing, munging and visualising data (e.g., <code>dplyr</code>, <code>forcats</code>, <code>ggplot2</code>, <code>lubridate</code>, <code>purrr</code>, <code>readr</code>, <code>stringr</code>, <code>tidyr</code>).<a href="#fnref1" class="footnote-back">↩</a></p></li>
 </ol>
 </div>
     </div>
