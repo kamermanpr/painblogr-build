@@ -5,6 +5,13 @@ output:
         template: './_templates/default.html'
 ---
 
+### 2019
+
+- 9 March 2019 [Arthritis in the USA](https://www.painblogr.org/2019-03-09-pain-in-the-usa.html)
+
+- 25 January 2019 [When your ‘golden years’ are not so golden](https://www.painblogr.org/2019-01-25-global-burden-of-disease.html)
+
+
 ### 2017
 - 18 October 2017 ['purrr'-ing through bootstrap confidence intervals](https://www.painblogr.org/2017-10-18-purrring-through-bootstraps.html)  
 
