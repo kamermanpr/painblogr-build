@@ -9,6 +9,22 @@ output:
 
 <br>
 
+![](./images/posts/2020-06-14-covid-fevers/post-image.jpg){ style="float:left;margin-left:auto;margin-right:auto;padding:16px 16px 20px 0px;" width=200px }
+
+### So you think investing in fever screening can curb the spread of COVID-19? Think again
+
+**Andrea Fuller** and **Duncan Mitchell**
+
+_14 June 2020_
+
+An article that discusses the futility of using fever screening for COVID-19 infection.
+
+<a class="btn btn-primary" href="https://www.painblogr.org/2020-06-14-covid-fevers.html" target="_blank">Read more <i class="fa fa-arrow-circle-o-right fa-2x" style="vertical-align: middle;" aria-hidden="true"></i></a><br>
+
+****
+
+<br>
+
 ![](./images/posts/2020-03-16-covid-19/post-image.jpg){ style="float:left;margin-left:auto;margin-right:auto;padding:16px 16px 20px 0px;" width=200px }
 
 ### COVID-19 in South Africa
@@ -23,7 +39,6 @@ A website that gives daily updates on the state of COVID-19 cases and deaths in 
 
 ****
 
-
 <br>
 
 ![](./images/posts/2019-03-09-pain-in-the-usa/post-image.jpg){ style="float:left;margin-left:auto;margin-right:auto;padding:16px 16px 20px 0px;" width=200px }
@@ -37,18 +52,3 @@ _9 March 2019_
 Using the `survey` package to analyse data on athritis from the 2013 US Behavioral Risk Factor Surveillance System (BRFSS) survey.
 
 <a class="btn btn-primary" href="https://www.painblogr.org/2019-03-09-pain-in-the-usa.html" target="_blank">Read more <i class="fa fa-arrow-circle-o-right fa-2x" style="vertical-align: middle;" aria-hidden="true"></i></a><br>
-
-****
-
-![](./images/posts/2019-01-25-global-burden-of-disease/post-image.jpg){ style="float:left;margin-left:auto;margin-right:auto;padding:16px 16px 20px 0px;" width=200px }
-
-### When your ‘golden years’ are not so golden
-
-**Peter Kamerman**
-
-_25 January 2019_
-
-I analysed Global Burden of Disease data to see whether our increasing life expectancy over the past three decades is extra time spent in good health or poor health.
-
-<a class="btn btn-primary" href="https://www.painblogr.org/2019-01-25-global-burden-of-disease.html" target="_blank">Read more <i class="fa fa-arrow-circle-o-right fa-2x" style="vertical-align: middle;" aria-hidden="true"></i></a><br>
-

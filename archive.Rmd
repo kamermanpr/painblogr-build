@@ -5,6 +5,12 @@ output:
         template: './_templates/default.html'
 ---
 
+### 2020
+
+- 14 June 2020 [So you think investing in fever screening can curb the spread of COVID-19? Think again](https://www.painblogr.org/2020-06-14-covid-fevers.html)
+
+- 15 March 2020 [COVID-19 in South Africa](https://covid19za.netlify.app/)
+
 ### 2019
 
 - 9 March 2019 [Arthritis in the USA](https://www.painblogr.org/2019-03-09-pain-in-the-usa.html)
