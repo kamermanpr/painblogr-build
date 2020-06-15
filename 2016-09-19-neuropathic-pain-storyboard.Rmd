@@ -529,6 +529,16 @@ Point estimates and 95% confidence intervals of the number needed to treat (NNT)
 # Load data
 load('./_data/2016-09-19-neuropathic-pain-storyboard/access_plot.RData')
 
+# Palette (from Color Brewer single hue sequential palette)
+pal_first <- colorFactor(c('#feedde','#fdbe85','#fd8d3c','#d94701'),
+                         geo_data$factors_first, ordered = TRUE)
+pal_second <- colorFactor(c('#efedf5','#bcbddc','#756bb1'),
+                          geo_data$factor_second, ordered = TRUE)
+pal_third <- colorFactor(c('#e5f5e0','#a1d99b','#31a354'),
+                         geo_data$factor_third, ordered = TRUE)
+pal_income <- colorFactor(c('#eff3ff','#bdd7e7','#6baed6','#2171b5'),
+                          geo_data$imf, ordered = TRUE)
+
 # Plot
 leaflet(data = geo_data) %>%
     setView(lat = 10, lng = 0, zoom = 2) %>%
