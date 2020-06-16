@@ -1,4 +1,5 @@
 ---
+title: "From epub to print copy, which of the traditional 'pain' journals is the quickest?"
 post_title: "From epub to print copy, which of the traditional 'pain' journals is the quickest?"
 post_author: 'Peter Kamerman'
 post_date: '5 February 2017'
@@ -264,7 +265,7 @@ parse_record <- function(record) {
     }
 
     # Make dataframe
-    publisher2 <- data_frame(article_node = publisher_path2,
+    publisher2 <- data.frame(article_node = publisher_path2,
                              publisher = publisher)
     
     #-- Journal -------------------------------------------------------------#
@@ -292,7 +293,7 @@ parse_record <- function(record) {
     }
 
     # Make dataframe
-    journal2 <- data_frame(article_node = journal_path2,
+    journal2 <- data.frame(article_node = journal_path2,
                            journal = journal) %>%
         mutate(journal = str_replace_all(journal,
                                          pattern = '[.]',
@@ -323,7 +324,7 @@ parse_record <- function(record) {
         }
     
         # Make dataframe
-        volume2 <- dplyr::data_frame(article_node = volume_path2,
+        volume2 <- dplyr::data.frame(article_node = volume_path2,
                                      volume = volume) %>%
             separate(volume, 
                      into = c('volume', 'other'),
@@ -356,7 +357,7 @@ parse_record <- function(record) {
         }
     
         # Make dataframe
-        issue2 <- dplyr::data_frame(article_node = issue_path2,
+        issue2 <- dplyr::data.frame(article_node = issue_path2,
                                     issue = issue) %>%
             separate(issue, 
                      into = c('issue', 'other'),
@@ -388,7 +389,7 @@ parse_record <- function(record) {
     }
 
     # Make dataframe
-    pmid2 <- data_frame(article_node = pmid_path2,
+    pmid2 <- data.frame(article_node = pmid_path2,
                         pmid = pmid)
 
     #-- Publication status --------------------------------------------------#
@@ -415,7 +416,7 @@ parse_record <- function(record) {
     }
 
     # Make dataframe
-    status2 <- data_frame(article_node = status_path2,
+    status2 <- data.frame(article_node = status_path2,
                           publication_status = status) %>%
         # Edit text
         mutate(publication_status = ifelse(
@@ -463,7 +464,7 @@ parse_record <- function(record) {
     }
 
     # Make dataframe
-    year_published2 <- data_frame(article_node = year_published_path2,
+    year_published2 <- data.frame(article_node = year_published_path2,
                                   year_published = year_published,
                                   month_published = month_published,
                                   day_published = day_published) %>%
@@ -520,7 +521,7 @@ parse_record <- function(record) {
     }
 
     # Make dataframe
-    year_online2 <- data_frame(article_node = year_online_path2,
+    year_online2 <- data.frame(article_node = year_online_path2,
                                year_online = year_online,
                                month_online = month_online,
                                day_online = day_online) %>%
@@ -577,7 +578,7 @@ parse_record <- function(record) {
     }
 
     # Make dataframe
-    year_entrez2 <- data_frame(article_node = year_entrez_path2,
+    year_entrez2 <- data.frame(article_node = year_entrez_path2,
                                year_entrez = year_entrez,
                                month_entrez = month_entrez,
                                day_entrez = day_entrez) %>%

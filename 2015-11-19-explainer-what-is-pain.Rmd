@@ -1,4 +1,5 @@
 ---
+title: 'Explainer: what is pain and what is happening when we feel it?'
 post_title: 'Explainer: what is pain and what is happening when we feel it?'
 post_author: 'Lorimer Moseley'
 post_date: '19 November 2015'

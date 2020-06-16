@@ -1,4 +1,5 @@
 ---
+title: "<em>purrr</em>-ing through bootstrap confidence intervals"
 post_title: "<em>purrr</em>-ing through bootstrap confidence intervals"
 post_author: "Peter Kamerman"
 post_date: "18 October 2017"

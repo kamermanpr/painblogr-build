@@ -1,4 +1,5 @@
 ---
+title: "Arthritis in the USA"
 post_title: "Arthritis in the USA"
 post_author: 'Peter Kamerman'
 post_date: '9 March 2019'
@@ -12,7 +13,7 @@ output:
 ---
 
 ```{r load-packages, include = FALSE}
-library(fiftystater) # For a map of the USA
+library(fiftystater) # For a map of the USA (this is only available on github)
 library(magrittr) # I like %<>%
 library(sf) # Simple features package for dealing with spatial data
 library(skimr) # Numeric summaries made simple

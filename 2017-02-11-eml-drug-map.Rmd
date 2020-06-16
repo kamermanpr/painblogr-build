@@ -305,7 +305,7 @@ third_line$factor_third <- factor(third_line$classes_third,
                                   ordered = TRUE)
 
 ## Clean-up 'income grp'
-imf <- data_frame(name = geo_data$name, imf = geo_data$income_grp) %>%
+imf <- data.frame(name = geo_data$name, imf = geo_data$income_grp) %>%
     mutate(imf = str_replace(imf,
                              pattern = '1. High income: OECD',
                              replacement = 'High income')) %>%
