@@ -250,7 +250,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
         <h1>Neat and tidy data exploration with list-columns and <em>purrr</em></h1> 
         <h4>Peter Kamerman</h4> 
         <em>19 June 2019</em> <hr />
-<p>I often find myself having to generate a multitude of exploratory plots and tables when I first lay my hands on a new dataset. This post describes one of the processes I sometimes go through to explore data using the <em>purrr</em> package to work with list-columns within nested dataframes.</p>
+<p>I often find myself having to generate a multitude of exploratory plots and tables when I first lay my hands on a new dataset. An example would be having to explore the data of every indiviudual or animal, looking for any ‘funny numbers’, before proceeding with the anaylsis. This post describes one of the processes I sometimes go through to explore data using the <em>purrr</em> package to work with list-columns within nested dataframes.</p>
 <div id="get-some-data" class="section level3">
 <h3>Get some data</h3>
 <p>To start we need some data. I will be using <strong>carrots</strong> data from the <em>carrots</em> data package (<code>devtools::install_github("kamermanpr/carrots")</code>). The <em>carrots</em> package contains data on, you guessed it, carrots. The dataset, which is a pared-down version of a larger <strong>carrots</strong> dataset from the <em>lmerTest</em> package, is briefly described in the figure and printouts below.</p>
@@ -474,7 +474,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 </tr>
 </tbody>
 </table>
-<p>For this demonstration I only need some of the data, so I `m going to select the columns that I want (Product, Age_group, Preference, Crispness, Sweetness, Bitterness), and filter the carrot types (Product) so that I only have Bolero and Yukon carrots.</p>
+<p>For this demonstration I only need some of the data, so I am going to select the columns that I want (Product, Age_group, Preference, Crispness, Sweetness, Bitterness), and filter the carrot types (Product) so that I only have Bolero and Yukon carrots.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># Load required package</span></span>
 <span id="cb6-2"><a href="#cb6-2"></a><span class="kw">library</span>(dplyr)</span>
 <span id="cb6-3"><a href="#cb6-3"></a></span>
