@@ -28,7 +28,7 @@ To start we need some data. I will be using **carrots** data from the _carrots_ 
 
 <br>
 <div style="margin:auto;width:80%;">
-<img src="./images/posts/2020-06-16-purring-through-exploratory-analyses/carrots.png" style="display:block;margin-right:auto;margin-left:auto;max-width:100%;">
+<img src="./images/posts/2020-06-19-purring-through-exploratory-analyses/carrots.png" style="display:block;margin-right:auto;margin-left:auto;max-width:100%;">
 </div>
 <br>
 
@@ -96,7 +96,7 @@ For those of you unfamiliar with list-columns, they are columns in a dataframe t
 
 <br>
 <div style="margin:auto;width:80%;">
-<img src="./images/posts/2020-06-16-purring-through-exploratory-analyses/list-column.png" style="display:block;margin-right:auto;margin-left:auto;max-width:100%;">
+<img src="./images/posts/2020-06-19-purring-through-exploratory-analyses/list-column.png" style="display:block;margin-right:auto;margin-left:auto;max-width:100%;">
 </div>
 <br>
 
@@ -141,7 +141,7 @@ Because the 'data' column is a list of lists, you can iterate functions over the
 
 <br>
 <div style="margin:auto;width:80%;">
-<img src="./images/posts/2020-06-16-purring-through-exploratory-analyses/purrr-mutate.png" style="display:block;margin-right:auto;margin-left:auto;max-width:100%;">
+<img src="./images/posts/2020-06-19-purring-through-exploratory-analyses/purrr-mutate.png" style="display:block;margin-right:auto;margin-left:auto;max-width:100%;">
 </div>
 <br>
 
@@ -151,7 +151,7 @@ The `map` function takes one list (in this case a list-column from the dataframe
 
 <br>
 <div style="margin:auto;width:80%;">
-<img src="./images/posts/2020-06-16-purring-through-exploratory-analyses/map-functions-1.png" style="display:block;margin-right:auto;margin-left:auto;max-width:100%;">
+<img src="./images/posts/2020-06-19-purring-through-exploratory-analyses/map-functions-1.png" style="display:block;margin-right:auto;margin-left:auto;max-width:100%;">
 </div>
 <br>
 
@@ -199,7 +199,7 @@ The problem with these figures is that you have no way of identifying which figu
 
 <br>
 <div style="margin:auto;width:80%;">
-<img src="./images/posts/2020-06-16-purring-through-exploratory-analyses/map-functions-2.png" style="display:block;margin-right:auto;margin-left:auto;max-width:100%;">
+<img src="./images/posts/2020-06-19-purring-through-exploratory-analyses/map-functions-2.png" style="display:block;margin-right:auto;margin-left:auto;max-width:100%;">
 </div>
 <br>
 
@@ -237,7 +237,7 @@ To use more than two sources of data, you use `pmap` (see figure below).
 
 <br>
 <div style="margin:auto;width:80%;">
-<img src="./images/posts/2020-06-16-purring-through-exploratory-analyses/map-functions-3.png" style="display:block;margin-right:auto;margin-left:auto;max-width:100%;">
+<img src="./images/posts/2020-06-19-purring-through-exploratory-analyses/map-functions-3.png" style="display:block;margin-right:auto;margin-left:auto;max-width:100%;">
 </div>
 <br>
 
