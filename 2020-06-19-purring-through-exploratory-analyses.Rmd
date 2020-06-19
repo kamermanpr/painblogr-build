@@ -20,7 +20,7 @@ knitr::opts_chunk$set(warning = FALSE,
 
 ****
 
-I often find myself having to generate a multitude of exploratory plots and tables when I first lay my hands on a new dataset. This post describes one of the processes I sometimes go through to explore data using the _purrr_ package to work with list-columns within nested dataframes.
+I often find myself having to generate a multitude of exploratory plots and tables when I first lay my hands on a new dataset. An example would be having to explore the data of every indiviudual or animal, looking for any 'funny numbers', before proceeding with the anaylsis. This post describes one of the processes I sometimes go through to explore data using the _purrr_ package to work with list-columns within nested dataframes.
 
 ### Get some data
 
@@ -55,7 +55,7 @@ str(carrots)
 skimr::skim(carrots)
 ```
 
-For this demonstration I only need some of the data, so I `m going to select the columns that I want (Product, Age_group, Preference, Crispness, Sweetness, Bitterness), and filter the carrot types (Product) so that I only have Bolero and Yukon carrots. 
+For this demonstration I only need some of the data, so I am going to select the columns that I want (Product, Age_group, Preference, Crispness, Sweetness, Bitterness), and filter the carrot types (Product) so that I only have Bolero and Yukon carrots. 
 
 ```{r}
 # Load required package
