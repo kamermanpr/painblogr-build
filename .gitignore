@@ -4,7 +4,5 @@
 .DS_Store
 *_cache/
 _data/.DS_Store
-
-
-
+*.key
 _data/2019-03-09-pain-in-the-usa/brfss2013\.RData

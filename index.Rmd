@@ -9,6 +9,23 @@ output:
 
 <br>
 
+![](./images/posts/2020-06-19-purring-through-exploratory-analyses/post-image.jpg){ style="float:left;margin-left:auto;margin-right:auto;padding:16px 16px 20px 0px;" width=200px }
+
+### Neat and tidy data exploration with list-columns and <em>purrr</em>
+
+**Peter Kamerman**
+
+_19 June 2020_
+
+Exploring data with the purrr package.
+
+<a class="btn btn-primary" href="https://www.painblogr.org/2020-06-19-purring-through-exploratory-analyses.html" target="_blank">Read more <i class="fa fa-arrow-circle-o-right fa-2x" style="vertical-align: middle;" aria-hidden="true"></i></a><br>
+
+****
+
+
+<br>
+
 ![](./images/posts/2020-06-14-covid-fevers/post-image.jpg){ style="float:left;margin-left:auto;margin-right:auto;padding:16px 16px 20px 0px;" width=200px }
 
 ### So you think investing in fever screening can curb the spread of COVID-19? Think again
@@ -36,19 +53,3 @@ _15 March 2020_
 A website that gives daily updates on the state of COVID-19 cases and deaths in South Africa.
 
 <a class="btn btn-primary" href="https://covid19za.netlify.com/" target="_blank">Read more <i class="fa fa-arrow-circle-o-right fa-2x" style="vertical-align: middle;" aria-hidden="true"></i></a><br>
-
-****
-
-<br>
-
-![](./images/posts/2019-03-09-pain-in-the-usa/post-image.jpg){ style="float:left;margin-left:auto;margin-right:auto;padding:16px 16px 20px 0px;" width=200px }
-
-### Arthritis in the USA
-
-**Peter Kamerman**
-
-_9 March 2019_
-
-Using the `survey` package to analyse data on athritis from the 2013 US Behavioral Risk Factor Surveillance System (BRFSS) survey.
-
-<a class="btn btn-primary" href="https://www.painblogr.org/2019-03-09-pain-in-the-usa.html" target="_blank">Read more <i class="fa fa-arrow-circle-o-right fa-2x" style="vertical-align: middle;" aria-hidden="true"></i></a><br>

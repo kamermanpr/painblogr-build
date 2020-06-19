@@ -1,0 +1,1441 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" >
+
+<!-- Head --------------------------------------------------------->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="generator" content="pandoc"/>
+	
+	
+	 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+ <meta name="viewport" content="width=device-width, initial-scale=1" />
+ <link href="site_libs/bootstrap-3.3.5/css/yeti.min.css" rel="stylesheet" />
+ <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+ <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+ <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+ <script src="site_libs/navigation-1.1/tabsets.js"></script> 
+
+	
+		<style type="text/css">
+		code {
+			white-space: pre;
+		}
+	</style>
+	<style type="text/css">
+		code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; } /* Alert */
+code span.an { color: #008000; } /* Annotation */
+code span.at { } /* Attribute */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #0000ff; } /* ControlFlow */
+code span.ch { color: #008080; } /* Char */
+code span.cn { } /* Constant */
+code span.co { color: #008000; } /* Comment */
+code span.cv { color: #008000; } /* CommentVar */
+code span.do { color: #008000; } /* Documentation */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.im { } /* Import */
+code span.in { color: #008000; } /* Information */
+code span.kw { color: #0000ff; } /* Keyword */
+code span.op { } /* Operator */
+code span.ot { color: #ff4000; } /* Other */
+code span.pp { color: #ff4000; } /* Preprocessor */
+code span.sc { color: #008080; } /* SpecialChar */
+code span.ss { color: #008080; } /* SpecialString */
+code span.st { color: #008080; } /* String */
+code span.va { } /* Variable */
+code span.vs { color: #008080; } /* VerbatimString */
+code span.wa { color: #008000; font-weight: bold; } /* Warning */ 
+	</style>
+
+		<style type="text/css">
+		pre:not([class]) {
+			background-color: white;
+		}
+	</style>
+	   	<style type="text/css">
+		h1 {
+			font-size: 34px;
+		}
+
+		h1.title {
+			font-size: 38px;
+		}
+
+		h2 {
+			font-size: 30px;
+		}
+
+		h3 {
+			font-size: 24px;
+		}
+
+		h4 {
+			font-size: 18px;
+		}
+
+		h5 {
+			font-size: 16px;
+		}
+
+		h6 {
+			font-size: 12px;
+		}
+
+		.table th:not([align]) {
+			text-align: left;
+		}
+
+		
+	</style>
+	
+		<link rel="stylesheet" href="css/custom.css" type="text/css" />  
+    <!-- Latest maxdcn font-awesome and academicons -->
+    <link rel="stylesheet" href="./css/font-awesome-4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./css/academicons-1.7.0/css/academicons.min.css">
+
+    <!-- custom css -->
+        <link rel="stylesheet" href="css/custom.css" type="text/css" />
+	
+    <!-- Include these sections here, otherwise YAML headings not inserted -->
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-71613331-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-71613331-1');
+    </script>
+
+    <!-- SEO -->
+    <title>Neat and tidy data exploration with list-columns and <em>purrr</em></title>
+    <meta name="description" content="Exploring data with the purrr package">
+    <link rel="author" href="https://plus.google.com/u/0/103355314187199079295" />
+    <meta name="robots" content="robots.txt">
+    <link rel="canonical" href="https://www.painblogr.org/2020-06-19-purring-through-exploratory-analyses.html">
+
+    <!-- Twittercard -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@painblogR">
+    <meta name="twitter:creator" content="@painblogR">
+    <meta name="twitter:title" content="Neat and tidy data exploration with list-columns and <em>purrr</em>">
+    <meta name="twitter:description" content="Exploring data with the purrr package">
+    <meta name="twitter:image" content="<a href="https://www.painblogr.org/images/posts/2020-06-19-purring-through-exploratory-analyses/post-image.jpg" class="uri">https://www.painblogr.org/images/posts/2020-06-19-purring-through-exploratory-analyses/post-image.jpg</a>">
+    <meta name="twitter:url" content="https://www.painblogr.org/2020-06-19-purring-through-exploratory-analyses.html">
+
+    <!-- Opengraph -->
+    <meta property="og:title" content="Neat and tidy data exploration with list-columns and <em>purrr</em>">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://www.painblogr.org/2020-06-19-purring-through-exploratory-analyses.html">
+    <meta property="og:image" content="<a href="https://www.painblogr.org/images/posts/2020-06-19-purring-through-exploratory-analyses/post-image.jpg" class="uri">https://www.painblogr.org/images/posts/2020-06-19-purring-through-exploratory-analyses/post-image.jpg</a>">
+    <meta property="og:description" content="Exploring data with the purrr package">
+    <meta property="og:site_name" content="painblogR">
+    <meta property="fb:app_id" content="621412384962188">
+</head>
+
+<!-- Body --------------------------------------------------------->
+
+<body>
+    <!-- Navigation bar -->
+    <nav class="navbar navbar-fixed-top" role="navigation" , style="background-color:#FFFFFF;border-bottom: 1px solid #CCCCCC;">
+        <div class="container-fluid" id="navfluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar-collapse" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <img src="images/capsaicin.png" alt="logo" , style="max-height:60px;padding-top:5px;">
+                <span class="site-title"><a href="https://www.painblogr.org" style="color:#000000;font-size:250%;vertical-align:middle;">
+				painblogR</a></span>&emsp;
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-navbar-collapse">
+                <ul class="nav navbar-nav" style="display:table-row;padding-top:7px">
+                    <li style="display:table-cell;float:none;vertical-align:middle;font-size:16px;"><a href="https://www.painblogr.org">Home</a></li>
+                    <li style="display:table-cell;float:none;vertical-align:middle;font-size:16px;"><a href="./archive.html">Archive</a></li>
+                    <li class="dropdown" style="display:table-cell;float:none;vertical-align:middle;font-size:16px;">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">About<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="./about_me.html">About me</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="./publications.html">Publications & Reprints </a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" style="display:table-cell;float:none;vertical-align:middle;font-size:16px;">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Teaching<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="https://www.painblogr.org/biostatistics/">Introduction to Biostatistics</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <!-- /. nav-collapse -->
+        </div>
+        <!-- /. container-fluid -->
+    </nav>
+
+	<!-- Extras -->
+		<style type = "text/css">
+		code {
+  			color: inherit;
+  			background-color: rgba(0, 0, 0, 0.04);
+		}
+		img {
+  			max-width:100%;
+  			height: auto;
+		}
+		.tabbed-pane {
+  			padding-top: 12px;
+		}
+		button.code-folding-btn:focus {
+  			outline: none;
+		}
+	</style>
+
+	<div class="container-fluid main-container">
+		<!-- tabsets -->
+		<script src="/tabsets.js"></script>
+		<script>
+			$(document).ready(function () {
+  			window.buildTabsets("TOC");
+			});
+		</script>
+
+		<!-- code folding -->
+		
+		<div class="fluid-row" id="header">
+
+    <!-- Main text --->
+    <div class="container-fluid" id="mainbody">
+         
+        <h1>Neat and tidy data exploration with list-columns and <em>purrr</em></h1> 
+        <h4>Peter Kamerman</h4> 
+        <em>19 June 2019</em> <hr />
+<p>I often find myself having to generate a multitude of exploratory plots and tables when I first lay my hands on a new dataset. This post describes one of the processes I sometimes go through to explore data using the <em>purrr</em> package to work with list-columns within nested dataframes.</p>
+<div id="get-some-data" class="section level3">
+<h3>Get some data</h3>
+<p>To start we need some data. I will be using <strong>carrots</strong> data from the <em>carrots</em> data package (<code>devtools::install_github("kamermanpr/carrots")</code>). The <em>carrots</em> package contains data on, you guessed it, carrots. The dataset, which is a pared-down version of a larger <strong>carrots</strong> dataset from the <em>lmerTest</em> package, is briefly described in the figure and printouts below.</p>
+<br>
+<div style="margin:auto;width:80%;">
+<p><img src="./images/posts/2020-06-16-purring-through-exploratory-analyses/carrots.png" style="display:block;margin-right:auto;margin-left:auto;max-width:100%;"></p>
+</div>
+<p><br></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># Install package if not already installed</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="cf">if</span>(<span class="st">&#39;carrots&#39;</span> <span class="op">%in%</span><span class="st"> </span><span class="kw">installed.packages</span>()[, <span class="st">&quot;Package&quot;</span>] <span class="op">==</span><span class="st"> </span><span class="ot">FALSE</span>){</span>
+<span id="cb1-3"><a href="#cb1-3"></a>    devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&quot;kamermanpr/carrots&quot;</span>)</span>
+<span id="cb1-4"><a href="#cb1-4"></a>}</span>
+<span id="cb1-5"><a href="#cb1-5"></a></span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="co"># Load the package</span></span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="kw">library</span>(carrots)</span>
+<span id="cb1-8"><a href="#cb1-8"></a></span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="co"># Load the data</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a><span class="kw">data</span>(carrots)</span>
+<span id="cb1-11"><a href="#cb1-11"></a></span>
+<span id="cb1-12"><a href="#cb1-12"></a><span class="co"># Quick peek at the data</span></span>
+<span id="cb1-13"><a href="#cb1-13"></a><span class="co">## Dimensions</span></span>
+<span id="cb1-14"><a href="#cb1-14"></a><span class="kw">dim</span>(carrots)</span></code></pre></div>
+<pre><code>## [1] 618  11</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co">## Structure</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="kw">str</span>(carrots)</span></code></pre></div>
+<pre><code>## tibble [618 × 11] (S3: tbl_df/tbl/data.frame)
+##  $ Product          : Factor w/ 6 levels &quot;Bolero&quot;,&quot;Major&quot;,..: 1 2 3 4 5 6 1 2 3 4 ...
+##  $ Consumer         : Factor w/ 103 levels &quot;168&quot;,&quot;169&quot;,&quot;171&quot;,..: 1 1 1 1 1 1 2 2 2 2 ...
+##  $ Frequency        : Ord.factor w/ 5 levels &quot;Once a week or more&quot;&lt;..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ Sex              : Factor w/ 2 levels &quot;Male&quot;,&quot;Female&quot;: 2 2 2 2 2 2 1 1 1 1 ...
+##  $ Age_group        : Ord.factor w/ 4 levels &quot;&lt; 25 years&quot;&lt;&quot;26-40 years&quot;&lt;..: 4 4 4 4 4 4 4 4 4 4 ...
+##  $ Employment_status: Ord.factor w/ 7 levels &quot;Unskilled labourer&quot;&lt;..: 7 7 7 7 7 7 7 7 7 7 ...
+##  $ Income_group     : Ord.factor w/ 4 levels &quot;Low-income&quot;&lt;&quot;Lower middle-income&quot;&lt;..: 2 2 2 2 2 2 2 2 2 2 ...
+##  $ Preference       : int [1:618] 4 4 5 5 5 4 6 5 5 5 ...
+##  $ Sweetness        : int [1:618] 2 2 4 3 4 2 5 2 5 2 ...
+##  $ Bitterness       : int [1:618] 4 2 2 2 1 3 1 2 2 2 ...
+##  $ Crispness        : int [1:618] 2 3 4 5 5 3 5 3 2 3 ...</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co">## Summary</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a>skimr<span class="op">::</span><span class="kw">skim</span>(carrots)</span></code></pre></div>
+<table style='width: auto;'
+        class='table table-condensed'>
+<caption>
+Data summary
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Name
+</td>
+<td style="text-align:left;">
+carrots
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Number of rows
+</td>
+<td style="text-align:left;">
+618
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Number of columns
+</td>
+<td style="text-align:left;">
+11
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+_______________________
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Column type frequency:
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+factor
+</td>
+<td style="text-align:left;">
+7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+numeric
+</td>
+<td style="text-align:left;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+________________________
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Group variables
+</td>
+<td style="text-align:left;">
+None
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: factor</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+skim_variable
+</th>
+<th style="text-align:right;">
+n_missing
+</th>
+<th style="text-align:right;">
+complete_rate
+</th>
+<th style="text-align:left;">
+ordered
+</th>
+<th style="text-align:right;">
+n_unique
+</th>
+<th style="text-align:left;">
+top_counts
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Product
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:left;">
+Bol: 103, Maj: 103, Nav: 103, Nel: 103
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Consumer
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+103
+</td>
+<td style="text-align:left;">
+168: 6, 169: 6, 171: 6, 172: 6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Frequency
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+Onc: 432, Onc: 102, Onc: 54, Les: 18
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Sex
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+Fem: 426, Mal: 192
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Age_group
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:left;">
+41-: 300, &gt; 6: 156, 26-: 96, &lt; 2: 66
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Employment_status
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:left;">
+Ret: 162, Off: 150, Ski: 90, Uns: 66
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Income_group
+</td>
+<td style="text-align:right;">
+36
+</td>
+<td style="text-align:right;">
+0.94
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:left;">
+Upp: 240, Low: 222, Low: 84, Upp: 36
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+skim_variable
+</th>
+<th style="text-align:right;">
+n_missing
+</th>
+<th style="text-align:right;">
+complete_rate
+</th>
+<th style="text-align:right;">
+mean
+</th>
+<th style="text-align:right;">
+sd
+</th>
+<th style="text-align:right;">
+p0
+</th>
+<th style="text-align:right;">
+p25
+</th>
+<th style="text-align:right;">
+p50
+</th>
+<th style="text-align:right;">
+p75
+</th>
+<th style="text-align:right;">
+p100
+</th>
+<th style="text-align:left;">
+hist
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Preference
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4.58
+</td>
+<td style="text-align:right;">
+1.16
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:left;">
+▁▂▇▆▅
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Sweetness
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+3.03
+</td>
+<td style="text-align:right;">
+1.30
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:left;">
+▇▅▃▂▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Bitterness
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2.28
+</td>
+<td style="text-align:right;">
+1.20
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:left;">
+▇▂▁▁▁
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Crispness
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+3.15
+</td>
+<td style="text-align:right;">
+1.33
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:left;">
+▇▆▃▃▁
+</td>
+</tr>
+</tbody>
+</table>
+<p>For this demonstration I only need some of the data, so I `m going to select the columns that I want (Product, Age_group, Preference, Crispness, Sweetness, Bitterness), and filter the carrot types (Product) so that I only have Bolero and Yukon carrots.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># Load required package</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb6-3"><a href="#cb6-3"></a></span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="co"># Select columns and filter data</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a>clean_carrots &lt;-<span class="st"> </span>carrots <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb6-6"><a href="#cb6-6"></a><span class="st">  </span><span class="kw">select</span>(Product, Age_group, Sex, </span>
+<span id="cb6-7"><a href="#cb6-7"></a>         Preference, Crispness, </span>
+<span id="cb6-8"><a href="#cb6-8"></a>         Sweetness, Bitterness) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb6-9"><a href="#cb6-9"></a><span class="st">  </span><span class="kw">filter</span>(Product <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;Bolero&#39;</span>, <span class="st">&#39;Yukon&#39;</span>))</span></code></pre></div>
+<p>Crispness, sweetness, and bitterness are all attributes of the carrots and to my mind they should fall under a single attribute column. I can fix this problem using the <code>pivot_longer</code> function from the <em>tidyr</em> package.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># Load required packages</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="kw">library</span>(tidyr)</span>
+<span id="cb7-3"><a href="#cb7-3"></a></span>
+<span id="cb7-4"><a href="#cb7-4"></a><span class="co"># Convert clean_carrots to long format</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a>long_carrots &lt;-<span class="st"> </span>clean_carrots <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb7-6"><a href="#cb7-6"></a><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">cols =</span> <span class="kw">c</span>(Crispness, Sweetness, Bitterness),</span>
+<span id="cb7-7"><a href="#cb7-7"></a>               <span class="dt">names_to =</span> <span class="st">&#39;Attributes&#39;</span>,</span>
+<span id="cb7-8"><a href="#cb7-8"></a>               <span class="dt">values_to =</span> <span class="st">&#39;Ratings&#39;</span>)</span></code></pre></div>
+<p>Take a look at the new dataset.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="kw">print</span>(long_carrots)</span></code></pre></div>
+<pre><code>## # A tibble: 618 x 6
+##    Product Age_group  Sex    Preference Attributes Ratings
+##    &lt;fct&gt;   &lt;ord&gt;      &lt;fct&gt;       &lt;int&gt; &lt;chr&gt;        &lt;int&gt;
+##  1 Bolero  &gt; 61 years Female          4 Crispness        2
+##  2 Bolero  &gt; 61 years Female          4 Sweetness        2
+##  3 Bolero  &gt; 61 years Female          4 Bitterness       4
+##  4 Yukon   &gt; 61 years Female          4 Crispness        3
+##  5 Yukon   &gt; 61 years Female          4 Sweetness        2
+##  6 Yukon   &gt; 61 years Female          4 Bitterness       3
+##  7 Bolero  &gt; 61 years Male            6 Crispness        5
+##  8 Bolero  &gt; 61 years Male            6 Sweetness        5
+##  9 Bolero  &gt; 61 years Male            6 Bitterness       1
+## 10 Yukon   &gt; 61 years Male            6 Crispness        3
+## # … with 608 more rows</code></pre>
+</div>
+<div id="working-with-list-columns" class="section level3">
+<h3>Working with list-columns</h3>
+<p>I think list-columns are great for rapidly analysing data across one or more grouping variables, while keeping intermediate and final outputs from an analysis nicely contained within a single dataframe.</p>
+<p>For those of you unfamiliar with list-columns, they are columns in a dataframe that contain more than one piece of data per row within a column. Instead, each row of the column contain a list of two or more pieces of data. The figure below will hopefully give you some insight into what I mean by this description. Briefly, in the figure we have a standard dataframe with columns for brand of tomato sauce, country, and cost in each country. If we use brand of tomato sauce as a grouping variable, we can cram all the related data into one cell per row (note: it doesn’t compress the data), replacing the previous two columns with a new list-column. That is, a column consisting a series of lists.</p>
+<br>
+<div style="margin:auto;width:80%;">
+<p><img src="./images/posts/2020-06-16-purring-through-exploratory-analyses/list-column.png" style="display:block;margin-right:auto;margin-left:auto;max-width:100%;"></p>
+</div>
+<p><br></p>
+<p>The ultimate goal of this exploratory analysis is to look at the relationship between consumer carrot preference and carrot attributes (crispness, sweetness, and bitterness) for each carrot type according to age group. So, the first thing I need to do is to create a list-column of all the pieces of data with carrot type as a grouping variable.</p>
+<p>Creating list-columns is simple with the help of the <code>group_by</code> function from the <em>dpylr</em> package, and the <code>nest</code> function from the <em>tidyr</em> package.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># Create a dataframe with a list-column called &#39;data&#39;</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a>diced_carrots &lt;-<span class="st"> </span>long_carrots <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="st">  </span><span class="co"># First group the data by carrot type</span></span>
+<span id="cb10-4"><a href="#cb10-4"></a><span class="st">  </span><span class="kw">group_by</span>(Product) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb10-5"><a href="#cb10-5"></a><span class="st">  </span><span class="co"># Then &#39;nest&#39; the remaining data into a list-column</span></span>
+<span id="cb10-6"><a href="#cb10-6"></a><span class="st">  </span><span class="kw">nest</span>()</span></code></pre></div>
+<p>We now have a new dataframe with two columns, ‘Product’ and ‘data’. ‘Product’ contains the grouping variable (carrot type), while ‘data’ contain the rest of the data as a list column.</p>
+<p>If we compare the original dataframe with the nested dataframe they look like this:</p>
+<p><strong>Original dataframe</strong></p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="kw">print</span>(long_carrots)</span></code></pre></div>
+<pre><code>## # A tibble: 618 x 6
+##    Product Age_group  Sex    Preference Attributes Ratings
+##    &lt;fct&gt;   &lt;ord&gt;      &lt;fct&gt;       &lt;int&gt; &lt;chr&gt;        &lt;int&gt;
+##  1 Bolero  &gt; 61 years Female          4 Crispness        2
+##  2 Bolero  &gt; 61 years Female          4 Sweetness        2
+##  3 Bolero  &gt; 61 years Female          4 Bitterness       4
+##  4 Yukon   &gt; 61 years Female          4 Crispness        3
+##  5 Yukon   &gt; 61 years Female          4 Sweetness        2
+##  6 Yukon   &gt; 61 years Female          4 Bitterness       3
+##  7 Bolero  &gt; 61 years Male            6 Crispness        5
+##  8 Bolero  &gt; 61 years Male            6 Sweetness        5
+##  9 Bolero  &gt; 61 years Male            6 Bitterness       1
+## 10 Yukon   &gt; 61 years Male            6 Crispness        3
+## # … with 608 more rows</code></pre>
+<p><strong>Nested dataframe</strong></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="kw">print</span>(diced_carrots)</span></code></pre></div>
+<pre><code>## # A tibble: 2 x 2
+## # Groups:   Product [6]
+##   Product data              
+##   &lt;fct&gt;   &lt;list&gt;            
+## 1 Bolero  &lt;tibble [309 × 5]&gt;
+## 2 Yukon   &lt;tibble [309 × 5]&gt;</code></pre>
+<p>If we look inside the two rows of the list-column, we find the data associated with each of the carrot types.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="kw">print</span>(diced_carrots<span class="op">$</span>data)</span></code></pre></div>
+<pre><code>## [[1]]
+## # A tibble: 309 x 5
+##    Age_group   Sex    Preference Attributes Ratings
+##    &lt;ord&gt;       &lt;fct&gt;       &lt;int&gt; &lt;chr&gt;        &lt;int&gt;
+##  1 &gt; 61 years  Female          4 Crispness        2
+##  2 &gt; 61 years  Female          4 Sweetness        2
+##  3 &gt; 61 years  Female          4 Bitterness       4
+##  4 &gt; 61 years  Male            6 Crispness        5
+##  5 &gt; 61 years  Male            6 Sweetness        5
+##  6 &gt; 61 years  Male            6 Bitterness       1
+##  7 26-40 years Male            4 Crispness        6
+##  8 26-40 years Male            4 Sweetness        3
+##  9 26-40 years Male            4 Bitterness       3
+## 10 41-60 years Male            5 Crispness        4
+## # … with 299 more rows
+## 
+## [[2]]
+## # A tibble: 309 x 5
+##    Age_group   Sex    Preference Attributes Ratings
+##    &lt;ord&gt;       &lt;fct&gt;       &lt;int&gt; &lt;chr&gt;        &lt;int&gt;
+##  1 &gt; 61 years  Female          4 Crispness        3
+##  2 &gt; 61 years  Female          4 Sweetness        2
+##  3 &gt; 61 years  Female          4 Bitterness       3
+##  4 &gt; 61 years  Male            6 Crispness        3
+##  5 &gt; 61 years  Male            6 Sweetness        5
+##  6 &gt; 61 years  Male            6 Bitterness       1
+##  7 26-40 years Male            5 Crispness        5
+##  8 26-40 years Male            5 Sweetness        4
+##  9 26-40 years Male            5 Bitterness       3
+## 10 41-60 years Male            4 Crispness        3
+## # … with 299 more rows</code></pre>
+</div>
+<div id="working-with-list-columns-1" class="section level3">
+<h3>Working with list-columns</h3>
+<p>Because the ‘data’ column is a list of lists, you can iterate functions over the elements of the column using the <em>base R</em> <code>lapply</code> function. However, I find the best way to work with dataframes that contain list-columns is to use the various <code>map</code> functions "(<code>map</code>, <code>map2</code>, <code>pmap</code> being the most basic varieties) from the <em>purrr</em> package to iterate over the list-column rows. When combining one of the various <code>map</code> functions with the <code>mutate</code> function from the <em>dplyr</em> package, you can take the output produced by applying a function over list-column(s) and place it into a new column in the same dataframe (see the figure below). This keeps all you analysis inputs and outputs together in one place.</p>
+<br>
+<div style="margin:auto;width:80%;">
+<p><img src="./images/posts/2020-06-16-purring-through-exploratory-analyses/purrr-mutate.png" style="display:block;margin-right:auto;margin-left:auto;max-width:100%;"></p>
+</div>
+<p><br></p>
+<p>First I will demonstrate a basic example of generating plots using <code>map</code>.</p>
+<p>The <code>map</code> function takes one list (in this case a list-column from the dataframe) as an input and iterates a function over the data. As I’ve already said, when used within a <em>dplyr</em> <code>mutate</code> function, the output from the <code>map</code> function is placed in a new column in the dataframe (as shown in the figure below).</p>
+<br>
+<div style="margin:auto;width:80%;">
+<p><img src="./images/posts/2020-06-16-purring-through-exploratory-analyses/map-functions-1.png" style="display:block;margin-right:auto;margin-left:auto;max-width:100%;"></p>
+</div>
+<p><br></p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="co"># Load required packages</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a><span class="kw">library</span>(purrr)</span>
+<span id="cb17-3"><a href="#cb17-3"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb17-4"><a href="#cb17-4"></a></span>
+<span id="cb17-5"><a href="#cb17-5"></a><span class="co"># Make a basic plot</span></span>
+<span id="cb17-6"><a href="#cb17-6"></a>diced_carrots &lt;-<span class="st"> </span>diced_carrots <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb17-7"><a href="#cb17-7"></a><span class="st">  </span><span class="co"># Add a new column containing ggplot objects</span></span>
+<span id="cb17-8"><a href="#cb17-8"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">basic_plot =</span> <span class="kw">map</span>(<span class="dt">.x =</span> data, <span class="co"># Tell map to use the data found within the &#39;data&#39; column</span></span>
+<span id="cb17-9"><a href="#cb17-9"></a>                          <span class="op">~</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> .x) <span class="op">+</span><span class="st"> </span><span class="co"># Create a user-defined plotting function using the tilde</span></span>
+<span id="cb17-10"><a href="#cb17-10"></a><span class="st">                            </span><span class="kw">aes</span>(<span class="dt">x =</span> Ratings,</span>
+<span id="cb17-11"><a href="#cb17-11"></a>                                <span class="dt">y =</span> Preference) <span class="op">+</span></span>
+<span id="cb17-12"><a href="#cb17-12"></a><span class="st">                            </span><span class="kw">geom_point</span>(<span class="dt">position =</span> <span class="kw">position_jitter</span>(<span class="dt">width =</span> <span class="fl">0.2</span>, </span>
+<span id="cb17-13"><a href="#cb17-13"></a>                                                                  <span class="dt">height =</span> <span class="fl">0.2</span>)) <span class="op">+</span></span>
+<span id="cb17-14"><a href="#cb17-14"></a><span class="st">                            </span><span class="kw">facet_wrap</span>(<span class="op">~</span>Attributes, <span class="dt">nrow =</span> <span class="dv">3</span>) <span class="op">+</span></span>
+<span id="cb17-15"><a href="#cb17-15"></a><span class="st">                            </span><span class="kw">theme_bw</span>(<span class="dt">base_size =</span> <span class="dv">14</span>))) </span></code></pre></div>
+<p>If you look at the resulting dataframe, it now has three columns, the grouping column (Product), the list-column (data), and a new list-column (basic_plot). This new column contains <em>ggplot</em> plotting objects, one for each carrot type.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="co"># Print the updated dataframe</span></span>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="kw">print</span>(diced_carrots)</span></code></pre></div>
+<pre><code>## # A tibble: 2 x 3
+## # Groups:   Product [6]
+##   Product data               basic_plot
+##   &lt;fct&gt;   &lt;list&gt;             &lt;list&gt;    
+## 1 Bolero  &lt;tibble [309 × 5]&gt; &lt;gg&gt;      
+## 2 Yukon   &lt;tibble [309 × 5]&gt; &lt;gg&gt;</code></pre>
+<p>Having the <em>ggplot</em> objects in the dataframe is a bit useless unless theere is a way to print the plots. There are three functions that you can use to extract the plots from the list-column, the <code>lapply</code> function from <em>base R</em>, the <code>map</code> function from <em>purrr</em>, or the <code>walk</code> function from <em>purrr</em>. My personal choice is the <code>walk</code> function, which works exactly the same way <code>map</code> does, but it returns the input (.x) invisibly, thus making a cleaner output for RMarkdown documents.</p>
+<p>You will notice in the code below that for all three functions, the input is the column you want to apply the <code>print</code> function to, namely, <em>diced_carrots$basic_plot</em>.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="co">#-- Using lapply --#</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a><span class="co"># lapply(X = diced_carrots$basic_plot, FUN = function(x){print(x)})</span></span>
+<span id="cb20-3"><a href="#cb20-3"></a></span>
+<span id="cb20-4"><a href="#cb20-4"></a><span class="co">#-- Using map --#</span></span>
+<span id="cb20-5"><a href="#cb20-5"></a><span class="co"># map(.x = diced_carrots$basic_plot, ~ print(.x))</span></span>
+<span id="cb20-6"><a href="#cb20-6"></a></span>
+<span id="cb20-7"><a href="#cb20-7"></a><span class="co">#-- Using walk --#</span></span>
+<span id="cb20-8"><a href="#cb20-8"></a><span class="kw">walk</span>(<span class="dt">.x =</span> diced_carrots<span class="op">$</span>basic_plot, <span class="op">~</span><span class="st"> </span><span class="kw">print</span>(.x))</span></code></pre></div>
+<p><img src="2020-06-19-purring-through-exploratory-analyses_files/figure-html/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /><img src="2020-06-19-purring-through-exploratory-analyses_files/figure-html/unnamed-chunk-12-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>The problem with these figures is that you have no way of identifying which figure belongs to the the Bolero carrot, and which to the Yukon carrot. This is where we can use the <code>map2</code> function from <em>purrr</em>. The <code>map2</code> function works the same way as <code>map</code>, but can take two data inputs. And, like the <code>map</code> function, if we wrap the function with a <code>mutate</code> function, we can produce a new column in the dataframe (see the figure below).</p>
+<br>
+<div style="margin:auto;width:80%;">
+<p><img src="./images/posts/2020-06-16-purring-through-exploratory-analyses/map-functions-2.png" style="display:block;margin-right:auto;margin-left:auto;max-width:100%;"></p>
+</div>
+<p><br></p>
+<p>Our goal from with <code>map2</code> is to recapitulate the plots we had before, but with the carrot type as a plot title. We can do that by using the data from the ‘data’ list-column to draw the plot (as we did before), but then also using the data in the ‘Product’ column to label the plots.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="co"># Make a labeled plot</span></span>
+<span id="cb21-2"><a href="#cb21-2"></a>diced_carrots &lt;-<span class="st"> </span>diced_carrots <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb21-3"><a href="#cb21-3"></a><span class="st">  </span><span class="co"># Add a new column containing ggplot objects</span></span>
+<span id="cb21-4"><a href="#cb21-4"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">labeled_plot =</span> <span class="kw">map2</span>(<span class="dt">.x =</span> data, <span class="co"># Tell map2 where to find the plotting data </span></span>
+<span id="cb21-5"><a href="#cb21-5"></a>                             <span class="dt">.y =</span> Product, <span class="co"># Tell map2 where to find the label data</span></span>
+<span id="cb21-6"><a href="#cb21-6"></a>                          <span class="op">~</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> .x) <span class="op">+</span><span class="st"> </span><span class="co"># Tell ggplot to use .x to draw the plots</span></span>
+<span id="cb21-7"><a href="#cb21-7"></a><span class="st">                            </span><span class="kw">aes</span>(<span class="dt">x =</span> Ratings,</span>
+<span id="cb21-8"><a href="#cb21-8"></a>                                <span class="dt">y =</span> Preference) <span class="op">+</span></span>
+<span id="cb21-9"><a href="#cb21-9"></a><span class="st">                            </span><span class="kw">geom_point</span>(<span class="dt">position =</span> <span class="kw">position_jitter</span>(<span class="dt">width =</span> <span class="fl">0.2</span>, </span>
+<span id="cb21-10"><a href="#cb21-10"></a>                                                                  <span class="dt">height =</span> <span class="fl">0.2</span>)) <span class="op">+</span></span>
+<span id="cb21-11"><a href="#cb21-11"></a><span class="st">                            </span><span class="kw">labs</span>(<span class="dt">title =</span> .y) <span class="op">+</span><span class="st"> </span><span class="co"># Tell ggplot to use .y to add labels </span></span>
+<span id="cb21-12"><a href="#cb21-12"></a><span class="st">                            </span><span class="kw">facet_wrap</span>(<span class="op">~</span>Attributes, <span class="dt">nrow =</span> <span class="dv">3</span>) <span class="op">+</span></span>
+<span id="cb21-13"><a href="#cb21-13"></a><span class="st">                            </span><span class="kw">theme_bw</span>(<span class="dt">base_size =</span> <span class="dv">14</span>))) </span>
+<span id="cb21-14"><a href="#cb21-14"></a></span>
+<span id="cb21-15"><a href="#cb21-15"></a><span class="co"># Look at the resulting dataframe</span></span>
+<span id="cb21-16"><a href="#cb21-16"></a><span class="kw">print</span>(diced_carrots)</span></code></pre></div>
+<pre><code>## # A tibble: 2 x 4
+## # Groups:   Product [6]
+##   Product data               basic_plot labeled_plot
+##   &lt;fct&gt;   &lt;list&gt;             &lt;list&gt;     &lt;list&gt;      
+## 1 Bolero  &lt;tibble [309 × 5]&gt; &lt;gg&gt;       &lt;gg&gt;        
+## 2 Yukon   &lt;tibble [309 × 5]&gt; &lt;gg&gt;       &lt;gg&gt;</code></pre>
+<p>The new column ‘labeled_plot’ is a list-column of ggplot objects, which we can then print using the <code>walk</code> function.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="co"># Print the new figures</span></span>
+<span id="cb23-2"><a href="#cb23-2"></a><span class="kw">walk</span>(<span class="dt">.x =</span> diced_carrots<span class="op">$</span>labeled_plot, <span class="op">~</span><span class="kw">print</span>(.x))</span></code></pre></div>
+<p><img src="2020-06-19-purring-through-exploratory-analyses_files/figure-html/unnamed-chunk-14-1.png" width="672" style="display: block; margin: auto;" /><img src="2020-06-19-purring-through-exploratory-analyses_files/figure-html/unnamed-chunk-14-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>We now have labeled figures, which makes identification easy.</p>
+<p>To use more than two sources of data, you use <code>pmap</code> (see figure below).</p>
+<br>
+<div style="margin:auto;width:80%;">
+<p><img src="./images/posts/2020-06-16-purring-through-exploratory-analyses/map-functions-3.png" style="display:block;margin-right:auto;margin-left:auto;max-width:100%;"></p>
+</div>
+<p><br></p>
+<p>There is a slight difference between <code>map/map2</code>, and<code>pmap</code> in terms of identifying the sources of data. Instead of using <em>.x</em> and <em>.y</em> to identify the data sources, you list the data sources using <em>.l</em>. For example:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="co"># A list</span></span>
+<span id="cb24-2"><a href="#cb24-2"></a><span class="kw">pmap</span>(<span class="dt">.l =</span> <span class="kw">list</span>(data_<span class="dv">1</span>, data_<span class="dv">2</span>, data_<span class="dv">3</span>, ...), ...)</span>
+<span id="cb24-3"><a href="#cb24-3"></a></span>
+<span id="cb24-4"><a href="#cb24-4"></a><span class="co"># Or a named list</span></span>
+<span id="cb24-5"><a href="#cb24-5"></a><span class="kw">pmap</span>(<span class="dt">.l =</span> <span class="kw">list</span>(<span class="dt">foo =</span> data_<span class="dv">1</span>, <span class="dt">bar =</span> data_<span class="dv">2</span>, <span class="dt">baz =</span> data_<span class="dv">3</span>, ...), ...)</span></code></pre></div>
+<p>When calling the data within your function, you can either use the positions in the list using <em>..1</em>, <em>..2</em>, <em>..3</em>, <em>etc</em> for the first, second, third, etc items in the list. Or, if you have a named list, you can use call the data using the names. In the example above, that would be, <em>foo</em>, <em>bar</em>, <em>baz</em>, <em>etc</em>.</p>
+<p>I will use <code>pmap</code> to add a line to my plots showing what the median preference rating is, but I want to do this procedure for a slightly more complex plot that the ones I have used before, which were only faceted by carrot taste attribute. Now I want to faceting the figure by taste attribute and age group to see whether there is a change in the relationship between carrot taste attributes and carrot preference as one gets older.</p>
+<p>I would usually use the <code>stat_summary</code> function in <em>ggplot</em> to add a summary measure to a plot, but it is my experience in <em>ggplot</em> that <code>geom_hline</code> does not play nicely within <code>stat_summary</code>, and so the first step in adding the median rating to each plot facet is to create a new dataframe with median preference value for each carrot type according to age group and taste attribute. This can be done using the <code>map</code> function, along with the <code>group_by</code> and <code>summarise</code> functions from <em>dplyr</em>.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="co"># Calculate the median preference rating for each carrot type according </span></span>
+<span id="cb25-2"><a href="#cb25-2"></a><span class="co"># to and age group and taste attribute</span></span>
+<span id="cb25-3"><a href="#cb25-3"></a>diced_carrots &lt;-<span class="st"> </span>diced_carrots <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb25-4"><a href="#cb25-4"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">median_pref =</span> <span class="kw">map</span>(<span class="dt">.x =</span> data, <span class="co"># Tell map where to find the data to summarise</span></span>
+<span id="cb25-5"><a href="#cb25-5"></a>                           <span class="op">~</span><span class="st"> </span>.x <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb25-6"><a href="#cb25-6"></a><span class="st">                             </span><span class="kw">group_by</span>(Age_group, Attributes) <span class="op">%&gt;%</span></span>
+<span id="cb25-7"><a href="#cb25-7"></a><span class="st">                             </span><span class="kw">summarise</span>(<span class="dt">med_ian =</span> <span class="kw">round</span>(<span class="kw">median</span>(Preference, </span>
+<span id="cb25-8"><a href="#cb25-8"></a>                                                              <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)))))</span>
+<span id="cb25-9"><a href="#cb25-9"></a></span>
+<span id="cb25-10"><a href="#cb25-10"></a><span class="co"># Print the updated dataframe</span></span>
+<span id="cb25-11"><a href="#cb25-11"></a><span class="kw">print</span>(diced_carrots)</span></code></pre></div>
+<pre><code>## # A tibble: 2 x 5
+## # Groups:   Product [6]
+##   Product data               basic_plot labeled_plot median_pref      
+##   &lt;fct&gt;   &lt;list&gt;             &lt;list&gt;     &lt;list&gt;       &lt;list&gt;           
+## 1 Bolero  &lt;tibble [309 × 5]&gt; &lt;gg&gt;       &lt;gg&gt;         &lt;tibble [12 × 3]&gt;
+## 2 Yukon   &lt;tibble [309 × 5]&gt; &lt;gg&gt;       &lt;gg&gt;         &lt;tibble [12 × 3]&gt;</code></pre>
+<p>The new column is a list-column of dataframes (tibbles), and we can look at the contents of the new column using <code>walk</code> or <code>walk2</code>. <code>walk2</code> behaves the same way as <code>walk</code> but takes two inputs (like its sibling <code>map2</code>), and allows one to produce pretty, labeled tables using the <code>kable</code> function from the <em>knitr</em> package (if you are knitting an Rmarkdown document, remember to put <code>results = 'asis'</code> in the chunk options when printing <code>kable</code> tables).</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="co"># Print the dataframes</span></span>
+<span id="cb27-2"><a href="#cb27-2"></a><span class="kw">walk2</span>(<span class="dt">.x =</span> diced_carrots<span class="op">$</span>median_pref, <span class="co"># Tell walk2 where to find the dataframes to print as tables</span></span>
+<span id="cb27-3"><a href="#cb27-3"></a>      <span class="dt">.y =</span> diced_carrots<span class="op">$</span>Product, <span class="co"># Tell walk2 where to find the labels for table captions </span></span>
+<span id="cb27-4"><a href="#cb27-4"></a>      <span class="op">~</span><span class="st"> </span><span class="kw">print</span>(knitr<span class="op">::</span><span class="kw">kable</span>(<span class="dt">x =</span> .x,</span>
+<span id="cb27-5"><a href="#cb27-5"></a>                           <span class="dt">caption =</span> .y)))</span></code></pre></div>
+<table>
+<caption>
+Bolero
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Age_group
+</th>
+<th style="text-align:left;">
+Attributes
+</th>
+<th style="text-align:right;">
+med_ian
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+&lt; 25 years
+</td>
+<td style="text-align:left;">
+Bitterness
+</td>
+<td style="text-align:right;">
+5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+&lt; 25 years
+</td>
+<td style="text-align:left;">
+Crispness
+</td>
+<td style="text-align:right;">
+5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+&lt; 25 years
+</td>
+<td style="text-align:left;">
+Sweetness
+</td>
+<td style="text-align:right;">
+5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+26-40 years
+</td>
+<td style="text-align:left;">
+Bitterness
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+26-40 years
+</td>
+<td style="text-align:left;">
+Crispness
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+26-40 years
+</td>
+<td style="text-align:left;">
+Sweetness
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+41-60 years
+</td>
+<td style="text-align:left;">
+Bitterness
+</td>
+<td style="text-align:right;">
+5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+41-60 years
+</td>
+<td style="text-align:left;">
+Crispness
+</td>
+<td style="text-align:right;">
+5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+41-60 years
+</td>
+<td style="text-align:left;">
+Sweetness
+</td>
+<td style="text-align:right;">
+5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+&gt; 61 years
+</td>
+<td style="text-align:left;">
+Bitterness
+</td>
+<td style="text-align:right;">
+5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+&gt; 61 years
+</td>
+<td style="text-align:left;">
+Crispness
+</td>
+<td style="text-align:right;">
+5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+&gt; 61 years
+</td>
+<td style="text-align:left;">
+Sweetness
+</td>
+<td style="text-align:right;">
+5
+</td>
+</tr>
+</tbody>
+</table>
+<table>
+<caption>
+Yukon
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Age_group
+</th>
+<th style="text-align:left;">
+Attributes
+</th>
+<th style="text-align:right;">
+med_ian
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+&lt; 25 years
+</td>
+<td style="text-align:left;">
+Bitterness
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+&lt; 25 years
+</td>
+<td style="text-align:left;">
+Crispness
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+&lt; 25 years
+</td>
+<td style="text-align:left;">
+Sweetness
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+26-40 years
+</td>
+<td style="text-align:left;">
+Bitterness
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+26-40 years
+</td>
+<td style="text-align:left;">
+Crispness
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+26-40 years
+</td>
+<td style="text-align:left;">
+Sweetness
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+41-60 years
+</td>
+<td style="text-align:left;">
+Bitterness
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+41-60 years
+</td>
+<td style="text-align:left;">
+Crispness
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+41-60 years
+</td>
+<td style="text-align:left;">
+Sweetness
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+&gt; 61 years
+</td>
+<td style="text-align:left;">
+Bitterness
+</td>
+<td style="text-align:right;">
+5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+&gt; 61 years
+</td>
+<td style="text-align:left;">
+Crispness
+</td>
+<td style="text-align:right;">
+5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+&gt; 61 years
+</td>
+<td style="text-align:left;">
+Sweetness
+</td>
+<td style="text-align:right;">
+5
+</td>
+</tr>
+</tbody>
+</table>
+<p>Now that I have the summarised data, I can create the new plots using <code>pmap</code> to pull in data from three (or more if required) sources. One source for the basic plots, one source for adding the median preference data, and one source to label the plots.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>diced_carrots &lt;-<span class="st"> </span>diced_carrots <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb28-2"><a href="#cb28-2"></a><span class="st">  </span><span class="co"># Add a new column containing ggplot objects</span></span>
+<span id="cb28-3"><a href="#cb28-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">labeled_plot2 =</span> <span class="kw">pmap</span>(<span class="dt">.l =</span> <span class="kw">list</span>(data, median_pref, Product), <span class="co"># Tell pmap where to find the data </span></span>
+<span id="cb28-4"><a href="#cb28-4"></a>                          <span class="op">~</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> ..<span class="dv">1</span>) <span class="op">+</span><span class="st"> </span><span class="co"># Tell ggplot to use ..1 to draw the basic plots</span></span>
+<span id="cb28-5"><a href="#cb28-5"></a><span class="st">                            </span><span class="kw">aes</span>(<span class="dt">x =</span> Ratings,</span>
+<span id="cb28-6"><a href="#cb28-6"></a>                                <span class="dt">y =</span> Preference) <span class="op">+</span></span>
+<span id="cb28-7"><a href="#cb28-7"></a><span class="st">                            </span><span class="kw">geom_point</span>(<span class="dt">position =</span> <span class="kw">position_jitter</span>(<span class="dt">width =</span> <span class="fl">0.2</span>, </span>
+<span id="cb28-8"><a href="#cb28-8"></a>                                                                  <span class="dt">height =</span> <span class="fl">0.2</span>)) <span class="op">+</span></span>
+<span id="cb28-9"><a href="#cb28-9"></a><span class="st">                            </span><span class="kw">geom_hline</span>(<span class="dt">data =</span> ..<span class="dv">2</span>, <span class="co"># tell ggplot to use ..2 to draw the median values</span></span>
+<span id="cb28-10"><a href="#cb28-10"></a>                                       <span class="kw">aes</span>(<span class="dt">yintercept =</span> med_ian), </span>
+<span id="cb28-11"><a href="#cb28-11"></a>                                       <span class="dt">colour =</span> <span class="st">&#39;red&#39;</span>) <span class="op">+</span></span>
+<span id="cb28-12"><a href="#cb28-12"></a><span class="st">                            </span><span class="kw">labs</span>(<span class="dt">title =</span> ..<span class="dv">3</span>) <span class="op">+</span><span class="st"> </span><span class="co"># Tell ggplot to use ..3 to add labels </span></span>
+<span id="cb28-13"><a href="#cb28-13"></a><span class="st">                            </span><span class="kw">facet_grid</span>(Attributes <span class="op">~</span><span class="st"> </span>Age_group) <span class="op">+</span></span>
+<span id="cb28-14"><a href="#cb28-14"></a><span class="st">                            </span><span class="kw">theme_bw</span>(<span class="dt">base_size =</span> <span class="dv">14</span>))) </span>
+<span id="cb28-15"><a href="#cb28-15"></a></span>
+<span id="cb28-16"><a href="#cb28-16"></a><span class="co"># Look at the resulting dataframe</span></span>
+<span id="cb28-17"><a href="#cb28-17"></a><span class="kw">print</span>(diced_carrots)</span></code></pre></div>
+<pre><code>## # A tibble: 2 x 6
+## # Groups:   Product [6]
+##   Product data             basic_plot labeled_plot median_pref     labeled_plot2
+##   &lt;fct&gt;   &lt;list&gt;           &lt;list&gt;     &lt;list&gt;       &lt;list&gt;          &lt;list&gt;       
+## 1 Bolero  &lt;tibble [309 × … &lt;gg&gt;       &lt;gg&gt;         &lt;tibble [12 × … &lt;gg&gt;         
+## 2 Yukon   &lt;tibble [309 × … &lt;gg&gt;       &lt;gg&gt;         &lt;tibble [12 × … &lt;gg&gt;</code></pre>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="co"># Print the figures</span></span>
+<span id="cb30-2"><a href="#cb30-2"></a><span class="kw">walk</span>(<span class="dt">.x =</span> diced_carrots<span class="op">$</span>labeled_plot2, <span class="op">~</span><span class="kw">print</span>(.x))</span></code></pre></div>
+<p><img src="2020-06-19-purring-through-exploratory-analyses_files/figure-html/unnamed-chunk-18-1.png" width="672" style="display: block; margin: auto;" /><img src="2020-06-19-purring-through-exploratory-analyses_files/figure-html/unnamed-chunk-18-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>And there you have it, a neat and tidy way of generating exploratory plots and tables. I’ve used this process on some fairly large datasets and it seems to scale nicely.</p>
+<hr />
+</div>
+<div id="session-information" class="section level1">
+<h1>Session information</h1>
+<pre><code>## R version 3.6.3 (2020-02-29)
+## Platform: x86_64-apple-darwin15.6.0 (64-bit)
+## Running under: macOS Catalina 10.15.5
+## 
+## Matrix products: default
+## BLAS:   /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRblas.0.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRlapack.dylib
+## 
+## Random number generation:
+##  RNG:     Mersenne-Twister 
+##  Normal:  Inversion 
+##  Sample:  Rounding 
+##  
+## locale:
+## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+## 
+## attached base packages:
+## [1] grid      stats     graphics  grDevices utils     datasets  methods  
+## [8] base     
+## 
+## other attached packages:
+##  [1] carrots_0.1.0         geofacet_0.2.0        survey_4.0           
+##  [4] survival_3.1-11       Matrix_1.2-18         sf_0.8-0             
+##  [7] fiftystater_1.0.1     skimr_2.1             magrittr_1.5         
+## [10] geojsonio_0.9.2       lubridate_1.7.4       xml2_1.3.0           
+## [13] sp_1.4-1              leaflet_2.0.3         highcharter_0.7.0    
+## [16] flexdashboard_0.5.1.1 gganimate_1.0.5       gdtools_0.2.1        
+## [19] ggiraph_0.7.0         svglite_1.2.3         pander_0.6.3         
+## [22] knitr_1.28            forcats_0.5.0         stringr_1.4.0        
+## [25] dplyr_0.8.5           purrr_0.3.3           readr_1.3.1          
+## [28] tidyr_1.0.2           tibble_3.0.0          ggplot2_3.3.0.9000   
+## [31] tidyverse_1.3.0      
+## 
+## loaded via a namespace (and not attached):
+##  [1] colorspace_1.4-1    ellipsis_0.3.0      class_7.3-16       
+##  [4] rgdal_1.4-8         base64enc_0.1-3     fs_1.3.1           
+##  [7] rstudioapi_0.11     httpcode_0.2.0      farver_2.0.3       
+## [10] ggrepel_0.8.2       fansi_0.4.1         splines_3.6.3      
+## [13] rlist_0.4.6.1       jsonlite_1.6.1      broom_0.5.5        
+## [16] dbplyr_1.4.2        png_0.1-7           rgeos_0.5-2        
+## [19] compiler_3.6.3      httr_1.4.1          backports_1.1.5    
+## [22] assertthat_0.2.1    lazyeval_0.2.2      cli_2.0.2          
+## [25] tweenr_1.0.1        htmltools_0.4.0     prettyunits_1.1.1  
+## [28] tools_3.6.3         igraph_1.2.5        gtable_0.3.0       
+## [31] glue_1.3.2          geojson_0.3.2       V8_3.1.0           
+## [34] Rcpp_1.0.4          imguR_1.0.3         cellranger_1.1.0   
+## [37] vctrs_0.2.4         crul_0.9.0          nlme_3.1-145       
+## [40] crosstalk_1.1.0.1   xfun_0.12           rvest_0.3.5        
+## [43] lifecycle_0.2.0     jqr_1.1.0           zoo_1.8-7          
+## [46] scales_1.1.0        hms_0.5.3           yaml_2.2.1         
+## [49] quantmod_0.4.17     curl_4.3            gridExtra_2.3      
+## [52] stringi_1.4.6       highr_0.8           maptools_0.9-9     
+## [55] e1071_1.7-3         TTR_0.23-6          boot_1.3-24        
+## [58] repr_1.1.0          rlang_0.4.5         pkgconfig_2.0.3    
+## [61] systemfonts_0.1.1   geogrid_0.1.1       evaluate_0.14      
+## [64] lattice_0.20-38     htmlwidgets_1.5.1   labeling_0.3       
+## [67] tidyselect_1.0.0    R6_2.4.1            generics_0.0.2     
+## [70] DBI_1.1.0           pillar_1.4.3        haven_2.2.0        
+## [73] whisker_0.4         foreign_0.8-76      withr_2.1.2        
+## [76] units_0.6-6         xts_0.12-0          modelr_0.1.6       
+## [79] crayon_1.3.4        uuid_0.1-4          KernSmooth_2.23-16 
+## [82] utf8_1.1.4          rmarkdown_2.1       jpeg_0.1-8.1       
+## [85] progress_1.2.2      rnaturalearth_0.1.0 readxl_1.3.1       
+## [88] data.table_1.12.8   reprex_0.3.0        digest_0.6.25      
+## [91] classInt_0.4-2      webshot_0.5.2       munsell_0.5.0      
+## [94] viridisLite_0.3.0   kableExtra_1.1.0    mitools_2.4</code></pre>
+</div>
+
+        <!-- Include these sections here, otherwise YAML headings not inserted -->
+        <!-- Share -->
+        <div class="share">
+            <p style="display:inline-block">
+                <hr>
+                <h3>Share</h3>&ensp;
+                <a href="mailto:?subject=Neat and tidy data exploration with list-columns and <em>purrr</em>&body=Hi, I thought you might like this post I found on painblogR:%0D%0A%0D%0Ahttps://www.painblogr.org/2020-06-19-purring-through-exploratory-analyses.html.%0D%0A%0D%0ABest regards" target="_blank"><i class="fa fa-envelope" style="color:#000000;vertical-align:middle;" title="Share on email" ></i></a>&ensp;
+                <a href="https://twitter.com/intent/tweet?url=https://www.painblogr.org/2020-06-19-purring-through-exploratory-analyses.html&text=Neat and tidy data exploration with list-columns and <em>purrr</em>&via=painblogR" rel="nofollow" target="_blank" title="Share on Twitter"><i class="fa fa-twitter" style="color:#000000;vertical-align:middle;"></i></a>&ensp;
+                <a href="https://facebook.com/sharer.php?u=https://www.painblogr.org/2020-06-19-purring-through-exploratory-analyses.html" rel="nofollow" target="_blank" title="Share on Facebook"><i class="fa fa-facebook" style="color:#000000;vertical-align:middle;"></i></a>&ensp;
+                <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://www.painblogr.org/2020-06-19-purring-through-exploratory-analyses.html" rel="nofollow" target="_blank" title="Share on LinkedIn"><i class="fa fa-linkedin" style="color:#000000;vertical-align:middle;"></i></a>
+            </p>
+        </div>
+
+        <!-- Disqus
+        <div class="comments">
+            <hr>
+            <h3>Comments</h3>
+            <div id="disqus_thread"></div>
+            <script>
+                var disqus_config = function() {
+                    this.page.url = 'https://www.painblogr.org/2020-06-19-purring-through-exploratory-analyses.html'
+                    this.page.identifier = '/2020-06-19-purring-through-exploratory-analyses.html'
+                };
+
+                (function() {
+                    var d = document,
+                        s = d.createElement('script');
+
+                    s.src = 'https://www.painblogr.disqus.com/embed.js';
+                    s.setAttribute('data-timestamp', +new Date());
+                    (d.head || d.body).appendChild(s);
+                })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+            </noscript>
+        </div>
+    </div> -->
+
+    <!-- Footer -->
+    <footer>
+         <!--footer-->
+ <div class="container-fluid" id="foot" style="background-color:#FFFFFF;border-top:#CCCCCC solid 1px;color:#999999;font-family:'Open sans', 'Helvetica';">
+     <div class="row">
+         <div class="col-sm-4">
+             <p>Hosted by: <a href="https://www.netlify.com" target="_blank">netlify.com</a>
+                 <br>Powered by: <a href="http://rmarkdown.rstudio.com/" target="_blank">RMarkdown</a>
+                 <br>
+                 <br>
+             </p>
+         </div>
+         <div class="col-sm-4">
+             <p>Fork/clone from: <a href="https://github.com/kamermanpr/kamermanpr.github.io.git" target="_blank">GitHub</a>
+                 <br>License: <a href="./LICENSE.html" target="_blank">MIT & CC-BY 4.0</a>
+                 <br>
+                 <br>
+             </p>
+         </div>
+         <div class="col-sm-4">
+             <h4 style="padding:0;margin:0">painblogR</h3>
+ 			   <p style="display:inline-block">
+ 				   <span style="font-style:italic">by Peter Kamerman</span>
+ 				   &ensp;
+ 				   <a href="mailto:peter.kamerman@gmail.com" title="Email me" target="_blank"><i style="color:#999999;" class="fa fa-envelope"></i></a>
+ 				   &ensp;
+ 				   <a href="//twitter.com/@painblogR" target="_blank" title="Follow me"><i style="color:#999999;" class="fa fa-twitter"></i></a>
+ 			   </p>
+ 		   </div>
+ 	   </div>
+ 	</div> 
+    </footer>
+</body>
+
+<!-- extras ------------------------------------------------------->
+<!-- Mathjax -->
+
+</html>
