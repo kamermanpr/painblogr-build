@@ -310,6 +310,10 @@ And there you have it, a neat and tidy way of generating exploratory plots and t
 
 ****
 
+For more cool R content, visit: [R Weekly](https://rweekly.org/){target="_blank"}
+
+****
+
 # Session information
 
 ```{r echo = FALSE}
