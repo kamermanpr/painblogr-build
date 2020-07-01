@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" >
+
+<!-- Head --------------------------------------------------------->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="generator" content="pandoc"/>
+	
+	
+	 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+ <meta name="viewport" content="width=device-width, initial-scale=1" />
+ <link href="site_libs/bootstrap-3.3.5/css/yeti.min.css" rel="stylesheet" />
+ <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+ <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+ <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+ <script src="site_libs/navigation-1.1/tabsets.js"></script>
+ <script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script> 
+
+	
+		<style type="text/css">
+		code {
+			white-space: pre;
+		}
+	</style>
+	<style type="text/css">
+		code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; } /* Alert */
+code span.an { color: #008000; } /* Annotation */
+code span.at { } /* Attribute */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #0000ff; } /* ControlFlow */
+code span.ch { color: #008080; } /* Char */
+code span.cn { } /* Constant */
+code span.co { color: #008000; } /* Comment */
+code span.cv { color: #008000; } /* CommentVar */
+code span.do { color: #008000; } /* Documentation */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.im { } /* Import */
+code span.in { color: #008000; } /* Information */
+code span.kw { color: #0000ff; } /* Keyword */
+code span.op { } /* Operator */
+code span.ot { color: #ff4000; } /* Other */
+code span.pp { color: #ff4000; } /* Preprocessor */
+code span.sc { color: #008080; } /* SpecialChar */
+code span.ss { color: #008080; } /* SpecialString */
+code span.st { color: #008080; } /* String */
+code span.va { } /* Variable */
+code span.vs { color: #008080; } /* VerbatimString */
+code span.wa { color: #008000; font-weight: bold; } /* Warning */ 
+	</style>
+
+		<style type="text/css">
+		pre:not([class]) {
+			background-color: white;
+		}
+	</style>
+	   	<style type="text/css">
+		h1 {
+			font-size: 34px;
+		}
+
+		h1.title {
+			font-size: 38px;
+		}
+
+		h2 {
+			font-size: 30px;
+		}
+
+		h3 {
+			font-size: 24px;
+		}
+
+		h4 {
+			font-size: 18px;
+		}
+
+		h5 {
+			font-size: 16px;
+		}
+
+		h6 {
+			font-size: 12px;
+		}
+
+		.table th:not([align]) {
+			text-align: left;
+		}
+
+		
+	</style>
+	
+		<link rel="stylesheet" href="css/custom.css" type="text/css" />  
+    <!-- Latest maxdcn font-awesome and academicons -->
+    <link rel="stylesheet" href="./css/font-awesome-4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./css/academicons-1.7.0/css/academicons.min.css">
+
+    <!-- custom css -->
+        <link rel="stylesheet" href="css/custom.css" type="text/css" />
+	
+    <!-- Include these sections here, otherwise YAML headings not inserted -->
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-71613331-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-71613331-1');
+    </script>
+
+    <!-- SEO -->
+    <title>Reclassification of gabapentinoids as schedule 3 controlled substances in the UK: an interupted time series analysis</title>
+    <meta name="description" content="Interrupted times series analysis of gabapentinoids in England using piecewise regression">
+    <link rel="author" href="https://plus.google.com/u/0/103355314187199079295" />
+    <meta name="robots" content="robots.txt">
+    <link rel="canonical" href="https://www.painblogr.org/2020-07-03-piecewise-regression.html">
+
+    <!-- Twittercard -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@painblogR">
+    <meta name="twitter:creator" content="@painblogR">
+    <meta name="twitter:title" content="Reclassification of gabapentinoids as schedule 3 controlled substances in the UK: an interupted time series analysis">
+    <meta name="twitter:description" content="Interrupted times series analysis of gabapentinoids in England using piecewise regression">
+    <meta name="twitter:image" content="<a href="https://www.painblogr.org/images/posts/2020-07-03-piecewise-regression/post-image.jpg" class="uri">https://www.painblogr.org/images/posts/2020-07-03-piecewise-regression/post-image.jpg</a>">
+    <meta name="twitter:url" content="https://www.painblogr.org/2020-07-03-piecewise-regression.html">
+
+    <!-- Opengraph -->
+    <meta property="og:title" content="Reclassification of gabapentinoids as schedule 3 controlled substances in the UK: an interupted time series analysis">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://www.painblogr.org/2020-07-03-piecewise-regression.html">
+    <meta property="og:image" content="<a href="https://www.painblogr.org/images/posts/2020-07-03-piecewise-regression/post-image.jpg" class="uri">https://www.painblogr.org/images/posts/2020-07-03-piecewise-regression/post-image.jpg</a>">
+    <meta property="og:description" content="Interrupted times series analysis of gabapentinoids in England using piecewise regression">
+    <meta property="og:site_name" content="painblogR">
+    <meta property="fb:app_id" content="621412384962188">
+</head>
+
+<!-- Body --------------------------------------------------------->
+
+<body>
+    <!-- Navigation bar -->
+    <nav class="navbar navbar-fixed-top" role="navigation" , style="background-color:#FFFFFF;border-bottom: 1px solid #CCCCCC;">
+        <div class="container-fluid" id="navfluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar-collapse" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <img src="images/capsaicin.png" alt="logo" , style="max-height:60px;padding-top:5px;">
+                <span class="site-title"><a href="https://www.painblogr.org" style="color:#000000;font-size:250%;vertical-align:middle;">
+				painblogR</a></span>&emsp;
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-navbar-collapse">
+                <ul class="nav navbar-nav" style="display:table-row;padding-top:7px">
+                    <li style="display:table-cell;float:none;vertical-align:middle;font-size:16px;"><a href="https://www.painblogr.org">Home</a></li>
+                    <li style="display:table-cell;float:none;vertical-align:middle;font-size:16px;"><a href="./archive.html">Archive</a></li>
+                    <li class="dropdown" style="display:table-cell;float:none;vertical-align:middle;font-size:16px;">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">About<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="./about_me.html">About me</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="./publications.html">Publications & Reprints </a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" style="display:table-cell;float:none;vertical-align:middle;font-size:16px;">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Teaching<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="https://www.painblogr.org/biostatistics/">Introduction to Biostatistics</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <!-- /. nav-collapse -->
+        </div>
+        <!-- /. container-fluid -->
+    </nav>
+
+	<!-- Extras -->
+		<style type = "text/css">
+		code {
+  			color: inherit;
+  			background-color: rgba(0, 0, 0, 0.04);
+		}
+		img {
+  			max-width:100%;
+  			height: auto;
+		}
+		.tabbed-pane {
+  			padding-top: 12px;
+		}
+		button.code-folding-btn:focus {
+  			outline: none;
+		}
+	</style>
+
+	<div class="container-fluid main-container">
+		<!-- tabsets -->
+		<script src="/tabsets.js"></script>
+		<script>
+			$(document).ready(function () {
+  			window.buildTabsets("TOC");
+			});
+		</script>
+
+		<!-- code folding -->
+		
+		<div class="fluid-row" id="header">
+
+    <!-- Main text --->
+    <div class="container-fluid" id="mainbody">
+         
+        <h1>Reclassification of gabapentinoids as schedule 3 controlled substances in the UK: an interupted time series analysis</h1> 
+        <h4>Peter Kamerman</h4> 
+        <em>3 July 2020</em> <hr />
+<p>Gabapentinoids (pregabalin and gabapentin) are used for the management of neuropathic pain, some types of epileptic seizures, and anxiety.</p>
+<p>Because of the rising number of drug-related fatalities linked to the use of gabapentinoids<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>, and evidence of their misuse, the drugs were reclassified in the UK in April 2019 as Class C substances, and scheduled as Schedule 3 items<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>. This reclassification meant that more controls were placed on the prescription of gabapentinoids.</p>
+<p>By knowing exactly when the change in prescribing requirements began (1 April 2019), it is possible to use interrupted time series analysis to look for a change in prescribing at the time of the change in regulation. This analysis requires data on drug prescriptions over time, data that are freely available for the National health System (NHS) England through the <a href="https://openprescribing.net" target="_blank">OpenPrescribing</a> platform.</p>
+<p>In this blog post I shall work through conducting an interrupted time series analysis using <em>piecewise regression</em> (also called segmented regression). I will use two methods of <em>piecewise regression</em>:</p>
+<ol style="list-style-type: decimal">
+<li><p>Manually re-specifying the data to incorporate a breakpoint (knot).</p></li>
+<li><p>Using linear splines to specify segments around a knot.</p></li>
+</ol>
+<div id="get-some-data" class="section level2">
+<h2>Get some data</h2>
+<p>The first thing to do is to get some data. Using the <a href="https://openprescribing.net/api" target="_blank">OpenPrescribing API</a>, I download data on the total items prescribed of gabapentin and pregabalin for the period 2020-05-01 to 2020-04-01 (please see this <a href="https://gist.github.com/kamermanpr/3d7a76131034aa7d4268dfa438cb9f5f" target="_blank"><em>GitHub Gist</em></a> for the <em>R</em> script I used).</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># Import data</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a>data &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&#39;_data/2020-07-03-piecewise-regression/gabapentinoids.csv&#39;</span>)</span></code></pre></div>
+</div>
+<div id="look-at-the-data" class="section level2">
+<h2>Look at the data</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># Describe data</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="kw">head</span>(data)</span></code></pre></div>
+<pre><code>##         date time_months prescriptions_gabapentin prescriptions_pregabalin
+## 1 2015-05-01           1                   450908                   375350
+## 2 2015-06-01           2                   479752                   399022
+## 3 2015-07-01           3                   502738                   419985
+## 4 2015-08-01           4                   460096                   385838
+## 5 2015-09-01           5                   497057                   414772
+## 6 2015-10-01           6                   505418                   423735
+##   prescriptions_total
+## 1              826258
+## 2              878774
+## 3              922723
+## 4              845934
+## 5              911829
+## 6              929153</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw">str</span>(data)</span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    60 obs. of  5 variables:
+##  $ date                    : chr  &quot;2015-05-01&quot; &quot;2015-06-01&quot; &quot;2015-07-01&quot; &quot;2015-08-01&quot; ...
+##  $ time_months             : int  1 2 3 4 5 6 7 8 9 10 ...
+##  $ prescriptions_gabapentin: int  450908 479752 502738 460096 497057 505418 488061 543067 489551 490390 ...
+##  $ prescriptions_pregabalin: int  375350 399022 419985 385838 414772 423735 410291 457160 414782 416315 ...
+##  $ prescriptions_total     : int  826258 878774 922723 845934 911829 929153 898352 1000227 904333 906705 ...</code></pre>
+<p>There are five columns: a date column (<em>date</em>), a time column expressing the time in months since the first record (<em>time_months</em>), and then three columns expressing the number of prescribed items per month of gabapentin (<em>prescriptions_gabapentin</em>), pregabalin (<em>prescriptions_pregabalin</em>), and the total number of gabapentinoids (<em>prescriptions_total</em>).</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># Load package</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="kw">library</span>(tidyr)</span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="kw">library</span>(stringr)</span>
+<span id="cb6-5"><a href="#cb6-5"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb6-6"><a href="#cb6-6"></a></span>
+<span id="cb6-7"><a href="#cb6-7"></a><span class="co"># Process data into long format</span></span>
+<span id="cb6-8"><a href="#cb6-8"></a>data_long &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb6-9"><a href="#cb6-9"></a><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">cols =</span> <span class="kw">starts_with</span>(<span class="st">&#39;prescription&#39;</span>),</span>
+<span id="cb6-10"><a href="#cb6-10"></a>               <span class="dt">names_to =</span> <span class="st">&#39;names&#39;</span>,</span>
+<span id="cb6-11"><a href="#cb6-11"></a>               <span class="dt">values_to =</span> <span class="st">&#39;values&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb6-12"><a href="#cb6-12"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">names =</span> <span class="kw">str_remove</span>(names, <span class="st">&#39;prescriptions_&#39;</span>))</span>
+<span id="cb6-13"><a href="#cb6-13"></a>  </span>
+<span id="cb6-14"><a href="#cb6-14"></a><span class="co"># Plot data (make it pretty)</span></span>
+<span id="cb6-15"><a href="#cb6-15"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> data_long) <span class="op">+</span></span>
+<span id="cb6-16"><a href="#cb6-16"></a><span class="st">  </span><span class="kw">aes</span>(<span class="dt">x =</span> time_months,</span>
+<span id="cb6-17"><a href="#cb6-17"></a>      <span class="dt">y =</span> values,</span>
+<span id="cb6-18"><a href="#cb6-18"></a>      <span class="dt">colour =</span> names,</span>
+<span id="cb6-19"><a href="#cb6-19"></a>      <span class="dt">fill =</span> names) <span class="op">+</span></span>
+<span id="cb6-20"><a href="#cb6-20"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">shape =</span> <span class="dv">21</span>,</span>
+<span id="cb6-21"><a href="#cb6-21"></a>             <span class="dt">size =</span> <span class="dv">3</span>) <span class="op">+</span></span>
+<span id="cb6-22"><a href="#cb6-22"></a><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">48</span>,</span>
+<span id="cb6-23"><a href="#cb6-23"></a>             <span class="dt">linetype =</span> <span class="dv">2</span>) <span class="op">+</span></span>
+<span id="cb6-24"><a href="#cb6-24"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">caption =</span> <span class="st">&#39;Vertical dashed line: date of reclassification (2019-04-01)&#39;</span>,</span>
+<span id="cb6-25"><a href="#cb6-25"></a>       <span class="dt">y =</span> <span class="st">&#39;Number of prescribed items&#39;</span>,</span>
+<span id="cb6-26"><a href="#cb6-26"></a>       <span class="dt">x =</span> <span class="st">&#39;Date&#39;</span>) <span class="op">+</span></span>
+<span id="cb6-27"><a href="#cb6-27"></a><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&#39;May 2015&#39;</span>, <span class="st">&#39;Dec 2016&#39;</span>, <span class="st">&#39;Aug 2018&#39;</span>, <span class="st">&#39;Apr 2020&#39;</span>)) <span class="op">+</span></span>
+<span id="cb6-28"><a href="#cb6-28"></a><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&#39;#67A0C9&#39;</span>, <span class="st">&#39;#FDA568&#39;</span>, <span class="st">&#39;#70BB70&#39;</span>)) <span class="op">+</span></span>
+<span id="cb6-29"><a href="#cb6-29"></a><span class="st">  </span><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&#39;#2678B2&#39;</span>, <span class="st">&#39;#FD7F28&#39;</span>, <span class="st">&#39;#339F34&#39;</span>)) <span class="op">+</span></span>
+<span id="cb6-30"><a href="#cb6-30"></a><span class="st">  </span><span class="kw">theme_minimal</span>(<span class="dt">base_size =</span> <span class="dv">18</span>) <span class="op">+</span></span>
+<span id="cb6-31"><a href="#cb6-31"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.title =</span> <span class="kw">element_blank</span>(),</span>
+<span id="cb6-32"><a href="#cb6-32"></a>        <span class="dt">legend.position =</span> <span class="st">&#39;top&#39;</span>,</span>
+<span id="cb6-33"><a href="#cb6-33"></a>        <span class="dt">panel.grid =</span> <span class="kw">element_blank</span>(),</span>
+<span id="cb6-34"><a href="#cb6-34"></a>        <span class="dt">axis.line =</span> <span class="kw">element_line</span>(<span class="dt">size =</span> <span class="fl">0.5</span>),</span>
+<span id="cb6-35"><a href="#cb6-35"></a>        <span class="dt">axis.ticks =</span> <span class="kw">element_line</span>(<span class="dt">size =</span> <span class="fl">0.5</span>))</span></code></pre></div>
+<p><img src="2020-07-03-piecewise-regression_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Looking at the plot, the number of prescribed items for the individual drugs, and therefore the overall total of gabapentinoids too, have been increasing steeply over the past 5 years. There is, however, a hint (especially for pregabalin) of prescriptions leveling off a bit since the April 2020 change in prescribing regulations.</p>
+<p>Using piecewise regression, I will determine whether there is indeed a change in prescribed items from April 2019 . I will do so by fitting the data with a simple linear regression and piecewise regression (using the two methods mentioned above), and then compare the the models. I will do this modelling for each drug and the total.</p>
+</div>
+<div id="simple-linear-regression" class="section level2">
+<h2>Simple linear regression</h2>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># load packages</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="kw">library</span>(purrr)</span>
+<span id="cb7-3"><a href="#cb7-3"></a></span>
+<span id="cb7-4"><a href="#cb7-4"></a><span class="co"># Generate a palette for some pretty colours</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a>colours_fill &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">fill =</span> <span class="kw">c</span>(<span class="st">&#39;#67A0C9&#39;</span>, <span class="st">&#39;#FDA568&#39;</span>, <span class="st">&#39;#70BB70&#39;</span>),</span>
+<span id="cb7-6"><a href="#cb7-6"></a>                           <span class="dt">colour =</span> <span class="kw">c</span>(<span class="st">&#39;#2678B2&#39;</span>, <span class="st">&#39;#FD7F28&#39;</span>, <span class="st">&#39;#339F34&#39;</span>))</span>
+<span id="cb7-7"><a href="#cb7-7"></a></span>
+<span id="cb7-8"><a href="#cb7-8"></a><span class="co"># Purrr over the data (see: https://www.painblogr.org/2020-06-19-purring-through-exploratory-analyses)</span></span>
+<span id="cb7-9"><a href="#cb7-9"></a>data_long &lt;-<span class="st"> </span>data_long <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb7-10"><a href="#cb7-10"></a><span class="st">  </span><span class="co"># Nest the data by drug &#39;name&#39; (pregabalin, gabapentin, and total)</span></span>
+<span id="cb7-11"><a href="#cb7-11"></a><span class="st">  </span><span class="kw">group_by</span>(names) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb7-12"><a href="#cb7-12"></a><span class="st">  </span><span class="kw">nest</span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb7-13"><a href="#cb7-13"></a><span class="st">  </span><span class="co"># Add the colour and fill columns</span></span>
+<span id="cb7-14"><a href="#cb7-14"></a><span class="st">  </span><span class="kw">bind_cols</span>(colours_fill) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb7-15"><a href="#cb7-15"></a><span class="st">  </span><span class="co"># Make the names sentence case.</span></span>
+<span id="cb7-16"><a href="#cb7-16"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">names =</span> <span class="kw">str_to_sentence</span>(names))</span>
+<span id="cb7-17"><a href="#cb7-17"></a></span>
+<span id="cb7-18"><a href="#cb7-18"></a>data_long &lt;-<span class="st"> </span>data_long <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb7-19"><a href="#cb7-19"></a><span class="st">  </span><span class="co"># Add model</span></span>
+<span id="cb7-20"><a href="#cb7-20"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">mod_1  =</span> <span class="kw">map</span>(<span class="dt">.x =</span> data,</span>
+<span id="cb7-21"><a href="#cb7-21"></a>                      <span class="op">~</span><span class="st"> </span><span class="kw">lm</span>(values <span class="op">~</span><span class="st"> </span>time_months, <span class="dt">data =</span> .x))) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb7-22"><a href="#cb7-22"></a><span class="st">  </span><span class="co"># Plot model</span></span>
+<span id="cb7-23"><a href="#cb7-23"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">plot_1 =</span> <span class="kw">pmap</span>(<span class="dt">.l =</span> <span class="kw">list</span>(data, names, fill, colour),</span>
+<span id="cb7-24"><a href="#cb7-24"></a>                      <span class="op">~</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> ..<span class="dv">1</span>) <span class="op">+</span></span>
+<span id="cb7-25"><a href="#cb7-25"></a><span class="st">                        </span><span class="kw">aes</span>(<span class="dt">x =</span> time_months,</span>
+<span id="cb7-26"><a href="#cb7-26"></a>                            <span class="dt">y =</span> values) <span class="op">+</span></span>
+<span id="cb7-27"><a href="#cb7-27"></a><span class="st">                        </span><span class="kw">geom_point</span>(<span class="dt">shape =</span> <span class="dv">21</span>,</span>
+<span id="cb7-28"><a href="#cb7-28"></a>                                   <span class="dt">size =</span> <span class="dv">3</span>,</span>
+<span id="cb7-29"><a href="#cb7-29"></a>                                   <span class="dt">fill =</span> ..<span class="dv">3</span>,</span>
+<span id="cb7-30"><a href="#cb7-30"></a>                                   <span class="dt">colour =</span> ..<span class="dv">4</span>) <span class="op">+</span></span>
+<span id="cb7-31"><a href="#cb7-31"></a><span class="st">                        </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&#39;lm&#39;</span>,</span>
+<span id="cb7-32"><a href="#cb7-32"></a>                                    <span class="dt">se =</span>  <span class="ot">FALSE</span>,</span>
+<span id="cb7-33"><a href="#cb7-33"></a>                                    <span class="dt">colour =</span> ..<span class="dv">4</span>) <span class="op">+</span></span>
+<span id="cb7-34"><a href="#cb7-34"></a><span class="st">                        </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">48</span>,</span>
+<span id="cb7-35"><a href="#cb7-35"></a>                                   <span class="dt">linetype =</span> <span class="dv">2</span>) <span class="op">+</span></span>
+<span id="cb7-36"><a href="#cb7-36"></a><span class="st">                        </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="kw">str_glue</span>(<span class="st">&#39;{..2}&#39;</span>),</span>
+<span id="cb7-37"><a href="#cb7-37"></a>                             <span class="dt">subtitle =</span> <span class="st">&#39;Simple linear regression (no knots)&#39;</span>,</span>
+<span id="cb7-38"><a href="#cb7-38"></a>                             <span class="dt">caption =</span> <span class="st">&#39;Vertical dashed line: date of reclassification (2019-04-01)&#39;</span>,</span>
+<span id="cb7-39"><a href="#cb7-39"></a>                             <span class="dt">y =</span> <span class="st">&#39;Number of prescribed items&#39;</span>,</span>
+<span id="cb7-40"><a href="#cb7-40"></a>                             <span class="dt">x =</span> <span class="st">&#39;Date&#39;</span>) <span class="op">+</span></span>
+<span id="cb7-41"><a href="#cb7-41"></a><span class="st">                        </span><span class="kw">scale_x_continuous</span>(<span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&#39;May 2015&#39;</span>, <span class="st">&#39;Dec 2016&#39;</span>, <span class="st">&#39;Aug 2018&#39;</span>, <span class="st">&#39;Apr 2020&#39;</span>)) <span class="op">+</span></span>
+<span id="cb7-42"><a href="#cb7-42"></a><span class="st">                        </span><span class="kw">theme_minimal</span>(<span class="dt">base_size =</span> <span class="dv">18</span>) <span class="op">+</span></span>
+<span id="cb7-43"><a href="#cb7-43"></a><span class="st">                        </span><span class="kw">theme</span>(<span class="dt">legend.title =</span> <span class="kw">element_blank</span>(),</span>
+<span id="cb7-44"><a href="#cb7-44"></a>                              <span class="dt">legend.position =</span> <span class="st">&#39;none&#39;</span>,</span>
+<span id="cb7-45"><a href="#cb7-45"></a>                              <span class="dt">panel.grid =</span> <span class="kw">element_blank</span>(),</span>
+<span id="cb7-46"><a href="#cb7-46"></a>                              <span class="dt">axis.line =</span> <span class="kw">element_line</span>(<span class="dt">size =</span> <span class="fl">0.5</span>),</span>
+<span id="cb7-47"><a href="#cb7-47"></a>                              <span class="dt">axis.ticks =</span> <span class="kw">element_line</span>(<span class="dt">size =</span> <span class="fl">0.5</span>))))</span>
+<span id="cb7-48"><a href="#cb7-48"></a></span>
+<span id="cb7-49"><a href="#cb7-49"></a><span class="co"># Print plots and lm outputs</span></span>
+<span id="cb7-50"><a href="#cb7-50"></a><span class="co">## GABAPENTIN</span></span>
+<span id="cb7-51"><a href="#cb7-51"></a><span class="co">### Plot</span></span>
+<span id="cb7-52"><a href="#cb7-52"></a>data_long<span class="op">$</span>plot_<span class="dv">1</span>[[<span class="dv">1</span>]]</span></code></pre></div>
+<p><img src="2020-07-03-piecewise-regression_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="co">### LM summary</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="kw">summary</span>(data_long<span class="op">$</span>mod_<span class="dv">1</span>[[<span class="dv">1</span>]])</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = values ~ time_months, data = .x)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -70794 -21651   3032  24697  51188 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 503528.8     7728.0   65.16  &lt; 2e-16 ***
+## time_months   2371.7      220.3   10.76 1.89e-15 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 29560 on 58 degrees of freedom
+## Multiple R-squared:  0.6664, Adjusted R-squared:  0.6606 
+## F-statistic: 115.9 on 1 and 58 DF,  p-value: 1.89e-15</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co">## PREGABALIN</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="co">### Plot</span></span>
+<span id="cb10-3"><a href="#cb10-3"></a>data_long<span class="op">$</span>plot_<span class="dv">1</span>[[<span class="dv">2</span>]]</span></code></pre></div>
+<p><img src="2020-07-03-piecewise-regression_files/figure-html/unnamed-chunk-5-2.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="co">### LM summary</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="kw">summary</span>(data_long<span class="op">$</span>mod_<span class="dv">1</span>[[<span class="dv">2</span>]])</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = values ~ time_months, data = .x)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -57154 -12165   4972  16396  42945 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 395574.9     5587.7   70.79   &lt;2e-16 ***
+## time_months   4465.3      159.3   28.03   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 21370 on 58 degrees of freedom
+## Multiple R-squared:  0.9312, Adjusted R-squared:  0.9301 
+## F-statistic: 785.6 on 1 and 58 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="co">## TOTAL</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a><span class="co">### Plot</span></span>
+<span id="cb13-3"><a href="#cb13-3"></a>data_long<span class="op">$</span>plot_<span class="dv">1</span>[[<span class="dv">3</span>]]</span></code></pre></div>
+<p><img src="2020-07-03-piecewise-regression_files/figure-html/unnamed-chunk-5-3.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="co">### LM summary</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a><span class="kw">summary</span>(data_long<span class="op">$</span>mod_<span class="dv">1</span>[[<span class="dv">3</span>]])</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = values ~ time_months, data = .x)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -127948  -34376    5254   42910   83841 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 899103.7    12992.2   69.20   &lt;2e-16 ***
+## time_months   6837.0      370.4   18.46   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 49690 on 58 degrees of freedom
+## Multiple R-squared:  0.8545, Adjusted R-squared:  0.852 
+## F-statistic: 340.7 on 1 and 58 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div id="piecewise-regression" class="section level2">
+<h2>Piecewise regression</h2>
+<div id="manually-re-specify-the-data-to-create-two-segments-around-a-knot" class="section level3">
+<h3>Manually re-specify the data to create two segments around a knot</h3>
+<p>To create a knot you need to include a second term in your linear regression term, one term for each segment.</p>
+<p><strong>Original model:</strong></p>
+<p><span class="math display">\[y = \beta{_0} + \beta{_1}X\]</span></p>
+<p><strong>New model:</strong></p>
+<p><span class="math display">\[y = \beta{_0} + \beta{_1}x + \beta{_2}(x - x^{(k)})xk\]</span></p>
+<p>Where:</p>
+<ul>
+<li><p><span class="math inline">\(xk\)</span> is a dummy knot, which takes a value of <strong>1</strong> when <span class="math inline">\(x \geq x^{(k)}\)</span> and <strong>0</strong> when <span class="math inline">\(x &lt; x^{(k)}\)</span></p></li>
+<li><p><span class="math inline">\((x - x^{(k)})\)</span> is the value of <span class="math inline">\(x\)</span> minus the knot value (<span class="math inline">\(x^{(k)}\)</span>)</p></li>
+</ul>
+<p>Thus, for <span class="math inline">\(x\)</span> values that fall below the knot value (<span class="math inline">\(x^{(k)}\)</span>), the second term will be 0, and for <span class="math inline">\(x\)</span> values greater than the knot value the second term will be <span class="math inline">\((x - x^{(k)})\)</span>.</p>
+<p>For the data at hand, the knot point is 48 months, the <em>time_months</em> value that coincides with the implementation of the new regulations (2019-04-01). Therefore we can re-specify the data into two terms: time_months (for time values <span class="math inline">\(&lt;\)</span> 48 months) and time_months2 (for time values <span class="math inline">\(\geq\)</span> 48 months)</p>
+<p>The code block below shows how to do that for each of the three datatsets (Gabapentin, Pregabalin, and Total). First you create a dummy knot (<span class="math inline">\(kx\)</span>; <em>dummy_knot</em>) at 48 months, then you subtract the knot value (<span class="math inline">\(x^{(k)} = 48\)</span>) from <em>time_months</em> (<span class="math inline">\(x\)</span>) to produce <em>x_minus_knot</em>, and finally you multiply <em>dummy_knot</em> by <em>x_minus_knot</em> to yield the second term of the model, namely, <em>time_months2</em>.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>data_long &lt;-<span class="st"> </span>data_long <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb16-2"><a href="#cb16-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">data_2 =</span> <span class="kw">map</span>(<span class="dt">.x =</span> data,</span>
+<span id="cb16-3"><a href="#cb16-3"></a>                      <span class="op">~</span><span class="st"> </span>.x <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb16-4"><a href="#cb16-4"></a><span class="st">                        </span><span class="co"># Create a dummy knot</span></span>
+<span id="cb16-5"><a href="#cb16-5"></a><span class="st">                        </span><span class="kw">mutate</span>(<span class="dt">dummy_knot =</span> <span class="kw">ifelse</span>(time_months <span class="op">&lt;</span><span class="st"> </span><span class="dv">48</span>,</span>
+<span id="cb16-6"><a href="#cb16-6"></a>                                                   <span class="dt">yes =</span> <span class="dv">0</span>, </span>
+<span id="cb16-7"><a href="#cb16-7"></a>                                                   <span class="dt">no =</span> <span class="dv">1</span>)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb16-8"><a href="#cb16-8"></a><span class="st">                        </span><span class="co"># Subtract knot value from x</span></span>
+<span id="cb16-9"><a href="#cb16-9"></a><span class="st">                        </span><span class="kw">mutate</span>(<span class="dt">x_minus_knot =</span> time_months <span class="op">-</span><span class="st"> </span><span class="dv">48</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb16-10"><a href="#cb16-10"></a><span class="st">                        </span><span class="co"># Calculate time_months2</span></span>
+<span id="cb16-11"><a href="#cb16-11"></a><span class="st">                        </span><span class="kw">mutate</span>(<span class="dt">time_months2 =</span> dummy_knot <span class="op">*</span><span class="st"> </span>x_minus_knot)))</span>
+<span id="cb16-12"><a href="#cb16-12"></a></span>
+<span id="cb16-13"><a href="#cb16-13"></a><span class="co"># Top-and-tail GABAPENTIN to check what the data looks like</span></span>
+<span id="cb16-14"><a href="#cb16-14"></a><span class="kw">head</span>(data_long<span class="op">$</span>data_<span class="dv">2</span>[[<span class="dv">1</span>]])</span></code></pre></div>
+<pre><code>## # A tibble: 6 x 6
+##   date       time_months values dummy_knot x_minus_knot time_months2
+##   &lt;chr&gt;            &lt;int&gt;  &lt;int&gt;      &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;
+## 1 2015-05-01           1 450908          0          -47            0
+## 2 2015-06-01           2 479752          0          -46            0
+## 3 2015-07-01           3 502738          0          -45            0
+## 4 2015-08-01           4 460096          0          -44            0
+## 5 2015-09-01           5 497057          0          -43            0
+## 6 2015-10-01           6 505418          0          -42            0</code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="kw">tail</span>(data_long<span class="op">$</span>data_<span class="dv">2</span>[[<span class="dv">1</span>]])</span></code></pre></div>
+<pre><code>## # A tibble: 6 x 6
+##   date       time_months values dummy_knot x_minus_knot time_months2
+##   &lt;chr&gt;            &lt;int&gt;  &lt;int&gt;      &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;
+## 1 2019-11-01          55 602927          1            7            7
+## 2 2019-12-01          56 618615          1            8            8
+## 3 2020-01-01          57 629109          1            9            9
+## 4 2020-02-01          58 570291          1           10           10
+## 5 2020-03-01          59 642909          1           11           11
+## 6 2020-04-01          60 616384          1           12           12</code></pre>
+<p>Now run the model using the updated data.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>data_long &lt;-<span class="st"> </span>data_long <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb20-2"><a href="#cb20-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">mod_2 =</span> <span class="kw">map</span>(<span class="dt">.x =</span> data_<span class="dv">2</span>,</span>
+<span id="cb20-3"><a href="#cb20-3"></a>                     <span class="op">~</span><span class="st"> </span><span class="kw">lm</span>(values <span class="op">~</span><span class="st"> </span>time_months <span class="op">+</span><span class="st"> </span>time_months2, <span class="dt">data =</span> .x)))</span></code></pre></div>
+<p>Next, generated predicted values for the model and plot the data.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>data_long &lt;-<span class="st"> </span>data_long <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb21-2"><a href="#cb21-2"></a><span class="st">  </span><span class="co"># Generate predicted data</span></span>
+<span id="cb21-3"><a href="#cb21-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">data_3 =</span> <span class="kw">map2</span>(<span class="dt">.x =</span> data_<span class="dv">2</span>,</span>
+<span id="cb21-4"><a href="#cb21-4"></a>                       <span class="dt">.y =</span> mod_<span class="dv">2</span>,</span>
+<span id="cb21-5"><a href="#cb21-5"></a>                       <span class="op">~</span><span class="st"> </span>.x <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb21-6"><a href="#cb21-6"></a><span class="st">                         </span><span class="kw">mutate</span>(<span class="dt">predicted =</span> <span class="kw">predict</span>(.y)))) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb21-7"><a href="#cb21-7"></a><span class="st">  </span><span class="co"># Generate plots</span></span>
+<span id="cb21-8"><a href="#cb21-8"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">plot_2 =</span> <span class="kw">map2</span>(<span class="dt">.x =</span> data_<span class="dv">3</span>,</span>
+<span id="cb21-9"><a href="#cb21-9"></a>                       <span class="dt">.y =</span> names,</span>
+<span id="cb21-10"><a href="#cb21-10"></a>                      <span class="op">~</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> .x) <span class="op">+</span></span>
+<span id="cb21-11"><a href="#cb21-11"></a><span class="st">                        </span><span class="kw">aes</span>(<span class="dt">x =</span> time_months,</span>
+<span id="cb21-12"><a href="#cb21-12"></a>                            <span class="dt">y =</span> values,</span>
+<span id="cb21-13"><a href="#cb21-13"></a>                            <span class="dt">colour =</span> dummy_knot,</span>
+<span id="cb21-14"><a href="#cb21-14"></a>                            <span class="dt">fill =</span> dummy_knot) <span class="op">+</span></span>
+<span id="cb21-15"><a href="#cb21-15"></a><span class="st">                        </span><span class="kw">geom_point</span>(<span class="dt">shape =</span> <span class="dv">21</span>,</span>
+<span id="cb21-16"><a href="#cb21-16"></a>                                   <span class="dt">size =</span> <span class="dv">3</span>) <span class="op">+</span></span>
+<span id="cb21-17"><a href="#cb21-17"></a><span class="st">                        </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">y =</span> predicted)) <span class="op">+</span></span>
+<span id="cb21-18"><a href="#cb21-18"></a><span class="st">                        </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">48</span>,</span>
+<span id="cb21-19"><a href="#cb21-19"></a>                                   <span class="dt">linetype =</span> <span class="dv">2</span>) <span class="op">+</span></span>
+<span id="cb21-20"><a href="#cb21-20"></a><span class="st">                        </span><span class="kw">labs</span>(<span class="dt">title =</span> .y,</span>
+<span id="cb21-21"><a href="#cb21-21"></a>                             <span class="dt">subtitle =</span> <span class="st">&#39;Segmented regression (1 knot)&#39;</span>,</span>
+<span id="cb21-22"><a href="#cb21-22"></a>                             <span class="dt">caption =</span> <span class="st">&#39;Vertical dashed line: date of reclassification (2019-04-01)&#39;</span>,</span>
+<span id="cb21-23"><a href="#cb21-23"></a>                             <span class="dt">y =</span> <span class="st">&#39;Number of prescribed items&#39;</span>,</span>
+<span id="cb21-24"><a href="#cb21-24"></a>                             <span class="dt">x =</span> <span class="st">&#39;Date&#39;</span>) <span class="op">+</span></span>
+<span id="cb21-25"><a href="#cb21-25"></a><span class="st">                        </span><span class="kw">scale_x_continuous</span>(<span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&#39;May 2015&#39;</span>, <span class="st">&#39;Dec 2016&#39;</span>, <span class="st">&#39;Aug 2018&#39;</span>, <span class="st">&#39;Apr 2020&#39;</span>)) <span class="op">+</span></span>
+<span id="cb21-26"><a href="#cb21-26"></a><span class="st">                        </span><span class="kw">theme_minimal</span>(<span class="dt">base_size =</span> <span class="dv">18</span>) <span class="op">+</span></span>
+<span id="cb21-27"><a href="#cb21-27"></a><span class="st">                        </span><span class="kw">theme</span>(<span class="dt">legend.title =</span> <span class="kw">element_blank</span>(),</span>
+<span id="cb21-28"><a href="#cb21-28"></a>                              <span class="dt">legend.position =</span> <span class="st">&#39;none&#39;</span>,</span>
+<span id="cb21-29"><a href="#cb21-29"></a>                              <span class="dt">panel.grid =</span> <span class="kw">element_blank</span>(),</span>
+<span id="cb21-30"><a href="#cb21-30"></a>                              <span class="dt">axis.line =</span> <span class="kw">element_line</span>(<span class="dt">size =</span> <span class="fl">0.5</span>),</span>
+<span id="cb21-31"><a href="#cb21-31"></a>                              <span class="dt">axis.ticks =</span> <span class="kw">element_line</span>(<span class="dt">size =</span> <span class="fl">0.5</span>))))</span>
+<span id="cb21-32"><a href="#cb21-32"></a></span>
+<span id="cb21-33"><a href="#cb21-33"></a><span class="co"># Print plots and lm outputs, and slopes</span></span>
+<span id="cb21-34"><a href="#cb21-34"></a><span class="co">## GABAPENTIN</span></span>
+<span id="cb21-35"><a href="#cb21-35"></a><span class="co">### Plot</span></span>
+<span id="cb21-36"><a href="#cb21-36"></a>data_long<span class="op">$</span>plot_<span class="dv">2</span>[[<span class="dv">1</span>]]</span></code></pre></div>
+<p><img src="2020-07-03-piecewise-regression_files/figure-html/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="co">### LM summary</span></span>
+<span id="cb22-2"><a href="#cb22-2"></a><span class="kw">summary</span>(data_long<span class="op">$</span>mod_<span class="dv">2</span>[[<span class="dv">1</span>]])</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = values ~ time_months + time_months2, data = .x)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -76545 -19315   3516  19892  48666 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  491934.6     7687.0  63.996  &lt; 2e-16 ***
+## time_months    2985.4      260.5  11.462  &lt; 2e-16 ***
+## time_months2  -5481.2     1491.8  -3.674 0.000528 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 26810 on 57 degrees of freedom
+## Multiple R-squared:  0.7303, Adjusted R-squared:  0.7208 
+## F-statistic: 77.17 on 2 and 57 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="co">### Slopes of individual segments</span></span>
+<span id="cb24-2"><a href="#cb24-2"></a><span class="co">#### Segment 1</span></span>
+<span id="cb24-3"><a href="#cb24-3"></a><span class="kw">coef</span>(data_long<span class="op">$</span>mod_<span class="dv">2</span>[[<span class="dv">1</span>]])[[<span class="dv">2</span>]]</span></code></pre></div>
+<pre><code>## [1] 2985.421</code></pre>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="co">#### Segment 2 (the sum of the two regression coefficients)</span></span>
+<span id="cb26-2"><a href="#cb26-2"></a><span class="kw">coef</span>(data_long<span class="op">$</span>mod_<span class="dv">2</span>[[<span class="dv">1</span>]])[[<span class="dv">2</span>]] <span class="op">+</span><span class="st"> </span><span class="kw">coef</span>(data_long<span class="op">$</span>mod_<span class="dv">2</span>[[<span class="dv">1</span>]])[[<span class="dv">3</span>]]</span></code></pre></div>
+<pre><code>## [1] -2495.8</code></pre>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="co">## PREGABALIN</span></span>
+<span id="cb28-2"><a href="#cb28-2"></a><span class="co">### Plot</span></span>
+<span id="cb28-3"><a href="#cb28-3"></a>data_long<span class="op">$</span>plot_<span class="dv">2</span>[[<span class="dv">2</span>]]</span></code></pre></div>
+<p><img src="2020-07-03-piecewise-regression_files/figure-html/unnamed-chunk-8-2.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="co">### LM summary</span></span>
+<span id="cb29-2"><a href="#cb29-2"></a><span class="kw">summary</span>(data_long<span class="op">$</span>mod_<span class="dv">2</span>[[<span class="dv">2</span>]])</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = values ~ time_months + time_months2, data = .x)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -59624 -12687   6007  13611  35680 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  389636.5     5876.8  66.300   &lt;2e-16 ***
+## time_months    4779.7      199.1  24.003   &lt;2e-16 ***
+## time_months2  -2807.4     1140.5  -2.462   0.0169 *  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 20500 on 57 degrees of freedom
+## Multiple R-squared:  0.9379, Adjusted R-squared:  0.9357 
+## F-statistic: 430.1 on 2 and 57 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="co">### Slopes of individual segments</span></span>
+<span id="cb31-2"><a href="#cb31-2"></a><span class="co">#### Segment 1</span></span>
+<span id="cb31-3"><a href="#cb31-3"></a><span class="kw">coef</span>(data_long<span class="op">$</span>mod_<span class="dv">2</span>[[<span class="dv">2</span>]])[[<span class="dv">2</span>]]</span></code></pre></div>
+<pre><code>## [1] 4779.71</code></pre>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="co">#### Segment 2 (the sum of the two regression coefficients)</span></span>
+<span id="cb33-2"><a href="#cb33-2"></a><span class="kw">coef</span>(data_long<span class="op">$</span>mod_<span class="dv">2</span>[[<span class="dv">2</span>]])[[<span class="dv">2</span>]] <span class="op">+</span><span class="st"> </span><span class="kw">coef</span>(data_long<span class="op">$</span>mod_<span class="dv">2</span>[[<span class="dv">2</span>]])[[<span class="dv">3</span>]]</span></code></pre></div>
+<pre><code>## [1] 1972.273</code></pre>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="co">## TOTAL</span></span>
+<span id="cb35-2"><a href="#cb35-2"></a><span class="co">### Plot</span></span>
+<span id="cb35-3"><a href="#cb35-3"></a>data_long<span class="op">$</span>plot_<span class="dv">2</span>[[<span class="dv">3</span>]]</span></code></pre></div>
+<p><img src="2020-07-03-piecewise-regression_files/figure-html/unnamed-chunk-8-3.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a><span class="co">### LM summary</span></span>
+<span id="cb36-2"><a href="#cb36-2"></a><span class="kw">summary</span>(data_long<span class="op">$</span>mod_<span class="dv">2</span>[[<span class="dv">3</span>]])</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = values ~ time_months + time_months2, data = .x)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -136169  -37501   12546   32975   75616 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  881571.1    13212.1  66.724  &lt; 2e-16 ***
+## time_months    7765.1      447.7  17.345  &lt; 2e-16 ***
+## time_months2  -8288.7     2564.0  -3.233  0.00204 ** 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 46080 on 57 degrees of freedom
+## Multiple R-squared:  0.8771, Adjusted R-squared:  0.8727 
+## F-statistic: 203.3 on 2 and 57 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="co">### Slopes of individual segments</span></span>
+<span id="cb38-2"><a href="#cb38-2"></a><span class="co">#### Segment 1</span></span>
+<span id="cb38-3"><a href="#cb38-3"></a><span class="kw">coef</span>(data_long<span class="op">$</span>mod_<span class="dv">2</span>[[<span class="dv">3</span>]])[[<span class="dv">2</span>]]</span></code></pre></div>
+<pre><code>## [1] 7765.131</code></pre>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="co">#### Segment 2 (the sum of the two regression coefficients)</span></span>
+<span id="cb40-2"><a href="#cb40-2"></a><span class="kw">coef</span>(data_long<span class="op">$</span>mod_<span class="dv">2</span>[[<span class="dv">3</span>]])[[<span class="dv">2</span>]] <span class="op">+</span><span class="st"> </span><span class="kw">coef</span>(data_long<span class="op">$</span>mod_<span class="dv">2</span>[[<span class="dv">3</span>]])[[<span class="dv">3</span>]]</span></code></pre></div>
+<pre><code>## [1] -523.5277</code></pre>
+</div>
+<div id="use-linear-splines-to-specfiy-two-segments-around-a-knot" class="section level3">
+<h3>Use linear splines to specfiy two segments around a knot</h3>
+<p>You can do the same thing as manually re-specifying the data into two segments by using the <code>lspline</code> function from the <em>lspline</em> package.</p>
+<p>The <code>lspline</code> function is designed to, “compute the basis of piecewise-linear spline”.</p>
+<p>The arguments for the function are:</p>
+<p><code>lspline(x, knots = NULL, marginal = FALSE)</code></p>
+<p>Where:</p>
+<ul>
+<li><p><code>x</code> is a numeric vector (x values)</p></li>
+<li><p><code>knots</code> is a numeric vector of knot positions</p></li>
+<li><p><code>marginal</code> is a logical that determines whether coefficients can be interpreted as slopes of consecutive spline segments (FALSE), or slope change at consecutive knots (TRUE).</p></li>
+</ul>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="co"># Load package</span></span>
+<span id="cb42-2"><a href="#cb42-2"></a><span class="kw">library</span>(lspline)</span>
+<span id="cb42-3"><a href="#cb42-3"></a></span>
+<span id="cb42-4"><a href="#cb42-4"></a>data_long &lt;-<span class="st"> </span>data_long <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb42-5"><a href="#cb42-5"></a><span class="st">  </span><span class="co"># Generate the model using lspline</span></span>
+<span id="cb42-6"><a href="#cb42-6"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">mod_3 =</span> <span class="kw">map</span>(<span class="dt">.x =</span> data,</span>
+<span id="cb42-7"><a href="#cb42-7"></a>                     <span class="op">~</span><span class="st"> </span><span class="kw">lm</span>(values <span class="op">~</span><span class="st"> </span><span class="kw">lspline</span>(<span class="dt">x =</span> time_months,</span>
+<span id="cb42-8"><a href="#cb42-8"></a>                                           <span class="dt">knots =</span> <span class="dv">48</span>,</span>
+<span id="cb42-9"><a href="#cb42-9"></a>                                           <span class="dt">marginal =</span> <span class="ot">FALSE</span>), <span class="dt">data =</span> .x))) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb42-10"><a href="#cb42-10"></a><span class="st">  </span><span class="co"># Get predicted values </span></span>
+<span id="cb42-11"><a href="#cb42-11"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">data_4 =</span> <span class="kw">map2</span>(<span class="dt">.x =</span> data_<span class="dv">3</span>,</span>
+<span id="cb42-12"><a href="#cb42-12"></a>                       <span class="dt">.y =</span> mod_<span class="dv">3</span>,</span>
+<span id="cb42-13"><a href="#cb42-13"></a>                       <span class="op">~</span><span class="st"> </span>.x <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb42-14"><a href="#cb42-14"></a><span class="st">                         </span><span class="kw">mutate</span>(<span class="dt">predicted_spl =</span> <span class="kw">predict</span>(.y)))) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb42-15"><a href="#cb42-15"></a><span class="st">  </span><span class="co"># Generate plots</span></span>
+<span id="cb42-16"><a href="#cb42-16"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">plot_3 =</span> <span class="kw">map2</span>(<span class="dt">.x =</span> data_<span class="dv">4</span>,</span>
+<span id="cb42-17"><a href="#cb42-17"></a>                       <span class="dt">.y =</span> names,</span>
+<span id="cb42-18"><a href="#cb42-18"></a>                      <span class="op">~</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> .x) <span class="op">+</span></span>
+<span id="cb42-19"><a href="#cb42-19"></a><span class="st">                        </span><span class="kw">aes</span>(<span class="dt">x =</span> time_months,</span>
+<span id="cb42-20"><a href="#cb42-20"></a>                            <span class="dt">y =</span> values,</span>
+<span id="cb42-21"><a href="#cb42-21"></a>                            <span class="dt">colour =</span> dummy_knot,</span>
+<span id="cb42-22"><a href="#cb42-22"></a>                            <span class="dt">fill =</span> dummy_knot) <span class="op">+</span></span>
+<span id="cb42-23"><a href="#cb42-23"></a><span class="st">                        </span><span class="kw">geom_point</span>(<span class="dt">shape =</span> <span class="dv">21</span>,</span>
+<span id="cb42-24"><a href="#cb42-24"></a>                                   <span class="dt">size =</span> <span class="dv">3</span>) <span class="op">+</span></span>
+<span id="cb42-25"><a href="#cb42-25"></a><span class="st">                        </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">y =</span> predicted_spl)) <span class="op">+</span></span>
+<span id="cb42-26"><a href="#cb42-26"></a><span class="st">                        </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">48</span>,</span>
+<span id="cb42-27"><a href="#cb42-27"></a>                                   <span class="dt">linetype =</span> <span class="dv">2</span>) <span class="op">+</span></span>
+<span id="cb42-28"><a href="#cb42-28"></a><span class="st">                        </span><span class="kw">labs</span>(<span class="dt">title =</span> .y,</span>
+<span id="cb42-29"><a href="#cb42-29"></a>                             <span class="dt">subtitle =</span> <span class="st">&#39;Piecewise linear spline (1 knot)&#39;</span>,</span>
+<span id="cb42-30"><a href="#cb42-30"></a>                             <span class="dt">caption =</span> <span class="st">&#39;Vertical dashed line: date of reclassification (2019-04-01)&#39;</span>,</span>
+<span id="cb42-31"><a href="#cb42-31"></a>                             <span class="dt">y =</span> <span class="st">&#39;Number of prescribed items&#39;</span>,</span>
+<span id="cb42-32"><a href="#cb42-32"></a>                             <span class="dt">x =</span> <span class="st">&#39;Date&#39;</span>) <span class="op">+</span></span>
+<span id="cb42-33"><a href="#cb42-33"></a><span class="st">                        </span><span class="kw">scale_x_continuous</span>(<span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&#39;May 2015&#39;</span>, <span class="st">&#39;Dec 2016&#39;</span>, <span class="st">&#39;Aug 2018&#39;</span>, <span class="st">&#39;Apr 2020&#39;</span>)) <span class="op">+</span></span>
+<span id="cb42-34"><a href="#cb42-34"></a><span class="st">                        </span><span class="kw">theme_minimal</span>(<span class="dt">base_size =</span> <span class="dv">18</span>) <span class="op">+</span></span>
+<span id="cb42-35"><a href="#cb42-35"></a><span class="st">                        </span><span class="kw">theme</span>(<span class="dt">legend.title =</span> <span class="kw">element_blank</span>(),</span>
+<span id="cb42-36"><a href="#cb42-36"></a>                              <span class="dt">legend.position =</span> <span class="st">&#39;none&#39;</span>,</span>
+<span id="cb42-37"><a href="#cb42-37"></a>                              <span class="dt">panel.grid =</span> <span class="kw">element_blank</span>(),</span>
+<span id="cb42-38"><a href="#cb42-38"></a>                              <span class="dt">axis.line =</span> <span class="kw">element_line</span>(<span class="dt">size =</span> <span class="fl">0.5</span>),</span>
+<span id="cb42-39"><a href="#cb42-39"></a>                              <span class="dt">axis.ticks =</span> <span class="kw">element_line</span>(<span class="dt">size =</span> <span class="fl">0.5</span>))))</span>
+<span id="cb42-40"><a href="#cb42-40"></a></span>
+<span id="cb42-41"><a href="#cb42-41"></a><span class="co"># Print plots and lm outputs, and slopes</span></span>
+<span id="cb42-42"><a href="#cb42-42"></a><span class="co">## GABAPENTIN</span></span>
+<span id="cb42-43"><a href="#cb42-43"></a><span class="co">### Plot</span></span>
+<span id="cb42-44"><a href="#cb42-44"></a>data_long<span class="op">$</span>plot_<span class="dv">3</span>[[<span class="dv">1</span>]]</span></code></pre></div>
+<p><img src="2020-07-03-piecewise-regression_files/figure-html/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a><span class="co">### LM summary</span></span>
+<span id="cb43-2"><a href="#cb43-2"></a><span class="kw">summary</span>(data_long<span class="op">$</span>mod_<span class="dv">3</span>[[<span class="dv">1</span>]])</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = values ~ lspline(x = time_months, knots = 48, marginal = FALSE), 
+##     data = .x)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -76545 -19315   3516  19892  48666 
+## 
+## Coefficients:
+##                                                         Estimate Std. Error
+## (Intercept)                                             491934.6     7687.0
+## lspline(x = time_months, knots = 48, marginal = FALSE)1   2985.4      260.5
+## lspline(x = time_months, knots = 48, marginal = FALSE)2  -2495.8     1339.7
+##                                                         t value Pr(&gt;|t|)    
+## (Intercept)                                              63.996   &lt;2e-16 ***
+## lspline(x = time_months, knots = 48, marginal = FALSE)1  11.462   &lt;2e-16 ***
+## lspline(x = time_months, knots = 48, marginal = FALSE)2  -1.863   0.0676 .  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 26810 on 57 degrees of freedom
+## Multiple R-squared:  0.7303, Adjusted R-squared:  0.7208 
+## F-statistic: 77.17 on 2 and 57 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a><span class="co">### Slopes of individual segments</span></span>
+<span id="cb45-2"><a href="#cb45-2"></a><span class="co">#### Segment 1</span></span>
+<span id="cb45-3"><a href="#cb45-3"></a><span class="kw">coef</span>(data_long<span class="op">$</span>mod_<span class="dv">3</span>[[<span class="dv">1</span>]])[[<span class="dv">2</span>]]</span></code></pre></div>
+<pre><code>## [1] 2985.421</code></pre>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a><span class="co">#### Segment 2 </span></span>
+<span id="cb47-2"><a href="#cb47-2"></a><span class="co">#### (marginal = FALSE, therefore coefficients can be interpreted as slopes of consecutive spline segments)</span></span>
+<span id="cb47-3"><a href="#cb47-3"></a><span class="kw">coef</span>(data_long<span class="op">$</span>mod_<span class="dv">3</span>[[<span class="dv">1</span>]])[[<span class="dv">3</span>]]</span></code></pre></div>
+<pre><code>## [1] -2495.8</code></pre>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a><span class="co">## PREGABALIN</span></span>
+<span id="cb49-2"><a href="#cb49-2"></a><span class="co">### Plot</span></span>
+<span id="cb49-3"><a href="#cb49-3"></a>data_long<span class="op">$</span>plot_<span class="dv">3</span>[[<span class="dv">2</span>]]</span></code></pre></div>
+<p><img src="2020-07-03-piecewise-regression_files/figure-html/unnamed-chunk-9-2.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a><span class="co">### LM summary</span></span>
+<span id="cb50-2"><a href="#cb50-2"></a><span class="kw">summary</span>(data_long<span class="op">$</span>mod_<span class="dv">3</span>[[<span class="dv">2</span>]])</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = values ~ lspline(x = time_months, knots = 48, marginal = FALSE), 
+##     data = .x)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -59624 -12687   6007  13611  35680 
+## 
+## Coefficients:
+##                                                         Estimate Std. Error
+## (Intercept)                                             389636.5     5876.8
+## lspline(x = time_months, knots = 48, marginal = FALSE)1   4779.7      199.1
+## lspline(x = time_months, knots = 48, marginal = FALSE)2   1972.3     1024.2
+##                                                         t value Pr(&gt;|t|)    
+## (Intercept)                                              66.300   &lt;2e-16 ***
+## lspline(x = time_months, knots = 48, marginal = FALSE)1  24.003   &lt;2e-16 ***
+## lspline(x = time_months, knots = 48, marginal = FALSE)2   1.926   0.0591 .  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 20500 on 57 degrees of freedom
+## Multiple R-squared:  0.9379, Adjusted R-squared:  0.9357 
+## F-statistic: 430.1 on 2 and 57 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a><span class="co">### Slopes of individual segments</span></span>
+<span id="cb52-2"><a href="#cb52-2"></a><span class="co">#### Segment 1</span></span>
+<span id="cb52-3"><a href="#cb52-3"></a><span class="kw">coef</span>(data_long<span class="op">$</span>mod_<span class="dv">3</span>[[<span class="dv">2</span>]])[[<span class="dv">2</span>]]</span></code></pre></div>
+<pre><code>## [1] 4779.71</code></pre>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a><span class="co">#### Segment 2</span></span>
+<span id="cb54-2"><a href="#cb54-2"></a><span class="co">#### (marginal = FALSE, therefore coefficients can be interpreted as slopes of consecutive spline segments)</span></span>
+<span id="cb54-3"><a href="#cb54-3"></a><span class="kw">coef</span>(data_long<span class="op">$</span>mod_<span class="dv">3</span>[[<span class="dv">2</span>]])[[<span class="dv">3</span>]]</span></code></pre></div>
+<pre><code>## [1] 1972.273</code></pre>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a><span class="co">## TOTAL</span></span>
+<span id="cb56-2"><a href="#cb56-2"></a><span class="co">### Plot</span></span>
+<span id="cb56-3"><a href="#cb56-3"></a>data_long<span class="op">$</span>plot_<span class="dv">3</span>[[<span class="dv">3</span>]]</span></code></pre></div>
+<p><img src="2020-07-03-piecewise-regression_files/figure-html/unnamed-chunk-9-3.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1"></a><span class="co">### LM summary</span></span>
+<span id="cb57-2"><a href="#cb57-2"></a><span class="kw">summary</span>(data_long<span class="op">$</span>mod_<span class="dv">3</span>[[<span class="dv">3</span>]])</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = values ~ lspline(x = time_months, knots = 48, marginal = FALSE), 
+##     data = .x)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -136169  -37501   12546   32975   75616 
+## 
+## Coefficients:
+##                                                         Estimate Std. Error
+## (Intercept)                                             881571.1    13212.1
+## lspline(x = time_months, knots = 48, marginal = FALSE)1   7765.1      447.7
+## lspline(x = time_months, knots = 48, marginal = FALSE)2   -523.5     2302.6
+##                                                         t value Pr(&gt;|t|)    
+## (Intercept)                                              66.724   &lt;2e-16 ***
+## lspline(x = time_months, knots = 48, marginal = FALSE)1  17.345   &lt;2e-16 ***
+## lspline(x = time_months, knots = 48, marginal = FALSE)2  -0.227    0.821    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 46080 on 57 degrees of freedom
+## Multiple R-squared:  0.8771, Adjusted R-squared:  0.8727 
+## F-statistic: 203.3 on 2 and 57 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1"></a><span class="co">### Slopes of individual segments</span></span>
+<span id="cb59-2"><a href="#cb59-2"></a><span class="co">#### Segment 1</span></span>
+<span id="cb59-3"><a href="#cb59-3"></a><span class="kw">coef</span>(data_long<span class="op">$</span>mod_<span class="dv">3</span>[[<span class="dv">3</span>]])[[<span class="dv">2</span>]]</span></code></pre></div>
+<pre><code>## [1] 7765.131</code></pre>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1"></a><span class="co">#### Segment 2 </span></span>
+<span id="cb61-2"><a href="#cb61-2"></a><span class="co">#### (marginal = FALSE, therefore coefficients can be interpreted as slopes of consecutive spline segments)</span></span>
+<span id="cb61-3"><a href="#cb61-3"></a><span class="kw">coef</span>(data_long<span class="op">$</span>mod_<span class="dv">3</span>[[<span class="dv">3</span>]])[[<span class="dv">3</span>]]</span></code></pre></div>
+<pre><code>## [1] -523.5277</code></pre>
+</div>
+</div>
+<div id="summary" class="section level2">
+<h2>Summary</h2>
+<p>If you go back and compare the plots and slopes generated by the manually specified segments to those generated using <code>lsplines</code>, you find that they are identical, which is what you expect, but its still reassuring.</p>
+<p>More importantly, was the fit and quality of the simple linear regression worse than the segmented models? For assessing goodness-of-fit, I’ll use the <span class="math inline">\(adjusted R^2\)</span>, and for model selection I’ll use <span class="math inline">\(AIC\)</span>.</p>
+<p>For number of pregabalin items prescribed:</p>
+<ul>
+<li><p><span class="math inline">\(adjusted R^2_{simple}\)</span> = 0.93 and <span class="math inline">\(adjusted R^2_{segmented}\)</span> = 0.94</p></li>
+<li><p><span class="math inline">\(AIC_{simple}\)</span> = 1371 and <span class="math inline">\(AIC_{segmented}\)</span> = 1367</p></li>
+</ul>
+<p>So by looking at the plots and assessing the <span class="math inline">\(adjusted R^2\)</span>s values, you can see that both models are fairly good fits. Based on the <span class="math inline">\(AIC\)</span> the quality of the segmented model is relatively better than that of the simple linear regression model.</p>
+<p>For number of gabapentin items prescribed:</p>
+<ul>
+<li><p><span class="math inline">\(adjusted R^2_{simple}\)</span> = 0.66 and <span class="math inline">\(adjusted R^2_{segmented}\)</span> = 0.72</p></li>
+<li><p><span class="math inline">\(AIC_{simple}\)</span> = 1410 and <span class="math inline">\(AIC_{segmented}\)</span> = 1399</p></li>
+</ul>
+<p>So neither model is a great fit, and its obvious why when you look at the plots; the data follow a curvilinear path that isn’t fully captured by the simple linear regression or linear spline. Based on the <span class="math inline">\(AIC\)</span>, the quality of the segmented model is relatively better than that of the simple linear regression model.</p>
+<p>For total number of items prescribed:</p>
+<ul>
+<li><p><span class="math inline">\(adjusted R^2_{simple}\)</span> = 0.85 and <span class="math inline">\(adjusted R^2_{segmented}\)</span> = 0.87</p></li>
+<li><p><span class="math inline">\(AIC_{simple}\)</span> = 1472 and <span class="math inline">\(AIC_{segmented}\)</span> = 1464</p></li>
+</ul>
+<p>So neither model is a great fit, with the fit lying somewhere between the <span class="math inline">\(adjusted R^2\)</span> values obtained for pregabalin and those obtained for gabapentin. If you look at the plots, the data follow a curvilinear path, reflecting the influence of the gabapentin data on the total number of prescribed items. Based on the <span class="math inline">\(AIC\)</span>, the quality of the segmented model is relatively better than that of the simple linear regression model.</p>
+<hr />
+<p>For more cool R content, visit: <a href="https://rweekly.org/" target="_blank">R Weekly</a></p>
+<hr />
+</div>
+<div id="session-information" class="section level1">
+<h1>Session information</h1>
+<pre><code>## R version 4.0.2 (2020-06-22)
+## Platform: x86_64-apple-darwin17.0 (64-bit)
+## Running under: macOS Catalina 10.15.5
+## 
+## Matrix products: default
+## BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
+## 
+## locale:
+## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+## [1] lspline_1.0-0 purrr_0.3.4   ggplot2_3.3.2 stringr_1.4.0 tidyr_1.1.0  
+## [6] dplyr_1.0.0  
+## 
+## loaded via a namespace (and not attached):
+##  [1] Rcpp_1.0.4.6     pillar_1.4.4     compiler_4.0.2   tools_4.0.2     
+##  [5] digest_0.6.25    evaluate_0.14    lifecycle_0.2.0  tibble_3.0.1    
+##  [9] gtable_0.3.0     nlme_3.1-148     lattice_0.20-41  mgcv_1.8-31     
+## [13] pkgconfig_2.0.3  rlang_0.4.6      Matrix_1.2-18    cli_2.0.2       
+## [17] yaml_2.2.1       xfun_0.15        withr_2.2.0      knitr_1.29      
+## [21] generics_0.0.2   vctrs_0.3.1      grid_4.0.2       tidyselect_1.1.0
+## [25] glue_1.4.1       R6_2.4.1         fansi_0.4.1      rmarkdown_2.3   
+## [29] farver_2.0.3     magrittr_1.5     scales_1.1.1     ellipsis_0.3.1  
+## [33] htmltools_0.5.0  splines_4.0.2    assertthat_0.2.1 colorspace_1.4-1
+## [37] labeling_0.3     utf8_1.1.4       stringi_1.4.6    munsell_0.5.0   
+## [41] crayon_1.3.4</code></pre>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Torrance N, Veluchamy A, Zhou Y, Fletcher EH, Moir E, Hebert HL, Donnan PT, Watson J, Colvin LA, Smith BH. Trends in gabapentinoid prescribing, co-prescribing of opioids and benzodiazepines, and associated deaths in Scotland. <em>Br J Anaesth</em> [in press]. doi: <a href="http://dx.doi.org/10.1016/j.bja.2020.05.017" target="_blank">10.1016/j.bja.2020.05.017</a>.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p><a href="https://www.england.nhs.uk/wp-content/uploads/2019/03/pregabalin-and-gabapentin-guidance-v1.pdf" target="_blank">Rescheduling of Gabapentin and Pregabalin as Schedule 3 Controlled Drugs</a>. NHS England. <em>Accessed: 2020-06-29.</em><a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+
+        <!-- Include these sections here, otherwise YAML headings not inserted -->
+        <!-- Share -->
+        <div class="share">
+            <p style="display:inline-block">
+                <hr>
+                <h3>Share</h3>&ensp;
+                <a href="mailto:?subject=Reclassification of gabapentinoids as schedule 3 controlled substances in the UK: an interupted time series analysis&body=Hi, I thought you might like this post I found on painblogR:%0D%0A%0D%0Ahttps://www.painblogr.org/2020-07-03-piecewise-regression.html.%0D%0A%0D%0ABest regards" target="_blank"><i class="fa fa-envelope" style="color:#000000;vertical-align:middle;" title="Share on email" ></i></a>&ensp;
+                <a href="https://twitter.com/intent/tweet?url=https://www.painblogr.org/2020-07-03-piecewise-regression.html&text=Reclassification of gabapentinoids as schedule 3 controlled substances in the UK: an interupted time series analysis&via=painblogR" rel="nofollow" target="_blank" title="Share on Twitter"><i class="fa fa-twitter" style="color:#000000;vertical-align:middle;"></i></a>&ensp;
+                <a href="https://facebook.com/sharer.php?u=https://www.painblogr.org/2020-07-03-piecewise-regression.html" rel="nofollow" target="_blank" title="Share on Facebook"><i class="fa fa-facebook" style="color:#000000;vertical-align:middle;"></i></a>&ensp;
+                <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://www.painblogr.org/2020-07-03-piecewise-regression.html" rel="nofollow" target="_blank" title="Share on LinkedIn"><i class="fa fa-linkedin" style="color:#000000;vertical-align:middle;"></i></a>
+            </p>
+        </div>
+
+        <!-- Disqus
+        <div class="comments">
+            <hr>
+            <h3>Comments</h3>
+            <div id="disqus_thread"></div>
+            <script>
+                var disqus_config = function() {
+                    this.page.url = 'https://www.painblogr.org/2020-07-03-piecewise-regression.html'
+                    this.page.identifier = '/2020-07-03-piecewise-regression.html'
+                };
+
+                (function() {
+                    var d = document,
+                        s = d.createElement('script');
+
+                    s.src = 'https://www.painblogr.disqus.com/embed.js';
+                    s.setAttribute('data-timestamp', +new Date());
+                    (d.head || d.body).appendChild(s);
+                })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+            </noscript>
+        </div>
+    </div> -->
+
+    <!-- Footer -->
+    <footer>
+         <!--footer-->
+ <div class="container-fluid" id="foot" style="background-color:#FFFFFF;border-top:#CCCCCC solid 1px;color:#999999;font-family:'Open sans', 'Helvetica';">
+     <div class="row">
+         <div class="col-sm-4">
+             <p>Hosted by: <a href="https://www.netlify.com" target="_blank">netlify.com</a>
+                 <br>Powered by: <a href="http://rmarkdown.rstudio.com/" target="_blank">RMarkdown</a>
+                 <br>
+                 <br>
+             </p>
+         </div>
+         <div class="col-sm-4">
+             <p>Fork/clone from: <a href="https://github.com/kamermanpr/kamermanpr.github.io.git" target="_blank">GitHub</a>
+                 <br>License: <a href="./LICENSE.html" target="_blank">MIT & CC-BY 4.0</a>
+                 <br>
+                 <br>
+             </p>
+         </div>
+         <div class="col-sm-4">
+             <h4 style="padding:0;margin:0">painblogR</h3>
+ 			   <p style="display:inline-block">
+ 				   <span style="font-style:italic">by Peter Kamerman</span>
+ 				   &ensp;
+ 				   <a href="mailto:peter.kamerman@gmail.com" title="Email me" target="_blank"><i style="color:#999999;" class="fa fa-envelope"></i></a>
+ 				   &ensp;
+ 				   <a href="//twitter.com/@painblogR" target="_blank" title="Follow me"><i style="color:#999999;" class="fa fa-twitter"></i></a>
+ 			   </p>
+ 		   </div>
+ 	   </div>
+ 	</div>
+ 
+ <script>
+ 
+ // add bootstrap table styles to pandoc tables
+ function bootstrapStylePandocTables() {
+   $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+ }
+ $(document).ready(function () {
+   bootstrapStylePandocTables();
+ });
+ 
+ </script>
+ 
+ <!-- tabsets -->
+ 
+ <script>
+ $(document).ready(function () {
+   window.buildTabsets("TOC");
+ });
+ 
+ $(document).ready(function () {
+   $('.tabset-dropdown > .nav-tabs > li').click(function () {
+     $(this).parent().toggleClass('nav-tabs-open')
+   });
+ });
+ </script>
+ 
+ <!-- code folding -->
+ 
+ 
+ <!-- dynamically load mathjax for compatibility with self-contained -->
+ <script>
+   (function () {
+     var script = document.createElement("script");
+     script.type = "text/javascript";
+     script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+     document.getElementsByTagName("head")[0].appendChild(script);
+   })();
+ </script> 
+    </footer>
+</body>
+</html>

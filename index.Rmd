@@ -9,6 +9,22 @@ output:
 
 <br>
 
+![](./images/posts/2020-07-03-piecewise-regression/post-image.jpg){ style="float:left;margin-left:auto;margin-right:auto;padding:16px 16px 20px 0px;" width=200px }
+
+### Reclassification of gabapentinoids as schedule 3 controlled substances in England: an interrupted time series analysis
+
+**Peter Kamerman**
+
+_3 July 2020_
+
+Interrupted times series analysis of gabapentinoids in England using piecewise regression.
+
+<a class="btn btn-primary" href="https://www.painblogr.org/images/posts/2020-07-03-piecewise-regression.html" target="_blank">Read more <i class="fa fa-arrow-circle-o-right fa-2x" style="vertical-align: middle;" aria-hidden="true"></i></a><br>
+
+****
+
+<br>
+
 ![](./images/posts/2020-06-19-purring-through-exploratory-analyses/post-image.jpg){ style="float:left;margin-left:auto;margin-right:auto;padding:16px 16px 20px 0px;" width=200px }
 
 ### Neat and tidy data exploration with list-columns and <em>purrr</em>
@@ -23,7 +39,6 @@ Exploring data with the purrr package.
 
 ****
 
-
 <br>
 
 ![](./images/posts/2020-06-14-covid-fevers/post-image.jpg){ style="float:left;margin-left:auto;margin-right:auto;padding:16px 16px 20px 0px;" width=200px }
@@ -37,19 +52,3 @@ _14 June 2020_
 An article that discusses the futility of using fever screening for COVID-19 infection.
 
 <a class="btn btn-primary" href="https://www.painblogr.org/2020-06-14-covid-fevers.html" target="_blank">Read more <i class="fa fa-arrow-circle-o-right fa-2x" style="vertical-align: middle;" aria-hidden="true"></i></a><br>
-
-****
-
-<br>
-
-![](./images/posts/2020-03-16-covid-19/post-image.jpg){ style="float:left;margin-left:auto;margin-right:auto;padding:16px 16px 20px 0px;" width=200px }
-
-### COVID-19 in South Africa
-
-**Peter Kamerman**
-
-_15 March 2020_
-
-A website that gives daily updates on the state of COVID-19 cases and deaths in South Africa.
-
-<a class="btn btn-primary" href="https://covid19za.netlify.com/" target="_blank">Read more <i class="fa fa-arrow-circle-o-right fa-2x" style="vertical-align: middle;" aria-hidden="true"></i></a><br>

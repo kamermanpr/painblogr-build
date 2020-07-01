@@ -7,6 +7,8 @@ output:
 
 ### 2020
 
+- 3 July 2020 [Reclassification of gabapentinoids as schedule 3 controlled substances in England: an interrupted time series analysis](https://www.painblogr.org/images/posts/2020-07-03-piecewise-regression.html) 
+
 - 19 June 2020 [Neat and tidy data exploration with list-columns and _purrr_](https://www.painblogr.org/2020-06-19-purring-through-exploratory-analyses.html) 
 
 - 14 June 2020 [So you think investing in fever screening can curb the spread of COVID-19? Think again](https://www.painblogr.org/2020-06-14-covid-fevers.html)

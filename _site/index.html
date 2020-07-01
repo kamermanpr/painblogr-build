@@ -12,7 +12,8 @@
  <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
  <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
  <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
- <script src="site_libs/navigation-1.1/tabsets.js"></script> 
+ <script src="site_libs/navigation-1.1/tabsets.js"></script>
+ <script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script> 
 
     <!-- Latest maxdcn font-awesome and academicons -->
     <link rel="stylesheet" href="./css/font-awesome-4.5.0/css/font-awesome.min.css">
@@ -109,7 +110,17 @@
          <p style="font-style:italic">Promoting open and reproducible research in the field of pain</p>
      </div>
  </div>          <h1>Latest Posts</h1>  <p><br></p>
+<p><img src="images/posts/2020-07-03-piecewise-regression/post-image.jpg" style="float:left;margin-left:auto;margin-right:auto;padding:16px 16px 20px 0px;" width="200" /></p>
+<div id="reclassification-of-gabapentinoids-as-schedule-3-controlled-substances-in-england-an-interrupted-time-series-analysis" class="section level3">
+<h3>Reclassification of gabapentinoids as schedule 3 controlled substances in England: an interrupted time series analysis</h3>
+<p><strong>Peter Kamerman</strong></p>
+<p><em>3 July 2020</em></p>
+<p>Interrupted times series analsyis of gabapentinoids in England.</p>
+<p><a class="btn btn-primary" href="https://www.painblogr.org/images/posts/2020-07-03-piecewise-regression.html" target="_blank">Read more <i class="fa fa-arrow-circle-o-right fa-2x" style="vertical-align: middle;" aria-hidden="true"></i></a><br></p>
+<hr />
+<p><br></p>
 <p><img src="images/posts/2020-06-19-purring-through-exploratory-analyses/post-image.jpg" style="float:left;margin-left:auto;margin-right:auto;padding:16px 16px 20px 0px;" width="200" /></p>
+</div>
 <div id="neat-and-tidy-data-exploration-with-list-columns-and-purrr" class="section level3">
 <h3>Neat and tidy data exploration with list-columns and <em>purrr</em></h3>
 <p><strong>Peter Kamerman</strong></p>
@@ -126,16 +137,6 @@
 <p><em>14 June 2020</em></p>
 <p>An article that discusses the futility of using fever screening for COVID-19 infection.</p>
 <p><a class="btn btn-primary" href="https://www.painblogr.org/2020-06-14-covid-fevers.html" target="_blank">Read more <i class="fa fa-arrow-circle-o-right fa-2x" style="vertical-align: middle;" aria-hidden="true"></i></a><br></p>
-<hr />
-<p><br></p>
-<p><img src="images/posts/2020-03-16-covid-19/post-image.jpg" style="float:left;margin-left:auto;margin-right:auto;padding:16px 16px 20px 0px;" width="200" /></p>
-</div>
-<div id="covid-19-in-south-africa" class="section level3">
-<h3>COVID-19 in South Africa</h3>
-<p><strong>Peter Kamerman</strong></p>
-<p><em>15 March 2020</em></p>
-<p>A website that gives daily updates on the state of COVID-19 cases and deaths in South Africa.</p>
-<p><a class="btn btn-primary" href="https://covid19za.netlify.com/" target="_blank">Read more <i class="fa fa-arrow-circle-o-right fa-2x" style="vertical-align: middle;" aria-hidden="true"></i></a><br></p>
 </div>
     </div>
 
@@ -169,7 +170,46 @@
  			   </p>
  		   </div>
  	   </div>
- 	</div> 
+ 	</div>
+ 
+ <script>
+ 
+ // add bootstrap table styles to pandoc tables
+ function bootstrapStylePandocTables() {
+   $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+ }
+ $(document).ready(function () {
+   bootstrapStylePandocTables();
+ });
+ 
+ </script>
+ 
+ <!-- tabsets -->
+ 
+ <script>
+ $(document).ready(function () {
+   window.buildTabsets("TOC");
+ });
+ 
+ $(document).ready(function () {
+   $('.tabset-dropdown > .nav-tabs > li').click(function () {
+     $(this).parent().toggleClass('nav-tabs-open')
+   });
+ });
+ </script>
+ 
+ <!-- code folding -->
+ 
+ 
+ <!-- dynamically load mathjax for compatibility with self-contained -->
+ <script>
+   (function () {
+     var script = document.createElement("script");
+     script.type = "text/javascript";
+     script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+     document.getElementsByTagName("head")[0].appendChild(script);
+   })();
+ </script> 
     </footer>
 </body>
 

@@ -1,0 +1,430 @@
+---
+title: "Reclassification of gabapentinoids as schedule 3 controlled substances in England: an interrupted time series analysis"
+post_title: "Reclassification of gabapentinoids as schedule 3 controlled substances in the UK: an interupted time series analysis"
+post_author: 'Peter Kamerman'
+post_date: '3 July 2020'
+post_image: 'https://www.painblogr.org/images/posts/2020-07-03-piecewise-regression/post-image.jpg'
+permalink:  '2020-07-03-piecewise-regression.html'
+description: "Interrupted times series analysis of gabapentinoids in England using piecewise regression"
+output:
+    html_document:
+        template: './_templates/posts.html'
+---
+
+```{r include = FALSE}
+# Set chunk options
+knitr::opts_chunk$set(warning = FALSE,
+                      message = FALSE,
+                      fig.align = 'center')
+```
+
+****
+
+Gabapentinoids (pregabalin and gabapentin) are used for the management of neuropathic pain, some types of epileptic seizures, and anxiety. 
+
+Because of the rising number of drug-related fatalities linked to the use of gabapentinoids[^1], and evidence of their misuse, the drugs were reclassified in the UK in April 2019 as Class C substances, and scheduled as Schedule 3 items[^2]. This reclassification meant that more controls were placed on the prescription of gabapentinoids. 
+
+[^1]: Torrance N, Veluchamy A, Zhou Y, Fletcher EH, Moir E, Hebert HL, Donnan PT, Watson J, Colvin LA, Smith BH. Trends in gabapentinoid prescribing, co-prescribing of opioids and benzodiazepines, and associated deaths in Scotland. _Br J Anaesth_ [in press]. doi: [10.1016/j.bja.2020.05.017](http://dx.doi.org/10.1016/j.bja.2020.05.017){target="_blank"}.
+
+[^2]: [Rescheduling of Gabapentin and Pregabalin as Schedule 3 Controlled Drugs](https://www.england.nhs.uk/wp-content/uploads/2019/03/pregabalin-and-gabapentin-guidance-v1.pdf){target="_blank"}. NHS England. _Accessed: 2020-06-29._
+
+By knowing exactly when the change in prescribing requirements began (1 April 2019), it is possible to use interrupted time series analysis to look for a change in prescribing at the time of the change in regulation. This analysis requires data on drug prescriptions over time, data that are freely available for the National health System (NHS) England through the [OpenPrescribing](https://openprescribing.net){target="_blank"} platform.
+
+In this blog post I shall work through conducting an interrupted time series analysis using _piecewise regression_ (also called segmented regression). I will use two methods of _piecewise regression_: 
+
+1. Manually re-specifying the data to incorporate a breakpoint (knot).
+
+2. Using linear splines to specify segments around a knot. 
+
+## Get some data
+
+The first thing to do is to get some data. Using the [OpenPrescribing API](https://openprescribing.net/api){target="_blank"}, I download data on the total items prescribed of gabapentin and pregabalin for the period 2020-05-01 to 2020-04-01 (please see this [_GitHub Gist_](https://gist.github.com/kamermanpr/3d7a76131034aa7d4268dfa438cb9f5f){target="_blank"} for the _R_ script I used). 
+
+```{r}
+# Import data
+data <- read.csv('_data/2020-07-03-piecewise-regression/gabapentinoids.csv')
+```
+
+## Look at the data
+
+```{r}
+# Describe data
+head(data)
+str(data)
+```
+
+There are five columns: a date column (_date_), a time column expressing the time in months since the first record (_time_months_), and then three columns expressing the number of prescribed items per month of gabapentin (_prescriptions\_gabapentin_), pregabalin (_prescriptions\_pregabalin_), and the total number of gabapentinoids (_prescriptions\_total_).
+
+```{r fig.height = 6, fig.width = 7}
+# Load package
+library(dplyr)
+library(tidyr)
+library(stringr)
+library(ggplot2)
+
+# Process data into long format
+data_long <- data %>% 
+  pivot_longer(cols = starts_with('prescription'),
+               names_to = 'names',
+               values_to = 'values') %>% 
+  mutate(names = str_remove(names, 'prescriptions_'))
+  
+# Plot data (make it pretty)
+ggplot(data = data_long) +
+  aes(x = time_months,
+      y = values,
+      colour = names,
+      fill = names) +
+  geom_point(shape = 21,
+             size = 3) +
+  geom_vline(xintercept = 48,
+             linetype = 2) +
+  labs(caption = 'Vertical dashed line: date of reclassification (2019-04-01)',
+       y = 'Number of prescribed items',
+       x = 'Date') +
+  scale_x_continuous(labels = c('May 2015', 'Dec 2016', 'Aug 2018', 'Apr 2020')) +
+  scale_fill_manual(values = c('#67A0C9', '#FDA568', '#70BB70')) +
+  scale_colour_manual(values = c('#2678B2', '#FD7F28', '#339F34')) +
+  theme_minimal(base_size = 18) +
+  theme(legend.title = element_blank(),
+        legend.position = 'top',
+        panel.grid = element_blank(),
+        axis.line = element_line(size = 0.5),
+        axis.ticks = element_line(size = 0.5))
+```
+
+Looking at the plot, the number of prescribed items for the individual drugs, and therefore the overall total of gabapentinoids too, have been increasing steeply over the past 5 years. There is, however, a hint (especially for pregabalin) of prescriptions leveling off a bit since the April 2020 change in prescribing regulations. 
+
+Using piecewise regression, I will determine whether there is indeed a change in prescribed items from April 2019 . I will do so by fitting the data with a simple linear regression and piecewise regression (using the two methods mentioned above), and then compare the the models. I will do this modelling for each drug and the total.
+
+## Simple linear regression
+
+```{r fig.height = 6, fig.width = 7}
+# load packages
+library(purrr)
+
+# Generate a palette for some pretty colours
+colours_fill <- data.frame(fill = c('#67A0C9', '#FDA568', '#70BB70'),
+                           colour = c('#2678B2', '#FD7F28', '#339F34'))
+
+# Purrr over the data (see: https://www.painblogr.org/2020-06-19-purring-through-exploratory-analyses)
+data_long <- data_long %>% 
+  # Nest the data by drug 'name' (pregabalin, gabapentin, and total)
+  group_by(names) %>% 
+  nest() %>% 
+  # Add the colour and fill columns
+  bind_cols(colours_fill) %>% 
+  # Make the names sentence case.
+  mutate(names = str_to_sentence(names))
+
+data_long <- data_long %>% 
+  # Add model
+  mutate(mod_1  = map(.x = data,
+                      ~ lm(values ~ time_months, data = .x))) %>% 
+  # Plot model
+  mutate(plot_1 = pmap(.l = list(data, names, fill, colour),
+                      ~ ggplot(data = ..1) +
+                        aes(x = time_months,
+                            y = values) +
+                        geom_point(shape = 21,
+                                   size = 3,
+                                   fill = ..3,
+                                   colour = ..4) +
+                        geom_smooth(method = 'lm',
+                                    se =  FALSE,
+                                    colour = ..4) +
+                        geom_vline(xintercept = 48,
+                                   linetype = 2) +
+                        labs(title = str_glue('{..2}'),
+                             subtitle = 'Simple linear regression (no knots)',
+                             caption = 'Vertical dashed line: date of reclassification (2019-04-01)',
+                             y = 'Number of prescribed items',
+                             x = 'Date') +
+                        scale_x_continuous(labels = c('May 2015', 'Dec 2016', 'Aug 2018', 'Apr 2020')) +
+                        theme_minimal(base_size = 18) +
+                        theme(legend.title = element_blank(),
+                              legend.position = 'none',
+                              panel.grid = element_blank(),
+                              axis.line = element_line(size = 0.5),
+                              axis.ticks = element_line(size = 0.5))))
+
+# Print plots and lm outputs
+## GABAPENTIN
+### Plot
+data_long$plot_1[[1]]
+### LM summary
+summary(data_long$mod_1[[1]])
+
+## PREGABALIN
+### Plot
+data_long$plot_1[[2]]
+### LM summary
+summary(data_long$mod_1[[2]])
+
+## TOTAL
+### Plot
+data_long$plot_1[[3]]
+### LM summary
+summary(data_long$mod_1[[3]])
+```
+
+## Piecewise regression
+
+### Manually re-specify the data to create two segments around a knot
+
+To create a knot you need to include a second term in your linear regression term, one term for each segment.
+
+**Original model:**
+
+$$y = \beta{_0} + \beta{_1}X$$
+
+**New model:** 
+
+$$y = \beta{_0} + \beta{_1}x + \beta{_2}(x - x^{(k)})xk$$
+
+Where:
+
+- $xk$ is a dummy knot, which takes a value of **1** when $x \geq x^{(k)}$ and **0** when $x < x^{(k)}$ 
+
+- $(x - x^{(k)})$ is the value of $x$ minus the knot value ($x^{(k)}$) 
+
+Thus, for $x$ values that fall below the knot value ($x^{(k)}$), the second term will be 0, and for $x$ values greater than the knot value the second term will be $(x - x^{(k)})$. 
+
+For the data at hand, the knot point is 48 months, the _time\_months_ value that coincides with the implementation of the new regulations (2019-04-01). Therefore we can re-specify the data into two terms: time_months (for time values $<$ 48 months) and time_months2 (for time values $\geq$ 48 months)
+
+The code block below shows how to do that for each of the three datatsets (Gabapentin, Pregabalin, and Total). First you create a dummy knot ($kx$; _dummy\_knot_) at 48 months, then you subtract the knot value ($x^{(k)} = 48$) from _time\_months_ ($x$) to produce _x\_minus\_knot_, and finally you multiply _dummy\_knot_ by  _x\_minus\_knot_ to yield the second term of the model, namely, _time\_months2_.
+
+```{r}
+data_long <- data_long %>% 
+  mutate(data_2 = map(.x = data,
+                      ~ .x %>% 
+                        # Create a dummy knot
+                        mutate(dummy_knot = ifelse(time_months < 48,
+                                                   yes = 0, 
+                                                   no = 1)) %>% 
+                        # Subtract knot value from x
+                        mutate(x_minus_knot = time_months - 48) %>% 
+                        # Calculate time_months2
+                        mutate(time_months2 = dummy_knot * x_minus_knot)))
+
+# Top-and-tail GABAPENTIN to check what the data looks like
+head(data_long$data_2[[1]])
+tail(data_long$data_2[[1]])
+```
+
+Now run the model using the updated data.
+
+```{r}
+data_long <- data_long %>% 
+  mutate(mod_2 = map(.x = data_2,
+                     ~ lm(values ~ time_months + time_months2, data = .x)))
+```
+
+Next, generated predicted values for the model and plot the data.
+
+```{r fig.height = 6, fig.width = 7}
+data_long <- data_long %>% 
+  # Generate predicted data
+  mutate(data_3 = map2(.x = data_2,
+                       .y = mod_2,
+                       ~ .x %>% 
+                         mutate(predicted = predict(.y)))) %>% 
+  # Generate plots
+  mutate(plot_2 = map2(.x = data_3,
+                       .y = names,
+                      ~ ggplot(data = .x) +
+                        aes(x = time_months,
+                            y = values,
+                            colour = dummy_knot,
+                            fill = dummy_knot) +
+                        geom_point(shape = 21,
+                                   size = 3) +
+                        geom_line(aes(y = predicted)) +
+                        geom_vline(xintercept = 48,
+                                   linetype = 2) +
+                        labs(title = .y,
+                             subtitle = 'Segmented regression (1 knot)',
+                             caption = 'Vertical dashed line: date of reclassification (2019-04-01)',
+                             y = 'Number of prescribed items',
+                             x = 'Date') +
+                        scale_x_continuous(labels = c('May 2015', 'Dec 2016', 'Aug 2018', 'Apr 2020')) +
+                        theme_minimal(base_size = 18) +
+                        theme(legend.title = element_blank(),
+                              legend.position = 'none',
+                              panel.grid = element_blank(),
+                              axis.line = element_line(size = 0.5),
+                              axis.ticks = element_line(size = 0.5))))
+
+# Print plots and lm outputs, and slopes
+## GABAPENTIN
+### Plot
+data_long$plot_2[[1]]
+### LM summary
+summary(data_long$mod_2[[1]])
+### Slopes of individual segments
+#### Segment 1
+coef(data_long$mod_2[[1]])[[2]]
+#### Segment 2 (the sum of the two regression coefficients)
+coef(data_long$mod_2[[1]])[[2]] + coef(data_long$mod_2[[1]])[[3]]
+
+## PREGABALIN
+### Plot
+data_long$plot_2[[2]]
+### LM summary
+summary(data_long$mod_2[[2]])
+### Slopes of individual segments
+#### Segment 1
+coef(data_long$mod_2[[2]])[[2]]
+#### Segment 2 (the sum of the two regression coefficients)
+coef(data_long$mod_2[[2]])[[2]] + coef(data_long$mod_2[[2]])[[3]]
+
+## TOTAL
+### Plot
+data_long$plot_2[[3]]
+### LM summary
+summary(data_long$mod_2[[3]])
+### Slopes of individual segments
+#### Segment 1
+coef(data_long$mod_2[[3]])[[2]]
+#### Segment 2 (the sum of the two regression coefficients)
+coef(data_long$mod_2[[3]])[[2]] + coef(data_long$mod_2[[3]])[[3]]
+```
+
+### Use linear splines to specfiy two segments around a knot
+
+You can do the same thing as manually re-specifying the data into two segments by using the `lspline` function from the _lspline_ package. 
+
+The `lspline` function is designed to, "compute the basis of piecewise-linear spline".
+
+The arguments for the function are:
+
+`lspline(x, knots = NULL, marginal = FALSE)`
+
+Where: 
+
+- `x` is a numeric vector (x values)
+
+- `knots` is a numeric vector of knot positions
+
+- `marginal` is a logical that determines whether coefficients can be interpreted as slopes of consecutive spline segments (FALSE), or slope change at consecutive knots (TRUE).
+
+```{r fig.height = 6, fig.width = 7}
+# Load package
+library(lspline)
+
+data_long <- data_long %>% 
+  # Generate the model using lspline
+  mutate(mod_3 = map(.x = data,
+                     ~ lm(values ~ lspline(x = time_months,
+                                           knots = 48,
+                                           marginal = FALSE), data = .x))) %>% 
+  # Get predicted values 
+  mutate(data_4 = map2(.x = data_3,
+                       .y = mod_3,
+                       ~ .x %>% 
+                         mutate(predicted_spl = predict(.y)))) %>% 
+  # Generate plots
+  mutate(plot_3 = map2(.x = data_4,
+                       .y = names,
+                      ~ ggplot(data = .x) +
+                        aes(x = time_months,
+                            y = values,
+                            colour = dummy_knot,
+                            fill = dummy_knot) +
+                        geom_point(shape = 21,
+                                   size = 3) +
+                        geom_line(aes(y = predicted_spl)) +
+                        geom_vline(xintercept = 48,
+                                   linetype = 2) +
+                        labs(title = .y,
+                             subtitle = 'Piecewise linear spline (1 knot)',
+                             caption = 'Vertical dashed line: date of reclassification (2019-04-01)',
+                             y = 'Number of prescribed items',
+                             x = 'Date') +
+                        scale_x_continuous(labels = c('May 2015', 'Dec 2016', 'Aug 2018', 'Apr 2020')) +
+                        theme_minimal(base_size = 18) +
+                        theme(legend.title = element_blank(),
+                              legend.position = 'none',
+                              panel.grid = element_blank(),
+                              axis.line = element_line(size = 0.5),
+                              axis.ticks = element_line(size = 0.5))))
+
+# Print plots and lm outputs, and slopes
+## GABAPENTIN
+### Plot
+data_long$plot_3[[1]]
+### LM summary
+summary(data_long$mod_3[[1]])
+### Slopes of individual segments
+#### Segment 1
+coef(data_long$mod_3[[1]])[[2]]
+#### Segment 2 
+#### (marginal = FALSE, therefore coefficients can be interpreted as slopes of consecutive spline segments)
+coef(data_long$mod_3[[1]])[[3]]
+
+## PREGABALIN
+### Plot
+data_long$plot_3[[2]]
+### LM summary
+summary(data_long$mod_3[[2]])
+### Slopes of individual segments
+#### Segment 1
+coef(data_long$mod_3[[2]])[[2]]
+#### Segment 2
+#### (marginal = FALSE, therefore coefficients can be interpreted as slopes of consecutive spline segments)
+coef(data_long$mod_3[[2]])[[3]]
+
+## TOTAL
+### Plot
+data_long$plot_3[[3]]
+### LM summary
+summary(data_long$mod_3[[3]])
+### Slopes of individual segments
+#### Segment 1
+coef(data_long$mod_3[[3]])[[2]]
+#### Segment 2 
+#### (marginal = FALSE, therefore coefficients can be interpreted as slopes of consecutive spline segments)
+coef(data_long$mod_3[[3]])[[3]]
+```
+
+## Summary
+
+If you go back and compare the plots and slopes generated by the manually specified segments to those generated using `lsplines`, you find that they are identical, which is what you expect, but its still reassuring. 
+
+More importantly, was the fit and quality of the simple linear regression worse than the segmented models? For assessing goodness-of-fit, I'll use the $adjusted R^2$, and for model selection I'll use $AIC$. 
+
+For number of pregabalin items prescribed: 
+
+- $adjusted R^2_{simple}$ = `r round(summary(data_long$mod_1[[2]])$adj.r.squared, 2)` and $adjusted R^2_{segmented}$ = `r round(summary(data_long$mod_3[[2]])$adj.r.squared, 2)`
+
+- $AIC_{simple}$ = `r round(AIC(data_long$mod_1[[2]]))` and $AIC_{segmented}$ = `r round(AIC(data_long$mod_3[[2]]))`
+
+So by looking at the plots and assessing the $adjusted R^2$s values, you can see that both models are fairly good fits. Based on the $AIC$ the quality of the segmented model is relatively better than that of the simple linear regression model.
+
+For number of gabapentin items prescribed:
+
+- $adjusted R^2_{simple}$ = `r round(summary(data_long$mod_1[[1]])$adj.r.squared, 2)` and $adjusted R^2_{segmented}$ = `r round(summary(data_long$mod_3[[1]])$adj.r.squared, 2)`
+
+- $AIC_{simple}$ = `r round(AIC(data_long$mod_1[[1]]))` and $AIC_{segmented}$ = `r round(AIC(data_long$mod_3[[1]]))`
+
+So neither model is a great fit, and its obvious why when you look at the plots; the data follow a curvilinear path that isn't fully captured by the simple linear regression or linear spline. Based on the $AIC$, the quality of the segmented model is relatively better than that of the simple linear regression model.
+
+For total number of items prescribed:
+
+- $adjusted R^2_{simple}$ = `r round(summary(data_long$mod_1[[3]])$adj.r.squared, 2)` and $adjusted R^2_{segmented}$ = `r round(summary(data_long$mod_3[[3]])$adj.r.squared, 2)`
+
+- $AIC_{simple}$ = `r round(AIC(data_long$mod_1[[3]]))` and $AIC_{segmented}$ = `r round(AIC(data_long$mod_3[[3]]))`
+
+So neither model is a great fit, with the fit lying somewhere between the $adjusted R^2$ values obtained for pregabalin and those obtained for gabapentin. If you look at the plots, the data follow a curvilinear path, reflecting the influence of the gabapentin data on the total number of prescribed items. Based on the $AIC$, the quality of the segmented model is relatively better than that of the simple linear regression model.
+
+****
+
+For more cool R content, visit: [R Weekly](https://rweekly.org/){target="_blank"}
+
+****
+
+# Session information
+
+```{r echo = FALSE}
+sessionInfo()
+```
