@@ -19,7 +19,7 @@ _3 July 2020_
 
 Interrupted times series analysis of gabapentinoids in England using piecewise regression.
 
-<a class="btn btn-primary" href="https://www.painblogr.org/images/posts/2020-07-03-piecewise-regression.html" target="_blank">Read more <i class="fa fa-arrow-circle-o-right fa-2x" style="vertical-align: middle;" aria-hidden="true"></i></a><br>
+<a class="btn btn-primary" href="https://www.painblogr.org/2020-07-03-piecewise-regression.html" target="_blank">Read more <i class="fa fa-arrow-circle-o-right fa-2x" style="vertical-align: middle;" aria-hidden="true"></i></a><br>
 
 ****
 
