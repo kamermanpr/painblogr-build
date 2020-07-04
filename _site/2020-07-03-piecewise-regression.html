@@ -146,7 +146,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     </script>
 
     <!-- SEO -->
-    <title>Reclassification of gabapentinoids as schedule 3 controlled substances in the UK: an interupted time series analysis</title>
+    <title>Reclassification of gabapentinoids as schedule 3 controlled substances in the UK: an interrupted time series analysis</title>
     <meta name="description" content="Interrupted times series analysis of gabapentinoids in England using piecewise regression">
     <link rel="author" href="https://plus.google.com/u/0/103355314187199079295" />
     <meta name="robots" content="robots.txt">
@@ -156,13 +156,13 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     <meta name="twitter:card" content="summary">
     <meta name="twitter:site" content="@painblogR">
     <meta name="twitter:creator" content="@painblogR">
-    <meta name="twitter:title" content="Reclassification of gabapentinoids as schedule 3 controlled substances in the UK: an interupted time series analysis">
+    <meta name="twitter:title" content="Reclassification of gabapentinoids as schedule 3 controlled substances in the UK: an interrupted time series analysis">
     <meta name="twitter:description" content="Interrupted times series analysis of gabapentinoids in England using piecewise regression">
     <meta name="twitter:image" content="<a href="https://www.painblogr.org/images/posts/2020-07-03-piecewise-regression/post-image.jpg" class="uri">https://www.painblogr.org/images/posts/2020-07-03-piecewise-regression/post-image.jpg</a>">
     <meta name="twitter:url" content="https://www.painblogr.org/2020-07-03-piecewise-regression.html">
 
     <!-- Opengraph -->
-    <meta property="og:title" content="Reclassification of gabapentinoids as schedule 3 controlled substances in the UK: an interupted time series analysis">
+    <meta property="og:title" content="Reclassification of gabapentinoids as schedule 3 controlled substances in the UK: an interrupted time series analysis">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://www.painblogr.org/2020-07-03-piecewise-regression.html">
     <meta property="og:image" content="<a href="https://www.painblogr.org/images/posts/2020-07-03-piecewise-regression/post-image.jpg" class="uri">https://www.painblogr.org/images/posts/2020-07-03-piecewise-regression/post-image.jpg</a>">
@@ -248,20 +248,20 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     <!-- Main text --->
     <div class="container-fluid" id="mainbody">
          
-        <h1>Reclassification of gabapentinoids as schedule 3 controlled substances in the UK: an interupted time series analysis</h1> 
+        <h1>Reclassification of gabapentinoids as schedule 3 controlled substances in the UK: an interrupted time series analysis</h1> 
         <h4>Peter Kamerman</h4> 
         <em>3 July 2020</em> <hr />
 <p>Gabapentinoids (pregabalin and gabapentin) are used for the management of neuropathic pain, some types of epileptic seizures, and anxiety.</p>
 <p>Because of the rising number of drug-related fatalities linked to the use of gabapentinoids<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>, and evidence of their misuse, the drugs were reclassified in the UK in April 2019 as Class C substances, and scheduled as Schedule 3 items<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>. This reclassification meant that more controls were placed on the prescription of gabapentinoids.</p>
-<p>By knowing exactly when the change in prescribing requirements began (1 April 2019), it is possible to use interrupted time series analysis to look for a change in prescribing at the time of the change in regulation. This analysis requires data on drug prescriptions over time, data that are freely available for the National health System (NHS) England through the <a href="https://openprescribing.net" target="_blank">OpenPrescribing</a> platform.</p>
-<p>In this blog post I shall work through conducting an interrupted time series analysis using <em>piecewise regression</em> (also called segmented regression). I will use two methods of <em>piecewise regression</em>:</p>
+<p>By knowing exactly when the change in prescribing requirements began (1 April 2019), it is possible to use interrupted time series analysis to look for a change in prescribing from the time of the change in regulation. This analysis requires data on drug prescriptions over time, data that are freely available for the National Health System (NHS) England through the <a href="https://openprescribing.net" target="_blank">OpenPrescribing</a> platform.</p>
+<p>In this blog post I work through my first attempt at conducting an interrupted time series analysis using <em>piecewise regression</em> (also called segmented regression). I use two methods of <em>piecewise regression</em>:</p>
 <ol style="list-style-type: decimal">
 <li><p>Manually re-specifying the data to incorporate a breakpoint (knot).</p></li>
-<li><p>Using linear splines to specify segments around a knot.</p></li>
+<li><p>Using linear splines to specify the knot.</p></li>
 </ol>
 <div id="get-some-data" class="section level2">
 <h2>Get some data</h2>
-<p>The first thing to do is to get some data. Using the <a href="https://openprescribing.net/api" target="_blank">OpenPrescribing API</a>, I download data on the total items prescribed of gabapentin and pregabalin for the period 2020-05-01 to 2020-04-01 (please see this <a href="https://gist.github.com/kamermanpr/3d7a76131034aa7d4268dfa438cb9f5f" target="_blank"><em>GitHub Gist</em></a> for the <em>R</em> script I used).</p>
+<p>The first thing to do was to get some data. Using the <a href="https://openprescribing.net/api" target="_blank">OpenPrescribing API</a>, I download data on the total items prescribed of gabapentin and pregabalin for the period 2020-05-01 to 2020-04-01 (please see this <a href="https://gist.github.com/kamermanpr/3d7a76131034aa7d4268dfa438cb9f5f" target="_blank"><em>GitHub Gist</em></a> for the <em>R</em> script I used).</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># Import data</span></span>
 <span id="cb1-2"><a href="#cb1-2"></a>data &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&#39;_data/2020-07-03-piecewise-regression/gabapentinoids.csv&#39;</span>)</span></code></pre></div>
 </div>
@@ -290,7 +290,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 ##  $ prescriptions_gabapentin: int  450908 479752 502738 460096 497057 505418 488061 543067 489551 490390 ...
 ##  $ prescriptions_pregabalin: int  375350 399022 419985 385838 414772 423735 410291 457160 414782 416315 ...
 ##  $ prescriptions_total     : int  826258 878774 922723 845934 911829 929153 898352 1000227 904333 906705 ...</code></pre>
-<p>There are five columns: a date column (<em>date</em>), a time column expressing the time in months since the first record (<em>time_months</em>), and then three columns expressing the number of prescribed items per month of gabapentin (<em>prescriptions_gabapentin</em>), pregabalin (<em>prescriptions_pregabalin</em>), and the total number of gabapentinoids (<em>prescriptions_total</em>).</p>
+<p>The data had five columns: a date column (<em>date</em>), a time column expressing the time in months since the first record (<em>time_months</em>), and then three columns expressing the number of prescribed items per month of gabapentin (<em>prescriptions_gabapentin</em>), pregabalin (<em>prescriptions_pregabalin</em>), and the total number of gabapentinoids (<em>prescriptions_total</em>).</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># Load package</span></span>
 <span id="cb6-2"><a href="#cb6-2"></a><span class="kw">library</span>(dplyr)</span>
 <span id="cb6-3"><a href="#cb6-3"></a><span class="kw">library</span>(tidyr)</span>
@@ -327,8 +327,8 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 <span id="cb6-34"><a href="#cb6-34"></a>        <span class="dt">axis.line =</span> <span class="kw">element_line</span>(<span class="dt">size =</span> <span class="fl">0.5</span>),</span>
 <span id="cb6-35"><a href="#cb6-35"></a>        <span class="dt">axis.ticks =</span> <span class="kw">element_line</span>(<span class="dt">size =</span> <span class="fl">0.5</span>))</span></code></pre></div>
 <p><img src="2020-07-03-piecewise-regression_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>Looking at the plot, the number of prescribed items for the individual drugs, and therefore the overall total of gabapentinoids too, have been increasing steeply over the past 5 years. There is, however, a hint (especially for pregabalin) of prescriptions leveling off a bit since the April 2020 change in prescribing regulations.</p>
-<p>Using piecewise regression, I will determine whether there is indeed a change in prescribed items from April 2019 . I will do so by fitting the data with a simple linear regression and piecewise regression (using the two methods mentioned above), and then compare the the models. I will do this modelling for each drug and the total.</p>
+<p>Looking at the plot, the number of prescribed items for the individual drugs, and therefore the overall total of gabapentinoids too, have been increasing steeply over the past 5 years. There is, however, a hint (especially for pregabalin) of prescriptions leveling off a bit since the April 2019 change in prescribing regulations.</p>
+<p>Using piecewise regression, I wanted to determine whether there was indeed a change in prescribed items from April 2019 . I did this assessment by fitting the data using simple linear regression and piecewise regression (using the two methods mentioned above), and then compared the the models. I did this modelling for each drug and the total.</p>
 </div>
 <div id="simple-linear-regression" class="section level2">
 <h2>Simple linear regression</h2>
@@ -458,7 +458,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 <h2>Piecewise regression</h2>
 <div id="manually-re-specify-the-data-to-create-two-segments-around-a-knot" class="section level3">
 <h3>Manually re-specify the data to create two segments around a knot</h3>
-<p>To create a knot you need to include a second term in your linear regression term, one term for each segment.</p>
+<p>To create a knot I needed to include a second term in the linear regression model, one term for each segment.</p>
 <p><strong>Original model:</strong></p>
 <p><span class="math display">\[y = \beta{_0} + \beta{_1}X\]</span></p>
 <p><strong>New model:</strong></p>
@@ -469,8 +469,8 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 <li><p><span class="math inline">\((x - x^{(k)})\)</span> is the value of <span class="math inline">\(x\)</span> minus the knot value (<span class="math inline">\(x^{(k)}\)</span>)</p></li>
 </ul>
 <p>Thus, for <span class="math inline">\(x\)</span> values that fall below the knot value (<span class="math inline">\(x^{(k)}\)</span>), the second term will be 0, and for <span class="math inline">\(x\)</span> values greater than the knot value the second term will be <span class="math inline">\((x - x^{(k)})\)</span>.</p>
-<p>For the data at hand, the knot point is 48 months, the <em>time_months</em> value that coincides with the implementation of the new regulations (2019-04-01). Therefore we can re-specify the data into two terms: time_months (for time values <span class="math inline">\(&lt;\)</span> 48 months) and time_months2 (for time values <span class="math inline">\(\geq\)</span> 48 months)</p>
-<p>The code block below shows how to do that for each of the three datatsets (Gabapentin, Pregabalin, and Total). First you create a dummy knot (<span class="math inline">\(kx\)</span>; <em>dummy_knot</em>) at 48 months, then you subtract the knot value (<span class="math inline">\(x^{(k)} = 48\)</span>) from <em>time_months</em> (<span class="math inline">\(x\)</span>) to produce <em>x_minus_knot</em>, and finally you multiply <em>dummy_knot</em> by <em>x_minus_knot</em> to yield the second term of the model, namely, <em>time_months2</em>.</p>
+<p>For my data, the knot point was 48 months, the <em>time_months</em> value that coincided with the implementation of the new regulations (2019-04-01). Therefore I re-specified the data into two terms: time_months (for time values <span class="math inline">\(&lt;\)</span> 48 months) and time_months2 (for time values <span class="math inline">\(\geq\)</span> 48 months)</p>
+<p>The code block below shows how I added the second term for each of the three datatsets (Gabapentin, Pregabalin, and Total). First I created a dummy knot (<span class="math inline">\(kx\)</span>; <em>dummy_knot</em>) at 48 months, then I subtracted the knot value (<span class="math inline">\(x^{(k)} = 48\)</span>) from <em>time_months</em> (<span class="math inline">\(x\)</span>) to produce <em>x_minus_knot</em>, and finally I multiplied <em>dummy_knot</em> by <em>x_minus_knot</em> to yield the second term of the model, namely, <em>time_months2</em>.</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>data_long &lt;-<span class="st"> </span>data_long <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb16-2"><a href="#cb16-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">data_2 =</span> <span class="kw">map</span>(<span class="dt">.x =</span> data,</span>
 <span id="cb16-3"><a href="#cb16-3"></a>                      <span class="op">~</span><span class="st"> </span>.x <span class="op">%&gt;%</span><span class="st"> </span></span>
@@ -504,11 +504,11 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 ## 4 2020-02-01          58 570291          1           10           10
 ## 5 2020-03-01          59 642909          1           11           11
 ## 6 2020-04-01          60 616384          1           12           12</code></pre>
-<p>Now run the model using the updated data.</p>
+<p>Then I ran the model using the updated data.</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>data_long &lt;-<span class="st"> </span>data_long <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb20-2"><a href="#cb20-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">mod_2 =</span> <span class="kw">map</span>(<span class="dt">.x =</span> data_<span class="dv">2</span>,</span>
 <span id="cb20-3"><a href="#cb20-3"></a>                     <span class="op">~</span><span class="st"> </span><span class="kw">lm</span>(values <span class="op">~</span><span class="st"> </span>time_months <span class="op">+</span><span class="st"> </span>time_months2, <span class="dt">data =</span> .x)))</span></code></pre></div>
-<p>Next, generated predicted values for the model and plot the data.</p>
+<p>I then generated predicted values for the model and plotted the data.</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>data_long &lt;-<span class="st"> </span>data_long <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb21-2"><a href="#cb21-2"></a><span class="st">  </span><span class="co"># Generate predicted data</span></span>
 <span id="cb21-3"><a href="#cb21-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">data_3 =</span> <span class="kw">map2</span>(<span class="dt">.x =</span> data_<span class="dv">2</span>,</span>
@@ -810,8 +810,18 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 </div>
 <div id="summary" class="section level2">
 <h2>Summary</h2>
-<p>If you go back and compare the plots and slopes generated by the manually specified segments to those generated using <code>lsplines</code>, you find that they are identical, which is what you expect, but its still reassuring.</p>
-<p>More importantly, was the fit and quality of the simple linear regression worse than the segmented models? For assessing goodness-of-fit, I’ll use the <span class="math inline">\(adjusted R^2\)</span>, and for model selection I’ll use <span class="math inline">\(AIC\)</span>.</p>
+<p>If you go back and compare the plots and slopes generated by the manually specified segments to those generated using <code>lsplines</code>, you find that they are identical, which is what you expect, but using <code>lsplines</code> saved quite a bit of coding to process the data compared to the manual method.</p>
+<p>More important for the question I asked (did the change in prescribing regulations lead to a change in prescribed items?), was whether the fit and quality of the simple linear regression was worse than the piecewise regression models? For assessing goodness-of-fit, I used the <span class="math inline">\(adjusted R^2\)</span>, and for model selection I used <span class="math inline">\(AIC\)</span>.</p>
+<p><br></p>
+<div id="for-number-of-gabapentin-items-prescribed" class="section level4">
+<h4>For number of gabapentin items prescribed:</h4>
+<ul>
+<li><p><span class="math inline">\(adjusted R^2_{simple}\)</span> = 0.66 and <span class="math inline">\(adjusted R^2_{segmented}\)</span> = 0.72</p></li>
+<li><p><span class="math inline">\(AIC_{simple}\)</span> = 1410 and <span class="math inline">\(AIC_{segmented}\)</span> = 1399</p></li>
+</ul>
+<p>So neither model is a great fit, and its obvious why when you look at the plots; the data follow a curvilinear path that isn’t fully captured by the simple linear regression or linear spline. Based on the <span class="math inline">\(AIC\)</span>, the quality of the segmented model was relatively better than that of the simple linear regression model.</p>
+<p><br></p>
+</div>
 <div id="for-number-of-pregabalin-items-prescribed" class="section level4">
 <h4>For number of pregabalin items prescribed:</h4>
 <ul>
@@ -819,14 +829,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 <li><p><span class="math inline">\(AIC_{simple}\)</span> = 1371 and <span class="math inline">\(AIC_{segmented}\)</span> = 1367</p></li>
 </ul>
 <p>So by looking at the plots and assessing the <span class="math inline">\(adjusted R^2\)</span>s values, you can see that both models are fairly good fits. Based on the <span class="math inline">\(AIC\)</span> the quality of the segmented model is relatively better than that of the simple linear regression model.</p>
-</div>
-<div id="for-number-of-gabapentin-items-prescribed" class="section level4">
-<h4>For number of gabapentin items prescribed:</h4>
-<ul>
-<li><p><span class="math inline">\(adjusted R^2_{simple}\)</span> = 0.66 and <span class="math inline">\(adjusted R^2_{segmented}\)</span> = 0.72</p></li>
-<li><p><span class="math inline">\(AIC_{simple}\)</span> = 1410 and <span class="math inline">\(AIC_{segmented}\)</span> = 1399</p></li>
-</ul>
-<p>So neither model is a great fit, and its obvious why when you look at the plots; the data follow a curvilinear path that isn’t fully captured by the simple linear regression or linear spline. Based on the <span class="math inline">\(AIC\)</span>, the quality of the segmented model is relatively better than that of the simple linear regression model.</p>
+<p><br></p>
 </div>
 <div id="for-total-number-of-items-prescribed" class="section level4">
 <h4>For total number of items prescribed:</h4>
@@ -835,6 +838,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 <li><p><span class="math inline">\(AIC_{simple}\)</span> = 1472 and <span class="math inline">\(AIC_{segmented}\)</span> = 1464</p></li>
 </ul>
 <p>So neither model is a great fit, with the fit lying somewhere between the <span class="math inline">\(adjusted R^2\)</span> values obtained for pregabalin and those obtained for gabapentin. If you look at the plots, the data follow a curvilinear path, reflecting the influence of the gabapentin data on the total number of prescribed items. Based on the <span class="math inline">\(AIC\)</span>, the quality of the segmented model is relatively better than that of the simple linear regression model.</p>
+<p>Based on these results, I feel that the piecewise regression models were marginally better than the models produced by simple linear regression, and that there has been a change in prescribing of gabapentinoids since the introduction of the new regulations in April 2019. However, the changes are not marked.</p>
 <hr />
 <p>For more cool R content, visit: <a href="https://rweekly.org/" target="_blank">R Weekly</a></p>
 <hr />
@@ -887,8 +891,8 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
             <p style="display:inline-block">
                 <hr>
                 <h3>Share</h3>&ensp;
-                <a href="mailto:?subject=Reclassification of gabapentinoids as schedule 3 controlled substances in the UK: an interupted time series analysis&body=Hi, I thought you might like this post I found on painblogR:%0D%0A%0D%0Ahttps://www.painblogr.org/2020-07-03-piecewise-regression.html.%0D%0A%0D%0ABest regards" target="_blank"><i class="fa fa-envelope" style="color:#000000;vertical-align:middle;" title="Share on email" ></i></a>&ensp;
-                <a href="https://twitter.com/intent/tweet?url=https://www.painblogr.org/2020-07-03-piecewise-regression.html&text=Reclassification of gabapentinoids as schedule 3 controlled substances in the UK: an interupted time series analysis&via=painblogR" rel="nofollow" target="_blank" title="Share on Twitter"><i class="fa fa-twitter" style="color:#000000;vertical-align:middle;"></i></a>&ensp;
+                <a href="mailto:?subject=Reclassification of gabapentinoids as schedule 3 controlled substances in the UK: an interrupted time series analysis&body=Hi, I thought you might like this post I found on painblogR:%0D%0A%0D%0Ahttps://www.painblogr.org/2020-07-03-piecewise-regression.html.%0D%0A%0D%0ABest regards" target="_blank"><i class="fa fa-envelope" style="color:#000000;vertical-align:middle;" title="Share on email" ></i></a>&ensp;
+                <a href="https://twitter.com/intent/tweet?url=https://www.painblogr.org/2020-07-03-piecewise-regression.html&text=Reclassification of gabapentinoids as schedule 3 controlled substances in the UK: an interrupted time series analysis&via=painblogR" rel="nofollow" target="_blank" title="Share on Twitter"><i class="fa fa-twitter" style="color:#000000;vertical-align:middle;"></i></a>&ensp;
                 <a href="https://facebook.com/sharer.php?u=https://www.painblogr.org/2020-07-03-piecewise-regression.html" rel="nofollow" target="_blank" title="Share on Facebook"><i class="fa fa-facebook" style="color:#000000;vertical-align:middle;"></i></a>&ensp;
                 <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://www.painblogr.org/2020-07-03-piecewise-regression.html" rel="nofollow" target="_blank" title="Share on LinkedIn"><i class="fa fa-linkedin" style="color:#000000;vertical-align:middle;"></i></a>
             </p>

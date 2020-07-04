@@ -1,6 +1,6 @@
 ---
 title: "Reclassification of gabapentinoids as schedule 3 controlled substances in England: an interrupted time series analysis"
-post_title: "Reclassification of gabapentinoids as schedule 3 controlled substances in the UK: an interupted time series analysis"
+post_title: "Reclassification of gabapentinoids as schedule 3 controlled substances in the UK: an interrupted time series analysis"
 post_author: 'Peter Kamerman'
 post_date: '3 July 2020'
 post_image: 'https://www.painblogr.org/images/posts/2020-07-03-piecewise-regression/post-image.jpg'
@@ -28,17 +28,17 @@ Because of the rising number of drug-related fatalities linked to the use of gab
 
 [^2]: [Rescheduling of Gabapentin and Pregabalin as Schedule 3 Controlled Drugs](https://www.england.nhs.uk/wp-content/uploads/2019/03/pregabalin-and-gabapentin-guidance-v1.pdf){target="_blank"}. NHS England. _Accessed: 2020-06-29._
 
-By knowing exactly when the change in prescribing requirements began (1 April 2019), it is possible to use interrupted time series analysis to look for a change in prescribing at the time of the change in regulation. This analysis requires data on drug prescriptions over time, data that are freely available for the National health System (NHS) England through the [OpenPrescribing](https://openprescribing.net){target="_blank"} platform.
+By knowing exactly when the change in prescribing requirements began (1 April 2019), it is possible to use interrupted time series analysis to look for a change in prescribing from the time of the change in regulation. This analysis requires data on drug prescriptions over time, data that are freely available for the National Health System (NHS) England through the [OpenPrescribing](https://openprescribing.net){target="_blank"} platform.
 
-In this blog post I shall work through conducting an interrupted time series analysis using _piecewise regression_ (also called segmented regression). I will use two methods of _piecewise regression_: 
+In this blog post I work through my first attempt at conducting an interrupted time series analysis using _piecewise regression_ (also called segmented regression). I use two methods of _piecewise regression_: 
 
 1. Manually re-specifying the data to incorporate a breakpoint (knot).
 
-2. Using linear splines to specify segments around a knot. 
+2. Using linear splines to specify the knot. 
 
 ## Get some data
 
-The first thing to do is to get some data. Using the [OpenPrescribing API](https://openprescribing.net/api){target="_blank"}, I download data on the total items prescribed of gabapentin and pregabalin for the period 2020-05-01 to 2020-04-01 (please see this [_GitHub Gist_](https://gist.github.com/kamermanpr/3d7a76131034aa7d4268dfa438cb9f5f){target="_blank"} for the _R_ script I used). 
+The first thing to do was to get some data. Using the [OpenPrescribing API](https://openprescribing.net/api){target="_blank"}, I download data on the total items prescribed of gabapentin and pregabalin for the period 2020-05-01 to 2020-04-01 (please see this [_GitHub Gist_](https://gist.github.com/kamermanpr/3d7a76131034aa7d4268dfa438cb9f5f){target="_blank"} for the _R_ script I used). 
 
 ```{r}
 # Import data
@@ -53,7 +53,7 @@ head(data)
 str(data)
 ```
 
-There are five columns: a date column (_date_), a time column expressing the time in months since the first record (_time_months_), and then three columns expressing the number of prescribed items per month of gabapentin (_prescriptions\_gabapentin_), pregabalin (_prescriptions\_pregabalin_), and the total number of gabapentinoids (_prescriptions\_total_).
+The data had five columns: a date column (_date_), a time column expressing the time in months since the first record (_time_months_), and then three columns expressing the number of prescribed items per month of gabapentin (_prescriptions\_gabapentin_), pregabalin (_prescriptions\_pregabalin_), and the total number of gabapentinoids (_prescriptions\_total_).
 
 ```{r fig.height = 6, fig.width = 7}
 # Load package
@@ -93,9 +93,9 @@ ggplot(data = data_long) +
         axis.ticks = element_line(size = 0.5))
 ```
 
-Looking at the plot, the number of prescribed items for the individual drugs, and therefore the overall total of gabapentinoids too, have been increasing steeply over the past 5 years. There is, however, a hint (especially for pregabalin) of prescriptions leveling off a bit since the April 2020 change in prescribing regulations. 
+Looking at the plot, the number of prescribed items for the individual drugs, and therefore the overall total of gabapentinoids too, have been increasing steeply over the past 5 years. There is, however, a hint (especially for pregabalin) of prescriptions leveling off a bit since the April 2019 change in prescribing regulations. 
 
-Using piecewise regression, I will determine whether there is indeed a change in prescribed items from April 2019 . I will do so by fitting the data with a simple linear regression and piecewise regression (using the two methods mentioned above), and then compare the the models. I will do this modelling for each drug and the total.
+Using piecewise regression, I wanted to determine whether there was indeed a change in prescribed items from April 2019 . I did this assessment by fitting the data using simple linear regression and piecewise regression (using the two methods mentioned above), and then compared the the models. I did this modelling for each drug and the total.
 
 ## Simple linear regression
 
@@ -172,7 +172,7 @@ summary(data_long$mod_1[[3]])
 
 ### Manually re-specify the data to create two segments around a knot
 
-To create a knot you need to include a second term in your linear regression term, one term for each segment.
+To create a knot I needed to include a second term in the linear regression model, one term for each segment.
 
 **Original model:**
 
@@ -190,9 +190,9 @@ Where:
 
 Thus, for $x$ values that fall below the knot value ($x^{(k)}$), the second term will be 0, and for $x$ values greater than the knot value the second term will be $(x - x^{(k)})$. 
 
-For the data at hand, the knot point is 48 months, the _time\_months_ value that coincides with the implementation of the new regulations (2019-04-01). Therefore we can re-specify the data into two terms: time_months (for time values $<$ 48 months) and time_months2 (for time values $\geq$ 48 months)
+For my data, the knot point was 48 months, the _time\_months_ value that coincided with the implementation of the new regulations (2019-04-01). Therefore I re-specified the data into two terms: time_months (for time values $<$ 48 months) and time_months2 (for time values $\geq$ 48 months)
 
-The code block below shows how to do that for each of the three datatsets (Gabapentin, Pregabalin, and Total). First you create a dummy knot ($kx$; _dummy\_knot_) at 48 months, then you subtract the knot value ($x^{(k)} = 48$) from _time\_months_ ($x$) to produce _x\_minus\_knot_, and finally you multiply _dummy\_knot_ by  _x\_minus\_knot_ to yield the second term of the model, namely, _time\_months2_.
+The code block below shows how I added the second term for each of the three datatsets (Gabapentin, Pregabalin, and Total). First I created a dummy knot ($kx$; _dummy\_knot_) at 48 months, then I subtracted the knot value ($x^{(k)} = 48$) from _time\_months_ ($x$) to produce _x\_minus\_knot_, and finally I multiplied _dummy\_knot_ by  _x\_minus\_knot_ to yield the second term of the model, namely, _time\_months2_.
 
 ```{r}
 data_long <- data_long %>% 
@@ -212,7 +212,7 @@ head(data_long$data_2[[1]])
 tail(data_long$data_2[[1]])
 ```
 
-Now run the model using the updated data.
+Then I ran the model using the updated data.
 
 ```{r}
 data_long <- data_long %>% 
@@ -220,7 +220,7 @@ data_long <- data_long %>%
                      ~ lm(values ~ time_months + time_months2, data = .x)))
 ```
 
-Next, generated predicted values for the model and plot the data.
+I then generated predicted values for the model and plotted the data.
 
 ```{r fig.height = 6, fig.width = 7}
 data_long <- data_long %>% 
@@ -389,9 +389,21 @@ coef(data_long$mod_3[[3]])[[3]]
 
 ## Summary
 
-If you go back and compare the plots and slopes generated by the manually specified segments to those generated using `lsplines`, you find that they are identical, which is what you expect, but its still reassuring. 
+If you go back and compare the plots and slopes generated by the manually specified segments to those generated using `lsplines`, you find that they are identical, which is what you expect, but using `lsplines` saved quite a bit of coding to process the data compared to the manual method. 
 
-More importantly, was the fit and quality of the simple linear regression worse than the segmented models? For assessing goodness-of-fit, I'll use the $adjusted R^2$, and for model selection I'll use $AIC$. 
+More important for the question I asked (did the change in prescribing regulations lead to a change in prescribed items?), was whether the fit and quality of the simple linear regression was worse than the piecewise regression models? For assessing goodness-of-fit, I used the $adjusted R^2$, and for model selection I used $AIC$. 
+
+<br>
+
+#### For number of gabapentin items prescribed:
+
+- $adjusted R^2_{simple}$ = `r round(summary(data_long$mod_1[[1]])$adj.r.squared, 2)` and $adjusted R^2_{segmented}$ = `r round(summary(data_long$mod_3[[1]])$adj.r.squared, 2)`
+
+- $AIC_{simple}$ = `r round(AIC(data_long$mod_1[[1]]))` and $AIC_{segmented}$ = `r round(AIC(data_long$mod_3[[1]]))`
+
+So neither model is a great fit, and its obvious why when you look at the plots; the data follow a curvilinear path that isn't fully captured by the simple linear regression or linear spline. Based on the $AIC$, the quality of the segmented model was relatively better than that of the simple linear regression model.
+
+<br>
 
 #### For number of pregabalin items prescribed: 
 
@@ -401,13 +413,7 @@ More importantly, was the fit and quality of the simple linear regression worse 
 
 So by looking at the plots and assessing the $adjusted R^2$s values, you can see that both models are fairly good fits. Based on the $AIC$ the quality of the segmented model is relatively better than that of the simple linear regression model.
 
-#### For number of gabapentin items prescribed:
-
-- $adjusted R^2_{simple}$ = `r round(summary(data_long$mod_1[[1]])$adj.r.squared, 2)` and $adjusted R^2_{segmented}$ = `r round(summary(data_long$mod_3[[1]])$adj.r.squared, 2)`
-
-- $AIC_{simple}$ = `r round(AIC(data_long$mod_1[[1]]))` and $AIC_{segmented}$ = `r round(AIC(data_long$mod_3[[1]]))`
-
-So neither model is a great fit, and its obvious why when you look at the plots; the data follow a curvilinear path that isn't fully captured by the simple linear regression or linear spline. Based on the $AIC$, the quality of the segmented model is relatively better than that of the simple linear regression model.
+<br>
 
 #### For total number of items prescribed:
 
@@ -416,6 +422,8 @@ So neither model is a great fit, and its obvious why when you look at the plots;
 - $AIC_{simple}$ = `r round(AIC(data_long$mod_1[[3]]))` and $AIC_{segmented}$ = `r round(AIC(data_long$mod_3[[3]]))`
 
 So neither model is a great fit, with the fit lying somewhere between the $adjusted R^2$ values obtained for pregabalin and those obtained for gabapentin. If you look at the plots, the data follow a curvilinear path, reflecting the influence of the gabapentin data on the total number of prescribed items. Based on the $AIC$, the quality of the segmented model is relatively better than that of the simple linear regression model.
+
+Based on these results, I feel that the piecewise regression models were marginally better than the models produced by simple linear regression, and that there has been a change in prescribing of gabapentinoids since the introduction of the new regulations in April 2019. However, the changes are not marked.  
 
 ****
 
