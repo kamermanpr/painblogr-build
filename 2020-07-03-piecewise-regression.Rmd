@@ -16,6 +16,8 @@ output:
 knitr::opts_chunk$set(warning = FALSE,
                       message = FALSE,
                       fig.align = 'center')
+
+options(scipen = 999999)
 ```
 
 ****

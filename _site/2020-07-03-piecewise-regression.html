@@ -396,15 +396,15 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 ## -70794 -21651   3032  24697  51188 
 ## 
 ## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept) 503528.8     7728.0   65.16  &lt; 2e-16 ***
-## time_months   2371.7      220.3   10.76 1.89e-15 ***
+##             Estimate Std. Error t value             Pr(&gt;|t|)    
+## (Intercept) 503528.8     7728.0   65.16 &lt; 0.0000000000000002 ***
+## time_months   2371.7      220.3   10.76  0.00000000000000189 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Residual standard error: 29560 on 58 degrees of freedom
 ## Multiple R-squared:  0.6664, Adjusted R-squared:  0.6606 
-## F-statistic: 115.9 on 1 and 58 DF,  p-value: 1.89e-15</code></pre>
+## F-statistic: 115.9 on 1 and 58 DF,  p-value: 0.00000000000000189</code></pre>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co">## PREGABALIN</span></span>
 <span id="cb10-2"><a href="#cb10-2"></a><span class="co">### Plot</span></span>
 <span id="cb10-3"><a href="#cb10-3"></a>data_long<span class="op">$</span>plot_<span class="dv">1</span>[[<span class="dv">2</span>]]</span></code></pre></div>
@@ -420,15 +420,15 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 ## -57154 -12165   4972  16396  42945 
 ## 
 ## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept) 395574.9     5587.7   70.79   &lt;2e-16 ***
-## time_months   4465.3      159.3   28.03   &lt;2e-16 ***
+##             Estimate Std. Error t value            Pr(&gt;|t|)    
+## (Intercept) 395574.9     5587.7   70.79 &lt;0.0000000000000002 ***
+## time_months   4465.3      159.3   28.03 &lt;0.0000000000000002 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Residual standard error: 21370 on 58 degrees of freedom
 ## Multiple R-squared:  0.9312, Adjusted R-squared:  0.9301 
-## F-statistic: 785.6 on 1 and 58 DF,  p-value: &lt; 2.2e-16</code></pre>
+## F-statistic: 785.6 on 1 and 58 DF,  p-value: &lt; 0.00000000000000022</code></pre>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="co">## TOTAL</span></span>
 <span id="cb13-2"><a href="#cb13-2"></a><span class="co">### Plot</span></span>
 <span id="cb13-3"><a href="#cb13-3"></a>data_long<span class="op">$</span>plot_<span class="dv">1</span>[[<span class="dv">3</span>]]</span></code></pre></div>
@@ -444,15 +444,15 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 ## -127948  -34376    5254   42910   83841 
 ## 
 ## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept) 899103.7    12992.2   69.20   &lt;2e-16 ***
-## time_months   6837.0      370.4   18.46   &lt;2e-16 ***
+##             Estimate Std. Error t value            Pr(&gt;|t|)    
+## (Intercept) 899103.7    12992.2   69.20 &lt;0.0000000000000002 ***
+## time_months   6837.0      370.4   18.46 &lt;0.0000000000000002 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Residual standard error: 49690 on 58 degrees of freedom
 ## Multiple R-squared:  0.8545, Adjusted R-squared:  0.852 
-## F-statistic: 340.7 on 1 and 58 DF,  p-value: &lt; 2.2e-16</code></pre>
+## F-statistic: 340.7 on 1 and 58 DF,  p-value: &lt; 0.00000000000000022</code></pre>
 </div>
 <div id="piecewise-regression" class="section level2">
 <h2>Piecewise regression</h2>
@@ -557,16 +557,16 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 ## -76545 -19315   3516  19892  48666 
 ## 
 ## Coefficients:
-##              Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)  491934.6     7687.0  63.996  &lt; 2e-16 ***
-## time_months    2985.4      260.5  11.462  &lt; 2e-16 ***
-## time_months2  -5481.2     1491.8  -3.674 0.000528 ***
+##              Estimate Std. Error t value             Pr(&gt;|t|)    
+## (Intercept)  491934.6     7687.0  63.996 &lt; 0.0000000000000002 ***
+## time_months    2985.4      260.5  11.462 &lt; 0.0000000000000002 ***
+## time_months2  -5481.2     1491.8  -3.674             0.000528 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Residual standard error: 26810 on 57 degrees of freedom
 ## Multiple R-squared:  0.7303, Adjusted R-squared:  0.7208 
-## F-statistic: 77.17 on 2 and 57 DF,  p-value: &lt; 2.2e-16</code></pre>
+## F-statistic: 77.17 on 2 and 57 DF,  p-value: &lt; 0.00000000000000022</code></pre>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="co">### Slopes of individual segments</span></span>
 <span id="cb24-2"><a href="#cb24-2"></a><span class="co">#### Segment 1</span></span>
 <span id="cb24-3"><a href="#cb24-3"></a><span class="kw">coef</span>(data_long<span class="op">$</span>mod_<span class="dv">2</span>[[<span class="dv">1</span>]])[[<span class="dv">2</span>]]</span></code></pre></div>
@@ -589,16 +589,16 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 ## -59624 -12687   6007  13611  35680 
 ## 
 ## Coefficients:
-##              Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)  389636.5     5876.8  66.300   &lt;2e-16 ***
-## time_months    4779.7      199.1  24.003   &lt;2e-16 ***
-## time_months2  -2807.4     1140.5  -2.462   0.0169 *  
+##              Estimate Std. Error t value            Pr(&gt;|t|)    
+## (Intercept)  389636.5     5876.8  66.300 &lt;0.0000000000000002 ***
+## time_months    4779.7      199.1  24.003 &lt;0.0000000000000002 ***
+## time_months2  -2807.4     1140.5  -2.462              0.0169 *  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Residual standard error: 20500 on 57 degrees of freedom
 ## Multiple R-squared:  0.9379, Adjusted R-squared:  0.9357 
-## F-statistic: 430.1 on 2 and 57 DF,  p-value: &lt; 2.2e-16</code></pre>
+## F-statistic: 430.1 on 2 and 57 DF,  p-value: &lt; 0.00000000000000022</code></pre>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="co">### Slopes of individual segments</span></span>
 <span id="cb31-2"><a href="#cb31-2"></a><span class="co">#### Segment 1</span></span>
 <span id="cb31-3"><a href="#cb31-3"></a><span class="kw">coef</span>(data_long<span class="op">$</span>mod_<span class="dv">2</span>[[<span class="dv">2</span>]])[[<span class="dv">2</span>]]</span></code></pre></div>
@@ -621,16 +621,16 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 ## -136169  -37501   12546   32975   75616 
 ## 
 ## Coefficients:
-##              Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)  881571.1    13212.1  66.724  &lt; 2e-16 ***
-## time_months    7765.1      447.7  17.345  &lt; 2e-16 ***
-## time_months2  -8288.7     2564.0  -3.233  0.00204 ** 
+##              Estimate Std. Error t value             Pr(&gt;|t|)    
+## (Intercept)  881571.1    13212.1  66.724 &lt; 0.0000000000000002 ***
+## time_months    7765.1      447.7  17.345 &lt; 0.0000000000000002 ***
+## time_months2  -8288.7     2564.0  -3.233              0.00204 ** 
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Residual standard error: 46080 on 57 degrees of freedom
 ## Multiple R-squared:  0.8771, Adjusted R-squared:  0.8727 
-## F-statistic: 203.3 on 2 and 57 DF,  p-value: &lt; 2.2e-16</code></pre>
+## F-statistic: 203.3 on 2 and 57 DF,  p-value: &lt; 0.00000000000000022</code></pre>
 <div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="co">### Slopes of individual segments</span></span>
 <span id="cb38-2"><a href="#cb38-2"></a><span class="co">#### Segment 1</span></span>
 <span id="cb38-3"><a href="#cb38-3"></a><span class="kw">coef</span>(data_long<span class="op">$</span>mod_<span class="dv">2</span>[[<span class="dv">3</span>]])[[<span class="dv">2</span>]]</span></code></pre></div>
@@ -712,16 +712,20 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 ## (Intercept)                                             491934.6     7687.0
 ## lspline(x = time_months, knots = 48, marginal = FALSE)1   2985.4      260.5
 ## lspline(x = time_months, knots = 48, marginal = FALSE)2  -2495.8     1339.7
-##                                                         t value Pr(&gt;|t|)    
-## (Intercept)                                              63.996   &lt;2e-16 ***
-## lspline(x = time_months, knots = 48, marginal = FALSE)1  11.462   &lt;2e-16 ***
-## lspline(x = time_months, knots = 48, marginal = FALSE)2  -1.863   0.0676 .  
+##                                                         t value
+## (Intercept)                                              63.996
+## lspline(x = time_months, knots = 48, marginal = FALSE)1  11.462
+## lspline(x = time_months, knots = 48, marginal = FALSE)2  -1.863
+##                                                                    Pr(&gt;|t|)    
+## (Intercept)                                             &lt;0.0000000000000002 ***
+## lspline(x = time_months, knots = 48, marginal = FALSE)1 &lt;0.0000000000000002 ***
+## lspline(x = time_months, knots = 48, marginal = FALSE)2              0.0676 .  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Residual standard error: 26810 on 57 degrees of freedom
 ## Multiple R-squared:  0.7303, Adjusted R-squared:  0.7208 
-## F-statistic: 77.17 on 2 and 57 DF,  p-value: &lt; 2.2e-16</code></pre>
+## F-statistic: 77.17 on 2 and 57 DF,  p-value: &lt; 0.00000000000000022</code></pre>
 <div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a><span class="co">### Slopes of individual segments</span></span>
 <span id="cb45-2"><a href="#cb45-2"></a><span class="co">#### Segment 1</span></span>
 <span id="cb45-3"><a href="#cb45-3"></a><span class="kw">coef</span>(data_long<span class="op">$</span>mod_<span class="dv">3</span>[[<span class="dv">1</span>]])[[<span class="dv">2</span>]]</span></code></pre></div>
@@ -750,16 +754,20 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 ## (Intercept)                                             389636.5     5876.8
 ## lspline(x = time_months, knots = 48, marginal = FALSE)1   4779.7      199.1
 ## lspline(x = time_months, knots = 48, marginal = FALSE)2   1972.3     1024.2
-##                                                         t value Pr(&gt;|t|)    
-## (Intercept)                                              66.300   &lt;2e-16 ***
-## lspline(x = time_months, knots = 48, marginal = FALSE)1  24.003   &lt;2e-16 ***
-## lspline(x = time_months, knots = 48, marginal = FALSE)2   1.926   0.0591 .  
+##                                                         t value
+## (Intercept)                                              66.300
+## lspline(x = time_months, knots = 48, marginal = FALSE)1  24.003
+## lspline(x = time_months, knots = 48, marginal = FALSE)2   1.926
+##                                                                    Pr(&gt;|t|)    
+## (Intercept)                                             &lt;0.0000000000000002 ***
+## lspline(x = time_months, knots = 48, marginal = FALSE)1 &lt;0.0000000000000002 ***
+## lspline(x = time_months, knots = 48, marginal = FALSE)2              0.0591 .  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Residual standard error: 20500 on 57 degrees of freedom
 ## Multiple R-squared:  0.9379, Adjusted R-squared:  0.9357 
-## F-statistic: 430.1 on 2 and 57 DF,  p-value: &lt; 2.2e-16</code></pre>
+## F-statistic: 430.1 on 2 and 57 DF,  p-value: &lt; 0.00000000000000022</code></pre>
 <div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a><span class="co">### Slopes of individual segments</span></span>
 <span id="cb52-2"><a href="#cb52-2"></a><span class="co">#### Segment 1</span></span>
 <span id="cb52-3"><a href="#cb52-3"></a><span class="kw">coef</span>(data_long<span class="op">$</span>mod_<span class="dv">3</span>[[<span class="dv">2</span>]])[[<span class="dv">2</span>]]</span></code></pre></div>
@@ -788,16 +796,20 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 ## (Intercept)                                             881571.1    13212.1
 ## lspline(x = time_months, knots = 48, marginal = FALSE)1   7765.1      447.7
 ## lspline(x = time_months, knots = 48, marginal = FALSE)2   -523.5     2302.6
-##                                                         t value Pr(&gt;|t|)    
-## (Intercept)                                              66.724   &lt;2e-16 ***
-## lspline(x = time_months, knots = 48, marginal = FALSE)1  17.345   &lt;2e-16 ***
-## lspline(x = time_months, knots = 48, marginal = FALSE)2  -0.227    0.821    
+##                                                         t value
+## (Intercept)                                              66.724
+## lspline(x = time_months, knots = 48, marginal = FALSE)1  17.345
+## lspline(x = time_months, knots = 48, marginal = FALSE)2  -0.227
+##                                                                    Pr(&gt;|t|)    
+## (Intercept)                                             &lt;0.0000000000000002 ***
+## lspline(x = time_months, knots = 48, marginal = FALSE)1 &lt;0.0000000000000002 ***
+## lspline(x = time_months, knots = 48, marginal = FALSE)2               0.821    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Residual standard error: 46080 on 57 degrees of freedom
 ## Multiple R-squared:  0.8771, Adjusted R-squared:  0.8727 
-## F-statistic: 203.3 on 2 and 57 DF,  p-value: &lt; 2.2e-16</code></pre>
+## F-statistic: 203.3 on 2 and 57 DF,  p-value: &lt; 0.00000000000000022</code></pre>
 <div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1"></a><span class="co">### Slopes of individual segments</span></span>
 <span id="cb59-2"><a href="#cb59-2"></a><span class="co">#### Segment 1</span></span>
 <span id="cb59-3"><a href="#cb59-3"></a><span class="kw">coef</span>(data_long<span class="op">$</span>mod_<span class="dv">3</span>[[<span class="dv">3</span>]])[[<span class="dv">2</span>]]</span></code></pre></div>
