@@ -429,6 +429,8 @@ Based on these results, I feel that the piecewise regression models were margina
 
 ****
 
+Thanks to Blair H Smith for giving me the idea to perform these analyses.
+
 For more cool R content, visit: [R Weekly](https://rweekly.org/){target="_blank"}
 
 ****
