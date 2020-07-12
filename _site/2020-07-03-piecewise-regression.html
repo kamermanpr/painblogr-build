@@ -207,6 +207,12 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
                             <li><a href="https://www.painblogr.org/biostatistics/">Introduction to Biostatistics</a></li>
                         </ul>
                     </li>
+                    <li class="dropdown" style="display:table-cell;float:none;vertical-align:middle;font-size:16px;">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Apps<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="https://kamermanpr.shinyapps.io/painblogr-statr/">statr: a stats calculator</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
             <!-- /. nav-collapse -->
@@ -867,28 +873,65 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 ## BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
 ## LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
 ## 
+## Random number generation:
+##  RNG:     Mersenne-Twister 
+##  Normal:  Inversion 
+##  Sample:  Rounding 
+##  
 ## locale:
 ## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
 ## 
 ## attached base packages:
-## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## [1] grid      stats     graphics  grDevices utils     datasets  methods  
+## [8] base     
 ## 
 ## other attached packages:
-## [1] lspline_1.0-0 purrr_0.3.4   ggplot2_3.3.2 stringr_1.4.0 tidyr_1.1.0  
-## [6] dplyr_1.0.0  
+##  [1] lspline_1.0-0       carrots_0.1.0       geofacet_0.2.0     
+##  [4] survey_4.0          survival_3.1-12     Matrix_1.2-18      
+##  [7] sf_0.9-4            fiftystater_1.0.1   skimr_2.1.1        
+## [10] magrittr_1.5        geojsonio_0.9.2     lubridate_1.7.9    
+## [13] xml2_1.3.2          sp_1.4-2            leaflet_2.0.3      
+## [16] highcharter_0.7.0   flexdashboard_0.5.2 gganimate_1.0.5    
+## [19] gdtools_0.2.2       ggiraph_0.7.0       svglite_1.2.3.2    
+## [22] pander_0.6.3        knitr_1.29          forcats_0.5.0      
+## [25] stringr_1.4.0       dplyr_1.0.0         purrr_0.3.4        
+## [28] readr_1.3.1         tidyr_1.1.0         tibble_3.0.1       
+## [31] ggplot2_3.3.2       tidyverse_1.3.0    
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Rcpp_1.0.4.6     pillar_1.4.4     compiler_4.0.2   tools_4.0.2     
-##  [5] digest_0.6.25    evaluate_0.14    lifecycle_0.2.0  tibble_3.0.1    
-##  [9] gtable_0.3.0     nlme_3.1-148     lattice_0.20-41  mgcv_1.8-31     
-## [13] pkgconfig_2.0.3  rlang_0.4.6      Matrix_1.2-18    cli_2.0.2       
-## [17] yaml_2.2.1       xfun_0.15        withr_2.2.0      knitr_1.29      
-## [21] generics_0.0.2   vctrs_0.3.1      grid_4.0.2       tidyselect_1.1.0
-## [25] glue_1.4.1       R6_2.4.1         fansi_0.4.1      rmarkdown_2.3   
-## [29] farver_2.0.3     magrittr_1.5     scales_1.1.1     ellipsis_0.3.1  
-## [33] htmltools_0.5.0  splines_4.0.2    assertthat_0.2.1 colorspace_1.4-1
-## [37] labeling_0.3     utf8_1.1.4       stringi_1.4.6    munsell_0.5.0   
-## [41] crayon_1.3.4</code></pre>
+##  [1] colorspace_1.4-1    ellipsis_0.3.1      class_7.3-17       
+##  [4] rgdal_1.5-10        base64enc_0.1-3     fs_1.4.1           
+##  [7] rstudioapi_0.11     httpcode_0.3.0      farver_2.0.3       
+## [10] ggrepel_0.8.2       fansi_0.4.1         splines_4.0.2      
+## [13] rlist_0.4.6.1       jsonlite_1.6.1      broom_0.5.6        
+## [16] dbplyr_1.4.4        png_0.1-7           rgeos_0.5-3        
+## [19] compiler_4.0.2      httr_1.4.1          backports_1.1.8    
+## [22] assertthat_0.2.1    lazyeval_0.2.2      cli_2.0.2          
+## [25] tweenr_1.0.1        htmltools_0.5.0     prettyunits_1.1.1  
+## [28] tools_4.0.2         igraph_1.2.5        gtable_0.3.0       
+## [31] glue_1.4.1          geojson_0.3.4       V8_3.2.0           
+## [34] Rcpp_1.0.4.6        imguR_1.0.3         cellranger_1.1.0   
+## [37] vctrs_0.3.1         crul_0.9.0          nlme_3.1-148       
+## [40] crosstalk_1.1.0.1   xfun_0.15           rvest_0.3.5        
+## [43] lifecycle_0.2.0     jqr_1.1.0           zoo_1.8-8          
+## [46] scales_1.1.1        hms_0.5.3           yaml_2.2.1         
+## [49] quantmod_0.4.17     curl_4.3            gridExtra_2.3      
+## [52] stringi_1.4.6       highr_0.8           maptools_1.0-1     
+## [55] e1071_1.7-3         TTR_0.23-6          boot_1.3-25        
+## [58] repr_1.1.0          rlang_0.4.6         pkgconfig_2.0.3    
+## [61] systemfonts_0.2.3   geogrid_0.1.1       evaluate_0.14      
+## [64] lattice_0.20-41     htmlwidgets_1.5.1   labeling_0.3       
+## [67] tidyselect_1.1.0    R6_2.4.1            generics_0.0.2     
+## [70] DBI_1.1.0           mgcv_1.8-31         pillar_1.4.4       
+## [73] haven_2.3.1         whisker_0.4         foreign_0.8-80     
+## [76] withr_2.2.0         units_0.6-7         xts_0.12-0         
+## [79] modelr_0.1.8        crayon_1.3.4        uuid_0.1-4         
+## [82] KernSmooth_2.23-17  utf8_1.1.4          rmarkdown_2.3      
+## [85] jpeg_0.1-8.1        progress_1.2.2      rnaturalearth_0.1.0
+## [88] readxl_1.3.1        data.table_1.12.8   blob_1.2.1         
+## [91] reprex_0.3.0        digest_0.6.25       classInt_0.4-3     
+## [94] webshot_0.5.2       munsell_0.5.0       viridisLite_0.3.0  
+## [97] kableExtra_1.1.0    mitools_2.4</code></pre>
 </div>
 <div class="footnotes">
 <hr />

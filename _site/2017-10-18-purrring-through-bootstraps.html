@@ -17,6 +17,7 @@
  <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
  <script src="site_libs/navigation-1.1/tabsets.js"></script>
  <script src="site_libs/navigation-1.1/codefolding.js"></script>
+ <script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
  <script src="site_libs/kePrint-0.0.1/kePrint.js"></script> 
 
 	
@@ -209,6 +210,12 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */  div.sourceCod
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Teaching<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="https://www.painblogr.org/biostatistics/">Introduction to Biostatistics</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" style="display:table-cell;float:none;vertical-align:middle;font-size:16px;">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Apps<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="https://kamermanpr.shinyapps.io/painblogr-statr/">statr: a stats calculator</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -472,7 +479,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */  div.sourceCod
 <span id="cb22-12"><a href="#cb22-12"></a><span class="st">    </span><span class="co"># Drop the list-columns (no longer needed)</span></span>
 <span id="cb22-13"><a href="#cb22-13"></a><span class="st">    </span>dplyr<span class="op">::</span><span class="kw">select</span>(<span class="op">-</span>data, <span class="op">-</span>booted, <span class="op">-</span>booted_ci) <span class="op">%&gt;%</span></span>
 <span id="cb22-14"><a href="#cb22-14"></a><span class="st">    </span><span class="co"># Unnest the dataframe</span></span>
-<span id="cb22-15"><a href="#cb22-15"></a><span class="st">    </span>tidyr<span class="op">::</span><span class="kw">unnest</span>()</span></code></pre></div>
+<span id="cb22-15"><a href="#cb22-15"></a><span class="st">    </span>tidyr<span class="op">::</span><span class="kw">unnest</span>(<span class="dt">cols =</span> <span class="kw">c</span>(statistic, lower_ci, upper_ci))</span></code></pre></div>
 <p>And for the “big reveal”, printing <strong>iris_booted</strong> gives a 3 x 4 dataframe with one class “factor” column (<em>“Species”</em>), and three class “double” columns (<em>“statistic”</em>, <em>“lower_ci”</em>, <em>“upper_ci”</em>). Each column contains data for one variable, and different observations of each variable are in different rows. As such, the dataframe can be considered tidy and the data are easy to work with.</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="co"># Print the tidy dataframe</span></span>
 <span id="cb23-2"><a href="#cb23-2"></a>iris_booted</span></code></pre></div>
@@ -520,7 +527,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */  div.sourceCod
 </tr>
 <tr class="odd">
 <td align="left">virginica</td>
-<td align="right">5.5</td>
+<td align="right">5.6</td>
 <td align="right">5.2</td>
 <td align="right">5.7</td>
 </tr>
@@ -598,7 +605,7 @@ versicolor
 virginica
 </td>
 <td style="text-align:right;">
-5.5
+5.6
 </td>
 <td style="text-align:right;">
 5.2
@@ -614,13 +621,13 @@ virginica
 <div id="session-information" class="section level2">
 <h2>Session information</h2>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="kw">sessionInfo</span>()</span></code></pre></div>
-<pre><code>## R version 3.6.3 (2020-02-29)
-## Platform: x86_64-apple-darwin15.6.0 (64-bit)
+<pre><code>## R version 4.0.2 (2020-06-22)
+## Platform: x86_64-apple-darwin17.0 (64-bit)
 ## Running under: macOS Catalina 10.15.5
 ## 
 ## Matrix products: default
-## BLAS:   /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRblas.0.dylib
-## LAPACK: /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRlapack.dylib
+## BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
 ## 
 ## locale:
 ## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -629,38 +636,38 @@ virginica
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-##  [1] magrittr_1.5          geojsonio_0.9.2       lubridate_1.7.4      
-##  [4] xml2_1.3.0            sp_1.4-1              leaflet_2.0.3        
-##  [7] highcharter_0.7.0     flexdashboard_0.5.1.1 gganimate_1.0.5      
-## [10] gdtools_0.2.1         ggiraph_0.7.0         svglite_1.2.3        
-## [13] pander_0.6.3          knitr_1.28            forcats_0.5.0        
-## [16] stringr_1.4.0         dplyr_0.8.5           purrr_0.3.3          
-## [19] readr_1.3.1           tidyr_1.0.2           tibble_3.0.0         
-## [22] ggplot2_3.3.0.9000    tidyverse_1.3.0      
+##  [1] magrittr_1.5        geojsonio_0.9.2     lubridate_1.7.9    
+##  [4] xml2_1.3.2          sp_1.4-2            leaflet_2.0.3      
+##  [7] highcharter_0.7.0   flexdashboard_0.5.2 gganimate_1.0.5    
+## [10] gdtools_0.2.2       ggiraph_0.7.0       svglite_1.2.3.2    
+## [13] pander_0.6.3        knitr_1.29          forcats_0.5.0      
+## [16] stringr_1.4.0       dplyr_1.0.0         purrr_0.3.4        
+## [19] readr_1.3.1         tidyr_1.1.0         tibble_3.0.1       
+## [22] ggplot2_3.3.2       tidyverse_1.3.0    
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] nlme_3.1-145       fs_1.3.1           sf_0.8-0           xts_0.12-0        
-##  [5] webshot_0.5.2      progress_1.2.2     httr_1.4.1         tools_3.6.3       
-##  [9] backports_1.1.5    utf8_1.1.4         rgdal_1.4-8        R6_2.4.1          
-## [13] KernSmooth_2.23-16 lazyeval_0.2.2     rgeos_0.5-2        DBI_1.1.0         
-## [17] colorspace_1.4-1   withr_2.1.2        tidyselect_1.0.0   prettyunits_1.1.1 
-## [21] curl_4.3           compiler_3.6.3     cli_2.0.2          rvest_0.3.5       
-## [25] labeling_0.3       scales_1.1.0       classInt_0.4-2     systemfonts_0.1.1 
-## [29] digest_0.6.25      foreign_0.8-76     rmarkdown_2.1      pkgconfig_2.0.3   
-## [33] htmltools_0.4.0    dbplyr_1.4.2       highr_0.8          htmlwidgets_1.5.1 
-## [37] rlang_0.4.5        readxl_1.3.1       TTR_0.23-6         httpcode_0.2.0    
+##  [1] nlme_3.1-148       fs_1.4.1           sf_0.9-4           xts_0.12-0        
+##  [5] webshot_0.5.2      progress_1.2.2     httr_1.4.1         tools_4.0.2       
+##  [9] backports_1.1.8    utf8_1.1.4         rgdal_1.5-10       R6_2.4.1          
+## [13] KernSmooth_2.23-17 lazyeval_0.2.2     rgeos_0.5-3        DBI_1.1.0         
+## [17] colorspace_1.4-1   withr_2.2.0        tidyselect_1.1.0   prettyunits_1.1.1 
+## [21] curl_4.3           compiler_4.0.2     cli_2.0.2          rvest_0.3.5       
+## [25] labeling_0.3       scales_1.1.1       classInt_0.4-3     systemfonts_0.2.3 
+## [29] digest_0.6.25      foreign_0.8-80     rmarkdown_2.3      pkgconfig_2.0.3   
+## [33] htmltools_0.5.0    dbplyr_1.4.4       highr_0.8          htmlwidgets_1.5.1 
+## [37] rlang_0.4.6        readxl_1.3.1       TTR_0.23-6         httpcode_0.3.0    
 ## [41] rstudioapi_0.11    quantmod_0.4.17    farver_2.0.3       generics_0.0.2    
-## [45] zoo_1.8-7          jsonlite_1.6.1     crosstalk_1.1.0.1  rlist_0.4.6.1     
-## [49] kableExtra_1.1.0   Rcpp_1.0.4         munsell_0.5.0      fansi_0.4.1       
+## [45] zoo_1.8-8          jsonlite_1.6.1     crosstalk_1.1.0.1  rlist_0.4.6.1     
+## [49] kableExtra_1.1.0   Rcpp_1.0.4.6       munsell_0.5.0      fansi_0.4.1       
 ## [53] lifecycle_0.2.0    stringi_1.4.6      whisker_0.4        yaml_2.2.1        
-## [57] jqr_1.1.0          maptools_0.9-9     grid_3.6.3         crayon_1.3.4      
-## [61] lattice_0.20-38    haven_2.2.0        geojson_0.3.2      hms_0.5.3         
-## [65] pillar_1.4.3       igraph_1.2.5       uuid_0.1-4         boot_1.3-24       
-## [69] crul_0.9.0         reprex_0.3.0       glue_1.3.2         evaluate_0.14     
-## [73] V8_3.1.0           data.table_1.12.8  modelr_0.1.6       vctrs_0.2.4       
-## [77] tweenr_1.0.1       cellranger_1.1.0   gtable_0.3.0       assertthat_0.2.1  
-## [81] xfun_0.12          broom_0.5.5        e1071_1.7-3        class_7.3-16      
-## [85] viridisLite_0.3.0  units_0.6-6        ellipsis_0.3.0</code></pre>
+## [57] jqr_1.1.0          maptools_1.0-1     grid_4.0.2         blob_1.2.1        
+## [61] crayon_1.3.4       lattice_0.20-41    haven_2.3.1        geojson_0.3.4     
+## [65] hms_0.5.3          pillar_1.4.4       igraph_1.2.5       uuid_0.1-4        
+## [69] boot_1.3-25        crul_0.9.0         reprex_0.3.0       glue_1.4.1        
+## [73] evaluate_0.14      V8_3.2.0           data.table_1.12.8  modelr_0.1.8      
+## [77] vctrs_0.3.1        tweenr_1.0.1       cellranger_1.1.0   gtable_0.3.0      
+## [81] assertthat_0.2.1   xfun_0.15          broom_0.5.6        e1071_1.7-3       
+## [85] class_7.3-17       viridisLite_0.3.0  units_0.6-7        ellipsis_0.3.1</code></pre>
 </div>
 <div class="footnotes">
 <hr />
@@ -738,11 +745,46 @@ virginica
  			   </p>
  		   </div>
  	   </div>
- 	</div> 
+ 	</div>
+ 
+ <script>
+ 
+ // add bootstrap table styles to pandoc tables
+ function bootstrapStylePandocTables() {
+   $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+ }
+ $(document).ready(function () {
+   bootstrapStylePandocTables();
+ });
+ 
+ </script>
+ 
+ <!-- tabsets -->
+ 
+ <script>
+ $(document).ready(function () {
+   window.buildTabsets("TOC");
+ });
+ 
+ $(document).ready(function () {
+   $('.tabset-dropdown > .nav-tabs > li').click(function () {
+     $(this).parent().toggleClass('nav-tabs-open')
+   });
+ });
+ </script>
+ 
+ <!-- code folding -->
+ 
+ 
+ <!-- dynamically load mathjax for compatibility with self-contained -->
+ <script>
+   (function () {
+     var script = document.createElement("script");
+     script.type = "text/javascript";
+     script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+     document.getElementsByTagName("head")[0].appendChild(script);
+   })();
+ </script> 
     </footer>
 </body>
-
-<!-- extras ------------------------------------------------------->
-<!-- Mathjax -->
-
 </html>

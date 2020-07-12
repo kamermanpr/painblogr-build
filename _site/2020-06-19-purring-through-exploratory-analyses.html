@@ -15,7 +15,8 @@
  <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
  <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
  <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
- <script src="site_libs/navigation-1.1/tabsets.js"></script> 
+ <script src="site_libs/navigation-1.1/tabsets.js"></script>
+ <script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script> 
 
 	
 		<style type="text/css">
@@ -206,6 +207,12 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
                             <li><a href="https://www.painblogr.org/biostatistics/">Introduction to Biostatistics</a></li>
                         </ul>
                     </li>
+                    <li class="dropdown" style="display:table-cell;float:none;vertical-align:middle;font-size:16px;">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Apps<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="https://kamermanpr.shinyapps.io/painblogr-statr/">statr: a stats calculator</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
             <!-- /. nav-collapse -->
@@ -276,7 +283,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 <pre><code>## [1] 618  11</code></pre>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co">## Structure</span></span>
 <span id="cb3-2"><a href="#cb3-2"></a><span class="kw">str</span>(carrots)</span></code></pre></div>
-<pre><code>## Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    618 obs. of  11 variables:
+<pre><code>## tibble [618 × 11] (S3: tbl_df/tbl/data.frame)
 ##  $ Product          : Factor w/ 6 levels &quot;Bolero&quot;,&quot;Major&quot;,..: 1 2 3 4 5 6 1 2 3 4 ...
 ##  $ Consumer         : Factor w/ 103 levels &quot;168&quot;,&quot;169&quot;,&quot;171&quot;,..: 1 1 1 1 1 1 2 2 2 2 ...
 ##  $ Frequency        : Ord.factor w/ 5 levels &quot;Once a week or more&quot;&lt;..: 1 1 1 1 1 1 1 1 1 1 ...
@@ -284,193 +291,443 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 ##  $ Age_group        : Ord.factor w/ 4 levels &quot;&lt; 25 years&quot;&lt;&quot;26-40 years&quot;&lt;..: 4 4 4 4 4 4 4 4 4 4 ...
 ##  $ Employment_status: Ord.factor w/ 7 levels &quot;Unskilled labourer&quot;&lt;..: 7 7 7 7 7 7 7 7 7 7 ...
 ##  $ Income_group     : Ord.factor w/ 4 levels &quot;Low-income&quot;&lt;&quot;Lower middle-income&quot;&lt;..: 2 2 2 2 2 2 2 2 2 2 ...
-##  $ Preference       : int  4 4 5 5 5 4 6 5 5 5 ...
-##  $ Sweetness        : int  2 2 4 3 4 2 5 2 5 2 ...
-##  $ Bitterness       : int  4 2 2 2 1 3 1 2 2 2 ...
-##  $ Crispness        : int  2 3 4 5 5 3 5 3 2 3 ...</code></pre>
+##  $ Preference       : int [1:618] 4 4 5 5 5 4 6 5 5 5 ...
+##  $ Sweetness        : int [1:618] 2 2 4 3 4 2 5 2 5 2 ...
+##  $ Bitterness       : int [1:618] 4 2 2 2 1 3 1 2 2 2 ...
+##  $ Crispness        : int [1:618] 2 3 4 5 5 3 5 3 2 3 ...</code></pre>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co">## Summary</span></span>
 <span id="cb5-2"><a href="#cb5-2"></a>skimr<span class="op">::</span><span class="kw">skim</span>(carrots)</span></code></pre></div>
-<table>
-<caption>Data summary</caption>
+<table style='width: auto;'
+        class='table table-condensed'>
+<caption>
+Data summary
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+</th>
+</tr>
+</thead>
 <tbody>
-<tr class="odd">
-<td align="left">Name</td>
-<td align="left">carrots</td>
+<tr>
+<td style="text-align:left;">
+Name
+</td>
+<td style="text-align:left;">
+carrots
+</td>
 </tr>
-<tr class="even">
-<td align="left">Number of rows</td>
-<td align="left">618</td>
+<tr>
+<td style="text-align:left;">
+Number of rows
+</td>
+<td style="text-align:left;">
+618
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Number of columns</td>
-<td align="left">11</td>
+<tr>
+<td style="text-align:left;">
+Number of columns
+</td>
+<td style="text-align:left;">
+11
+</td>
 </tr>
-<tr class="even">
-<td align="left">_______________________</td>
-<td align="left"></td>
+<tr>
+<td style="text-align:left;">
+_______________________
+</td>
+<td style="text-align:left;">
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Column type frequency:</td>
-<td align="left"></td>
+<tr>
+<td style="text-align:left;">
+Column type frequency:
+</td>
+<td style="text-align:left;">
+</td>
 </tr>
-<tr class="even">
-<td align="left">factor</td>
-<td align="left">7</td>
+<tr>
+<td style="text-align:left;">
+factor
+</td>
+<td style="text-align:left;">
+7
+</td>
 </tr>
-<tr class="odd">
-<td align="left">numeric</td>
-<td align="left">4</td>
+<tr>
+<td style="text-align:left;">
+numeric
+</td>
+<td style="text-align:left;">
+4
+</td>
 </tr>
-<tr class="even">
-<td align="left">________________________</td>
-<td align="left"></td>
+<tr>
+<td style="text-align:left;">
+________________________
+</td>
+<td style="text-align:left;">
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Group variables</td>
-<td align="left">None</td>
+<tr>
+<td style="text-align:left;">
+Group variables
+</td>
+<td style="text-align:left;">
+None
+</td>
 </tr>
 </tbody>
 </table>
 <p><strong>Variable type: factor</strong></p>
 <table>
 <thead>
-<tr class="header">
-<th align="left">skim_variable</th>
-<th align="right">n_missing</th>
-<th align="right">complete_rate</th>
-<th align="left">ordered</th>
-<th align="right">n_unique</th>
-<th align="left">top_counts</th>
+<tr>
+<th style="text-align:left;">
+skim_variable
+</th>
+<th style="text-align:right;">
+n_missing
+</th>
+<th style="text-align:right;">
+complete_rate
+</th>
+<th style="text-align:left;">
+ordered
+</th>
+<th style="text-align:right;">
+n_unique
+</th>
+<th style="text-align:left;">
+top_counts
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left">Product</td>
-<td align="right">0</td>
-<td align="right">1.00</td>
-<td align="left">FALSE</td>
-<td align="right">6</td>
-<td align="left">Bol: 103, Maj: 103, Nav: 103, Nel: 103</td>
+<tr>
+<td style="text-align:left;">
+Product
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:left;">
+Bol: 103, Maj: 103, Nav: 103, Nel: 103
+</td>
 </tr>
-<tr class="even">
-<td align="left">Consumer</td>
-<td align="right">0</td>
-<td align="right">1.00</td>
-<td align="left">FALSE</td>
-<td align="right">103</td>
-<td align="left">168: 6, 169: 6, 171: 6, 172: 6</td>
+<tr>
+<td style="text-align:left;">
+Consumer
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+103
+</td>
+<td style="text-align:left;">
+168: 6, 169: 6, 171: 6, 172: 6
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Frequency</td>
-<td align="right">0</td>
-<td align="right">1.00</td>
-<td align="left">TRUE</td>
-<td align="right">5</td>
-<td align="left">Onc: 432, Onc: 102, Onc: 54, Les: 18</td>
+<tr>
+<td style="text-align:left;">
+Frequency
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+Onc: 432, Onc: 102, Onc: 54, Les: 18
+</td>
 </tr>
-<tr class="even">
-<td align="left">Sex</td>
-<td align="right">0</td>
-<td align="right">1.00</td>
-<td align="left">FALSE</td>
-<td align="right">2</td>
-<td align="left">Fem: 426, Mal: 192</td>
+<tr>
+<td style="text-align:left;">
+Sex
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+Fem: 426, Mal: 192
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Age_group</td>
-<td align="right">0</td>
-<td align="right">1.00</td>
-<td align="left">TRUE</td>
-<td align="right">4</td>
-<td align="left">41-: 300, &gt; 6: 156, 26-: 96, &lt; 2: 66</td>
+<tr>
+<td style="text-align:left;">
+Age_group
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:left;">
+41-: 300, &gt; 6: 156, 26-: 96, &lt; 2: 66
+</td>
 </tr>
-<tr class="even">
-<td align="left">Employment_status</td>
-<td align="right">0</td>
-<td align="right">1.00</td>
-<td align="left">TRUE</td>
-<td align="right">7</td>
-<td align="left">Ret: 162, Off: 150, Ski: 90, Uns: 66</td>
+<tr>
+<td style="text-align:left;">
+Employment_status
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:left;">
+Ret: 162, Off: 150, Ski: 90, Uns: 66
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Income_group</td>
-<td align="right">36</td>
-<td align="right">0.94</td>
-<td align="left">TRUE</td>
-<td align="right">4</td>
-<td align="left">Upp: 240, Low: 222, Low: 84, Upp: 36</td>
+<tr>
+<td style="text-align:left;">
+Income_group
+</td>
+<td style="text-align:right;">
+36
+</td>
+<td style="text-align:right;">
+0.94
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:left;">
+Upp: 240, Low: 222, Low: 84, Upp: 36
+</td>
 </tr>
 </tbody>
 </table>
 <p><strong>Variable type: numeric</strong></p>
 <table>
 <thead>
-<tr class="header">
-<th align="left">skim_variable</th>
-<th align="right">n_missing</th>
-<th align="right">complete_rate</th>
-<th align="right">mean</th>
-<th align="right">sd</th>
-<th align="right">p0</th>
-<th align="right">p25</th>
-<th align="right">p50</th>
-<th align="right">p75</th>
-<th align="right">p100</th>
-<th align="left">hist</th>
+<tr>
+<th style="text-align:left;">
+skim_variable
+</th>
+<th style="text-align:right;">
+n_missing
+</th>
+<th style="text-align:right;">
+complete_rate
+</th>
+<th style="text-align:right;">
+mean
+</th>
+<th style="text-align:right;">
+sd
+</th>
+<th style="text-align:right;">
+p0
+</th>
+<th style="text-align:right;">
+p25
+</th>
+<th style="text-align:right;">
+p50
+</th>
+<th style="text-align:right;">
+p75
+</th>
+<th style="text-align:right;">
+p100
+</th>
+<th style="text-align:left;">
+hist
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left">Preference</td>
-<td align="right">2</td>
-<td align="right">1</td>
-<td align="right">4.58</td>
-<td align="right">1.16</td>
-<td align="right">1</td>
-<td align="right">4</td>
-<td align="right">4</td>
-<td align="right">5</td>
-<td align="right">7</td>
-<td align="left">▁▂▇▆▅</td>
+<tr>
+<td style="text-align:left;">
+Preference
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4.58
+</td>
+<td style="text-align:right;">
+1.16
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:left;">
+▁▂▇▆▅
+</td>
 </tr>
-<tr class="even">
-<td align="left">Sweetness</td>
-<td align="right">2</td>
-<td align="right">1</td>
-<td align="right">3.03</td>
-<td align="right">1.30</td>
-<td align="right">1</td>
-<td align="right">2</td>
-<td align="right">3</td>
-<td align="right">4</td>
-<td align="right">7</td>
-<td align="left">▇▅▃▂▁</td>
+<tr>
+<td style="text-align:left;">
+Sweetness
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+3.03
+</td>
+<td style="text-align:right;">
+1.30
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:left;">
+▇▅▃▂▁
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Bitterness</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">2.28</td>
-<td align="right">1.20</td>
-<td align="right">1</td>
-<td align="right">1</td>
-<td align="right">2</td>
-<td align="right">3</td>
-<td align="right">7</td>
-<td align="left">▇▂▁▁▁</td>
+<tr>
+<td style="text-align:left;">
+Bitterness
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2.28
+</td>
+<td style="text-align:right;">
+1.20
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:left;">
+▇▂▁▁▁
+</td>
 </tr>
-<tr class="even">
-<td align="left">Crispness</td>
-<td align="right">3</td>
-<td align="right">1</td>
-<td align="right">3.15</td>
-<td align="right">1.33</td>
-<td align="right">1</td>
-<td align="right">2</td>
-<td align="right">3</td>
-<td align="right">4</td>
-<td align="right">7</td>
-<td align="left">▇▆▃▃▁</td>
+<tr>
+<td style="text-align:left;">
+Crispness
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+3.15
+</td>
+<td style="text-align:right;">
+1.33
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:left;">
+▇▆▃▃▁
+</td>
 </tr>
 </tbody>
 </table>
@@ -548,7 +805,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 <p><strong>Nested dataframe</strong></p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="kw">print</span>(diced_carrots)</span></code></pre></div>
 <pre><code>## # A tibble: 2 x 2
-## # Groups:   Product [6]
+## # Groups:   Product [2]
 ##   Product data              
 ##   &lt;fct&gt;   &lt;list&gt;            
 ## 1 Bolero  &lt;tibble [309 × 5]&gt;
@@ -621,7 +878,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="co"># Print the updated dataframe</span></span>
 <span id="cb18-2"><a href="#cb18-2"></a><span class="kw">print</span>(diced_carrots)</span></code></pre></div>
 <pre><code>## # A tibble: 2 x 3
-## # Groups:   Product [6]
+## # Groups:   Product [2]
 ##   Product data               basic_plot
 ##   &lt;fct&gt;   &lt;list&gt;             &lt;list&gt;    
 ## 1 Bolero  &lt;tibble [309 × 5]&gt; &lt;gg&gt;      
@@ -661,7 +918,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 <span id="cb21-15"><a href="#cb21-15"></a><span class="co"># Look at the resulting dataframe</span></span>
 <span id="cb21-16"><a href="#cb21-16"></a><span class="kw">print</span>(diced_carrots)</span></code></pre></div>
 <pre><code>## # A tibble: 2 x 4
-## # Groups:   Product [6]
+## # Groups:   Product [2]
 ##   Product data               basic_plot labeled_plot
 ##   &lt;fct&gt;   &lt;list&gt;             &lt;list&gt;     &lt;list&gt;      
 ## 1 Bolero  &lt;tibble [309 × 5]&gt; &lt;gg&gt;       &lt;gg&gt;        
@@ -698,7 +955,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 <span id="cb25-10"><a href="#cb25-10"></a><span class="co"># Print the updated dataframe</span></span>
 <span id="cb25-11"><a href="#cb25-11"></a><span class="kw">print</span>(diced_carrots)</span></code></pre></div>
 <pre><code>## # A tibble: 2 x 5
-## # Groups:   Product [6]
+## # Groups:   Product [2]
 ##   Product data               basic_plot labeled_plot median_pref      
 ##   &lt;fct&gt;   &lt;list&gt;             &lt;list&gt;     &lt;list&gt;       &lt;list&gt;           
 ## 1 Bolero  &lt;tibble [309 × 5]&gt; &lt;gg&gt;       &lt;gg&gt;         &lt;tibble [12 × 3]&gt;
@@ -710,146 +967,306 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 <span id="cb27-4"><a href="#cb27-4"></a>      <span class="op">~</span><span class="st"> </span><span class="kw">print</span>(knitr<span class="op">::</span><span class="kw">kable</span>(<span class="dt">x =</span> .x,</span>
 <span id="cb27-5"><a href="#cb27-5"></a>                           <span class="dt">caption =</span> .y)))</span></code></pre></div>
 <table>
-<caption>Bolero</caption>
+<caption>
+Bolero
+</caption>
 <thead>
-<tr class="header">
-<th align="left">Age_group</th>
-<th align="left">Attributes</th>
-<th align="right">med_ian</th>
+<tr>
+<th style="text-align:left;">
+Age_group
+</th>
+<th style="text-align:left;">
+Attributes
+</th>
+<th style="text-align:right;">
+med_ian
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left">&lt; 25 years</td>
-<td align="left">Bitterness</td>
-<td align="right">5</td>
+<tr>
+<td style="text-align:left;">
+&lt; 25 years
+</td>
+<td style="text-align:left;">
+Bitterness
+</td>
+<td style="text-align:right;">
+5
+</td>
 </tr>
-<tr class="even">
-<td align="left">&lt; 25 years</td>
-<td align="left">Crispness</td>
-<td align="right">5</td>
+<tr>
+<td style="text-align:left;">
+&lt; 25 years
+</td>
+<td style="text-align:left;">
+Crispness
+</td>
+<td style="text-align:right;">
+5
+</td>
 </tr>
-<tr class="odd">
-<td align="left">&lt; 25 years</td>
-<td align="left">Sweetness</td>
-<td align="right">5</td>
+<tr>
+<td style="text-align:left;">
+&lt; 25 years
+</td>
+<td style="text-align:left;">
+Sweetness
+</td>
+<td style="text-align:right;">
+5
+</td>
 </tr>
-<tr class="even">
-<td align="left">26-40 years</td>
-<td align="left">Bitterness</td>
-<td align="right">4</td>
+<tr>
+<td style="text-align:left;">
+26-40 years
+</td>
+<td style="text-align:left;">
+Bitterness
+</td>
+<td style="text-align:right;">
+4
+</td>
 </tr>
-<tr class="odd">
-<td align="left">26-40 years</td>
-<td align="left">Crispness</td>
-<td align="right">4</td>
+<tr>
+<td style="text-align:left;">
+26-40 years
+</td>
+<td style="text-align:left;">
+Crispness
+</td>
+<td style="text-align:right;">
+4
+</td>
 </tr>
-<tr class="even">
-<td align="left">26-40 years</td>
-<td align="left">Sweetness</td>
-<td align="right">4</td>
+<tr>
+<td style="text-align:left;">
+26-40 years
+</td>
+<td style="text-align:left;">
+Sweetness
+</td>
+<td style="text-align:right;">
+4
+</td>
 </tr>
-<tr class="odd">
-<td align="left">41-60 years</td>
-<td align="left">Bitterness</td>
-<td align="right">5</td>
+<tr>
+<td style="text-align:left;">
+41-60 years
+</td>
+<td style="text-align:left;">
+Bitterness
+</td>
+<td style="text-align:right;">
+5
+</td>
 </tr>
-<tr class="even">
-<td align="left">41-60 years</td>
-<td align="left">Crispness</td>
-<td align="right">5</td>
+<tr>
+<td style="text-align:left;">
+41-60 years
+</td>
+<td style="text-align:left;">
+Crispness
+</td>
+<td style="text-align:right;">
+5
+</td>
 </tr>
-<tr class="odd">
-<td align="left">41-60 years</td>
-<td align="left">Sweetness</td>
-<td align="right">5</td>
+<tr>
+<td style="text-align:left;">
+41-60 years
+</td>
+<td style="text-align:left;">
+Sweetness
+</td>
+<td style="text-align:right;">
+5
+</td>
 </tr>
-<tr class="even">
-<td align="left">&gt; 61 years</td>
-<td align="left">Bitterness</td>
-<td align="right">5</td>
+<tr>
+<td style="text-align:left;">
+&gt; 61 years
+</td>
+<td style="text-align:left;">
+Bitterness
+</td>
+<td style="text-align:right;">
+5
+</td>
 </tr>
-<tr class="odd">
-<td align="left">&gt; 61 years</td>
-<td align="left">Crispness</td>
-<td align="right">5</td>
+<tr>
+<td style="text-align:left;">
+&gt; 61 years
+</td>
+<td style="text-align:left;">
+Crispness
+</td>
+<td style="text-align:right;">
+5
+</td>
 </tr>
-<tr class="even">
-<td align="left">&gt; 61 years</td>
-<td align="left">Sweetness</td>
-<td align="right">5</td>
+<tr>
+<td style="text-align:left;">
+&gt; 61 years
+</td>
+<td style="text-align:left;">
+Sweetness
+</td>
+<td style="text-align:right;">
+5
+</td>
 </tr>
 </tbody>
 </table>
 <table>
-<caption>Yukon</caption>
+<caption>
+Yukon
+</caption>
 <thead>
-<tr class="header">
-<th align="left">Age_group</th>
-<th align="left">Attributes</th>
-<th align="right">med_ian</th>
+<tr>
+<th style="text-align:left;">
+Age_group
+</th>
+<th style="text-align:left;">
+Attributes
+</th>
+<th style="text-align:right;">
+med_ian
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left">&lt; 25 years</td>
-<td align="left">Bitterness</td>
-<td align="right">4</td>
+<tr>
+<td style="text-align:left;">
+&lt; 25 years
+</td>
+<td style="text-align:left;">
+Bitterness
+</td>
+<td style="text-align:right;">
+4
+</td>
 </tr>
-<tr class="even">
-<td align="left">&lt; 25 years</td>
-<td align="left">Crispness</td>
-<td align="right">4</td>
+<tr>
+<td style="text-align:left;">
+&lt; 25 years
+</td>
+<td style="text-align:left;">
+Crispness
+</td>
+<td style="text-align:right;">
+4
+</td>
 </tr>
-<tr class="odd">
-<td align="left">&lt; 25 years</td>
-<td align="left">Sweetness</td>
-<td align="right">4</td>
+<tr>
+<td style="text-align:left;">
+&lt; 25 years
+</td>
+<td style="text-align:left;">
+Sweetness
+</td>
+<td style="text-align:right;">
+4
+</td>
 </tr>
-<tr class="even">
-<td align="left">26-40 years</td>
-<td align="left">Bitterness</td>
-<td align="right">4</td>
+<tr>
+<td style="text-align:left;">
+26-40 years
+</td>
+<td style="text-align:left;">
+Bitterness
+</td>
+<td style="text-align:right;">
+4
+</td>
 </tr>
-<tr class="odd">
-<td align="left">26-40 years</td>
-<td align="left">Crispness</td>
-<td align="right">4</td>
+<tr>
+<td style="text-align:left;">
+26-40 years
+</td>
+<td style="text-align:left;">
+Crispness
+</td>
+<td style="text-align:right;">
+4
+</td>
 </tr>
-<tr class="even">
-<td align="left">26-40 years</td>
-<td align="left">Sweetness</td>
-<td align="right">4</td>
+<tr>
+<td style="text-align:left;">
+26-40 years
+</td>
+<td style="text-align:left;">
+Sweetness
+</td>
+<td style="text-align:right;">
+4
+</td>
 </tr>
-<tr class="odd">
-<td align="left">41-60 years</td>
-<td align="left">Bitterness</td>
-<td align="right">4</td>
+<tr>
+<td style="text-align:left;">
+41-60 years
+</td>
+<td style="text-align:left;">
+Bitterness
+</td>
+<td style="text-align:right;">
+4
+</td>
 </tr>
-<tr class="even">
-<td align="left">41-60 years</td>
-<td align="left">Crispness</td>
-<td align="right">4</td>
+<tr>
+<td style="text-align:left;">
+41-60 years
+</td>
+<td style="text-align:left;">
+Crispness
+</td>
+<td style="text-align:right;">
+4
+</td>
 </tr>
-<tr class="odd">
-<td align="left">41-60 years</td>
-<td align="left">Sweetness</td>
-<td align="right">4</td>
+<tr>
+<td style="text-align:left;">
+41-60 years
+</td>
+<td style="text-align:left;">
+Sweetness
+</td>
+<td style="text-align:right;">
+4
+</td>
 </tr>
-<tr class="even">
-<td align="left">&gt; 61 years</td>
-<td align="left">Bitterness</td>
-<td align="right">5</td>
+<tr>
+<td style="text-align:left;">
+&gt; 61 years
+</td>
+<td style="text-align:left;">
+Bitterness
+</td>
+<td style="text-align:right;">
+5
+</td>
 </tr>
-<tr class="odd">
-<td align="left">&gt; 61 years</td>
-<td align="left">Crispness</td>
-<td align="right">5</td>
+<tr>
+<td style="text-align:left;">
+&gt; 61 years
+</td>
+<td style="text-align:left;">
+Crispness
+</td>
+<td style="text-align:right;">
+5
+</td>
 </tr>
-<tr class="even">
-<td align="left">&gt; 61 years</td>
-<td align="left">Sweetness</td>
-<td align="right">5</td>
+<tr>
+<td style="text-align:left;">
+&gt; 61 years
+</td>
+<td style="text-align:left;">
+Sweetness
+</td>
+<td style="text-align:right;">
+5
+</td>
 </tr>
 </tbody>
 </table>
@@ -872,7 +1289,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 <span id="cb28-16"><a href="#cb28-16"></a><span class="co"># Look at the resulting dataframe</span></span>
 <span id="cb28-17"><a href="#cb28-17"></a><span class="kw">print</span>(diced_carrots)</span></code></pre></div>
 <pre><code>## # A tibble: 2 x 6
-## # Groups:   Product [6]
+## # Groups:   Product [2]
 ##   Product data             basic_plot labeled_plot median_pref     labeled_plot2
 ##   &lt;fct&gt;   &lt;list&gt;           &lt;list&gt;     &lt;list&gt;       &lt;list&gt;          &lt;list&gt;       
 ## 1 Bolero  &lt;tibble [309 × … &lt;gg&gt;       &lt;gg&gt;         &lt;tibble [12 × … &lt;gg&gt;         
@@ -887,36 +1304,73 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 </div>
 <div id="session-information" class="section level1">
 <h1>Session information</h1>
-<pre><code>## R version 3.6.3 (2020-02-29)
-## Platform: x86_64-apple-darwin15.6.0 (64-bit)
+<pre><code>## R version 4.0.2 (2020-06-22)
+## Platform: x86_64-apple-darwin17.0 (64-bit)
 ## Running under: macOS Catalina 10.15.5
 ## 
 ## Matrix products: default
-## BLAS:   /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRblas.0.dylib
-## LAPACK: /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRlapack.dylib
+## BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
 ## 
+## Random number generation:
+##  RNG:     Mersenne-Twister 
+##  Normal:  Inversion 
+##  Sample:  Rounding 
+##  
 ## locale:
 ## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
 ## 
 ## attached base packages:
-## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## [1] grid      stats     graphics  grDevices utils     datasets  methods  
+## [8] base     
 ## 
 ## other attached packages:
-## [1] ggplot2_3.3.0.9000 purrr_0.3.3        tidyr_1.0.2        dplyr_0.8.5       
-## [5] carrots_0.1.0     
+##  [1] carrots_0.1.0       geofacet_0.2.0      survey_4.0         
+##  [4] survival_3.1-12     Matrix_1.2-18       sf_0.9-4           
+##  [7] fiftystater_1.0.1   skimr_2.1.1         magrittr_1.5       
+## [10] geojsonio_0.9.2     lubridate_1.7.9     xml2_1.3.2         
+## [13] sp_1.4-2            leaflet_2.0.3       highcharter_0.7.0  
+## [16] flexdashboard_0.5.2 gganimate_1.0.5     gdtools_0.2.2      
+## [19] ggiraph_0.7.0       svglite_1.2.3.2     pander_0.6.3       
+## [22] knitr_1.29          forcats_0.5.0       stringr_1.4.0      
+## [25] dplyr_1.0.0         purrr_0.3.4         readr_1.3.1        
+## [28] tidyr_1.1.0         tibble_3.0.1        ggplot2_3.3.2      
+## [31] tidyverse_1.3.0    
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Rcpp_1.0.4       pillar_1.4.3     compiler_3.6.3   highr_0.8       
-##  [5] base64enc_0.1-3  tools_3.6.3      digest_0.6.25    jsonlite_1.6.1  
-##  [9] evaluate_0.14    lifecycle_0.2.0  tibble_3.0.0     gtable_0.3.0    
-## [13] pkgconfig_2.0.3  rlang_0.4.5      cli_2.0.2        yaml_2.2.1      
-## [17] xfun_0.12        withr_2.1.2      repr_1.1.0       stringr_1.4.0   
-## [21] knitr_1.28       vctrs_0.2.4      grid_3.6.3       tidyselect_1.0.0
-## [25] glue_1.3.2       R6_2.4.1         fansi_0.4.1      rmarkdown_2.1   
-## [29] farver_2.0.3     skimr_2.1        magrittr_1.5     scales_1.1.0    
-## [33] ellipsis_0.3.0   htmltools_0.4.0  assertthat_0.2.1 colorspace_1.4-1
-## [37] labeling_0.3     utf8_1.1.4       stringi_1.4.6    munsell_0.5.0   
-## [41] crayon_1.3.4</code></pre>
+##  [1] colorspace_1.4-1    ellipsis_0.3.1      class_7.3-17       
+##  [4] rgdal_1.5-10        base64enc_0.1-3     fs_1.4.1           
+##  [7] rstudioapi_0.11     httpcode_0.3.0      farver_2.0.3       
+## [10] ggrepel_0.8.2       fansi_0.4.1         splines_4.0.2      
+## [13] rlist_0.4.6.1       jsonlite_1.6.1      broom_0.5.6        
+## [16] dbplyr_1.4.4        png_0.1-7           rgeos_0.5-3        
+## [19] compiler_4.0.2      httr_1.4.1          backports_1.1.8    
+## [22] assertthat_0.2.1    lazyeval_0.2.2      cli_2.0.2          
+## [25] tweenr_1.0.1        htmltools_0.5.0     prettyunits_1.1.1  
+## [28] tools_4.0.2         igraph_1.2.5        gtable_0.3.0       
+## [31] glue_1.4.1          geojson_0.3.4       V8_3.2.0           
+## [34] Rcpp_1.0.4.6        imguR_1.0.3         cellranger_1.1.0   
+## [37] vctrs_0.3.1         crul_0.9.0          nlme_3.1-148       
+## [40] crosstalk_1.1.0.1   xfun_0.15           rvest_0.3.5        
+## [43] lifecycle_0.2.0     jqr_1.1.0           zoo_1.8-8          
+## [46] scales_1.1.1        hms_0.5.3           yaml_2.2.1         
+## [49] quantmod_0.4.17     curl_4.3            gridExtra_2.3      
+## [52] stringi_1.4.6       highr_0.8           maptools_1.0-1     
+## [55] e1071_1.7-3         TTR_0.23-6          boot_1.3-25        
+## [58] repr_1.1.0          rlang_0.4.6         pkgconfig_2.0.3    
+## [61] systemfonts_0.2.3   geogrid_0.1.1       evaluate_0.14      
+## [64] lattice_0.20-41     htmlwidgets_1.5.1   labeling_0.3       
+## [67] tidyselect_1.1.0    R6_2.4.1            generics_0.0.2     
+## [70] DBI_1.1.0           pillar_1.4.4        haven_2.3.1        
+## [73] whisker_0.4         foreign_0.8-80      withr_2.2.0        
+## [76] units_0.6-7         xts_0.12-0          modelr_0.1.8       
+## [79] crayon_1.3.4        uuid_0.1-4          KernSmooth_2.23-17 
+## [82] utf8_1.1.4          rmarkdown_2.3       jpeg_0.1-8.1       
+## [85] progress_1.2.2      rnaturalearth_0.1.0 readxl_1.3.1       
+## [88] data.table_1.12.8   blob_1.2.1          reprex_0.3.0       
+## [91] digest_0.6.25       classInt_0.4-3      webshot_0.5.2      
+## [94] munsell_0.5.0       viridisLite_0.3.0   kableExtra_1.1.0   
+## [97] mitools_2.4</code></pre>
 </div>
 
         <!-- Include these sections here, otherwise YAML headings not inserted -->
@@ -987,11 +1441,46 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
  			   </p>
  		   </div>
  	   </div>
- 	</div> 
+ 	</div>
+ 
+ <script>
+ 
+ // add bootstrap table styles to pandoc tables
+ function bootstrapStylePandocTables() {
+   $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+ }
+ $(document).ready(function () {
+   bootstrapStylePandocTables();
+ });
+ 
+ </script>
+ 
+ <!-- tabsets -->
+ 
+ <script>
+ $(document).ready(function () {
+   window.buildTabsets("TOC");
+ });
+ 
+ $(document).ready(function () {
+   $('.tabset-dropdown > .nav-tabs > li').click(function () {
+     $(this).parent().toggleClass('nav-tabs-open')
+   });
+ });
+ </script>
+ 
+ <!-- code folding -->
+ 
+ 
+ <!-- dynamically load mathjax for compatibility with self-contained -->
+ <script>
+   (function () {
+     var script = document.createElement("script");
+     script.type = "text/javascript";
+     script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+     document.getElementsByTagName("head")[0].appendChild(script);
+   })();
+ </script> 
     </footer>
 </body>
-
-<!-- extras ------------------------------------------------------->
-<!-- Mathjax -->
-
 </html>

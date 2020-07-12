@@ -169,7 +169,7 @@ iris_booted <- iris_nest %>%
     # Drop the list-columns (no longer needed)
     dplyr::select(-data, -booted, -booted_ci) %>%
     # Unnest the dataframe
-    tidyr::unnest()
+    tidyr::unnest(cols = c(statistic, lower_ci, upper_ci))
 ```
 
 And for the "big reveal", printing **iris_booted** gives a 3 x 4 dataframe with one class "factor" column (_"Species"_), and three class "double" columns (_"statistic"_, _"lower_ci"_, _"upper_ci"_). Each column contains data for one variable, and different observations of each variable are in different rows. As such, the dataframe can be considered tidy and the data are easy to work with.

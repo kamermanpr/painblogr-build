@@ -1,4 +1,5 @@
 ---
+title: "Too few medicines to treat neuropathic pain on national essential medicines lists"
 post_title: "Too few medicines to treat neuropathic pain on national essential medicines lists"
 post_author: 'Peter Kamerman'
 post_date: '11 February 2017'
@@ -156,7 +157,7 @@ first_line <- access_data %>%
            venlafaxine, class_tca, class_alpha2delta,
            class_snri, classes_first) %>%
     # Get rid of strange attr that have cropped-up
-    tbl_df()
+    as.data.frame()
 
 #-- Extract second-line drugs per country ------------------------------------#
 second_line <- access_data %>%
@@ -212,7 +213,7 @@ second_line <- access_data %>%
     select(name, grade, tramadol, lidocaine, class_opioid2,
            class_topical, classes_second) %>%
     # Get rid of strange attr that have cropped-up
-    tbl_df()
+    as.data.frame()
 
 #-- Extract third-line drugs per country -------------------------------------#
 third_line <- access_data %>%
@@ -265,7 +266,7 @@ third_line <- access_data %>%
     # Reorder columns
     select(name, grade, morphine, oxycodone, classes_third) %>%
     # Get rid of strange attr that have cropped-up
-    tbl_df()
+    as.data.frame()
 
 ############################################################
 #                                                          #
