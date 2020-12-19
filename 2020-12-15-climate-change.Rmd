@@ -30,7 +30,7 @@ library(rnaturalearth)
 
 ****
 
-I was asked by my wife, Prof Andrea Fuller, head of the [Wildlife Conservation Physiology Lab](https://www.wildlifeconservationphysiology.com/){target="_blank"}, University of the Witwatersrand, South Africa, to assist her and some colleagues who were writing a paper on [^1] to update a figure (Figure 1 below) on the global aridity index, which appears in the 2019 IPCC report on climate change [^2]. The original figure uses 2015 data, and they wanted to use 2019 data. 
+I was asked by my wife, Prof Andrea Fuller, head of the [Wildlife Conservation Physiology Lab](https://www.wildlifeconservationphysiology.com/){target="_blank"}, University of the Witwatersrand, South Africa, to assist her and some colleagues who were writing a paper on how  dryland mammals may respond to climate change [^1] to update a figure (Figure 1 below) on the global aridity index, which appears in the 2019 IPCC report on climate change [^2]. The original figure uses 2015 data, and they wanted to use 2019 data. 
 
 The aridity index is the ratio of the total amount of precipitation in an area and the amount of evapotranspiration . That is, what is the water gain (precipitation) relative to the amount of water loss (evapotranspiration) in a region. The smaller the ratio, the more arid a region is. 
 
@@ -261,7 +261,7 @@ I think that is a fairly good reproduction of the original figure from the IPCC 
 Seeing this gradient from hyper-arid to semi-arid across the Southern African region, I wanted to see if there has been any changes in this gradient over the past 25 years. 
 ## Aridity index across South Africa (1995 to 2019)
 
-I wanted to use data from 1995 through to 2019, in 5-year periods. This meant down loading and processing multiple files, and to reduce the amount of repetition in my code, I turned to the `map` functions in the `purrr` package. 
+I wanted to use data from 1995 through to 2019, in 5-year periods. This meant downloading and processing multiple files, and to reduce the amount of repetition in my code, I turned to the `map` functions in the `purrr` package. 
 
 ### Download data
 
@@ -440,7 +440,7 @@ ai_df <- ai_df %>%
                            ordered = TRUE))
 ```
 
-### Get natural earth map
+### Get Natural Earth map
 
 I wanted to plot the country outlines on the raster image, and to do this I needed the `rnaturalearth` package.
 

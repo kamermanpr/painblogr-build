@@ -257,7 +257,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
         <h1>Using raster maths to calculate and map aridity indices</h1> 
         <h4>Peter Kamerman</h4> 
         <em>15 December 2020</em> <hr />
-<p>I was asked by my wife, Prof Andrea Fuller, head of the <a href="https://www.wildlifeconservationphysiology.com/" target="_blank">Wildlife Conservation Physiology Lab</a>, University of the Witwatersrand, South Africa, to assist her and some colleagues who were writing a paper on <a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> to update a figure (Figure 1 below) on the global aridity index, which appears in the 2019 IPCC report on climate change <a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>. The original figure uses 2015 data, and they wanted to use 2019 data.</p>
+<p>I was asked by my wife, Prof Andrea Fuller, head of the <a href="https://www.wildlifeconservationphysiology.com/" target="_blank">Wildlife Conservation Physiology Lab</a>, University of the Witwatersrand, South Africa, to assist her and some colleagues who were writing a paper on how dryland mammals may respond to climate change <a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> to update a figure (Figure 1 below) on the global aridity index, which appears in the 2019 IPCC report on climate change <a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>. The original figure uses 2015 data, and they wanted to use 2019 data.</p>
 <p>The aridity index is the ratio of the total amount of precipitation in an area and the amount of evapotranspiration . That is, what is the water gain (precipitation) relative to the amount of water loss (evapotranspiration) in a region. The smaller the ratio, the more arid a region is.</p>
 <p>
 <figure>
@@ -424,7 +424,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 <p><img src="2020-12-15-climate-change_files/figure-html/unnamed-chunk-9-1.png" width="864" style="display: block; margin: auto;" /></p>
 <p>I think that is a fairly good reproduction of the original figure from the IPCC report, updated to use 2019. As you can see large swaths of North Africa, the Arabian Peninsula, and central Australia are deemed hyper-arid regions. In fact, most of Australia is hyper-arid or arid. The same goes for the Southern African region I am from, were the West coast is hyper-arid, and most of the rest of the region is arid or semi-arid.</p>
 <p>Seeing this gradient from hyper-arid to semi-arid across the Southern African region, I wanted to see if there has been any changes in this gradient over the past 25 years. ## Aridity index across South Africa (1995 to 2019)</p>
-<p>I wanted to use data from 1995 through to 2019, in 5-year periods. This meant down loading and processing multiple files, and to reduce the amount of repetition in my code, I turned to the <code>map</code> functions in the <code>purrr</code> package.</p>
+<p>I wanted to use data from 1995 through to 2019, in 5-year periods. This meant downloading and processing multiple files, and to reduce the amount of repetition in my code, I turned to the <code>map</code> functions in the <code>purrr</code> package.</p>
 </div>
 <div id="download-data" class="section level3">
 <h3>Download data</h3>
@@ -570,7 +570,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 <span id="cb14-50"><a href="#cb14-50"></a>                           <span class="dt">ordered =</span> <span class="ot">TRUE</span>))</span></code></pre></div>
 </div>
 <div id="get-natural-earth-map" class="section level3">
-<h3>Get natural earth map</h3>
+<h3>Get Natural Earth map</h3>
 <p>I wanted to plot the country outlines on the raster image, and to do this I needed the <code>rnaturalearth</code> package.</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="co"># Load package</span></span>
 <span id="cb15-2"><a href="#cb15-2"></a><span class="kw">library</span>(rnaturalearth)</span>
