@@ -7,7 +7,7 @@ output:
 
 ### 2020
 
-- 15 December 2020 [Using raster maths to calculate and map aridity indices](https://www.painblogr.org/2020-07-03-climate-change.html)
+- 15 December 2020 [Using raster maths to calculate and map aridity indices](https://www.painblogr.org/2020-12-15-climate-change.html)
 
 - 3 July 2020 [Reclassification of gabapentinoids as schedule 3 controlled substances in England: an interrupted time series analysis](https://www.painblogr.org/2020-07-03-piecewise-regression.html) 
 
