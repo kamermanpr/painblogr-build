@@ -259,6 +259,7 @@ ggplot(data = aridity_index_df) +
 I think that is a fairly good reproduction of the original figure from the IPCC report, updated to use 2019. As you can see large swaths of North Africa, the Arabian Peninsula, and central Australia are deemed hyper-arid regions. In fact, most of Australia is hyper-arid or arid. The same goes for the Southern African region I am from, were the West coast is hyper-arid, and most of the rest of the region is arid or semi-arid. 
 
 Seeing this gradient from hyper-arid to semi-arid across the Southern African region, I wanted to see if there has been any changes in this gradient over the past 25 years. 
+
 ## Aridity index across South Africa (1995 to 2019)
 
 I wanted to use data from 1995 through to 2019, in 5-year periods. This meant downloading and processing multiple files, and to reduce the amount of repetition in my code, I turned to the `map` functions in the `purrr` package. 
@@ -364,7 +365,7 @@ evapotranspiration_rasters <- map(.x = evapotranspiration_rasters,
                                   ~ crop(.x, ext2))
 ```
 
-# Raster maths
+### Raster maths
 
 Then to calculate the annual mean for each year.
 
@@ -486,6 +487,8 @@ ggplot() +
 ```
 
 It's always difficult to interpret a series of snapshots in time, and as can be seen in the figure, there are spatial fluctuations in the aridity index across the ~25 years. For example, the humid zone increases massively in 2000, but is minimal in most other years. What is clear however, is that 2019 was a bad year, with large expanses of Namibia and South Africa experiencing hyper-arid conditions. It will be interesting to see if this trend continues in 2020, especially since the _El Nino-Southern Oscillation_ is in a _La Nina_ state in 2020, which is associated with above average rainfall in Southern Africa.
+
+I hope you found this blog post useful, and that enjoyed reading it.
 
 ****
 

@@ -423,9 +423,12 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 <span id="cb9-39"><a href="#cb9-39"></a>        <span class="dt">panel.grid.minor =</span> <span class="kw">element_blank</span>())</span></code></pre></div>
 <p><img src="2020-12-15-climate-change_files/figure-html/unnamed-chunk-9-1.png" width="864" style="display: block; margin: auto;" /></p>
 <p>I think that is a fairly good reproduction of the original figure from the IPCC report, updated to use 2019. As you can see large swaths of North Africa, the Arabian Peninsula, and central Australia are deemed hyper-arid regions. In fact, most of Australia is hyper-arid or arid. The same goes for the Southern African region I am from, were the West coast is hyper-arid, and most of the rest of the region is arid or semi-arid.</p>
-<p>Seeing this gradient from hyper-arid to semi-arid across the Southern African region, I wanted to see if there has been any changes in this gradient over the past 25 years. ## Aridity index across South Africa (1995 to 2019)</p>
-<p>I wanted to use data from 1995 through to 2019, in 5-year periods. This meant downloading and processing multiple files, and to reduce the amount of repetition in my code, I turned to the <code>map</code> functions in the <code>purrr</code> package.</p>
+<p>Seeing this gradient from hyper-arid to semi-arid across the Southern African region, I wanted to see if there has been any changes in this gradient over the past 25 years.</p>
 </div>
+</div>
+<div id="aridity-index-across-south-africa-1995-to-2019" class="section level2">
+<h2>Aridity index across South Africa (1995 to 2019)</h2>
+<p>I wanted to use data from 1995 through to 2019, in 5-year periods. This meant downloading and processing multiple files, and to reduce the amount of repetition in my code, I turned to the <code>map</code> functions in the <code>purrr</code> package.</p>
 <div id="download-data" class="section level3">
 <h3>Download data</h3>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co">#--- Load packages ---#</span></span>
@@ -499,9 +502,8 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 <span id="cb12-10"><a href="#cb12-10"></a>evapotranspiration_rasters &lt;-<span class="st"> </span><span class="kw">map</span>(<span class="dt">.x =</span> evapotranspiration_rasters,</span>
 <span id="cb12-11"><a href="#cb12-11"></a>                                  <span class="op">~</span><span class="st"> </span><span class="kw">crop</span>(.x, ext2))</span></code></pre></div>
 </div>
-</div>
-<div id="raster-maths-1" class="section level1">
-<h1>Raster maths</h1>
+<div id="raster-maths-1" class="section level3">
+<h3>Raster maths</h3>
 <p>Then to calculate the annual mean for each year.</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="co">#-- Calculate mean annual values --#</span></span>
 <span id="cb13-2"><a href="#cb13-2"></a><span class="co"># Precipitation</span></span>
@@ -515,6 +517,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 <span id="cb13-10"><a href="#cb13-10"></a>                                  <span class="op">~</span><span class="st"> </span><span class="kw">calc</span>(.x, </span>
 <span id="cb13-11"><a href="#cb13-11"></a>                                         <span class="dt">fun =</span> mean, </span>
 <span id="cb13-12"><a href="#cb13-12"></a>                                         <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</span></code></pre></div>
+</div>
 <div id="process-the-data-as-a-dataframe" class="section level3">
 <h3>Process the data as a dataframe</h3>
 <p>To try something different to the <code>raster::overlay</code> method I used in the previous section to calculate the global aridity index, in this section, I converted the raster objects to dataframes using the combination of <code>raster::rasterToPoints</code> and <code>base::as.data.frame</code>, and then did the maths using the <code>dplyr::mutate</code> function.</p>
@@ -610,6 +613,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 <span id="cb16-18"><a href="#cb16-18"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.title =</span> <span class="kw">element_blank</span>())</span></code></pre></div>
 <p><img src="2020-12-15-climate-change_files/figure-html/unnamed-chunk-15-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>It’s always difficult to interpret a series of snapshots in time, and as can be seen in the figure, there are spatial fluctuations in the aridity index across the ~25 years. For example, the humid zone increases massively in 2000, but is minimal in most other years. What is clear however, is that 2019 was a bad year, with large expanses of Namibia and South Africa experiencing hyper-arid conditions. It will be interesting to see if this trend continues in 2020, especially since the <em>El Nino-Southern Oscillation</em> is in a <em>La Nina</em> state in 2020, which is associated with above average rainfall in Southern Africa.</p>
+<p>I hope you found this blog post useful, and that enjoyed reading it.</p>
 <hr />
 </div>
 </div>
