@@ -9,6 +9,22 @@ output:
 
 <br>
 
+![](./images/posts/2020-12-15-climate-change/post-image.jpg){ style="float:left;margin-left:auto;margin-right:auto;padding:16px 16px 20px 0px;" width=200px }
+
+### Using raster maths to calculate and map aridity indices
+
+**Peter Kamerman**
+
+_15 December 2020_
+
+Using raster maths to map global aridity and changes in aridity over time in South Africa.
+
+<a class="btn btn-primary" href="https://www.painblogr.org/2020-07-03-climate-change.html" target="_blank">Read more <i class="fa fa-arrow-circle-o-right fa-2x" style="vertical-align: middle;" aria-hidden="true"></i></a><br>
+
+****
+
+<br>
+
 ![](./images/posts/2020-07-03-piecewise-regression/post-image.jpg){ style="float:left;margin-left:auto;margin-right:auto;padding:16px 16px 20px 0px;" width=200px }
 
 ### Reclassification of gabapentinoids as schedule 3 controlled substances in England: an interrupted time series analysis
@@ -36,19 +52,3 @@ _19 June 2020_
 Exploring data with the purrr package.
 
 <a class="btn btn-primary" href="https://www.painblogr.org/2020-06-19-purring-through-exploratory-analyses.html" target="_blank">Read more <i class="fa fa-arrow-circle-o-right fa-2x" style="vertical-align: middle;" aria-hidden="true"></i></a><br>
-
-****
-
-<br>
-
-![](./images/posts/2020-06-14-covid-fevers/post-image.jpg){ style="float:left;margin-left:auto;margin-right:auto;padding:16px 16px 20px 0px;" width=200px }
-
-### So you think investing in fever screening can curb the spread of COVID-19? Think again
-
-**Andrea Fuller** and **Duncan Mitchell**
-
-_14 June 2020_
-
-An article that discusses the futility of using fever screening for COVID-19 infection.
-
-<a class="btn btn-primary" href="https://www.painblogr.org/2020-06-14-covid-fevers.html" target="_blank">Read more <i class="fa fa-arrow-circle-o-right fa-2x" style="vertical-align: middle;" aria-hidden="true"></i></a><br>
