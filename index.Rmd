@@ -17,7 +17,7 @@ output:
 
 _15 December 2020_
 
-Using raster maths to map global aridity and changes in aridity over time in South Africa.
+Using raster maths to map global aridity and changes in aridity over time in parts of Southern Africa.
 
 <a class="btn btn-primary" href="https://www.painblogr.org/2020-12-15-climate-change.html" target="_blank">Read more <i class="fa fa-arrow-circle-o-right fa-2x" style="vertical-align: middle;" aria-hidden="true"></i></a><br>
 

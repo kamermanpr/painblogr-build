@@ -5,7 +5,7 @@ post_author: 'Peter Kamerman'
 post_date: '15 December 2020'
 post_image: 'https://www.painblogr.org/images/posts/2020-12-15-climate-change/post-image.jpg'
 permalink:  '2020-12-15-climate-change.html'
-description: "Using raster maths to map global aridity and changes in aridity over time in South Africa"
+description: "Using raster maths to map global aridity and changes in aridity over time in parts of Southern Africa"
 output:
     html_document:
         template: './_templates/posts.html'
@@ -30,7 +30,7 @@ library(rnaturalearth)
 
 ****
 
-I was asked by my wife, Prof Andrea Fuller, head of the [Wildlife Conservation Physiology Lab](https://www.wildlifeconservationphysiology.com/){target="_blank"}, University of the Witwatersrand, South Africa, to assist her and some colleagues who were writing a paper on how  dryland mammals may respond to climate change [^1] to update a figure (Figure 1 below) on the global aridity index, which appears in the 2019 IPCC report on climate change [^2]. The original figure uses 2015 data, and they wanted to use 2019 data. 
+I was asked by my wife, Prof Andrea Fuller, head of the [Wildlife Conservation Physiology Lab](https://www.wildlifeconservationphysiology.com/){target="_blank"}, University of the Witwatersrand, South Africa, to assist her and some colleagues who were writing a paper on how  dryland mammals may respond to climate change [^1] to update a figure (see below) on the global aridity index, which appears in the 2019 IPCC report on climate change [^2]. The original figure uses 2015 data, and they wanted to use 2019 data. 
 
 The aridity index is the ratio of the total amount of precipitation in an area and the amount of evapotranspiration . That is, what is the water gain (precipitation) relative to the amount of water loss (evapotranspiration) in a region. The smaller the ratio, the more arid a region is. 
 
@@ -42,17 +42,18 @@ on climate change, desertification, land degradation, sustainable land managemen
 <p>
 <figure>
 <img src="./images/posts/2020-12-15-climate-change/ipcc-aridity-index-small.jpg">
-<figurecaption><span style="font-weight:bold;">Figure 1: </span>Geographical distribution of drylands, delimited based on the aridity index</figurecaption>
+<figurecaption><span style="font-weight:bold;">Figure: </span>Geographical distribution of drylands, delimited based on the aridity index</figurecaption>
 </figure>
 </p>
+<br>
 
 I had used the mapping functions in _R_ before (for example, [see here](https://www.painblogr.org/2019-03-09-pain-in-the-usa){target="_blank"}), but never to plot raster data. So, I took up the challenge to reproduce the plot. 
 
-This blog post details how I accomplished the task, and, as importantly, serves as a _"note to self"_ on how I did it.
+This blog post details how I accomplished the task, and in the process provides me with a _"note to self"_ on how I did it.
 
 ## Global drylands figure 
 
-First I needed to get access to the raster data, which is freely available through the amazing TerraClimate project [^3]. Although there are no aridity index rasters, data on precipitation and evapotranspiration are available for the period [1958 to 2019](http://thredds.northwestknowledge.net:8080/thredds/catalog/TERRACLIMATE_ALL/data/catalog.html){target="_blank"}, and from which I could calculate the aridity index using raster maths.
+First I needed to get access to the raster data, which is freely available through the amazing TerraClimate project [^3]. Although there are no aridity index rasters, data on precipitation and evapotranspiration are available for the period [1958 to 2019](http://thredds.northwestknowledge.net:8080/thredds/catalog/TERRACLIMATE_ALL/data/catalog.html){target="_blank"}, and from those data I could calculate the aridity index using raster maths.
 
 [^3]: Abatzoglou JT, Dobrowski SZ, Parks SA, Hegewisch KC. TerraClimate, a high-resolution global dataset of monthly climate and climatic water balance from 1958-2015. _Sci Data_ **5**:170191, 2018. DOI: [10.1038/sdata.2017.191](https://doi.org/10.1038/sdata.2017.191)
 
@@ -67,7 +68,7 @@ library(dplyr) # General data processing
 
 ### Download, import, and inspect data
 
-For importing the downloaded file, I used the `raster::stack` function, which imports the series of raster objects contained in the _*.nc_ file (one object for each month of the year) and stacks them into a single 'RasterStack' object.
+For importing the data I used the `raster::stack` function, which imports the raster data stored in the _*.nc_ files I had downloaded. Each _*.nc_ file contained raster data for the 12 months of each year, and the  `raster::stack` function imports the data and stacks them into a single 'RasterStack' object, with 12 layers (one for each month).
 
 ```{r dummy_code, echo = TRUE, eval = FALSE}
 #--- Download the files from the TerraClimate website ---#
@@ -120,9 +121,6 @@ As can be seen from the plots, there are data for each month of 2019 (one for ea
 
 I used the `raster::calc` function to generate a new raster object consisting of a single layer by calculating the arithmetic mean across the layers of the RasterLayer object.
 
-You can also see that the small multiples have Antarctica plotted, but the original figure (Figure 1 above) does not, and so I needed to crop the rasters to exclude Antarctica using the `raster::extent` and `raster::crop` functions. 
-
-
 ```{r echo = TRUE}
 #--- Raster maths ---#
 # Precipitation
@@ -134,7 +132,11 @@ ppt_mean <- calc(ppt, # RasterStack object
 pet_mean <- calc(pet,
                  fun = mean, 
                  na.rm = TRUE)
+```
 
+You can also see that the small multiples shown above have Antarctica plotted, but the original figure does not, and so I needed to crop the rasters to exclude Antarctica using the `raster::extent` and `raster::crop` functions. 
+
+```{r echo = TRUE}
 #--- Set the extent ---#
 # Cut off all values below 60 degrees South (removing Antarctica)
 ext <- extent(c(xmin = -180, xmax = 180, 
@@ -256,15 +258,17 @@ ggplot(data = aridity_index_df) +
         panel.grid.minor = element_blank())
 ```
 
-I think that is a fairly good reproduction of the original figure from the IPCC report, updated to use 2019. As you can see large swaths of North Africa, the Arabian Peninsula, and central Australia are deemed hyper-arid regions. In fact, most of Australia is hyper-arid or arid. The same goes for the Southern African region I am from, were the West coast is hyper-arid, and most of the rest of the region is arid or semi-arid. 
+I think that is a fairly good reproduction of the original figure from the IPCC report, updated to use 2019 data. As you can see large swaths of North Africa, the Arabian Peninsula, and central Australia are deemed hyper-arid regions. In fact, most of Australia is hyper-arid or arid. The same goes for the Southern African region, which I am from, where the West coast is hyper-arid, and most of the rest of the region is arid or semi-arid. 
 
 Seeing this gradient from hyper-arid to semi-arid across the Southern African region, I wanted to see if there has been any changes in this gradient over the past 25 years. 
 
-## Aridity index across South Africa (1995 to 2019)
+## Aridity index across the southern parts of Southern Africa (1995 to 2019)
 
-I wanted to use data from 1995 through to 2019, in 5-year periods. This meant downloading and processing multiple files, and to reduce the amount of repetition in my code, I turned to the `map` functions in the `purrr` package. 
+I wanted to use data from 1995 through to 2019, in 5-year periods. This meant downloading and processing multiple files, and to reduce the amount of repetition in my code, I turned to the various `map` functions in the `purrr` package. 
 
-### Download data
+### Download and import data
+
+First I downloaded the data from TerraClimate project locally.
 
 ```{r dummy_code4, echo = TRUE, eval = FALSE}
 #--- Load packages ---#
@@ -307,7 +311,7 @@ map2(.x = evapotranspiration_urls,
                      method = 'curl'))
 ```
 
-### Import data
+Then I imported the files. Again, I used the `raster::stack` function I had used for importing the data for the global map.
 
 ```{r dummy_code5, echo = TRUE, eval = FALSE}
 #--- Precipitation ---#
@@ -345,9 +349,7 @@ evapotranspiration_rasters <- map(.x = evapotranspiration_paths,
                                   ~ stack(.x))
 ```
 
-### Crop the rasters
-
-I needed to crop the large raster data to only include Southern Africa. 
+Once I had imported the data, I needed to crop the large raster data to only include parts of Southern Africa, with a focus on South Africa. 
 
 By only using a subset of the data in the raster file, this cropping step would speed-up the processing of the data in later steps.
 
@@ -367,7 +369,7 @@ evapotranspiration_rasters <- map(.x = evapotranspiration_rasters,
 
 ### Raster maths
 
-Then to calculate the annual mean for each year.
+Then to calculate the annual mean for each year, I used the `raster::calc` function.
 
 ```{r echo = TRUE}
 #-- Calculate mean annual values --#
@@ -443,7 +445,7 @@ ai_df <- ai_df %>%
 
 ### Get Natural Earth map
 
-I wanted to plot the country outlines on the raster image, and to do this I needed the `rnaturalearth` package.
+I wanted to plot the country outlines on the raster image, and to do this I needed the `rnaturalearth` package, which makes it easy to global maps from the [Natural Earth](https://www.naturalearthdata.com/) site.
 
 ```{r echo = TRUE}
 # Load package
@@ -466,9 +468,6 @@ s_africa <- africa %>%
 ### Plot the data
 
 ```{r echo = TRUE, fig.height = 8, fig.width = 7}
-#--- Set a colour palette ---#
-colours2 <- c('#e31a1c', '#fd8d3c', '#fecc5c', '#ffffb2', '#666666')
-
 #--- Plot the data ---#
 ggplot() +
   geom_raster(data = ai_df, # Plot the aridity index raster
@@ -477,7 +476,7 @@ ggplot() +
                   fill = category)) + 
   geom_sf(data = s_africa,
           alpha = 0) + # Plot Southern Africa
-  scale_fill_manual(values = colours2,
+  scale_fill_manual(values = colours, # Already set for the global aridity index map
                     guide = guide_legend(reverse = TRUE)) +
   coord_sf(ylim = c(-37, -21),
            xlim = c(10, 40)) +
@@ -486,9 +485,10 @@ ggplot() +
   theme(legend.title = element_blank())
 ```
 
-It's always difficult to interpret a series of snapshots in time, and as can be seen in the figure, there are spatial fluctuations in the aridity index across the ~25 years. For example, the humid zone increases massively in 2000, but is minimal in most other years. What is clear however, is that 2019 was a bad year, with large expanses of Namibia and South Africa experiencing hyper-arid conditions. It will be interesting to see if this trend continues in 2020, especially since the _El Nino-Southern Oscillation_ is in a _La Nina_ state in 2020, which is associated with above average rainfall in Southern Africa.
+It's always difficult to interpret a series of snapshots in time, and as can be seen in the figure, there are spatial fluctuations in the aridity index across the ~25 years. For example, the humid zone increases massively in 2000, but is minimal in most other years. Indeed, it appears that there is a gradual encroachment of the semi-arid regions into the dry semi-humid and humid zones on the east coast. What is clear, is that 2019 was a bad year, with large expanses of Namibia and South Africa experiencing hyper-arid conditions. It will be interesting to see if this trend continues in 2020, especially since the _El Nino-Southern Oscillation_ is in a _La Nina_ state in 2020, which is associated with above average rainfall in Southern Africa.
 
-I hope you found this blog post useful, and that enjoyed reading it.
+Another approach to analysing the data could be to average the aridity index values over multiple years, thus exposing smoothed temporal trends. 
+I hope you found this blog post useful, and that you enjoyed reading it.
 
 ****
 

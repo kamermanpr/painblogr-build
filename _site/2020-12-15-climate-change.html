@@ -147,7 +147,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 
     <!-- SEO -->
     <title>Using raster maths to calculate and map aridity indices</title>
-    <meta name="description" content="Using raster maths to map global aridity and changes in aridity over time in South Africa">
+    <meta name="description" content="Using raster maths to map global aridity and changes in aridity over time in parts of Southern Africa">
     <link rel="author" href="https://plus.google.com/u/0/103355314187199079295" />
     <meta name="robots" content="robots.txt">
     <link rel="canonical" href="https://www.painblogr.org/2020-12-15-climate-change.html">
@@ -157,7 +157,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     <meta name="twitter:site" content="@painblogR">
     <meta name="twitter:creator" content="@painblogR">
     <meta name="twitter:title" content="Using raster maths to calculate and map aridity indices">
-    <meta name="twitter:description" content="Using raster maths to map global aridity and changes in aridity over time in South Africa">
+    <meta name="twitter:description" content="Using raster maths to map global aridity and changes in aridity over time in parts of Southern Africa">
     <meta name="twitter:image" content="<a href="https://www.painblogr.org/images/posts/2020-12-15-climate-change/post-image.jpg" class="uri">https://www.painblogr.org/images/posts/2020-12-15-climate-change/post-image.jpg</a>">
     <meta name="twitter:url" content="https://www.painblogr.org/2020-12-15-climate-change.html">
 
@@ -166,7 +166,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://www.painblogr.org/2020-12-15-climate-change.html">
     <meta property="og:image" content="<a href="https://www.painblogr.org/images/posts/2020-12-15-climate-change/post-image.jpg" class="uri">https://www.painblogr.org/images/posts/2020-12-15-climate-change/post-image.jpg</a>">
-    <meta property="og:description" content="Using raster maths to map global aridity and changes in aridity over time in South Africa">
+    <meta property="og:description" content="Using raster maths to map global aridity and changes in aridity over time in parts of Southern Africa">
     <meta property="og:site_name" content="painblogR">
     <meta property="fb:app_id" content="621412384962188">
 </head>
@@ -257,18 +257,19 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
         <h1>Using raster maths to calculate and map aridity indices</h1> 
         <h4>Peter Kamerman</h4> 
         <em>15 December 2020</em> <hr />
-<p>I was asked by my wife, Prof Andrea Fuller, head of the <a href="https://www.wildlifeconservationphysiology.com/" target="_blank">Wildlife Conservation Physiology Lab</a>, University of the Witwatersrand, South Africa, to assist her and some colleagues who were writing a paper on how dryland mammals may respond to climate change <a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> to update a figure (Figure 1 below) on the global aridity index, which appears in the 2019 IPCC report on climate change <a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>. The original figure uses 2015 data, and they wanted to use 2019 data.</p>
+<p>I was asked by my wife, Prof Andrea Fuller, head of the <a href="https://www.wildlifeconservationphysiology.com/" target="_blank">Wildlife Conservation Physiology Lab</a>, University of the Witwatersrand, South Africa, to assist her and some colleagues who were writing a paper on how dryland mammals may respond to climate change <a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> to update a figure (see below) on the global aridity index, which appears in the 2019 IPCC report on climate change <a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>. The original figure uses 2015 data, and they wanted to use 2019 data.</p>
 <p>The aridity index is the ratio of the total amount of precipitation in an area and the amount of evapotranspiration . That is, what is the water gain (precipitation) relative to the amount of water loss (evapotranspiration) in a region. The smaller the ratio, the more arid a region is.</p>
 <p>
 <figure>
-<img src="images/posts/2020-12-15-climate-change/ipcc-aridity-index-small.jpg"> <figurecaption><span style="font-weight:bold;">Figure 1: </span>Geographical distribution of drylands, delimited based on the aridity index</figurecaption>
+<img src="images/posts/2020-12-15-climate-change/ipcc-aridity-index-small.jpg"> <figurecaption><span style="font-weight:bold;">Figure: </span>Geographical distribution of drylands, delimited based on the aridity index</figurecaption>
 </figure>
 </p>
+<p><br></p>
 <p>I had used the mapping functions in <em>R</em> before (for example, <a href="https://www.painblogr.org/2019-03-09-pain-in-the-usa" target="_blank">see here</a>), but never to plot raster data. So, I took up the challenge to reproduce the plot.</p>
-<p>This blog post details how I accomplished the task, and, as importantly, serves as a <em>“note to self”</em> on how I did it.</p>
+<p>This blog post details how I accomplished the task, and in the process provides me with a <em>“note to self”</em> on how I did it.</p>
 <div id="global-drylands-figure" class="section level2">
 <h2>Global drylands figure</h2>
-<p>First I needed to get access to the raster data, which is freely available through the amazing TerraClimate project <a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>. Although there are no aridity index rasters, data on precipitation and evapotranspiration are available for the period <a href="http://thredds.northwestknowledge.net:8080/thredds/catalog/TERRACLIMATE_ALL/data/catalog.html" target="_blank">1958 to 2019</a>, and from which I could calculate the aridity index using raster maths.</p>
+<p>First I needed to get access to the raster data, which is freely available through the amazing TerraClimate project <a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>. Although there are no aridity index rasters, data on precipitation and evapotranspiration are available for the period <a href="http://thredds.northwestknowledge.net:8080/thredds/catalog/TERRACLIMATE_ALL/data/catalog.html" target="_blank">1958 to 2019</a>, and from those data I could calculate the aridity index using raster maths.</p>
 <div id="load-packages" class="section level3">
 <h3>Load packages</h3>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># Load packages</span></span>
@@ -278,7 +279,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 </div>
 <div id="download-import-and-inspect-data" class="section level3">
 <h3>Download, import, and inspect data</h3>
-<p>For importing the downloaded file, I used the <code>raster::stack</code> function, which imports the series of raster objects contained in the _*.nc_ file (one object for each month of the year) and stacks them into a single ‘RasterStack’ object.</p>
+<p>For importing the data I used the <code>raster::stack</code> function, which imports the raster data stored in the _*.nc_ files I had downloaded. Each _*.nc_ file contained raster data for the 12 months of each year, and the <code>raster::stack</code> function imports the data and stacks them into a single ‘RasterStack’ object, with 12 layers (one for each month).</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co">#--- Download the files from the TerraClimate website ---#</span></span>
 <span id="cb2-2"><a href="#cb2-2"></a><span class="co"># Precipitation</span></span>
 <span id="cb2-3"><a href="#cb2-3"></a><span class="kw">download.file</span>(<span class="dt">url =</span> <span class="st">&#39;http://thredds.northwestknowledge.net:8080/thredds/fileServer/TERRACLIMATE_ALL/data/TerraClimate_ppt_2019.nc&#39;</span>,</span>
@@ -307,7 +308,6 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 <div id="raster-maths" class="section level3">
 <h3>Raster maths</h3>
 <p>I used the <code>raster::calc</code> function to generate a new raster object consisting of a single layer by calculating the arithmetic mean across the layers of the RasterLayer object.</p>
-<p>You can also see that the small multiples have Antarctica plotted, but the original figure (Figure 1 above) does not, and so I needed to crop the rasters to exclude Antarctica using the <code>raster::extent</code> and <code>raster::crop</code> functions.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co">#--- Raster maths ---#</span></span>
 <span id="cb4-2"><a href="#cb4-2"></a><span class="co"># Precipitation</span></span>
 <span id="cb4-3"><a href="#cb4-3"></a>ppt_mean &lt;-<span class="st"> </span><span class="kw">calc</span>(ppt, <span class="co"># RasterStack object</span></span>
@@ -317,40 +317,40 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 <span id="cb4-7"><a href="#cb4-7"></a><span class="co"># Evapotranspiration</span></span>
 <span id="cb4-8"><a href="#cb4-8"></a>pet_mean &lt;-<span class="st"> </span><span class="kw">calc</span>(pet,</span>
 <span id="cb4-9"><a href="#cb4-9"></a>                 <span class="dt">fun =</span> mean, </span>
-<span id="cb4-10"><a href="#cb4-10"></a>                 <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb4-11"><a href="#cb4-11"></a></span>
-<span id="cb4-12"><a href="#cb4-12"></a><span class="co">#--- Set the extent ---#</span></span>
-<span id="cb4-13"><a href="#cb4-13"></a><span class="co"># Cut off all values below 60 degrees South (removing Antarctica)</span></span>
-<span id="cb4-14"><a href="#cb4-14"></a>ext &lt;-<span class="st"> </span><span class="kw">extent</span>(<span class="kw">c</span>(<span class="dt">xmin =</span> <span class="dv">-180</span>, <span class="dt">xmax =</span> <span class="dv">180</span>, </span>
-<span id="cb4-15"><a href="#cb4-15"></a>                <span class="dt">ymin =</span> <span class="dv">-60</span>, <span class="dt">ymax =</span> <span class="dv">90</span>))</span>
-<span id="cb4-16"><a href="#cb4-16"></a></span>
-<span id="cb4-17"><a href="#cb4-17"></a><span class="co">#--- Crop ---#</span></span>
-<span id="cb4-18"><a href="#cb4-18"></a><span class="co"># Precipitation</span></span>
-<span id="cb4-19"><a href="#cb4-19"></a>ppt_mean &lt;-<span class="st"> </span><span class="kw">crop</span>(<span class="dt">x =</span> ppt_mean, </span>
-<span id="cb4-20"><a href="#cb4-20"></a>                 <span class="dt">y =</span> ext)</span>
-<span id="cb4-21"><a href="#cb4-21"></a></span>
-<span id="cb4-22"><a href="#cb4-22"></a><span class="co"># Evapotranspiration</span></span>
-<span id="cb4-23"><a href="#cb4-23"></a>pet_mean &lt;-<span class="st"> </span><span class="kw">crop</span>(<span class="dt">x =</span> pet_mean, </span>
-<span id="cb4-24"><a href="#cb4-24"></a>                 <span class="dt">y =</span> ext)</span>
-<span id="cb4-25"><a href="#cb4-25"></a></span>
-<span id="cb4-26"><a href="#cb4-26"></a><span class="co">#--- Inspect ---#</span></span>
-<span id="cb4-27"><a href="#cb4-27"></a><span class="co"># Precipitation</span></span>
-<span id="cb4-28"><a href="#cb4-28"></a><span class="kw">plot</span>(<span class="dt">main =</span> <span class="st">&#39;Precipitation&#39;</span>,</span>
-<span id="cb4-29"><a href="#cb4-29"></a>     ppt_mean)</span></code></pre></div>
-<p><img src="2020-12-15-climate-change_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># Evapotranspiration</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="kw">plot</span>(<span class="dt">main =</span> <span class="st">&#39;Evapotranspiration&#39;</span>,</span>
-<span id="cb5-3"><a href="#cb5-3"></a>     pet_mean)</span></code></pre></div>
-<p><img src="2020-12-15-climate-change_files/figure-html/unnamed-chunk-5-2.png" width="672" style="display: block; margin: auto;" /></p>
+<span id="cb4-10"><a href="#cb4-10"></a>                 <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<p>You can also see that the small multiples shown above have Antarctica plotted, but the original figure does not, and so I needed to crop the rasters to exclude Antarctica using the <code>raster::extent</code> and <code>raster::crop</code> functions.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co">#--- Set the extent ---#</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="co"># Cut off all values below 60 degrees South (removing Antarctica)</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a>ext &lt;-<span class="st"> </span><span class="kw">extent</span>(<span class="kw">c</span>(<span class="dt">xmin =</span> <span class="dv">-180</span>, <span class="dt">xmax =</span> <span class="dv">180</span>, </span>
+<span id="cb5-4"><a href="#cb5-4"></a>                <span class="dt">ymin =</span> <span class="dv">-60</span>, <span class="dt">ymax =</span> <span class="dv">90</span>))</span>
+<span id="cb5-5"><a href="#cb5-5"></a></span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="co">#--- Crop ---#</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a><span class="co"># Precipitation</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a>ppt_mean &lt;-<span class="st"> </span><span class="kw">crop</span>(<span class="dt">x =</span> ppt_mean, </span>
+<span id="cb5-9"><a href="#cb5-9"></a>                 <span class="dt">y =</span> ext)</span>
+<span id="cb5-10"><a href="#cb5-10"></a></span>
+<span id="cb5-11"><a href="#cb5-11"></a><span class="co"># Evapotranspiration</span></span>
+<span id="cb5-12"><a href="#cb5-12"></a>pet_mean &lt;-<span class="st"> </span><span class="kw">crop</span>(<span class="dt">x =</span> pet_mean, </span>
+<span id="cb5-13"><a href="#cb5-13"></a>                 <span class="dt">y =</span> ext)</span>
+<span id="cb5-14"><a href="#cb5-14"></a></span>
+<span id="cb5-15"><a href="#cb5-15"></a><span class="co">#--- Inspect ---#</span></span>
+<span id="cb5-16"><a href="#cb5-16"></a><span class="co"># Precipitation</span></span>
+<span id="cb5-17"><a href="#cb5-17"></a><span class="kw">plot</span>(<span class="dt">main =</span> <span class="st">&#39;Precipitation&#39;</span>,</span>
+<span id="cb5-18"><a href="#cb5-18"></a>     ppt_mean)</span></code></pre></div>
+<p><img src="2020-12-15-climate-change_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># Evapotranspiration</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="kw">plot</span>(<span class="dt">main =</span> <span class="st">&#39;Evapotranspiration&#39;</span>,</span>
+<span id="cb6-3"><a href="#cb6-3"></a>     pet_mean)</span></code></pre></div>
+<p><img src="2020-12-15-climate-change_files/figure-html/unnamed-chunk-6-2.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Now that I had combined the layers into a single layer and cropped them to the area I wanted, I needed to calculate the aridity index by overlaying the two rasters <em>ppt_mean</em> and <em>pet_mean</em> and specifying how the layers should be combined using the <code>raster::overlay</code> function. In this case I wanted to take the ratio of precipitation to evapotranspiration.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co">#--- Calculate aridity index ---#</span></span>
-<span id="cb6-2"><a href="#cb6-2"></a><span class="co"># Precipitation (ppt) / Evapotranspiration (pet)</span></span>
-<span id="cb6-3"><a href="#cb6-3"></a>aridity_index &lt;-<span class="st"> </span><span class="kw">overlay</span>(<span class="dt">x =</span> ppt_mean, <span class="co"># Raster object 1</span></span>
-<span id="cb6-4"><a href="#cb6-4"></a>                         <span class="dt">y =</span> pet_mean, <span class="co"># Raster object 2</span></span>
-<span id="cb6-5"><a href="#cb6-5"></a>                         <span class="dt">fun =</span> <span class="cf">function</span>(x, y){<span class="kw">return</span>(x <span class="op">/</span><span class="st"> </span>y)}) <span class="co"># Function to apply</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co">#--- Calculate aridity index ---#</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="co"># Precipitation (ppt) / Evapotranspiration (pet)</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a>aridity_index &lt;-<span class="st"> </span><span class="kw">overlay</span>(<span class="dt">x =</span> ppt_mean, <span class="co"># Raster object 1</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a>                         <span class="dt">y =</span> pet_mean, <span class="co"># Raster object 2</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a>                         <span class="dt">fun =</span> <span class="cf">function</span>(x, y){<span class="kw">return</span>(x <span class="op">/</span><span class="st"> </span>y)}) <span class="co"># Function to apply</span></span></code></pre></div>
 <p>You can plot rasters using the <code>raster::plot</code> function, but I find it has limited functionality, so to give me more flexibility when plotting the aridity index, I converted the raster to a dataframe so that I could use <code>ggplot2</code>. First I converted the raster, using the <code>raster::rasterToPoints</code> function, to a matrix of x and y coordinates and a layer expressing the value at each coordinate.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co">#--- Convert raster to a matrix ---#</span></span>
-<span id="cb7-2"><a href="#cb7-2"></a>aridity_index_matrix &lt;-<span class="st"> </span><span class="kw">rasterToPoints</span>(aridity_index)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="co">#--- Convert raster to a matrix ---#</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a>aridity_index_matrix &lt;-<span class="st"> </span><span class="kw">rasterToPoints</span>(aridity_index)</span></code></pre></div>
 <p>Then I converted the matrix to a dataframe using the <code>base::as.data.frame</code> function, and recoded all the layer values into a categorical variable representing the aridity index (AI) categories. These categories are:</p>
 <ul>
 <li><p>Humid: AI <span class="math inline">\(\geq\)</span> 0.65,</p></li>
@@ -359,261 +359,254 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 <li><p>Arid: 0.05 <span class="math inline">\(&lt;\)</span> AI <span class="math inline">\(\leq\)</span> 0.20</p></li>
 <li><p>Hyper-arid: AI <span class="math inline">\(&lt;\)</span> 0.05</p></li>
 </ul>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="co">#--- Convert to the matrix to a dataframe ---#</span></span>
-<span id="cb8-2"><a href="#cb8-2"></a>aridity_index_df &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(aridity_index_matrix)</span>
-<span id="cb8-3"><a href="#cb8-3"></a></span>
-<span id="cb8-4"><a href="#cb8-4"></a><span class="co">#--- Recode aridity index into categories --#</span></span>
-<span id="cb8-5"><a href="#cb8-5"></a>aridity_index_df &lt;-<span class="st"> </span>aridity_index_df <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb8-6"><a href="#cb8-6"></a><span class="st">  </span><span class="co"># Recode</span></span>
-<span id="cb8-7"><a href="#cb8-7"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">category =</span> <span class="kw">case_when</span>(</span>
-<span id="cb8-8"><a href="#cb8-8"></a>    <span class="kw">is.infinite</span>(layer) <span class="op">~</span><span class="st"> &#39;Humid&#39;</span>,</span>
-<span id="cb8-9"><a href="#cb8-9"></a>    layer <span class="op">&gt;=</span><span class="st"> </span><span class="fl">0.65</span> <span class="op">~</span><span class="st"> &#39;Humid&#39;</span>,</span>
-<span id="cb8-10"><a href="#cb8-10"></a>    layer <span class="op">&gt;=</span><span class="st"> </span><span class="fl">0.5</span> <span class="op">&amp;</span><span class="st"> </span>layer <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.65</span> <span class="op">~</span><span class="st"> &#39;Dry sub-humid&#39;</span>,</span>
-<span id="cb8-11"><a href="#cb8-11"></a>    layer <span class="op">&gt;=</span><span class="st"> </span><span class="fl">0.2</span> <span class="op">&amp;</span><span class="st"> </span>layer <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.5</span> <span class="op">~</span><span class="st"> &#39;Semi-arid&#39;</span>,</span>
-<span id="cb8-12"><a href="#cb8-12"></a>    layer <span class="op">&gt;=</span><span class="st"> </span><span class="fl">0.05</span> <span class="op">&amp;</span><span class="st"> </span>layer <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.2</span> <span class="op">~</span><span class="st"> &#39;Arid&#39;</span>,</span>
-<span id="cb8-13"><a href="#cb8-13"></a>    layer <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span> <span class="op">~</span><span class="st"> &#39;Hyper-arid&#39;</span></span>
-<span id="cb8-14"><a href="#cb8-14"></a>  )) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb8-15"><a href="#cb8-15"></a><span class="st">  </span><span class="co"># Convert to ordered factor</span></span>
-<span id="cb8-16"><a href="#cb8-16"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">category =</span> <span class="kw">factor</span>(category,</span>
-<span id="cb8-17"><a href="#cb8-17"></a>                           <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&#39;Hyper-arid&#39;</span>, <span class="st">&#39;Arid&#39;</span>, <span class="st">&#39;Semi-arid&#39;</span>,</span>
-<span id="cb8-18"><a href="#cb8-18"></a>                                      <span class="st">&#39;Dry sub-humid&#39;</span>, <span class="st">&#39;Humid&#39;</span>),</span>
-<span id="cb8-19"><a href="#cb8-19"></a>                           <span class="dt">ordered =</span> <span class="ot">TRUE</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="co">#--- Convert to the matrix to a dataframe ---#</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a>aridity_index_df &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(aridity_index_matrix)</span>
+<span id="cb9-3"><a href="#cb9-3"></a></span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="co">#--- Recode aridity index into categories --#</span></span>
+<span id="cb9-5"><a href="#cb9-5"></a>aridity_index_df &lt;-<span class="st"> </span>aridity_index_df <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb9-6"><a href="#cb9-6"></a><span class="st">  </span><span class="co"># Recode</span></span>
+<span id="cb9-7"><a href="#cb9-7"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">category =</span> <span class="kw">case_when</span>(</span>
+<span id="cb9-8"><a href="#cb9-8"></a>    <span class="kw">is.infinite</span>(layer) <span class="op">~</span><span class="st"> &#39;Humid&#39;</span>,</span>
+<span id="cb9-9"><a href="#cb9-9"></a>    layer <span class="op">&gt;=</span><span class="st"> </span><span class="fl">0.65</span> <span class="op">~</span><span class="st"> &#39;Humid&#39;</span>,</span>
+<span id="cb9-10"><a href="#cb9-10"></a>    layer <span class="op">&gt;=</span><span class="st"> </span><span class="fl">0.5</span> <span class="op">&amp;</span><span class="st"> </span>layer <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.65</span> <span class="op">~</span><span class="st"> &#39;Dry sub-humid&#39;</span>,</span>
+<span id="cb9-11"><a href="#cb9-11"></a>    layer <span class="op">&gt;=</span><span class="st"> </span><span class="fl">0.2</span> <span class="op">&amp;</span><span class="st"> </span>layer <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.5</span> <span class="op">~</span><span class="st"> &#39;Semi-arid&#39;</span>,</span>
+<span id="cb9-12"><a href="#cb9-12"></a>    layer <span class="op">&gt;=</span><span class="st"> </span><span class="fl">0.05</span> <span class="op">&amp;</span><span class="st"> </span>layer <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.2</span> <span class="op">~</span><span class="st"> &#39;Arid&#39;</span>,</span>
+<span id="cb9-13"><a href="#cb9-13"></a>    layer <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span> <span class="op">~</span><span class="st"> &#39;Hyper-arid&#39;</span></span>
+<span id="cb9-14"><a href="#cb9-14"></a>  )) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb9-15"><a href="#cb9-15"></a><span class="st">  </span><span class="co"># Convert to ordered factor</span></span>
+<span id="cb9-16"><a href="#cb9-16"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">category =</span> <span class="kw">factor</span>(category,</span>
+<span id="cb9-17"><a href="#cb9-17"></a>                           <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&#39;Hyper-arid&#39;</span>, <span class="st">&#39;Arid&#39;</span>, <span class="st">&#39;Semi-arid&#39;</span>,</span>
+<span id="cb9-18"><a href="#cb9-18"></a>                                      <span class="st">&#39;Dry sub-humid&#39;</span>, <span class="st">&#39;Humid&#39;</span>),</span>
+<span id="cb9-19"><a href="#cb9-19"></a>                           <span class="dt">ordered =</span> <span class="ot">TRUE</span>))</span></code></pre></div>
 </div>
 <div id="plot-the-data" class="section level3">
 <h3>Plot the data</h3>
 <p>Lastly, I plotted the data.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="co">#--- Set a colour palette ---#</span></span>
-<span id="cb9-2"><a href="#cb9-2"></a>colours &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;#e31a1c&#39;</span>, <span class="st">&#39;#fd8d3c&#39;</span>, <span class="st">&#39;#fecc5c&#39;</span>, <span class="st">&#39;#ffffb2&#39;</span>, <span class="st">&#39;#666666&#39;</span>)</span>
-<span id="cb9-3"><a href="#cb9-3"></a></span>
-<span id="cb9-4"><a href="#cb9-4"></a><span class="co">#--- Plot the data ---#</span></span>
-<span id="cb9-5"><a href="#cb9-5"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> aridity_index_df) <span class="op">+</span></span>
-<span id="cb9-6"><a href="#cb9-6"></a><span class="st">  </span><span class="kw">aes</span>(<span class="dt">y =</span> y,</span>
-<span id="cb9-7"><a href="#cb9-7"></a>      <span class="dt">x =</span> x,</span>
-<span id="cb9-8"><a href="#cb9-8"></a>      <span class="dt">fill =</span> category) <span class="op">+</span></span>
-<span id="cb9-9"><a href="#cb9-9"></a><span class="st">  </span><span class="kw">geom_raster</span>() <span class="op">+</span></span>
-<span id="cb9-10"><a href="#cb9-10"></a><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> colours,</span>
-<span id="cb9-11"><a href="#cb9-11"></a>                    <span class="dt">guide =</span> <span class="kw">guide_legend</span>(<span class="dt">reverse =</span> <span class="ot">TRUE</span>)) <span class="op">+</span></span>
-<span id="cb9-12"><a href="#cb9-12"></a><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">60</span>, <span class="dv">90</span>),</span>
-<span id="cb9-13"><a href="#cb9-13"></a>                     <span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>),</span>
-<span id="cb9-14"><a href="#cb9-14"></a>                     <span class="dt">breaks =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">40</span>, <span class="dv">-20</span>, <span class="dv">0</span>, <span class="dv">20</span>, <span class="dv">40</span>, <span class="dv">60</span>, <span class="dv">80</span>),</span>
-<span id="cb9-15"><a href="#cb9-15"></a>                     <span class="dt">labels =</span> <span class="kw">c</span>(<span class="kw">expression</span>(<span class="st">&#39;40&#39;</span><span class="op">*</span>degree<span class="op">*</span><span class="st">&#39;S&#39;</span>),</span>
-<span id="cb9-16"><a href="#cb9-16"></a>                                <span class="kw">expression</span>(<span class="st">&#39;20&#39;</span><span class="op">*</span>degree<span class="op">*</span><span class="st">&#39;S&#39;</span>),</span>
-<span id="cb9-17"><a href="#cb9-17"></a>                                <span class="kw">expression</span>(<span class="st">&#39;0&#39;</span><span class="op">*</span>degree),</span>
-<span id="cb9-18"><a href="#cb9-18"></a>                                <span class="kw">expression</span>(<span class="st">&#39;20&#39;</span><span class="op">*</span>degree<span class="op">*</span><span class="st">&#39;N&#39;</span>),</span>
-<span id="cb9-19"><a href="#cb9-19"></a>                                <span class="kw">expression</span>(<span class="st">&#39;40&#39;</span><span class="op">*</span>degree<span class="op">*</span><span class="st">&#39;N&#39;</span>),</span>
-<span id="cb9-20"><a href="#cb9-20"></a>                                <span class="kw">expression</span>(<span class="st">&#39;60&#39;</span><span class="op">*</span>degree<span class="op">*</span><span class="st">&#39;N&#39;</span>),</span>
-<span id="cb9-21"><a href="#cb9-21"></a>                                <span class="kw">expression</span>(<span class="st">&#39;80&#39;</span><span class="op">*</span>degree<span class="op">*</span><span class="st">&#39;N&#39;</span>))) <span class="op">+</span></span>
-<span id="cb9-22"><a href="#cb9-22"></a><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">180</span>, <span class="dv">180</span>),</span>
-<span id="cb9-23"><a href="#cb9-23"></a>                     <span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>),</span>
-<span id="cb9-24"><a href="#cb9-24"></a>                     <span class="dt">breaks =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">180</span>, <span class="dv">-120</span>, <span class="dv">-60</span>, <span class="dv">0</span>, <span class="dv">60</span>, <span class="dv">120</span>, <span class="dv">180</span>),</span>
-<span id="cb9-25"><a href="#cb9-25"></a>                     <span class="dt">labels =</span> <span class="kw">c</span>(<span class="kw">expression</span>(<span class="st">&#39;180&#39;</span><span class="op">*</span>degree<span class="op">*</span><span class="st">&#39;W&#39;</span>),</span>
-<span id="cb9-26"><a href="#cb9-26"></a>                                <span class="kw">expression</span>(<span class="st">&#39;120&#39;</span><span class="op">*</span>degree<span class="op">*</span><span class="st">&#39;W&#39;</span>),</span>
-<span id="cb9-27"><a href="#cb9-27"></a>                                <span class="kw">expression</span>(<span class="st">&#39;60&#39;</span><span class="op">*</span>degree<span class="op">*</span><span class="st">&#39;W&#39;</span>),</span>
-<span id="cb9-28"><a href="#cb9-28"></a>                                <span class="kw">expression</span>(<span class="st">&#39;0&#39;</span><span class="op">*</span>degree),</span>
-<span id="cb9-29"><a href="#cb9-29"></a>                                <span class="kw">expression</span>(<span class="st">&#39;60&#39;</span><span class="op">*</span>degree<span class="op">*</span><span class="st">&#39;E&#39;</span>),</span>
-<span id="cb9-30"><a href="#cb9-30"></a>                                <span class="kw">expression</span>(<span class="st">&#39;120&#39;</span><span class="op">*</span>degree<span class="op">*</span><span class="st">&#39;E&#39;</span>),</span>
-<span id="cb9-31"><a href="#cb9-31"></a>                                <span class="kw">expression</span>(<span class="st">&#39;180&#39;</span><span class="op">*</span>degree<span class="op">*</span><span class="st">&#39;E&#39;</span>))) <span class="op">+</span></span>
-<span id="cb9-32"><a href="#cb9-32"></a><span class="st">  </span><span class="kw">theme_bw</span>(<span class="dt">base_size =</span> <span class="dv">14</span>) <span class="op">+</span></span>
-<span id="cb9-33"><a href="#cb9-33"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.title =</span> <span class="kw">element_blank</span>(),</span>
-<span id="cb9-34"><a href="#cb9-34"></a>        <span class="dt">legend.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">10</span>),</span>
-<span id="cb9-35"><a href="#cb9-35"></a>        <span class="dt">axis.title =</span> <span class="kw">element_blank</span>(),</span>
-<span id="cb9-36"><a href="#cb9-36"></a>        <span class="dt">panel.grid.major =</span> <span class="kw">element_line</span>(<span class="dt">linetype =</span> <span class="dv">2</span>, </span>
-<span id="cb9-37"><a href="#cb9-37"></a>                                        <span class="dt">size =</span> <span class="fl">0.5</span>,</span>
-<span id="cb9-38"><a href="#cb9-38"></a>                                        <span class="dt">colour =</span> <span class="st">&#39;#666666&#39;</span>),</span>
-<span id="cb9-39"><a href="#cb9-39"></a>        <span class="dt">panel.grid.minor =</span> <span class="kw">element_blank</span>())</span></code></pre></div>
-<p><img src="2020-12-15-climate-change_files/figure-html/unnamed-chunk-9-1.png" width="864" style="display: block; margin: auto;" /></p>
-<p>I think that is a fairly good reproduction of the original figure from the IPCC report, updated to use 2019. As you can see large swaths of North Africa, the Arabian Peninsula, and central Australia are deemed hyper-arid regions. In fact, most of Australia is hyper-arid or arid. The same goes for the Southern African region I am from, were the West coast is hyper-arid, and most of the rest of the region is arid or semi-arid.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co">#--- Set a colour palette ---#</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a>colours &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;#e31a1c&#39;</span>, <span class="st">&#39;#fd8d3c&#39;</span>, <span class="st">&#39;#fecc5c&#39;</span>, <span class="st">&#39;#ffffb2&#39;</span>, <span class="st">&#39;#666666&#39;</span>)</span>
+<span id="cb10-3"><a href="#cb10-3"></a></span>
+<span id="cb10-4"><a href="#cb10-4"></a><span class="co">#--- Plot the data ---#</span></span>
+<span id="cb10-5"><a href="#cb10-5"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> aridity_index_df) <span class="op">+</span></span>
+<span id="cb10-6"><a href="#cb10-6"></a><span class="st">  </span><span class="kw">aes</span>(<span class="dt">y =</span> y,</span>
+<span id="cb10-7"><a href="#cb10-7"></a>      <span class="dt">x =</span> x,</span>
+<span id="cb10-8"><a href="#cb10-8"></a>      <span class="dt">fill =</span> category) <span class="op">+</span></span>
+<span id="cb10-9"><a href="#cb10-9"></a><span class="st">  </span><span class="kw">geom_raster</span>() <span class="op">+</span></span>
+<span id="cb10-10"><a href="#cb10-10"></a><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> colours,</span>
+<span id="cb10-11"><a href="#cb10-11"></a>                    <span class="dt">guide =</span> <span class="kw">guide_legend</span>(<span class="dt">reverse =</span> <span class="ot">TRUE</span>)) <span class="op">+</span></span>
+<span id="cb10-12"><a href="#cb10-12"></a><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">60</span>, <span class="dv">90</span>),</span>
+<span id="cb10-13"><a href="#cb10-13"></a>                     <span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb10-14"><a href="#cb10-14"></a>                     <span class="dt">breaks =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">40</span>, <span class="dv">-20</span>, <span class="dv">0</span>, <span class="dv">20</span>, <span class="dv">40</span>, <span class="dv">60</span>, <span class="dv">80</span>),</span>
+<span id="cb10-15"><a href="#cb10-15"></a>                     <span class="dt">labels =</span> <span class="kw">c</span>(<span class="kw">expression</span>(<span class="st">&#39;40&#39;</span><span class="op">*</span>degree<span class="op">*</span><span class="st">&#39;S&#39;</span>),</span>
+<span id="cb10-16"><a href="#cb10-16"></a>                                <span class="kw">expression</span>(<span class="st">&#39;20&#39;</span><span class="op">*</span>degree<span class="op">*</span><span class="st">&#39;S&#39;</span>),</span>
+<span id="cb10-17"><a href="#cb10-17"></a>                                <span class="kw">expression</span>(<span class="st">&#39;0&#39;</span><span class="op">*</span>degree),</span>
+<span id="cb10-18"><a href="#cb10-18"></a>                                <span class="kw">expression</span>(<span class="st">&#39;20&#39;</span><span class="op">*</span>degree<span class="op">*</span><span class="st">&#39;N&#39;</span>),</span>
+<span id="cb10-19"><a href="#cb10-19"></a>                                <span class="kw">expression</span>(<span class="st">&#39;40&#39;</span><span class="op">*</span>degree<span class="op">*</span><span class="st">&#39;N&#39;</span>),</span>
+<span id="cb10-20"><a href="#cb10-20"></a>                                <span class="kw">expression</span>(<span class="st">&#39;60&#39;</span><span class="op">*</span>degree<span class="op">*</span><span class="st">&#39;N&#39;</span>),</span>
+<span id="cb10-21"><a href="#cb10-21"></a>                                <span class="kw">expression</span>(<span class="st">&#39;80&#39;</span><span class="op">*</span>degree<span class="op">*</span><span class="st">&#39;N&#39;</span>))) <span class="op">+</span></span>
+<span id="cb10-22"><a href="#cb10-22"></a><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">180</span>, <span class="dv">180</span>),</span>
+<span id="cb10-23"><a href="#cb10-23"></a>                     <span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb10-24"><a href="#cb10-24"></a>                     <span class="dt">breaks =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">180</span>, <span class="dv">-120</span>, <span class="dv">-60</span>, <span class="dv">0</span>, <span class="dv">60</span>, <span class="dv">120</span>, <span class="dv">180</span>),</span>
+<span id="cb10-25"><a href="#cb10-25"></a>                     <span class="dt">labels =</span> <span class="kw">c</span>(<span class="kw">expression</span>(<span class="st">&#39;180&#39;</span><span class="op">*</span>degree<span class="op">*</span><span class="st">&#39;W&#39;</span>),</span>
+<span id="cb10-26"><a href="#cb10-26"></a>                                <span class="kw">expression</span>(<span class="st">&#39;120&#39;</span><span class="op">*</span>degree<span class="op">*</span><span class="st">&#39;W&#39;</span>),</span>
+<span id="cb10-27"><a href="#cb10-27"></a>                                <span class="kw">expression</span>(<span class="st">&#39;60&#39;</span><span class="op">*</span>degree<span class="op">*</span><span class="st">&#39;W&#39;</span>),</span>
+<span id="cb10-28"><a href="#cb10-28"></a>                                <span class="kw">expression</span>(<span class="st">&#39;0&#39;</span><span class="op">*</span>degree),</span>
+<span id="cb10-29"><a href="#cb10-29"></a>                                <span class="kw">expression</span>(<span class="st">&#39;60&#39;</span><span class="op">*</span>degree<span class="op">*</span><span class="st">&#39;E&#39;</span>),</span>
+<span id="cb10-30"><a href="#cb10-30"></a>                                <span class="kw">expression</span>(<span class="st">&#39;120&#39;</span><span class="op">*</span>degree<span class="op">*</span><span class="st">&#39;E&#39;</span>),</span>
+<span id="cb10-31"><a href="#cb10-31"></a>                                <span class="kw">expression</span>(<span class="st">&#39;180&#39;</span><span class="op">*</span>degree<span class="op">*</span><span class="st">&#39;E&#39;</span>))) <span class="op">+</span></span>
+<span id="cb10-32"><a href="#cb10-32"></a><span class="st">  </span><span class="kw">theme_bw</span>(<span class="dt">base_size =</span> <span class="dv">14</span>) <span class="op">+</span></span>
+<span id="cb10-33"><a href="#cb10-33"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.title =</span> <span class="kw">element_blank</span>(),</span>
+<span id="cb10-34"><a href="#cb10-34"></a>        <span class="dt">legend.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">10</span>),</span>
+<span id="cb10-35"><a href="#cb10-35"></a>        <span class="dt">axis.title =</span> <span class="kw">element_blank</span>(),</span>
+<span id="cb10-36"><a href="#cb10-36"></a>        <span class="dt">panel.grid.major =</span> <span class="kw">element_line</span>(<span class="dt">linetype =</span> <span class="dv">2</span>, </span>
+<span id="cb10-37"><a href="#cb10-37"></a>                                        <span class="dt">size =</span> <span class="fl">0.5</span>,</span>
+<span id="cb10-38"><a href="#cb10-38"></a>                                        <span class="dt">colour =</span> <span class="st">&#39;#666666&#39;</span>),</span>
+<span id="cb10-39"><a href="#cb10-39"></a>        <span class="dt">panel.grid.minor =</span> <span class="kw">element_blank</span>())</span></code></pre></div>
+<p><img src="2020-12-15-climate-change_files/figure-html/unnamed-chunk-10-1.png" width="864" style="display: block; margin: auto;" /></p>
+<p>I think that is a fairly good reproduction of the original figure from the IPCC report, updated to use 2019 data. As you can see large swaths of North Africa, the Arabian Peninsula, and central Australia are deemed hyper-arid regions. In fact, most of Australia is hyper-arid or arid. The same goes for the Southern African region, which I am from, where the West coast is hyper-arid, and most of the rest of the region is arid or semi-arid.</p>
 <p>Seeing this gradient from hyper-arid to semi-arid across the Southern African region, I wanted to see if there has been any changes in this gradient over the past 25 years.</p>
 </div>
 </div>
-<div id="aridity-index-across-south-africa-1995-to-2019" class="section level2">
-<h2>Aridity index across South Africa (1995 to 2019)</h2>
-<p>I wanted to use data from 1995 through to 2019, in 5-year periods. This meant downloading and processing multiple files, and to reduce the amount of repetition in my code, I turned to the <code>map</code> functions in the <code>purrr</code> package.</p>
-<div id="download-data" class="section level3">
-<h3>Download data</h3>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co">#--- Load packages ---#</span></span>
-<span id="cb10-2"><a href="#cb10-2"></a><span class="kw">library</span>(purrr)</span>
-<span id="cb10-3"><a href="#cb10-3"></a></span>
-<span id="cb10-4"><a href="#cb10-4"></a><span class="co">#--- Precipitation ---#</span></span>
-<span id="cb10-5"><a href="#cb10-5"></a><span class="co"># Construct a vector of URLs to download data</span></span>
-<span id="cb10-6"><a href="#cb10-6"></a><span class="co">## Years to download</span></span>
-<span id="cb10-7"><a href="#cb10-7"></a>years &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">1995</span>, <span class="dt">to =</span> <span class="dv">2015</span>, <span class="dt">by =</span> <span class="dv">5</span>), <span class="dv">2019</span>)</span>
-<span id="cb10-8"><a href="#cb10-8"></a><span class="co">## First chunk of the URL</span></span>
-<span id="cb10-9"><a href="#cb10-9"></a>precipitation_lead &lt;-<span class="st"> &#39;http://thredds.northwestknowledge.net:8080/thredds/fileServer/TERRACLIMATE_ALL/data/TerraClimate_ppt_&#39;</span></span>
-<span id="cb10-10"><a href="#cb10-10"></a><span class="co">## Piece together the precipitation_lead and year and add the file extension (.nc)</span></span>
-<span id="cb10-11"><a href="#cb10-11"></a>precipitation_urls &lt;-<span class="st"> </span><span class="kw">paste0</span>(precipitation_lead, years, <span class="st">&#39;.nc&#39;</span>)</span>
-<span id="cb10-12"><a href="#cb10-12"></a></span>
-<span id="cb10-13"><a href="#cb10-13"></a><span class="co"># Construct a vector of destination files</span></span>
-<span id="cb10-14"><a href="#cb10-14"></a>precipitation_destfile &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&#39;TerraClimate_ppt_&#39;</span>, years, <span class="st">&#39;.nc&#39;</span>)</span>
-<span id="cb10-15"><a href="#cb10-15"></a></span>
-<span id="cb10-16"><a href="#cb10-16"></a><span class="co"># Download using the purrr::map2 functions</span></span>
-<span id="cb10-17"><a href="#cb10-17"></a><span class="kw">map2</span>(<span class="dt">.x =</span> precipitation_urls, <span class="co"># Input 1 to apply a function over</span></span>
-<span id="cb10-18"><a href="#cb10-18"></a>     <span class="dt">.y =</span> precipitation_destfile, <span class="co"># Input 2 to apply a function over</span></span>
-<span id="cb10-19"><a href="#cb10-19"></a>     <span class="op">~</span><span class="st"> </span><span class="kw">download.file</span>(<span class="dt">url =</span> .x, <span class="co"># The function to apply</span></span>
-<span id="cb10-20"><a href="#cb10-20"></a>                     <span class="dt">destfile =</span> .y,</span>
-<span id="cb10-21"><a href="#cb10-21"></a>                     <span class="dt">method =</span> <span class="st">&#39;curl&#39;</span>))</span>
-<span id="cb10-22"><a href="#cb10-22"></a></span>
-<span id="cb10-23"><a href="#cb10-23"></a><span class="co">#--- Evapotranspiration</span></span>
-<span id="cb10-24"><a href="#cb10-24"></a><span class="co"># Construct a vector of URLs to download data</span></span>
-<span id="cb10-25"><a href="#cb10-25"></a><span class="co">## First chunk of the URL</span></span>
-<span id="cb10-26"><a href="#cb10-26"></a>evapotranspiration_lead &lt;-<span class="st"> &#39;http://thredds.northwestknowledge.net:8080/thredds/fileServer/TERRACLIMATE_ALL/data/TerraClimate_pet_&#39;</span></span>
-<span id="cb10-27"><a href="#cb10-27"></a><span class="co">## Piece together the precipitation_lead and year and add the file extension (.nc)</span></span>
-<span id="cb10-28"><a href="#cb10-28"></a>evapotranspiration_urls &lt;-<span class="st"> </span><span class="kw">paste0</span>(evapotranspiration_lead, years, <span class="st">&#39;.nc&#39;</span>)</span>
-<span id="cb10-29"><a href="#cb10-29"></a></span>
-<span id="cb10-30"><a href="#cb10-30"></a><span class="co"># Construct a vector of destination files</span></span>
-<span id="cb10-31"><a href="#cb10-31"></a>evapotranspiration_destfile &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&#39;TerraClimate_pet_&#39;</span>, years, <span class="st">&#39;.nc&#39;</span>)</span>
-<span id="cb10-32"><a href="#cb10-32"></a></span>
-<span id="cb10-33"><a href="#cb10-33"></a><span class="co"># Download using the purrr::map2 functions</span></span>
-<span id="cb10-34"><a href="#cb10-34"></a><span class="kw">map2</span>(<span class="dt">.x =</span> evapotranspiration_urls,</span>
-<span id="cb10-35"><a href="#cb10-35"></a>     <span class="dt">.y =</span> evapotranspiration_destfile,</span>
-<span id="cb10-36"><a href="#cb10-36"></a>     <span class="op">~</span><span class="st"> </span><span class="kw">download.file</span>(<span class="dt">url =</span> .x,</span>
-<span id="cb10-37"><a href="#cb10-37"></a>                     <span class="dt">destfile =</span> .y,</span>
-<span id="cb10-38"><a href="#cb10-38"></a>                     <span class="dt">method =</span> <span class="st">&#39;curl&#39;</span>))</span></code></pre></div>
-</div>
-<div id="import-data" class="section level3">
-<h3>Import data</h3>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="co">#--- Precipitation ---#</span></span>
-<span id="cb11-2"><a href="#cb11-2"></a><span class="co"># Get a list of precipitation file names</span></span>
-<span id="cb11-3"><a href="#cb11-3"></a>precipitation_files &lt;-<span class="st"> </span><span class="kw">list.files</span>(<span class="dt">path =</span> <span class="st">&#39;.&#39;</span>, <span class="dt">pattern =</span> <span class="st">&#39;.ppt.&#39;</span>)</span>
-<span id="cb11-4"><a href="#cb11-4"></a><span class="co"># Import using the purrr::map function to apply the raster::stack function</span></span>
-<span id="cb11-5"><a href="#cb11-5"></a>precipitation_rasters &lt;-<span class="st"> </span><span class="kw">map</span>(<span class="dt">.x =</span> precipitation_files,</span>
-<span id="cb11-6"><a href="#cb11-6"></a>                             <span class="op">~</span><span class="st"> </span><span class="kw">stack</span>(.x))</span>
-<span id="cb11-7"><a href="#cb11-7"></a></span>
-<span id="cb11-8"><a href="#cb11-8"></a><span class="co">#--- Evapotranspiration ---#</span></span>
-<span id="cb11-9"><a href="#cb11-9"></a><span class="co"># Get a list of evapotranspiration file names</span></span>
-<span id="cb11-10"><a href="#cb11-10"></a>evapotranspiration_files &lt;-<span class="st"> </span><span class="kw">list.files</span>(<span class="dt">path =</span> <span class="st">&#39;.&#39;</span>, <span class="dt">pattern =</span> <span class="st">&#39;.pet.&#39;</span>)</span>
-<span id="cb11-11"><a href="#cb11-11"></a><span class="co"># Import using the purrr::map function to apply the raster::stack function</span></span>
-<span id="cb11-12"><a href="#cb11-12"></a>evapotranspiration_rasters &lt;-<span class="st"> </span><span class="kw">map</span>(<span class="dt">.x =</span> evapotranspiration_files,</span>
-<span id="cb11-13"><a href="#cb11-13"></a>                                  <span class="op">~</span><span class="kw">stack</span>(.x))</span></code></pre></div>
-</div>
-<div id="crop-the-rasters" class="section level3">
-<h3>Crop the rasters</h3>
-<p>I needed to crop the large raster data to only include Southern Africa.</p>
+<div id="aridity-index-across-the-southern-parts-of-southern-africa-1995-to-2019" class="section level2">
+<h2>Aridity index across the southern parts of Southern Africa (1995 to 2019)</h2>
+<p>I wanted to use data from 1995 through to 2019, in 5-year periods. This meant downloading and processing multiple files, and to reduce the amount of repetition in my code, I turned to the various <code>map</code> functions in the <code>purrr</code> package.</p>
+<div id="download-and-import-data" class="section level3">
+<h3>Download and import data</h3>
+<p>First I downloaded the data from TerraClimate project locally.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="co">#--- Load packages ---#</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="kw">library</span>(purrr)</span>
+<span id="cb11-3"><a href="#cb11-3"></a></span>
+<span id="cb11-4"><a href="#cb11-4"></a><span class="co">#--- Precipitation ---#</span></span>
+<span id="cb11-5"><a href="#cb11-5"></a><span class="co"># Construct a vector of URLs to download data</span></span>
+<span id="cb11-6"><a href="#cb11-6"></a><span class="co">## Years to download</span></span>
+<span id="cb11-7"><a href="#cb11-7"></a>years &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">1995</span>, <span class="dt">to =</span> <span class="dv">2015</span>, <span class="dt">by =</span> <span class="dv">5</span>), <span class="dv">2019</span>)</span>
+<span id="cb11-8"><a href="#cb11-8"></a><span class="co">## First chunk of the URL</span></span>
+<span id="cb11-9"><a href="#cb11-9"></a>precipitation_lead &lt;-<span class="st"> &#39;http://thredds.northwestknowledge.net:8080/thredds/fileServer/TERRACLIMATE_ALL/data/TerraClimate_ppt_&#39;</span></span>
+<span id="cb11-10"><a href="#cb11-10"></a><span class="co">## Piece together the precipitation_lead and year and add the file extension (.nc)</span></span>
+<span id="cb11-11"><a href="#cb11-11"></a>precipitation_urls &lt;-<span class="st"> </span><span class="kw">paste0</span>(precipitation_lead, years, <span class="st">&#39;.nc&#39;</span>)</span>
+<span id="cb11-12"><a href="#cb11-12"></a></span>
+<span id="cb11-13"><a href="#cb11-13"></a><span class="co"># Construct a vector of destination files</span></span>
+<span id="cb11-14"><a href="#cb11-14"></a>precipitation_destfile &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&#39;TerraClimate_ppt_&#39;</span>, years, <span class="st">&#39;.nc&#39;</span>)</span>
+<span id="cb11-15"><a href="#cb11-15"></a></span>
+<span id="cb11-16"><a href="#cb11-16"></a><span class="co"># Download using the purrr::map2 functions</span></span>
+<span id="cb11-17"><a href="#cb11-17"></a><span class="kw">map2</span>(<span class="dt">.x =</span> precipitation_urls, <span class="co"># Input 1 to apply a function over</span></span>
+<span id="cb11-18"><a href="#cb11-18"></a>     <span class="dt">.y =</span> precipitation_destfile, <span class="co"># Input 2 to apply a function over</span></span>
+<span id="cb11-19"><a href="#cb11-19"></a>     <span class="op">~</span><span class="st"> </span><span class="kw">download.file</span>(<span class="dt">url =</span> .x, <span class="co"># The function to apply</span></span>
+<span id="cb11-20"><a href="#cb11-20"></a>                     <span class="dt">destfile =</span> .y,</span>
+<span id="cb11-21"><a href="#cb11-21"></a>                     <span class="dt">method =</span> <span class="st">&#39;curl&#39;</span>))</span>
+<span id="cb11-22"><a href="#cb11-22"></a></span>
+<span id="cb11-23"><a href="#cb11-23"></a><span class="co">#--- Evapotranspiration</span></span>
+<span id="cb11-24"><a href="#cb11-24"></a><span class="co"># Construct a vector of URLs to download data</span></span>
+<span id="cb11-25"><a href="#cb11-25"></a><span class="co">## First chunk of the URL</span></span>
+<span id="cb11-26"><a href="#cb11-26"></a>evapotranspiration_lead &lt;-<span class="st"> &#39;http://thredds.northwestknowledge.net:8080/thredds/fileServer/TERRACLIMATE_ALL/data/TerraClimate_pet_&#39;</span></span>
+<span id="cb11-27"><a href="#cb11-27"></a><span class="co">## Piece together the precipitation_lead and year and add the file extension (.nc)</span></span>
+<span id="cb11-28"><a href="#cb11-28"></a>evapotranspiration_urls &lt;-<span class="st"> </span><span class="kw">paste0</span>(evapotranspiration_lead, years, <span class="st">&#39;.nc&#39;</span>)</span>
+<span id="cb11-29"><a href="#cb11-29"></a></span>
+<span id="cb11-30"><a href="#cb11-30"></a><span class="co"># Construct a vector of destination files</span></span>
+<span id="cb11-31"><a href="#cb11-31"></a>evapotranspiration_destfile &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&#39;TerraClimate_pet_&#39;</span>, years, <span class="st">&#39;.nc&#39;</span>)</span>
+<span id="cb11-32"><a href="#cb11-32"></a></span>
+<span id="cb11-33"><a href="#cb11-33"></a><span class="co"># Download using the purrr::map2 functions</span></span>
+<span id="cb11-34"><a href="#cb11-34"></a><span class="kw">map2</span>(<span class="dt">.x =</span> evapotranspiration_urls,</span>
+<span id="cb11-35"><a href="#cb11-35"></a>     <span class="dt">.y =</span> evapotranspiration_destfile,</span>
+<span id="cb11-36"><a href="#cb11-36"></a>     <span class="op">~</span><span class="st"> </span><span class="kw">download.file</span>(<span class="dt">url =</span> .x,</span>
+<span id="cb11-37"><a href="#cb11-37"></a>                     <span class="dt">destfile =</span> .y,</span>
+<span id="cb11-38"><a href="#cb11-38"></a>                     <span class="dt">method =</span> <span class="st">&#39;curl&#39;</span>))</span></code></pre></div>
+<p>Then I imported the files. Again, I used the <code>raster::stack</code> function I had used for importing the data for the global map.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="co">#--- Precipitation ---#</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="co"># Get a list of precipitation file names</span></span>
+<span id="cb12-3"><a href="#cb12-3"></a>precipitation_files &lt;-<span class="st"> </span><span class="kw">list.files</span>(<span class="dt">path =</span> <span class="st">&#39;.&#39;</span>, <span class="dt">pattern =</span> <span class="st">&#39;.ppt.&#39;</span>)</span>
+<span id="cb12-4"><a href="#cb12-4"></a><span class="co"># Import using the purrr::map function to apply the raster::stack function</span></span>
+<span id="cb12-5"><a href="#cb12-5"></a>precipitation_rasters &lt;-<span class="st"> </span><span class="kw">map</span>(<span class="dt">.x =</span> precipitation_files,</span>
+<span id="cb12-6"><a href="#cb12-6"></a>                             <span class="op">~</span><span class="st"> </span><span class="kw">stack</span>(.x))</span>
+<span id="cb12-7"><a href="#cb12-7"></a></span>
+<span id="cb12-8"><a href="#cb12-8"></a><span class="co">#--- Evapotranspiration ---#</span></span>
+<span id="cb12-9"><a href="#cb12-9"></a><span class="co"># Get a list of evapotranspiration file names</span></span>
+<span id="cb12-10"><a href="#cb12-10"></a>evapotranspiration_files &lt;-<span class="st"> </span><span class="kw">list.files</span>(<span class="dt">path =</span> <span class="st">&#39;.&#39;</span>, <span class="dt">pattern =</span> <span class="st">&#39;.pet.&#39;</span>)</span>
+<span id="cb12-11"><a href="#cb12-11"></a><span class="co"># Import using the purrr::map function to apply the raster::stack function</span></span>
+<span id="cb12-12"><a href="#cb12-12"></a>evapotranspiration_rasters &lt;-<span class="st"> </span><span class="kw">map</span>(<span class="dt">.x =</span> evapotranspiration_files,</span>
+<span id="cb12-13"><a href="#cb12-13"></a>                                  <span class="op">~</span><span class="kw">stack</span>(.x))</span></code></pre></div>
+<p>Once I had imported the data, I needed to crop the large raster data to only include parts of Southern Africa, with a focus on South Africa.</p>
 <p>By only using a subset of the data in the raster file, this cropping step would speed-up the processing of the data in later steps.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="co"># Set extent to cover Southern Africa</span></span>
-<span id="cb12-2"><a href="#cb12-2"></a>ext2 &lt;-<span class="st"> </span><span class="kw">extent</span>(<span class="dv">10</span>, <span class="dv">40</span>, <span class="dv">-37</span>, <span class="dv">-20</span>)</span>
-<span id="cb12-3"><a href="#cb12-3"></a></span>
-<span id="cb12-4"><a href="#cb12-4"></a><span class="co"># Crop rasters</span></span>
-<span id="cb12-5"><a href="#cb12-5"></a><span class="co">## Precipitation</span></span>
-<span id="cb12-6"><a href="#cb12-6"></a>precipitation_rasters &lt;-<span class="st"> </span><span class="kw">map</span>(<span class="dt">.x =</span> precipitation_rasters,</span>
-<span id="cb12-7"><a href="#cb12-7"></a>                             <span class="op">~</span><span class="st"> </span><span class="kw">crop</span>(.x, ext2))</span>
-<span id="cb12-8"><a href="#cb12-8"></a></span>
-<span id="cb12-9"><a href="#cb12-9"></a><span class="co">## Evapotranspiration</span></span>
-<span id="cb12-10"><a href="#cb12-10"></a>evapotranspiration_rasters &lt;-<span class="st"> </span><span class="kw">map</span>(<span class="dt">.x =</span> evapotranspiration_rasters,</span>
-<span id="cb12-11"><a href="#cb12-11"></a>                                  <span class="op">~</span><span class="st"> </span><span class="kw">crop</span>(.x, ext2))</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="co"># Set extent to cover Southern Africa</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a>ext2 &lt;-<span class="st"> </span><span class="kw">extent</span>(<span class="dv">10</span>, <span class="dv">40</span>, <span class="dv">-37</span>, <span class="dv">-20</span>)</span>
+<span id="cb13-3"><a href="#cb13-3"></a></span>
+<span id="cb13-4"><a href="#cb13-4"></a><span class="co"># Crop rasters</span></span>
+<span id="cb13-5"><a href="#cb13-5"></a><span class="co">## Precipitation</span></span>
+<span id="cb13-6"><a href="#cb13-6"></a>precipitation_rasters &lt;-<span class="st"> </span><span class="kw">map</span>(<span class="dt">.x =</span> precipitation_rasters,</span>
+<span id="cb13-7"><a href="#cb13-7"></a>                             <span class="op">~</span><span class="st"> </span><span class="kw">crop</span>(.x, ext2))</span>
+<span id="cb13-8"><a href="#cb13-8"></a></span>
+<span id="cb13-9"><a href="#cb13-9"></a><span class="co">## Evapotranspiration</span></span>
+<span id="cb13-10"><a href="#cb13-10"></a>evapotranspiration_rasters &lt;-<span class="st"> </span><span class="kw">map</span>(<span class="dt">.x =</span> evapotranspiration_rasters,</span>
+<span id="cb13-11"><a href="#cb13-11"></a>                                  <span class="op">~</span><span class="st"> </span><span class="kw">crop</span>(.x, ext2))</span></code></pre></div>
 </div>
 <div id="raster-maths-1" class="section level3">
 <h3>Raster maths</h3>
-<p>Then to calculate the annual mean for each year.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="co">#-- Calculate mean annual values --#</span></span>
-<span id="cb13-2"><a href="#cb13-2"></a><span class="co"># Precipitation</span></span>
-<span id="cb13-3"><a href="#cb13-3"></a>precipitation_rasters &lt;-<span class="st"> </span><span class="kw">map</span>(<span class="dt">.x =</span> precipitation_rasters,</span>
-<span id="cb13-4"><a href="#cb13-4"></a>                             <span class="op">~</span><span class="st"> </span><span class="kw">calc</span>(.x, </span>
-<span id="cb13-5"><a href="#cb13-5"></a>                                    <span class="dt">fun =</span> mean, </span>
-<span id="cb13-6"><a href="#cb13-6"></a>                                    <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</span>
-<span id="cb13-7"><a href="#cb13-7"></a></span>
-<span id="cb13-8"><a href="#cb13-8"></a><span class="co"># Evapotranspiration</span></span>
-<span id="cb13-9"><a href="#cb13-9"></a>evapotranspiration_rasters &lt;-<span class="st"> </span><span class="kw">map</span>(<span class="dt">.x =</span> evapotranspiration_rasters,</span>
-<span id="cb13-10"><a href="#cb13-10"></a>                                  <span class="op">~</span><span class="st"> </span><span class="kw">calc</span>(.x, </span>
-<span id="cb13-11"><a href="#cb13-11"></a>                                         <span class="dt">fun =</span> mean, </span>
-<span id="cb13-12"><a href="#cb13-12"></a>                                         <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</span></code></pre></div>
+<p>Then to calculate the annual mean for each year, I used the <code>raster::calc</code> function.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="co">#-- Calculate mean annual values --#</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a><span class="co"># Precipitation</span></span>
+<span id="cb14-3"><a href="#cb14-3"></a>precipitation_rasters &lt;-<span class="st"> </span><span class="kw">map</span>(<span class="dt">.x =</span> precipitation_rasters,</span>
+<span id="cb14-4"><a href="#cb14-4"></a>                             <span class="op">~</span><span class="st"> </span><span class="kw">calc</span>(.x, </span>
+<span id="cb14-5"><a href="#cb14-5"></a>                                    <span class="dt">fun =</span> mean, </span>
+<span id="cb14-6"><a href="#cb14-6"></a>                                    <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</span>
+<span id="cb14-7"><a href="#cb14-7"></a></span>
+<span id="cb14-8"><a href="#cb14-8"></a><span class="co"># Evapotranspiration</span></span>
+<span id="cb14-9"><a href="#cb14-9"></a>evapotranspiration_rasters &lt;-<span class="st"> </span><span class="kw">map</span>(<span class="dt">.x =</span> evapotranspiration_rasters,</span>
+<span id="cb14-10"><a href="#cb14-10"></a>                                  <span class="op">~</span><span class="st"> </span><span class="kw">calc</span>(.x, </span>
+<span id="cb14-11"><a href="#cb14-11"></a>                                         <span class="dt">fun =</span> mean, </span>
+<span id="cb14-12"><a href="#cb14-12"></a>                                         <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</span></code></pre></div>
 </div>
 <div id="process-the-data-as-a-dataframe" class="section level3">
 <h3>Process the data as a dataframe</h3>
 <p>To try something different to the <code>raster::overlay</code> method I used in the previous section to calculate the global aridity index, in this section, I converted the raster objects to dataframes using the combination of <code>raster::rasterToPoints</code> and <code>base::as.data.frame</code>, and then did the maths using the <code>dplyr::mutate</code> function.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="co">#--- Convert each raster to a dataframe ---#</span></span>
-<span id="cb14-2"><a href="#cb14-2"></a><span class="co"># Precipitation</span></span>
-<span id="cb14-3"><a href="#cb14-3"></a>precipitation_rasters &lt;-<span class="st"> </span><span class="kw">map</span>(<span class="dt">.x =</span> precipitation_rasters,</span>
-<span id="cb14-4"><a href="#cb14-4"></a>                             <span class="op">~</span><span class="st"> </span><span class="kw">rasterToPoints</span>(.x) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb14-5"><a href="#cb14-5"></a><span class="st">                               </span><span class="kw">as.data.frame</span>(.) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb14-6"><a href="#cb14-6"></a><span class="st">                               </span><span class="kw">rename</span>(<span class="dt">precipitation =</span> layer)) <span class="co"># For later join</span></span>
-<span id="cb14-7"><a href="#cb14-7"></a></span>
-<span id="cb14-8"><a href="#cb14-8"></a><span class="co"># Evapotranspiration</span></span>
-<span id="cb14-9"><a href="#cb14-9"></a>evapotranspiration_rasters &lt;-<span class="st"> </span><span class="kw">map</span>(<span class="dt">.x =</span> evapotranspiration_rasters,</span>
-<span id="cb14-10"><a href="#cb14-10"></a>                             <span class="op">~</span><span class="st"> </span><span class="kw">rasterToPoints</span>(.x) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb14-11"><a href="#cb14-11"></a><span class="st">                               </span><span class="kw">as.data.frame</span>(.) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb14-12"><a href="#cb14-12"></a><span class="st">                               </span><span class="kw">rename</span>(<span class="dt">evapotranspiration =</span> layer)) <span class="co"># For later join</span></span>
-<span id="cb14-13"><a href="#cb14-13"></a></span>
-<span id="cb14-14"><a href="#cb14-14"></a><span class="co">#--- Join the precipitation and evapotranspiration dataframes ---#</span></span>
-<span id="cb14-15"><a href="#cb14-15"></a>ai_df &lt;-<span class="st"> </span><span class="kw">map2</span>(<span class="dt">.x =</span> precipitation_rasters,</span>
-<span id="cb14-16"><a href="#cb14-16"></a>              <span class="dt">.y =</span> evapotranspiration_rasters,</span>
-<span id="cb14-17"><a href="#cb14-17"></a>              <span class="op">~</span><span class="st"> </span><span class="kw">left_join</span>(.x, .y))</span>
-<span id="cb14-18"><a href="#cb14-18"></a></span>
-<span id="cb14-19"><a href="#cb14-19"></a><span class="co">#-- Add a year identifier to each dataframe --#</span></span>
-<span id="cb14-20"><a href="#cb14-20"></a>years2 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">1995</span>, <span class="dt">to =</span> <span class="dv">2015</span>, <span class="dt">by =</span> <span class="dv">5</span>), <span class="dv">2019</span>)</span>
-<span id="cb14-21"><a href="#cb14-21"></a></span>
-<span id="cb14-22"><a href="#cb14-22"></a>ai_df &lt;-<span class="st"> </span><span class="kw">map2</span>(<span class="dt">.x =</span> ai_df,</span>
-<span id="cb14-23"><a href="#cb14-23"></a>              <span class="dt">.y =</span> years2,</span>
-<span id="cb14-24"><a href="#cb14-24"></a>              <span class="op">~</span><span class="st"> </span>.x <span class="op">%&gt;%</span></span>
-<span id="cb14-25"><a href="#cb14-25"></a><span class="st">                </span><span class="kw">mutate</span>(<span class="dt">year =</span> <span class="kw">as.character</span>(.y)))</span>
-<span id="cb14-26"><a href="#cb14-26"></a></span>
-<span id="cb14-27"><a href="#cb14-27"></a><span class="co">#-- Bind list items to make a single large dataframe (1995 to 2019) --#</span></span>
-<span id="cb14-28"><a href="#cb14-28"></a>ai_df &lt;-<span class="st"> </span><span class="kw">map_df</span>(<span class="dt">.x =</span> ai_df,</span>
-<span id="cb14-29"><a href="#cb14-29"></a>                <span class="op">~</span><span class="st"> </span><span class="kw">bind_rows</span>(.x))</span>
-<span id="cb14-30"><a href="#cb14-30"></a></span>
-<span id="cb14-31"><a href="#cb14-31"></a><span class="co">#--- Calculate aridity index ---#</span></span>
-<span id="cb14-32"><a href="#cb14-32"></a>ai_df &lt;-<span class="st"> </span>ai_df <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb14-33"><a href="#cb14-33"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">aridity_index =</span> precipitation <span class="op">/</span><span class="st"> </span>evapotranspiration)</span>
-<span id="cb14-34"><a href="#cb14-34"></a></span>
-<span id="cb14-35"><a href="#cb14-35"></a><span class="co">#--- Recode aridity index into categories --#</span></span>
-<span id="cb14-36"><a href="#cb14-36"></a>ai_df &lt;-<span class="st"> </span>ai_df <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb14-37"><a href="#cb14-37"></a><span class="st">  </span><span class="co"># Recode</span></span>
-<span id="cb14-38"><a href="#cb14-38"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">category =</span> <span class="kw">case_when</span>(</span>
-<span id="cb14-39"><a href="#cb14-39"></a>    <span class="kw">is.infinite</span>(aridity_index) <span class="op">~</span><span class="st"> &#39;Humid&#39;</span>,</span>
-<span id="cb14-40"><a href="#cb14-40"></a>    aridity_index <span class="op">&gt;=</span><span class="st"> </span><span class="fl">0.65</span> <span class="op">~</span><span class="st"> &#39;Humid&#39;</span>,</span>
-<span id="cb14-41"><a href="#cb14-41"></a>    aridity_index <span class="op">&gt;=</span><span class="st"> </span><span class="fl">0.5</span> <span class="op">&amp;</span><span class="st"> </span>aridity_index <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.65</span> <span class="op">~</span><span class="st"> &#39;Dry sub-humid&#39;</span>,</span>
-<span id="cb14-42"><a href="#cb14-42"></a>    aridity_index <span class="op">&gt;=</span><span class="st"> </span><span class="fl">0.2</span> <span class="op">&amp;</span><span class="st"> </span>aridity_index <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.5</span> <span class="op">~</span><span class="st"> &#39;Semi-arid&#39;</span>,</span>
-<span id="cb14-43"><a href="#cb14-43"></a>    aridity_index <span class="op">&gt;=</span><span class="st"> </span><span class="fl">0.05</span> <span class="op">&amp;</span><span class="st"> </span>aridity_index <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.2</span> <span class="op">~</span><span class="st"> &#39;Arid&#39;</span>,</span>
-<span id="cb14-44"><a href="#cb14-44"></a>    aridity_index <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span> <span class="op">~</span><span class="st"> &#39;Hyper-arid&#39;</span></span>
-<span id="cb14-45"><a href="#cb14-45"></a>  )) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb14-46"><a href="#cb14-46"></a><span class="st">  </span><span class="co"># Convert to ordered factor</span></span>
-<span id="cb14-47"><a href="#cb14-47"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">category =</span> <span class="kw">factor</span>(category,</span>
-<span id="cb14-48"><a href="#cb14-48"></a>                           <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&#39;Hyper-arid&#39;</span>, <span class="st">&#39;Arid&#39;</span>, <span class="st">&#39;Semi-arid&#39;</span>,</span>
-<span id="cb14-49"><a href="#cb14-49"></a>                                      <span class="st">&#39;Dry sub-humid&#39;</span>, <span class="st">&#39;Humid&#39;</span>),</span>
-<span id="cb14-50"><a href="#cb14-50"></a>                           <span class="dt">ordered =</span> <span class="ot">TRUE</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="co">#--- Convert each raster to a dataframe ---#</span></span>
+<span id="cb15-2"><a href="#cb15-2"></a><span class="co"># Precipitation</span></span>
+<span id="cb15-3"><a href="#cb15-3"></a>precipitation_rasters &lt;-<span class="st"> </span><span class="kw">map</span>(<span class="dt">.x =</span> precipitation_rasters,</span>
+<span id="cb15-4"><a href="#cb15-4"></a>                             <span class="op">~</span><span class="st"> </span><span class="kw">rasterToPoints</span>(.x) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb15-5"><a href="#cb15-5"></a><span class="st">                               </span><span class="kw">as.data.frame</span>(.) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb15-6"><a href="#cb15-6"></a><span class="st">                               </span><span class="kw">rename</span>(<span class="dt">precipitation =</span> layer)) <span class="co"># For later join</span></span>
+<span id="cb15-7"><a href="#cb15-7"></a></span>
+<span id="cb15-8"><a href="#cb15-8"></a><span class="co"># Evapotranspiration</span></span>
+<span id="cb15-9"><a href="#cb15-9"></a>evapotranspiration_rasters &lt;-<span class="st"> </span><span class="kw">map</span>(<span class="dt">.x =</span> evapotranspiration_rasters,</span>
+<span id="cb15-10"><a href="#cb15-10"></a>                             <span class="op">~</span><span class="st"> </span><span class="kw">rasterToPoints</span>(.x) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb15-11"><a href="#cb15-11"></a><span class="st">                               </span><span class="kw">as.data.frame</span>(.) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb15-12"><a href="#cb15-12"></a><span class="st">                               </span><span class="kw">rename</span>(<span class="dt">evapotranspiration =</span> layer)) <span class="co"># For later join</span></span>
+<span id="cb15-13"><a href="#cb15-13"></a></span>
+<span id="cb15-14"><a href="#cb15-14"></a><span class="co">#--- Join the precipitation and evapotranspiration dataframes ---#</span></span>
+<span id="cb15-15"><a href="#cb15-15"></a>ai_df &lt;-<span class="st"> </span><span class="kw">map2</span>(<span class="dt">.x =</span> precipitation_rasters,</span>
+<span id="cb15-16"><a href="#cb15-16"></a>              <span class="dt">.y =</span> evapotranspiration_rasters,</span>
+<span id="cb15-17"><a href="#cb15-17"></a>              <span class="op">~</span><span class="st"> </span><span class="kw">left_join</span>(.x, .y))</span>
+<span id="cb15-18"><a href="#cb15-18"></a></span>
+<span id="cb15-19"><a href="#cb15-19"></a><span class="co">#-- Add a year identifier to each dataframe --#</span></span>
+<span id="cb15-20"><a href="#cb15-20"></a>years2 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">1995</span>, <span class="dt">to =</span> <span class="dv">2015</span>, <span class="dt">by =</span> <span class="dv">5</span>), <span class="dv">2019</span>)</span>
+<span id="cb15-21"><a href="#cb15-21"></a></span>
+<span id="cb15-22"><a href="#cb15-22"></a>ai_df &lt;-<span class="st"> </span><span class="kw">map2</span>(<span class="dt">.x =</span> ai_df,</span>
+<span id="cb15-23"><a href="#cb15-23"></a>              <span class="dt">.y =</span> years2,</span>
+<span id="cb15-24"><a href="#cb15-24"></a>              <span class="op">~</span><span class="st"> </span>.x <span class="op">%&gt;%</span></span>
+<span id="cb15-25"><a href="#cb15-25"></a><span class="st">                </span><span class="kw">mutate</span>(<span class="dt">year =</span> <span class="kw">as.character</span>(.y)))</span>
+<span id="cb15-26"><a href="#cb15-26"></a></span>
+<span id="cb15-27"><a href="#cb15-27"></a><span class="co">#-- Bind list items to make a single large dataframe (1995 to 2019) --#</span></span>
+<span id="cb15-28"><a href="#cb15-28"></a>ai_df &lt;-<span class="st"> </span><span class="kw">map_df</span>(<span class="dt">.x =</span> ai_df,</span>
+<span id="cb15-29"><a href="#cb15-29"></a>                <span class="op">~</span><span class="st"> </span><span class="kw">bind_rows</span>(.x))</span>
+<span id="cb15-30"><a href="#cb15-30"></a></span>
+<span id="cb15-31"><a href="#cb15-31"></a><span class="co">#--- Calculate aridity index ---#</span></span>
+<span id="cb15-32"><a href="#cb15-32"></a>ai_df &lt;-<span class="st"> </span>ai_df <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb15-33"><a href="#cb15-33"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">aridity_index =</span> precipitation <span class="op">/</span><span class="st"> </span>evapotranspiration)</span>
+<span id="cb15-34"><a href="#cb15-34"></a></span>
+<span id="cb15-35"><a href="#cb15-35"></a><span class="co">#--- Recode aridity index into categories --#</span></span>
+<span id="cb15-36"><a href="#cb15-36"></a>ai_df &lt;-<span class="st"> </span>ai_df <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb15-37"><a href="#cb15-37"></a><span class="st">  </span><span class="co"># Recode</span></span>
+<span id="cb15-38"><a href="#cb15-38"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">category =</span> <span class="kw">case_when</span>(</span>
+<span id="cb15-39"><a href="#cb15-39"></a>    <span class="kw">is.infinite</span>(aridity_index) <span class="op">~</span><span class="st"> &#39;Humid&#39;</span>,</span>
+<span id="cb15-40"><a href="#cb15-40"></a>    aridity_index <span class="op">&gt;=</span><span class="st"> </span><span class="fl">0.65</span> <span class="op">~</span><span class="st"> &#39;Humid&#39;</span>,</span>
+<span id="cb15-41"><a href="#cb15-41"></a>    aridity_index <span class="op">&gt;=</span><span class="st"> </span><span class="fl">0.5</span> <span class="op">&amp;</span><span class="st"> </span>aridity_index <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.65</span> <span class="op">~</span><span class="st"> &#39;Dry sub-humid&#39;</span>,</span>
+<span id="cb15-42"><a href="#cb15-42"></a>    aridity_index <span class="op">&gt;=</span><span class="st"> </span><span class="fl">0.2</span> <span class="op">&amp;</span><span class="st"> </span>aridity_index <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.5</span> <span class="op">~</span><span class="st"> &#39;Semi-arid&#39;</span>,</span>
+<span id="cb15-43"><a href="#cb15-43"></a>    aridity_index <span class="op">&gt;=</span><span class="st"> </span><span class="fl">0.05</span> <span class="op">&amp;</span><span class="st"> </span>aridity_index <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.2</span> <span class="op">~</span><span class="st"> &#39;Arid&#39;</span>,</span>
+<span id="cb15-44"><a href="#cb15-44"></a>    aridity_index <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span> <span class="op">~</span><span class="st"> &#39;Hyper-arid&#39;</span></span>
+<span id="cb15-45"><a href="#cb15-45"></a>  )) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb15-46"><a href="#cb15-46"></a><span class="st">  </span><span class="co"># Convert to ordered factor</span></span>
+<span id="cb15-47"><a href="#cb15-47"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">category =</span> <span class="kw">factor</span>(category,</span>
+<span id="cb15-48"><a href="#cb15-48"></a>                           <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&#39;Hyper-arid&#39;</span>, <span class="st">&#39;Arid&#39;</span>, <span class="st">&#39;Semi-arid&#39;</span>,</span>
+<span id="cb15-49"><a href="#cb15-49"></a>                                      <span class="st">&#39;Dry sub-humid&#39;</span>, <span class="st">&#39;Humid&#39;</span>),</span>
+<span id="cb15-50"><a href="#cb15-50"></a>                           <span class="dt">ordered =</span> <span class="ot">TRUE</span>))</span></code></pre></div>
 </div>
 <div id="get-natural-earth-map" class="section level3">
 <h3>Get Natural Earth map</h3>
-<p>I wanted to plot the country outlines on the raster image, and to do this I needed the <code>rnaturalearth</code> package.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="co"># Load package</span></span>
-<span id="cb15-2"><a href="#cb15-2"></a><span class="kw">library</span>(rnaturalearth)</span>
-<span id="cb15-3"><a href="#cb15-3"></a><span class="kw">library</span>(rnaturalearthdata)</span>
-<span id="cb15-4"><a href="#cb15-4"></a></span>
-<span id="cb15-5"><a href="#cb15-5"></a><span class="co">#--- Get medium scale (1:50) map of Southern African countries ---#</span></span>
-<span id="cb15-6"><a href="#cb15-6"></a><span class="co"># Get a map of Africa</span></span>
-<span id="cb15-7"><a href="#cb15-7"></a>africa &lt;-<span class="st"> </span><span class="kw">ne_countries</span>(<span class="dt">scale =</span> <span class="dv">50</span>, </span>
-<span id="cb15-8"><a href="#cb15-8"></a>                       <span class="dt">continent =</span> <span class="st">&#39;Africa&#39;</span>)</span>
-<span id="cb15-9"><a href="#cb15-9"></a></span>
-<span id="cb15-10"><a href="#cb15-10"></a><span class="co"># Extract Southern African countries</span></span>
-<span id="cb15-11"><a href="#cb15-11"></a>country_filter &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;ZAF&#39;</span>, <span class="st">&#39;NAM&#39;</span>, <span class="st">&#39;BWA&#39;</span>, <span class="st">&#39;ZWE&#39;</span>, <span class="st">&#39;MOZ&#39;</span>, <span class="st">&#39;MWI&#39;</span>, <span class="st">&#39;ZMB&#39;</span>, <span class="st">&#39;AGO&#39;</span>)</span>
-<span id="cb15-12"><a href="#cb15-12"></a></span>
-<span id="cb15-13"><a href="#cb15-13"></a>s_africa &lt;-<span class="st"> </span>africa <span class="op">%&gt;%</span></span>
-<span id="cb15-14"><a href="#cb15-14"></a><span class="st">  </span><span class="kw">st_as_sf</span>(.) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Convert the large SpatialPolygonDataFrame into a sf object</span></span>
-<span id="cb15-15"><a href="#cb15-15"></a><span class="st">  </span><span class="kw">filter</span>(sov_a3 <span class="op">%in%</span><span class="st"> </span>country_filter) <span class="co"># Filter out the countries I want</span></span></code></pre></div>
+<p>I wanted to plot the country outlines on the raster image, and to do this I needed the <code>rnaturalearth</code> package, which makes it easy to global maps from the <a href="https://www.naturalearthdata.com/">Natural Earth</a> site.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="co"># Load package</span></span>
+<span id="cb16-2"><a href="#cb16-2"></a><span class="kw">library</span>(rnaturalearth)</span>
+<span id="cb16-3"><a href="#cb16-3"></a><span class="kw">library</span>(rnaturalearthdata)</span>
+<span id="cb16-4"><a href="#cb16-4"></a></span>
+<span id="cb16-5"><a href="#cb16-5"></a><span class="co">#--- Get medium scale (1:50) map of Southern African countries ---#</span></span>
+<span id="cb16-6"><a href="#cb16-6"></a><span class="co"># Get a map of Africa</span></span>
+<span id="cb16-7"><a href="#cb16-7"></a>africa &lt;-<span class="st"> </span><span class="kw">ne_countries</span>(<span class="dt">scale =</span> <span class="dv">50</span>, </span>
+<span id="cb16-8"><a href="#cb16-8"></a>                       <span class="dt">continent =</span> <span class="st">&#39;Africa&#39;</span>)</span>
+<span id="cb16-9"><a href="#cb16-9"></a></span>
+<span id="cb16-10"><a href="#cb16-10"></a><span class="co"># Extract Southern African countries</span></span>
+<span id="cb16-11"><a href="#cb16-11"></a>country_filter &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;ZAF&#39;</span>, <span class="st">&#39;NAM&#39;</span>, <span class="st">&#39;BWA&#39;</span>, <span class="st">&#39;ZWE&#39;</span>, <span class="st">&#39;MOZ&#39;</span>, <span class="st">&#39;MWI&#39;</span>, <span class="st">&#39;ZMB&#39;</span>, <span class="st">&#39;AGO&#39;</span>)</span>
+<span id="cb16-12"><a href="#cb16-12"></a></span>
+<span id="cb16-13"><a href="#cb16-13"></a>s_africa &lt;-<span class="st"> </span>africa <span class="op">%&gt;%</span></span>
+<span id="cb16-14"><a href="#cb16-14"></a><span class="st">  </span><span class="kw">st_as_sf</span>(.) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Convert the large SpatialPolygonDataFrame into a sf object</span></span>
+<span id="cb16-15"><a href="#cb16-15"></a><span class="st">  </span><span class="kw">filter</span>(sov_a3 <span class="op">%in%</span><span class="st"> </span>country_filter) <span class="co"># Filter out the countries I want</span></span></code></pre></div>
 </div>
 <div id="plot-the-data-1" class="section level3">
 <h3>Plot the data</h3>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="co">#--- Set a colour palette ---#</span></span>
-<span id="cb16-2"><a href="#cb16-2"></a>colours2 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&#39;#e31a1c&#39;</span>, <span class="st">&#39;#fd8d3c&#39;</span>, <span class="st">&#39;#fecc5c&#39;</span>, <span class="st">&#39;#ffffb2&#39;</span>, <span class="st">&#39;#666666&#39;</span>)</span>
-<span id="cb16-3"><a href="#cb16-3"></a></span>
-<span id="cb16-4"><a href="#cb16-4"></a><span class="co">#--- Plot the data ---#</span></span>
-<span id="cb16-5"><a href="#cb16-5"></a><span class="kw">ggplot</span>() <span class="op">+</span></span>
-<span id="cb16-6"><a href="#cb16-6"></a><span class="st">  </span><span class="kw">geom_raster</span>(<span class="dt">data =</span> ai_df, <span class="co"># Plot the aridity index raster</span></span>
-<span id="cb16-7"><a href="#cb16-7"></a>              <span class="kw">aes</span>(<span class="dt">x =</span> x,</span>
-<span id="cb16-8"><a href="#cb16-8"></a>                  <span class="dt">y =</span> y,</span>
-<span id="cb16-9"><a href="#cb16-9"></a>                  <span class="dt">fill =</span> category)) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb16-10"><a href="#cb16-10"></a><span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> s_africa,</span>
-<span id="cb16-11"><a href="#cb16-11"></a>          <span class="dt">alpha =</span> <span class="dv">0</span>) <span class="op">+</span><span class="st"> </span><span class="co"># Plot Southern Africa</span></span>
-<span id="cb16-12"><a href="#cb16-12"></a><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> colours2,</span>
-<span id="cb16-13"><a href="#cb16-13"></a>                    <span class="dt">guide =</span> <span class="kw">guide_legend</span>(<span class="dt">reverse =</span> <span class="ot">TRUE</span>)) <span class="op">+</span></span>
-<span id="cb16-14"><a href="#cb16-14"></a><span class="st">  </span><span class="kw">coord_sf</span>(<span class="dt">ylim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">37</span>, <span class="dv">-21</span>),</span>
-<span id="cb16-15"><a href="#cb16-15"></a>           <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">40</span>)) <span class="op">+</span></span>
-<span id="cb16-16"><a href="#cb16-16"></a><span class="st">  </span><span class="kw">theme_void</span>(<span class="dt">base_size =</span> <span class="dv">18</span>) <span class="op">+</span></span>
-<span id="cb16-17"><a href="#cb16-17"></a><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>year, <span class="dt">ncol =</span> <span class="dv">2</span>) <span class="op">+</span></span>
-<span id="cb16-18"><a href="#cb16-18"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.title =</span> <span class="kw">element_blank</span>())</span></code></pre></div>
-<p><img src="2020-12-15-climate-change_files/figure-html/unnamed-chunk-15-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>It’s always difficult to interpret a series of snapshots in time, and as can be seen in the figure, there are spatial fluctuations in the aridity index across the ~25 years. For example, the humid zone increases massively in 2000, but is minimal in most other years. What is clear however, is that 2019 was a bad year, with large expanses of Namibia and South Africa experiencing hyper-arid conditions. It will be interesting to see if this trend continues in 2020, especially since the <em>El Nino-Southern Oscillation</em> is in a <em>La Nina</em> state in 2020, which is associated with above average rainfall in Southern Africa.</p>
-<p>I hope you found this blog post useful, and that enjoyed reading it.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="co">#--- Plot the data ---#</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a><span class="kw">ggplot</span>() <span class="op">+</span></span>
+<span id="cb17-3"><a href="#cb17-3"></a><span class="st">  </span><span class="kw">geom_raster</span>(<span class="dt">data =</span> ai_df, <span class="co"># Plot the aridity index raster</span></span>
+<span id="cb17-4"><a href="#cb17-4"></a>              <span class="kw">aes</span>(<span class="dt">x =</span> x,</span>
+<span id="cb17-5"><a href="#cb17-5"></a>                  <span class="dt">y =</span> y,</span>
+<span id="cb17-6"><a href="#cb17-6"></a>                  <span class="dt">fill =</span> category)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb17-7"><a href="#cb17-7"></a><span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">data =</span> s_africa,</span>
+<span id="cb17-8"><a href="#cb17-8"></a>          <span class="dt">alpha =</span> <span class="dv">0</span>) <span class="op">+</span><span class="st"> </span><span class="co"># Plot Southern Africa</span></span>
+<span id="cb17-9"><a href="#cb17-9"></a><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> colours, <span class="co"># Already set for the global aridity index map</span></span>
+<span id="cb17-10"><a href="#cb17-10"></a>                    <span class="dt">guide =</span> <span class="kw">guide_legend</span>(<span class="dt">reverse =</span> <span class="ot">TRUE</span>)) <span class="op">+</span></span>
+<span id="cb17-11"><a href="#cb17-11"></a><span class="st">  </span><span class="kw">coord_sf</span>(<span class="dt">ylim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">37</span>, <span class="dv">-21</span>),</span>
+<span id="cb17-12"><a href="#cb17-12"></a>           <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">40</span>)) <span class="op">+</span></span>
+<span id="cb17-13"><a href="#cb17-13"></a><span class="st">  </span><span class="kw">theme_void</span>(<span class="dt">base_size =</span> <span class="dv">18</span>) <span class="op">+</span></span>
+<span id="cb17-14"><a href="#cb17-14"></a><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>year, <span class="dt">ncol =</span> <span class="dv">2</span>) <span class="op">+</span></span>
+<span id="cb17-15"><a href="#cb17-15"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.title =</span> <span class="kw">element_blank</span>())</span></code></pre></div>
+<p><img src="2020-12-15-climate-change_files/figure-html/unnamed-chunk-16-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>It’s always difficult to interpret a series of snapshots in time, and as can be seen in the figure, there are spatial fluctuations in the aridity index across the ~25 years. For example, the humid zone increases massively in 2000, but is minimal in most other years. Indeed, it appears that there is a gradual encroachment of the semi-arid regions into the dry semi-humid and humid zones on the east coast. What is clear, is that 2019 was a bad year, with large expanses of Namibia and South Africa experiencing hyper-arid conditions. It will be interesting to see if this trend continues in 2020, especially since the <em>El Nino-Southern Oscillation</em> is in a <em>La Nina</em> state in 2020, which is associated with above average rainfall in Southern Africa.</p>
+<p>Another approach to analysing the data could be to average the aridity index values over multiple years, thus exposing smoothed temporal trends. I hope you found this blog post useful, and that you enjoyed reading it.</p>
 <hr />
 </div>
 </div>
