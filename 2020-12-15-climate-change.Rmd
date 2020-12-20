@@ -1,11 +1,11 @@
 ---
 title: "Calculating and mapping global and regional aridity indices"
-post_title: "Using raster maths to calculate and map aridity indices"
+post_title: "Using raster data to calculate and then map aridity indices"
 post_author: 'Peter Kamerman'
 post_date: '15 December 2020'
 post_image: 'https://www.painblogr.org/images/posts/2020-12-15-climate-change/post-image.jpg'
 permalink:  '2020-12-15-climate-change.html'
-description: "Using raster maths to map global aridity and changes in aridity over time in parts of Southern Africa"
+description: "Using raster maths to calculate global aridity and changes in aridity over time in parts of Southern Africa"
 output:
     html_document:
         template: './_templates/posts.html'
