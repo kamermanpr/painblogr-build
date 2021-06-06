@@ -9,14 +9,23 @@
     <meta name="generator" content="pandoc"/>
 	
 	
-	 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
- <meta name="viewport" content="width=device-width, initial-scale=1" />
- <link href="site_libs/bootstrap-3.3.5/css/yeti.min.css" rel="stylesheet" />
- <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
- <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
- <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
- <script src="site_libs/navigation-1.1/tabsets.js"></script>
- <script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script> 
+	 <script src="site_libs/header-attrs-2.7/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/yeti.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script> 
 
 	
 		<style type="text/css">
@@ -25,19 +34,19 @@
 		}
 	</style>
 	<style type="text/css">
-		code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
+		pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -57,7 +66,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; } /* Alert */
 code span.an { color: #008000; } /* Annotation */
@@ -201,12 +210,15 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
                             <li><a href="./publications.html">Publications & Reprints </a></li>
                         </ul>
                     </li>
+                    <!---
+                    # Teaching
                     <li class="dropdown" style="display:table-cell;float:none;vertical-align:middle;font-size:16px;">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Teaching<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="https://www.painblogr.org/biostatistics/">Introduction to Biostatistics</a></li>
                         </ul>
                     </li>
+                    --->
                     <li class="dropdown" style="display:table-cell;float:none;vertical-align:middle;font-size:16px;">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Apps<span class="caret"></span></a>
                         <ul class="dropdown-menu">
@@ -268,13 +280,13 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 <div id="get-some-data" class="section level2">
 <h2>Get some data</h2>
 <p>The first thing to do was to get some data. Using the <a href="https://openprescribing.net/api" target="_blank">OpenPrescribing API</a>, I download data on the total items prescribed of gabapentin and pregabalin for the period 2020-05-01 to 2020-04-01 (please see this <a href="https://gist.github.com/kamermanpr/3d7a76131034aa7d4268dfa438cb9f5f" target="_blank"><em>GitHub Gist</em></a> for the <em>R</em> script I used).</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># Import data</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a>data &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&#39;_data/2020-07-03-piecewise-regression/gabapentinoids.csv&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import data</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;_data/2020-07-03-piecewise-regression/gabapentinoids.csv&#39;</span>)</span></code></pre></div>
 </div>
 <div id="look-at-the-data" class="section level2">
 <h2>Look at the data</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># Describe data</span></span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="kw">head</span>(data)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Describe data</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(data)</span></code></pre></div>
 <pre><code>##         date time_months prescriptions_gabapentin prescriptions_pregabalin
 ## 1 2015-05-01           1                   450908                   375350
 ## 2 2015-06-01           2                   479752                   399022
@@ -289,7 +301,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 ## 4              845934
 ## 5              911829
 ## 6              929153</code></pre>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw">str</span>(data)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(data)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    60 obs. of  5 variables:
 ##  $ date                    : chr  &quot;2015-05-01&quot; &quot;2015-06-01&quot; &quot;2015-07-01&quot; &quot;2015-08-01&quot; ...
 ##  $ time_months             : int  1 2 3 4 5 6 7 8 9 10 ...
@@ -297,102 +309,102 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 ##  $ prescriptions_pregabalin: int  375350 399022 419985 385838 414772 423735 410291 457160 414782 416315 ...
 ##  $ prescriptions_total     : int  826258 878774 922723 845934 911829 929153 898352 1000227 904333 906705 ...</code></pre>
 <p>The data had five columns: a date column (<em>date</em>), a time column expressing the time in months since the first record (<em>time_months</em>), and then three columns expressing the number of prescribed items per month of gabapentin (<em>prescriptions_gabapentin</em>), pregabalin (<em>prescriptions_pregabalin</em>), and the total number of gabapentinoids (<em>prescriptions_total</em>).</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># Load package</span></span>
-<span id="cb6-2"><a href="#cb6-2"></a><span class="kw">library</span>(dplyr)</span>
-<span id="cb6-3"><a href="#cb6-3"></a><span class="kw">library</span>(tidyr)</span>
-<span id="cb6-4"><a href="#cb6-4"></a><span class="kw">library</span>(stringr)</span>
-<span id="cb6-5"><a href="#cb6-5"></a><span class="kw">library</span>(ggplot2)</span>
-<span id="cb6-6"><a href="#cb6-6"></a></span>
-<span id="cb6-7"><a href="#cb6-7"></a><span class="co"># Process data into long format</span></span>
-<span id="cb6-8"><a href="#cb6-8"></a>data_long &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb6-9"><a href="#cb6-9"></a><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">cols =</span> <span class="kw">starts_with</span>(<span class="st">&#39;prescription&#39;</span>),</span>
-<span id="cb6-10"><a href="#cb6-10"></a>               <span class="dt">names_to =</span> <span class="st">&#39;names&#39;</span>,</span>
-<span id="cb6-11"><a href="#cb6-11"></a>               <span class="dt">values_to =</span> <span class="st">&#39;values&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb6-12"><a href="#cb6-12"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">names =</span> <span class="kw">str_remove</span>(names, <span class="st">&#39;prescriptions_&#39;</span>))</span>
-<span id="cb6-13"><a href="#cb6-13"></a>  </span>
-<span id="cb6-14"><a href="#cb6-14"></a><span class="co"># Plot data (make it pretty)</span></span>
-<span id="cb6-15"><a href="#cb6-15"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> data_long) <span class="op">+</span></span>
-<span id="cb6-16"><a href="#cb6-16"></a><span class="st">  </span><span class="kw">aes</span>(<span class="dt">x =</span> time_months,</span>
-<span id="cb6-17"><a href="#cb6-17"></a>      <span class="dt">y =</span> values,</span>
-<span id="cb6-18"><a href="#cb6-18"></a>      <span class="dt">colour =</span> names,</span>
-<span id="cb6-19"><a href="#cb6-19"></a>      <span class="dt">fill =</span> names) <span class="op">+</span></span>
-<span id="cb6-20"><a href="#cb6-20"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">shape =</span> <span class="dv">21</span>,</span>
-<span id="cb6-21"><a href="#cb6-21"></a>             <span class="dt">size =</span> <span class="dv">3</span>) <span class="op">+</span></span>
-<span id="cb6-22"><a href="#cb6-22"></a><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">48</span>,</span>
-<span id="cb6-23"><a href="#cb6-23"></a>             <span class="dt">linetype =</span> <span class="dv">2</span>) <span class="op">+</span></span>
-<span id="cb6-24"><a href="#cb6-24"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">caption =</span> <span class="st">&#39;Vertical dashed line: date of reclassification (2019-04-01)&#39;</span>,</span>
-<span id="cb6-25"><a href="#cb6-25"></a>       <span class="dt">y =</span> <span class="st">&#39;Number of prescribed items&#39;</span>,</span>
-<span id="cb6-26"><a href="#cb6-26"></a>       <span class="dt">x =</span> <span class="st">&#39;Date&#39;</span>) <span class="op">+</span></span>
-<span id="cb6-27"><a href="#cb6-27"></a><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&#39;May 2015&#39;</span>, <span class="st">&#39;Dec 2016&#39;</span>, <span class="st">&#39;Aug 2018&#39;</span>, <span class="st">&#39;Apr 2020&#39;</span>)) <span class="op">+</span></span>
-<span id="cb6-28"><a href="#cb6-28"></a><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&#39;#67A0C9&#39;</span>, <span class="st">&#39;#FDA568&#39;</span>, <span class="st">&#39;#70BB70&#39;</span>)) <span class="op">+</span></span>
-<span id="cb6-29"><a href="#cb6-29"></a><span class="st">  </span><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&#39;#2678B2&#39;</span>, <span class="st">&#39;#FD7F28&#39;</span>, <span class="st">&#39;#339F34&#39;</span>)) <span class="op">+</span></span>
-<span id="cb6-30"><a href="#cb6-30"></a><span class="st">  </span><span class="kw">theme_minimal</span>(<span class="dt">base_size =</span> <span class="dv">18</span>) <span class="op">+</span></span>
-<span id="cb6-31"><a href="#cb6-31"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.title =</span> <span class="kw">element_blank</span>(),</span>
-<span id="cb6-32"><a href="#cb6-32"></a>        <span class="dt">legend.position =</span> <span class="st">&#39;top&#39;</span>,</span>
-<span id="cb6-33"><a href="#cb6-33"></a>        <span class="dt">panel.grid =</span> <span class="kw">element_blank</span>(),</span>
-<span id="cb6-34"><a href="#cb6-34"></a>        <span class="dt">axis.line =</span> <span class="kw">element_line</span>(<span class="dt">size =</span> <span class="fl">0.5</span>),</span>
-<span id="cb6-35"><a href="#cb6-35"></a>        <span class="dt">axis.ticks =</span> <span class="kw">element_line</span>(<span class="dt">size =</span> <span class="fl">0.5</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load package</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Process data into long format</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>data_long <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> </span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">&#39;prescription&#39;</span>),</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">&#39;names&#39;</span>,</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">&#39;values&#39;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">names =</span> <span class="fu">str_remove</span>(names, <span class="st">&#39;prescriptions_&#39;</span>))</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot data (make it pretty)</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> data_long) <span class="sc">+</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> time_months,</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> values,</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>      <span class="at">colour =</span> names,</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>      <span class="at">fill =</span> names) <span class="sc">+</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">21</span>,</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">48</span>,</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>             <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">caption =</span> <span class="st">&#39;Vertical dashed line: date of reclassification (2019-04-01)&#39;</span>,</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&#39;Number of prescribed items&#39;</span>,</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&#39;Date&#39;</span>) <span class="sc">+</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&#39;May 2015&#39;</span>, <span class="st">&#39;Dec 2016&#39;</span>, <span class="st">&#39;Aug 2018&#39;</span>, <span class="st">&#39;Apr 2020&#39;</span>)) <span class="sc">+</span></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&#39;#67A0C9&#39;</span>, <span class="st">&#39;#FDA568&#39;</span>, <span class="st">&#39;#70BB70&#39;</span>)) <span class="sc">+</span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&#39;#2678B2&#39;</span>, <span class="st">&#39;#FD7F28&#39;</span>, <span class="st">&#39;#339F34&#39;</span>)) <span class="sc">+</span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">18</span>) <span class="sc">+</span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">&#39;top&#39;</span>,</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.line =</span> <span class="fu">element_line</span>(<span class="at">size =</span> <span class="fl">0.5</span>),</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.ticks =</span> <span class="fu">element_line</span>(<span class="at">size =</span> <span class="fl">0.5</span>))</span></code></pre></div>
 <p><img src="2020-07-03-piecewise-regression_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Looking at the plot, the number of prescribed items for the individual drugs, and therefore the overall total of gabapentinoids too, have been increasing steeply over the past 5 years. There is, however, a hint (especially for pregabalin) of prescriptions leveling off a bit since the April 2019 change in prescribing regulations.</p>
 <p>Using piecewise regression, I wanted to determine whether there was indeed a change in prescribed items from April 2019 . I did this assessment by fitting the data using simple linear regression and piecewise regression (using the two methods mentioned above), and then compared the the models. I did this modelling for each drug and the total.</p>
 </div>
 <div id="simple-linear-regression" class="section level2">
 <h2>Simple linear regression</h2>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># load packages</span></span>
-<span id="cb7-2"><a href="#cb7-2"></a><span class="kw">library</span>(purrr)</span>
-<span id="cb7-3"><a href="#cb7-3"></a></span>
-<span id="cb7-4"><a href="#cb7-4"></a><span class="co"># Generate a palette for some pretty colours</span></span>
-<span id="cb7-5"><a href="#cb7-5"></a>colours_fill &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">fill =</span> <span class="kw">c</span>(<span class="st">&#39;#67A0C9&#39;</span>, <span class="st">&#39;#FDA568&#39;</span>, <span class="st">&#39;#70BB70&#39;</span>),</span>
-<span id="cb7-6"><a href="#cb7-6"></a>                           <span class="dt">colour =</span> <span class="kw">c</span>(<span class="st">&#39;#2678B2&#39;</span>, <span class="st">&#39;#FD7F28&#39;</span>, <span class="st">&#39;#339F34&#39;</span>))</span>
-<span id="cb7-7"><a href="#cb7-7"></a></span>
-<span id="cb7-8"><a href="#cb7-8"></a><span class="co"># Purrr over the data (see: https://www.painblogr.org/2020-06-19-purring-through-exploratory-analyses)</span></span>
-<span id="cb7-9"><a href="#cb7-9"></a>data_long &lt;-<span class="st"> </span>data_long <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb7-10"><a href="#cb7-10"></a><span class="st">  </span><span class="co"># Nest the data by drug &#39;name&#39; (pregabalin, gabapentin, and total)</span></span>
-<span id="cb7-11"><a href="#cb7-11"></a><span class="st">  </span><span class="kw">group_by</span>(names) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb7-12"><a href="#cb7-12"></a><span class="st">  </span><span class="kw">nest</span>() <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb7-13"><a href="#cb7-13"></a><span class="st">  </span><span class="co"># Add the colour and fill columns</span></span>
-<span id="cb7-14"><a href="#cb7-14"></a><span class="st">  </span><span class="kw">bind_cols</span>(colours_fill) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb7-15"><a href="#cb7-15"></a><span class="st">  </span><span class="co"># Make the names sentence case.</span></span>
-<span id="cb7-16"><a href="#cb7-16"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">names =</span> <span class="kw">str_to_sentence</span>(names))</span>
-<span id="cb7-17"><a href="#cb7-17"></a></span>
-<span id="cb7-18"><a href="#cb7-18"></a>data_long &lt;-<span class="st"> </span>data_long <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb7-19"><a href="#cb7-19"></a><span class="st">  </span><span class="co"># Add model</span></span>
-<span id="cb7-20"><a href="#cb7-20"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">mod_1  =</span> <span class="kw">map</span>(<span class="dt">.x =</span> data,</span>
-<span id="cb7-21"><a href="#cb7-21"></a>                      <span class="op">~</span><span class="st"> </span><span class="kw">lm</span>(values <span class="op">~</span><span class="st"> </span>time_months, <span class="dt">data =</span> .x))) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb7-22"><a href="#cb7-22"></a><span class="st">  </span><span class="co"># Plot model</span></span>
-<span id="cb7-23"><a href="#cb7-23"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">plot_1 =</span> <span class="kw">pmap</span>(<span class="dt">.l =</span> <span class="kw">list</span>(data, names, fill, colour),</span>
-<span id="cb7-24"><a href="#cb7-24"></a>                      <span class="op">~</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> ..<span class="dv">1</span>) <span class="op">+</span></span>
-<span id="cb7-25"><a href="#cb7-25"></a><span class="st">                        </span><span class="kw">aes</span>(<span class="dt">x =</span> time_months,</span>
-<span id="cb7-26"><a href="#cb7-26"></a>                            <span class="dt">y =</span> values) <span class="op">+</span></span>
-<span id="cb7-27"><a href="#cb7-27"></a><span class="st">                        </span><span class="kw">geom_point</span>(<span class="dt">shape =</span> <span class="dv">21</span>,</span>
-<span id="cb7-28"><a href="#cb7-28"></a>                                   <span class="dt">size =</span> <span class="dv">3</span>,</span>
-<span id="cb7-29"><a href="#cb7-29"></a>                                   <span class="dt">fill =</span> ..<span class="dv">3</span>,</span>
-<span id="cb7-30"><a href="#cb7-30"></a>                                   <span class="dt">colour =</span> ..<span class="dv">4</span>) <span class="op">+</span></span>
-<span id="cb7-31"><a href="#cb7-31"></a><span class="st">                        </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&#39;lm&#39;</span>,</span>
-<span id="cb7-32"><a href="#cb7-32"></a>                                    <span class="dt">se =</span>  <span class="ot">FALSE</span>,</span>
-<span id="cb7-33"><a href="#cb7-33"></a>                                    <span class="dt">colour =</span> ..<span class="dv">4</span>) <span class="op">+</span></span>
-<span id="cb7-34"><a href="#cb7-34"></a><span class="st">                        </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">48</span>,</span>
-<span id="cb7-35"><a href="#cb7-35"></a>                                   <span class="dt">linetype =</span> <span class="dv">2</span>) <span class="op">+</span></span>
-<span id="cb7-36"><a href="#cb7-36"></a><span class="st">                        </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="kw">str_glue</span>(<span class="st">&#39;{..2}&#39;</span>),</span>
-<span id="cb7-37"><a href="#cb7-37"></a>                             <span class="dt">subtitle =</span> <span class="st">&#39;Simple linear regression (no knots)&#39;</span>,</span>
-<span id="cb7-38"><a href="#cb7-38"></a>                             <span class="dt">caption =</span> <span class="st">&#39;Vertical dashed line: date of reclassification (2019-04-01)&#39;</span>,</span>
-<span id="cb7-39"><a href="#cb7-39"></a>                             <span class="dt">y =</span> <span class="st">&#39;Number of prescribed items&#39;</span>,</span>
-<span id="cb7-40"><a href="#cb7-40"></a>                             <span class="dt">x =</span> <span class="st">&#39;Date&#39;</span>) <span class="op">+</span></span>
-<span id="cb7-41"><a href="#cb7-41"></a><span class="st">                        </span><span class="kw">scale_x_continuous</span>(<span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&#39;May 2015&#39;</span>, <span class="st">&#39;Dec 2016&#39;</span>, <span class="st">&#39;Aug 2018&#39;</span>, <span class="st">&#39;Apr 2020&#39;</span>)) <span class="op">+</span></span>
-<span id="cb7-42"><a href="#cb7-42"></a><span class="st">                        </span><span class="kw">theme_minimal</span>(<span class="dt">base_size =</span> <span class="dv">18</span>) <span class="op">+</span></span>
-<span id="cb7-43"><a href="#cb7-43"></a><span class="st">                        </span><span class="kw">theme</span>(<span class="dt">legend.title =</span> <span class="kw">element_blank</span>(),</span>
-<span id="cb7-44"><a href="#cb7-44"></a>                              <span class="dt">legend.position =</span> <span class="st">&#39;none&#39;</span>,</span>
-<span id="cb7-45"><a href="#cb7-45"></a>                              <span class="dt">panel.grid =</span> <span class="kw">element_blank</span>(),</span>
-<span id="cb7-46"><a href="#cb7-46"></a>                              <span class="dt">axis.line =</span> <span class="kw">element_line</span>(<span class="dt">size =</span> <span class="fl">0.5</span>),</span>
-<span id="cb7-47"><a href="#cb7-47"></a>                              <span class="dt">axis.ticks =</span> <span class="kw">element_line</span>(<span class="dt">size =</span> <span class="fl">0.5</span>))))</span>
-<span id="cb7-48"><a href="#cb7-48"></a></span>
-<span id="cb7-49"><a href="#cb7-49"></a><span class="co"># Print plots and lm outputs</span></span>
-<span id="cb7-50"><a href="#cb7-50"></a><span class="co">## GABAPENTIN</span></span>
-<span id="cb7-51"><a href="#cb7-51"></a><span class="co">### Plot</span></span>
-<span id="cb7-52"><a href="#cb7-52"></a>data_long<span class="op">$</span>plot_<span class="dv">1</span>[[<span class="dv">1</span>]]</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load packages</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate a palette for some pretty colours</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>colours_fill <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">fill =</span> <span class="fu">c</span>(<span class="st">&#39;#67A0C9&#39;</span>, <span class="st">&#39;#FDA568&#39;</span>, <span class="st">&#39;#70BB70&#39;</span>),</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>                           <span class="at">colour =</span> <span class="fu">c</span>(<span class="st">&#39;#2678B2&#39;</span>, <span class="st">&#39;#FD7F28&#39;</span>, <span class="st">&#39;#339F34&#39;</span>))</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Purrr over the data (see: https://www.painblogr.org/2020-06-19-purring-through-exploratory-analyses)</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>data_long <span class="ot">&lt;-</span> data_long <span class="sc">%&gt;%</span> </span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Nest the data by drug &#39;name&#39; (pregabalin, gabapentin, and total)</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(names) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nest</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add the colour and fill columns</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(colours_fill) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Make the names sentence case.</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">names =</span> <span class="fu">str_to_sentence</span>(names))</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>data_long <span class="ot">&lt;-</span> data_long <span class="sc">%&gt;%</span> </span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add model</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">mod_1  =</span> <span class="fu">map</span>(<span class="at">.x =</span> data,</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>                      <span class="sc">~</span> <span class="fu">lm</span>(values <span class="sc">~</span> time_months, <span class="at">data =</span> .x))) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Plot model</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">plot_1 =</span> <span class="fu">pmap</span>(<span class="at">.l =</span> <span class="fu">list</span>(data, names, fill, colour),</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>                      <span class="sc">~</span> <span class="fu">ggplot</span>(<span class="at">data =</span> ..<span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">aes</span>(<span class="at">x =</span> time_months,</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>                            <span class="at">y =</span> values) <span class="sc">+</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">21</span>,</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">size =</span> <span class="dv">3</span>,</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">fill =</span> ..<span class="dv">3</span>,</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">colour =</span> ..<span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&#39;lm&#39;</span>,</span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">se =</span>  <span class="cn">FALSE</span>,</span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">colour =</span> ..<span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">48</span>,</span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">str_glue</span>(<span class="st">&#39;{..2}&#39;</span>),</span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>                             <span class="at">subtitle =</span> <span class="st">&#39;Simple linear regression (no knots)&#39;</span>,</span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>                             <span class="at">caption =</span> <span class="st">&#39;Vertical dashed line: date of reclassification (2019-04-01)&#39;</span>,</span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>                             <span class="at">y =</span> <span class="st">&#39;Number of prescribed items&#39;</span>,</span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>                             <span class="at">x =</span> <span class="st">&#39;Date&#39;</span>) <span class="sc">+</span></span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">scale_x_continuous</span>(<span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&#39;May 2015&#39;</span>, <span class="st">&#39;Dec 2016&#39;</span>, <span class="st">&#39;Aug 2018&#39;</span>, <span class="st">&#39;Apr 2020&#39;</span>)) <span class="sc">+</span></span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">18</span>) <span class="sc">+</span></span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>                              <span class="at">legend.position =</span> <span class="st">&#39;none&#39;</span>,</span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a>                              <span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a>                              <span class="at">axis.line =</span> <span class="fu">element_line</span>(<span class="at">size =</span> <span class="fl">0.5</span>),</span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a>                              <span class="at">axis.ticks =</span> <span class="fu">element_line</span>(<span class="at">size =</span> <span class="fl">0.5</span>))))</span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a><span class="co"># Print plots and lm outputs</span></span>
+<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a><span class="do">## GABAPENTIN</span></span>
+<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a><span class="do">### Plot</span></span>
+<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a>data_long<span class="sc">$</span>plot_1[[<span class="dv">1</span>]]</span></code></pre></div>
 <p><img src="2020-07-03-piecewise-regression_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="co">### LM summary</span></span>
-<span id="cb8-2"><a href="#cb8-2"></a><span class="kw">summary</span>(data_long<span class="op">$</span>mod_<span class="dv">1</span>[[<span class="dv">1</span>]])</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="do">### LM summary</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(data_long<span class="sc">$</span>mod_1[[<span class="dv">1</span>]])</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = values ~ time_months, data = .x)
@@ -411,12 +423,12 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 ## Residual standard error: 29560 on 58 degrees of freedom
 ## Multiple R-squared:  0.6664, Adjusted R-squared:  0.6606 
 ## F-statistic: 115.9 on 1 and 58 DF,  p-value: 0.00000000000000189</code></pre>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co">## PREGABALIN</span></span>
-<span id="cb10-2"><a href="#cb10-2"></a><span class="co">### Plot</span></span>
-<span id="cb10-3"><a href="#cb10-3"></a>data_long<span class="op">$</span>plot_<span class="dv">1</span>[[<span class="dv">2</span>]]</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="do">## PREGABALIN</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="do">### Plot</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>data_long<span class="sc">$</span>plot_1[[<span class="dv">2</span>]]</span></code></pre></div>
 <p><img src="2020-07-03-piecewise-regression_files/figure-html/unnamed-chunk-5-2.png" width="672" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="co">### LM summary</span></span>
-<span id="cb11-2"><a href="#cb11-2"></a><span class="kw">summary</span>(data_long<span class="op">$</span>mod_<span class="dv">1</span>[[<span class="dv">2</span>]])</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="do">### LM summary</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(data_long<span class="sc">$</span>mod_1[[<span class="dv">2</span>]])</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = values ~ time_months, data = .x)
@@ -435,12 +447,12 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 ## Residual standard error: 21370 on 58 degrees of freedom
 ## Multiple R-squared:  0.9312, Adjusted R-squared:  0.9301 
 ## F-statistic: 785.6 on 1 and 58 DF,  p-value: &lt; 0.00000000000000022</code></pre>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="co">## TOTAL</span></span>
-<span id="cb13-2"><a href="#cb13-2"></a><span class="co">### Plot</span></span>
-<span id="cb13-3"><a href="#cb13-3"></a>data_long<span class="op">$</span>plot_<span class="dv">1</span>[[<span class="dv">3</span>]]</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="do">## TOTAL</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="do">### Plot</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>data_long<span class="sc">$</span>plot_1[[<span class="dv">3</span>]]</span></code></pre></div>
 <p><img src="2020-07-03-piecewise-regression_files/figure-html/unnamed-chunk-5-3.png" width="672" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="co">### LM summary</span></span>
-<span id="cb14-2"><a href="#cb14-2"></a><span class="kw">summary</span>(data_long<span class="op">$</span>mod_<span class="dv">1</span>[[<span class="dv">3</span>]])</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="do">### LM summary</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(data_long<span class="sc">$</span>mod_1[[<span class="dv">3</span>]])</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = values ~ time_months, data = .x)
@@ -477,20 +489,20 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 <p>Thus, for <span class="math inline">\(x\)</span> values that fall below the knot value (<span class="math inline">\(x^{(k)}\)</span>), the second term will be 0, and for <span class="math inline">\(x\)</span> values greater than the knot value the second term will be <span class="math inline">\((x - x^{(k)})\)</span>.</p>
 <p>For my data, the knot point was 48 months, the <em>time_months</em> value that coincided with the implementation of the new regulations (2019-04-01). Therefore I re-specified the data into two terms: time_months (for time values <span class="math inline">\(&lt;\)</span> 48 months) and time_months2 (for time values <span class="math inline">\(\geq\)</span> 48 months)</p>
 <p>The code block below shows how I added the second term for each of the three datatsets (Gabapentin, Pregabalin, and Total). First I created a dummy knot (<span class="math inline">\(kx\)</span>; <em>dummy_knot</em>) at 48 months, then I subtracted the knot value (<span class="math inline">\(x^{(k)} = 48\)</span>) from <em>time_months</em> (<span class="math inline">\(x\)</span>) to produce <em>x_minus_knot</em>, and finally I multiplied <em>dummy_knot</em> by <em>x_minus_knot</em> to yield the second term of the model, namely, <em>time_months2</em>.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>data_long &lt;-<span class="st"> </span>data_long <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb16-2"><a href="#cb16-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">data_2 =</span> <span class="kw">map</span>(<span class="dt">.x =</span> data,</span>
-<span id="cb16-3"><a href="#cb16-3"></a>                      <span class="op">~</span><span class="st"> </span>.x <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb16-4"><a href="#cb16-4"></a><span class="st">                        </span><span class="co"># Create a dummy knot</span></span>
-<span id="cb16-5"><a href="#cb16-5"></a><span class="st">                        </span><span class="kw">mutate</span>(<span class="dt">dummy_knot =</span> <span class="kw">ifelse</span>(time_months <span class="op">&lt;</span><span class="st"> </span><span class="dv">48</span>,</span>
-<span id="cb16-6"><a href="#cb16-6"></a>                                                   <span class="dt">yes =</span> <span class="dv">0</span>, </span>
-<span id="cb16-7"><a href="#cb16-7"></a>                                                   <span class="dt">no =</span> <span class="dv">1</span>)) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb16-8"><a href="#cb16-8"></a><span class="st">                        </span><span class="co"># Subtract knot value from x</span></span>
-<span id="cb16-9"><a href="#cb16-9"></a><span class="st">                        </span><span class="kw">mutate</span>(<span class="dt">x_minus_knot =</span> time_months <span class="op">-</span><span class="st"> </span><span class="dv">48</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb16-10"><a href="#cb16-10"></a><span class="st">                        </span><span class="co"># Calculate time_months2</span></span>
-<span id="cb16-11"><a href="#cb16-11"></a><span class="st">                        </span><span class="kw">mutate</span>(<span class="dt">time_months2 =</span> dummy_knot <span class="op">*</span><span class="st"> </span>x_minus_knot)))</span>
-<span id="cb16-12"><a href="#cb16-12"></a></span>
-<span id="cb16-13"><a href="#cb16-13"></a><span class="co"># Top-and-tail GABAPENTIN to check what the data looks like</span></span>
-<span id="cb16-14"><a href="#cb16-14"></a><span class="kw">head</span>(data_long<span class="op">$</span>data_<span class="dv">2</span>[[<span class="dv">1</span>]])</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>data_long <span class="ot">&lt;-</span> data_long <span class="sc">%&gt;%</span> </span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">data_2 =</span> <span class="fu">map</span>(<span class="at">.x =</span> data,</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>                      <span class="sc">~</span> .x <span class="sc">%&gt;%</span> </span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>                        <span class="co"># Create a dummy knot</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">mutate</span>(<span class="at">dummy_knot =</span> <span class="fu">ifelse</span>(time_months <span class="sc">&lt;</span> <span class="dv">48</span>,</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>                                                   <span class="at">yes =</span> <span class="dv">0</span>, </span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>                                                   <span class="at">no =</span> <span class="dv">1</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>                        <span class="co"># Subtract knot value from x</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">mutate</span>(<span class="at">x_minus_knot =</span> time_months <span class="sc">-</span> <span class="dv">48</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>                        <span class="co"># Calculate time_months2</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">mutate</span>(<span class="at">time_months2 =</span> dummy_knot <span class="sc">*</span> x_minus_knot)))</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Top-and-tail GABAPENTIN to check what the data looks like</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(data_long<span class="sc">$</span>data_2[[<span class="dv">1</span>]])</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 6
 ##   date       time_months values dummy_knot x_minus_knot time_months2
 ##   &lt;chr&gt;            &lt;int&gt;  &lt;int&gt;      &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;
@@ -500,7 +512,7 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 ## 4 2015-08-01           4 460096          0          -44            0
 ## 5 2015-09-01           5 497057          0          -43            0
 ## 6 2015-10-01           6 505418          0          -42            0</code></pre>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="kw">tail</span>(data_long<span class="op">$</span>data_<span class="dv">2</span>[[<span class="dv">1</span>]])</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(data_long<span class="sc">$</span>data_2[[<span class="dv">1</span>]])</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 6
 ##   date       time_months values dummy_knot x_minus_knot time_months2
 ##   &lt;chr&gt;            &lt;int&gt;  &lt;int&gt;      &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;
@@ -511,49 +523,49 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 ## 5 2020-03-01          59 642909          1           11           11
 ## 6 2020-04-01          60 616384          1           12           12</code></pre>
 <p>Then I ran the model using the updated data.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>data_long &lt;-<span class="st"> </span>data_long <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb20-2"><a href="#cb20-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">mod_2 =</span> <span class="kw">map</span>(<span class="dt">.x =</span> data_<span class="dv">2</span>,</span>
-<span id="cb20-3"><a href="#cb20-3"></a>                     <span class="op">~</span><span class="st"> </span><span class="kw">lm</span>(values <span class="op">~</span><span class="st"> </span>time_months <span class="op">+</span><span class="st"> </span>time_months2, <span class="dt">data =</span> .x)))</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>data_long <span class="ot">&lt;-</span> data_long <span class="sc">%&gt;%</span> </span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">mod_2 =</span> <span class="fu">map</span>(<span class="at">.x =</span> data_2,</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>                     <span class="sc">~</span> <span class="fu">lm</span>(values <span class="sc">~</span> time_months <span class="sc">+</span> time_months2, <span class="at">data =</span> .x)))</span></code></pre></div>
 <p>I then generated predicted values for the model and plotted the data.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>data_long &lt;-<span class="st"> </span>data_long <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb21-2"><a href="#cb21-2"></a><span class="st">  </span><span class="co"># Generate predicted data</span></span>
-<span id="cb21-3"><a href="#cb21-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">data_3 =</span> <span class="kw">map2</span>(<span class="dt">.x =</span> data_<span class="dv">2</span>,</span>
-<span id="cb21-4"><a href="#cb21-4"></a>                       <span class="dt">.y =</span> mod_<span class="dv">2</span>,</span>
-<span id="cb21-5"><a href="#cb21-5"></a>                       <span class="op">~</span><span class="st"> </span>.x <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb21-6"><a href="#cb21-6"></a><span class="st">                         </span><span class="kw">mutate</span>(<span class="dt">predicted =</span> <span class="kw">predict</span>(.y)))) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb21-7"><a href="#cb21-7"></a><span class="st">  </span><span class="co"># Generate plots</span></span>
-<span id="cb21-8"><a href="#cb21-8"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">plot_2 =</span> <span class="kw">map2</span>(<span class="dt">.x =</span> data_<span class="dv">3</span>,</span>
-<span id="cb21-9"><a href="#cb21-9"></a>                       <span class="dt">.y =</span> names,</span>
-<span id="cb21-10"><a href="#cb21-10"></a>                      <span class="op">~</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> .x) <span class="op">+</span></span>
-<span id="cb21-11"><a href="#cb21-11"></a><span class="st">                        </span><span class="kw">aes</span>(<span class="dt">x =</span> time_months,</span>
-<span id="cb21-12"><a href="#cb21-12"></a>                            <span class="dt">y =</span> values,</span>
-<span id="cb21-13"><a href="#cb21-13"></a>                            <span class="dt">colour =</span> dummy_knot,</span>
-<span id="cb21-14"><a href="#cb21-14"></a>                            <span class="dt">fill =</span> dummy_knot) <span class="op">+</span></span>
-<span id="cb21-15"><a href="#cb21-15"></a><span class="st">                        </span><span class="kw">geom_point</span>(<span class="dt">shape =</span> <span class="dv">21</span>,</span>
-<span id="cb21-16"><a href="#cb21-16"></a>                                   <span class="dt">size =</span> <span class="dv">3</span>) <span class="op">+</span></span>
-<span id="cb21-17"><a href="#cb21-17"></a><span class="st">                        </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">y =</span> predicted)) <span class="op">+</span></span>
-<span id="cb21-18"><a href="#cb21-18"></a><span class="st">                        </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">48</span>,</span>
-<span id="cb21-19"><a href="#cb21-19"></a>                                   <span class="dt">linetype =</span> <span class="dv">2</span>) <span class="op">+</span></span>
-<span id="cb21-20"><a href="#cb21-20"></a><span class="st">                        </span><span class="kw">labs</span>(<span class="dt">title =</span> .y,</span>
-<span id="cb21-21"><a href="#cb21-21"></a>                             <span class="dt">subtitle =</span> <span class="st">&#39;Segmented regression (1 knot)&#39;</span>,</span>
-<span id="cb21-22"><a href="#cb21-22"></a>                             <span class="dt">caption =</span> <span class="st">&#39;Vertical dashed line: date of reclassification (2019-04-01)&#39;</span>,</span>
-<span id="cb21-23"><a href="#cb21-23"></a>                             <span class="dt">y =</span> <span class="st">&#39;Number of prescribed items&#39;</span>,</span>
-<span id="cb21-24"><a href="#cb21-24"></a>                             <span class="dt">x =</span> <span class="st">&#39;Date&#39;</span>) <span class="op">+</span></span>
-<span id="cb21-25"><a href="#cb21-25"></a><span class="st">                        </span><span class="kw">scale_x_continuous</span>(<span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&#39;May 2015&#39;</span>, <span class="st">&#39;Dec 2016&#39;</span>, <span class="st">&#39;Aug 2018&#39;</span>, <span class="st">&#39;Apr 2020&#39;</span>)) <span class="op">+</span></span>
-<span id="cb21-26"><a href="#cb21-26"></a><span class="st">                        </span><span class="kw">theme_minimal</span>(<span class="dt">base_size =</span> <span class="dv">18</span>) <span class="op">+</span></span>
-<span id="cb21-27"><a href="#cb21-27"></a><span class="st">                        </span><span class="kw">theme</span>(<span class="dt">legend.title =</span> <span class="kw">element_blank</span>(),</span>
-<span id="cb21-28"><a href="#cb21-28"></a>                              <span class="dt">legend.position =</span> <span class="st">&#39;none&#39;</span>,</span>
-<span id="cb21-29"><a href="#cb21-29"></a>                              <span class="dt">panel.grid =</span> <span class="kw">element_blank</span>(),</span>
-<span id="cb21-30"><a href="#cb21-30"></a>                              <span class="dt">axis.line =</span> <span class="kw">element_line</span>(<span class="dt">size =</span> <span class="fl">0.5</span>),</span>
-<span id="cb21-31"><a href="#cb21-31"></a>                              <span class="dt">axis.ticks =</span> <span class="kw">element_line</span>(<span class="dt">size =</span> <span class="fl">0.5</span>))))</span>
-<span id="cb21-32"><a href="#cb21-32"></a></span>
-<span id="cb21-33"><a href="#cb21-33"></a><span class="co"># Print plots and lm outputs, and slopes</span></span>
-<span id="cb21-34"><a href="#cb21-34"></a><span class="co">## GABAPENTIN</span></span>
-<span id="cb21-35"><a href="#cb21-35"></a><span class="co">### Plot</span></span>
-<span id="cb21-36"><a href="#cb21-36"></a>data_long<span class="op">$</span>plot_<span class="dv">2</span>[[<span class="dv">1</span>]]</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>data_long <span class="ot">&lt;-</span> data_long <span class="sc">%&gt;%</span> </span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Generate predicted data</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">data_3 =</span> <span class="fu">map2</span>(<span class="at">.x =</span> data_2,</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">.y =</span> mod_2,</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>                       <span class="sc">~</span> .x <span class="sc">%&gt;%</span> </span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>                         <span class="fu">mutate</span>(<span class="at">predicted =</span> <span class="fu">predict</span>(.y)))) <span class="sc">%&gt;%</span> </span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Generate plots</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">plot_2 =</span> <span class="fu">map2</span>(<span class="at">.x =</span> data_3,</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>                       <span class="at">.y =</span> names,</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>                      <span class="sc">~</span> <span class="fu">ggplot</span>(<span class="at">data =</span> .x) <span class="sc">+</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">aes</span>(<span class="at">x =</span> time_months,</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>                            <span class="at">y =</span> values,</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>                            <span class="at">colour =</span> dummy_knot,</span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>                            <span class="at">fill =</span> dummy_knot) <span class="sc">+</span></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">21</span>,</span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> predicted)) <span class="sc">+</span></span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">48</span>,</span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">labs</span>(<span class="at">title =</span> .y,</span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>                             <span class="at">subtitle =</span> <span class="st">&#39;Segmented regression (1 knot)&#39;</span>,</span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>                             <span class="at">caption =</span> <span class="st">&#39;Vertical dashed line: date of reclassification (2019-04-01)&#39;</span>,</span>
+<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a>                             <span class="at">y =</span> <span class="st">&#39;Number of prescribed items&#39;</span>,</span>
+<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a>                             <span class="at">x =</span> <span class="st">&#39;Date&#39;</span>) <span class="sc">+</span></span>
+<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">scale_x_continuous</span>(<span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&#39;May 2015&#39;</span>, <span class="st">&#39;Dec 2016&#39;</span>, <span class="st">&#39;Aug 2018&#39;</span>, <span class="st">&#39;Apr 2020&#39;</span>)) <span class="sc">+</span></span>
+<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">18</span>) <span class="sc">+</span></span>
+<span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb21-28"><a href="#cb21-28" aria-hidden="true" tabindex="-1"></a>                              <span class="at">legend.position =</span> <span class="st">&#39;none&#39;</span>,</span>
+<span id="cb21-29"><a href="#cb21-29" aria-hidden="true" tabindex="-1"></a>                              <span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb21-30"><a href="#cb21-30" aria-hidden="true" tabindex="-1"></a>                              <span class="at">axis.line =</span> <span class="fu">element_line</span>(<span class="at">size =</span> <span class="fl">0.5</span>),</span>
+<span id="cb21-31"><a href="#cb21-31" aria-hidden="true" tabindex="-1"></a>                              <span class="at">axis.ticks =</span> <span class="fu">element_line</span>(<span class="at">size =</span> <span class="fl">0.5</span>))))</span>
+<span id="cb21-32"><a href="#cb21-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-33"><a href="#cb21-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Print plots and lm outputs, and slopes</span></span>
+<span id="cb21-34"><a href="#cb21-34" aria-hidden="true" tabindex="-1"></a><span class="do">## GABAPENTIN</span></span>
+<span id="cb21-35"><a href="#cb21-35" aria-hidden="true" tabindex="-1"></a><span class="do">### Plot</span></span>
+<span id="cb21-36"><a href="#cb21-36" aria-hidden="true" tabindex="-1"></a>data_long<span class="sc">$</span>plot_2[[<span class="dv">1</span>]]</span></code></pre></div>
 <p><img src="2020-07-03-piecewise-regression_files/figure-html/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="co">### LM summary</span></span>
-<span id="cb22-2"><a href="#cb22-2"></a><span class="kw">summary</span>(data_long<span class="op">$</span>mod_<span class="dv">2</span>[[<span class="dv">1</span>]])</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="do">### LM summary</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(data_long<span class="sc">$</span>mod_2[[<span class="dv">1</span>]])</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = values ~ time_months + time_months2, data = .x)
@@ -573,19 +585,19 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 ## Residual standard error: 26810 on 57 degrees of freedom
 ## Multiple R-squared:  0.7303, Adjusted R-squared:  0.7208 
 ## F-statistic: 77.17 on 2 and 57 DF,  p-value: &lt; 0.00000000000000022</code></pre>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="co">### Slopes of individual segments</span></span>
-<span id="cb24-2"><a href="#cb24-2"></a><span class="co">#### Segment 1</span></span>
-<span id="cb24-3"><a href="#cb24-3"></a><span class="kw">coef</span>(data_long<span class="op">$</span>mod_<span class="dv">2</span>[[<span class="dv">1</span>]])[[<span class="dv">2</span>]]</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Slopes of individual segments</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="do">#### Segment 1</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(data_long<span class="sc">$</span>mod_2[[<span class="dv">1</span>]])[[<span class="dv">2</span>]]</span></code></pre></div>
 <pre><code>## [1] 2985.421</code></pre>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="co">#### Segment 2 (the sum of the two regression coefficients)</span></span>
-<span id="cb26-2"><a href="#cb26-2"></a><span class="kw">coef</span>(data_long<span class="op">$</span>mod_<span class="dv">2</span>[[<span class="dv">1</span>]])[[<span class="dv">2</span>]] <span class="op">+</span><span class="st"> </span><span class="kw">coef</span>(data_long<span class="op">$</span>mod_<span class="dv">2</span>[[<span class="dv">1</span>]])[[<span class="dv">3</span>]]</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="do">#### Segment 2 (the sum of the two regression coefficients)</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(data_long<span class="sc">$</span>mod_2[[<span class="dv">1</span>]])[[<span class="dv">2</span>]] <span class="sc">+</span> <span class="fu">coef</span>(data_long<span class="sc">$</span>mod_2[[<span class="dv">1</span>]])[[<span class="dv">3</span>]]</span></code></pre></div>
 <pre><code>## [1] -2495.8</code></pre>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="co">## PREGABALIN</span></span>
-<span id="cb28-2"><a href="#cb28-2"></a><span class="co">### Plot</span></span>
-<span id="cb28-3"><a href="#cb28-3"></a>data_long<span class="op">$</span>plot_<span class="dv">2</span>[[<span class="dv">2</span>]]</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="do">## PREGABALIN</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="do">### Plot</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>data_long<span class="sc">$</span>plot_2[[<span class="dv">2</span>]]</span></code></pre></div>
 <p><img src="2020-07-03-piecewise-regression_files/figure-html/unnamed-chunk-8-2.png" width="672" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="co">### LM summary</span></span>
-<span id="cb29-2"><a href="#cb29-2"></a><span class="kw">summary</span>(data_long<span class="op">$</span>mod_<span class="dv">2</span>[[<span class="dv">2</span>]])</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="do">### LM summary</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(data_long<span class="sc">$</span>mod_2[[<span class="dv">2</span>]])</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = values ~ time_months + time_months2, data = .x)
@@ -605,19 +617,19 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 ## Residual standard error: 20500 on 57 degrees of freedom
 ## Multiple R-squared:  0.9379, Adjusted R-squared:  0.9357 
 ## F-statistic: 430.1 on 2 and 57 DF,  p-value: &lt; 0.00000000000000022</code></pre>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="co">### Slopes of individual segments</span></span>
-<span id="cb31-2"><a href="#cb31-2"></a><span class="co">#### Segment 1</span></span>
-<span id="cb31-3"><a href="#cb31-3"></a><span class="kw">coef</span>(data_long<span class="op">$</span>mod_<span class="dv">2</span>[[<span class="dv">2</span>]])[[<span class="dv">2</span>]]</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Slopes of individual segments</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="do">#### Segment 1</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(data_long<span class="sc">$</span>mod_2[[<span class="dv">2</span>]])[[<span class="dv">2</span>]]</span></code></pre></div>
 <pre><code>## [1] 4779.71</code></pre>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="co">#### Segment 2 (the sum of the two regression coefficients)</span></span>
-<span id="cb33-2"><a href="#cb33-2"></a><span class="kw">coef</span>(data_long<span class="op">$</span>mod_<span class="dv">2</span>[[<span class="dv">2</span>]])[[<span class="dv">2</span>]] <span class="op">+</span><span class="st"> </span><span class="kw">coef</span>(data_long<span class="op">$</span>mod_<span class="dv">2</span>[[<span class="dv">2</span>]])[[<span class="dv">3</span>]]</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="do">#### Segment 2 (the sum of the two regression coefficients)</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(data_long<span class="sc">$</span>mod_2[[<span class="dv">2</span>]])[[<span class="dv">2</span>]] <span class="sc">+</span> <span class="fu">coef</span>(data_long<span class="sc">$</span>mod_2[[<span class="dv">2</span>]])[[<span class="dv">3</span>]]</span></code></pre></div>
 <pre><code>## [1] 1972.273</code></pre>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="co">## TOTAL</span></span>
-<span id="cb35-2"><a href="#cb35-2"></a><span class="co">### Plot</span></span>
-<span id="cb35-3"><a href="#cb35-3"></a>data_long<span class="op">$</span>plot_<span class="dv">2</span>[[<span class="dv">3</span>]]</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="do">## TOTAL</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="do">### Plot</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>data_long<span class="sc">$</span>plot_2[[<span class="dv">3</span>]]</span></code></pre></div>
 <p><img src="2020-07-03-piecewise-regression_files/figure-html/unnamed-chunk-8-3.png" width="672" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a><span class="co">### LM summary</span></span>
-<span id="cb36-2"><a href="#cb36-2"></a><span class="kw">summary</span>(data_long<span class="op">$</span>mod_<span class="dv">2</span>[[<span class="dv">3</span>]])</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="do">### LM summary</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(data_long<span class="sc">$</span>mod_2[[<span class="dv">3</span>]])</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = values ~ time_months + time_months2, data = .x)
@@ -637,12 +649,12 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 ## Residual standard error: 46080 on 57 degrees of freedom
 ## Multiple R-squared:  0.8771, Adjusted R-squared:  0.8727 
 ## F-statistic: 203.3 on 2 and 57 DF,  p-value: &lt; 0.00000000000000022</code></pre>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="co">### Slopes of individual segments</span></span>
-<span id="cb38-2"><a href="#cb38-2"></a><span class="co">#### Segment 1</span></span>
-<span id="cb38-3"><a href="#cb38-3"></a><span class="kw">coef</span>(data_long<span class="op">$</span>mod_<span class="dv">2</span>[[<span class="dv">3</span>]])[[<span class="dv">2</span>]]</span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Slopes of individual segments</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="do">#### Segment 1</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(data_long<span class="sc">$</span>mod_2[[<span class="dv">3</span>]])[[<span class="dv">2</span>]]</span></code></pre></div>
 <pre><code>## [1] 7765.131</code></pre>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="co">#### Segment 2 (the sum of the two regression coefficients)</span></span>
-<span id="cb40-2"><a href="#cb40-2"></a><span class="kw">coef</span>(data_long<span class="op">$</span>mod_<span class="dv">2</span>[[<span class="dv">3</span>]])[[<span class="dv">2</span>]] <span class="op">+</span><span class="st"> </span><span class="kw">coef</span>(data_long<span class="op">$</span>mod_<span class="dv">2</span>[[<span class="dv">3</span>]])[[<span class="dv">3</span>]]</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="do">#### Segment 2 (the sum of the two regression coefficients)</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(data_long<span class="sc">$</span>mod_2[[<span class="dv">3</span>]])[[<span class="dv">2</span>]] <span class="sc">+</span> <span class="fu">coef</span>(data_long<span class="sc">$</span>mod_2[[<span class="dv">3</span>]])[[<span class="dv">3</span>]]</span></code></pre></div>
 <pre><code>## [1] -523.5277</code></pre>
 </div>
 <div id="use-linear-splines-to-specfiy-two-segments-around-a-knot" class="section level3">
@@ -657,53 +669,53 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 <li><p><code>knots</code> is a numeric vector of knot positions</p></li>
 <li><p><code>marginal</code> is a logical that determines whether coefficients can be interpreted as slopes of consecutive spline segments (FALSE), or slope change at consecutive knots (TRUE).</p></li>
 </ul>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="co"># Load package</span></span>
-<span id="cb42-2"><a href="#cb42-2"></a><span class="kw">library</span>(lspline)</span>
-<span id="cb42-3"><a href="#cb42-3"></a></span>
-<span id="cb42-4"><a href="#cb42-4"></a>data_long &lt;-<span class="st"> </span>data_long <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb42-5"><a href="#cb42-5"></a><span class="st">  </span><span class="co"># Generate the model using lspline</span></span>
-<span id="cb42-6"><a href="#cb42-6"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">mod_3 =</span> <span class="kw">map</span>(<span class="dt">.x =</span> data,</span>
-<span id="cb42-7"><a href="#cb42-7"></a>                     <span class="op">~</span><span class="st"> </span><span class="kw">lm</span>(values <span class="op">~</span><span class="st"> </span><span class="kw">lspline</span>(<span class="dt">x =</span> time_months,</span>
-<span id="cb42-8"><a href="#cb42-8"></a>                                           <span class="dt">knots =</span> <span class="dv">48</span>,</span>
-<span id="cb42-9"><a href="#cb42-9"></a>                                           <span class="dt">marginal =</span> <span class="ot">FALSE</span>), <span class="dt">data =</span> .x))) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb42-10"><a href="#cb42-10"></a><span class="st">  </span><span class="co"># Get predicted values </span></span>
-<span id="cb42-11"><a href="#cb42-11"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">data_4 =</span> <span class="kw">map2</span>(<span class="dt">.x =</span> data_<span class="dv">3</span>,</span>
-<span id="cb42-12"><a href="#cb42-12"></a>                       <span class="dt">.y =</span> mod_<span class="dv">3</span>,</span>
-<span id="cb42-13"><a href="#cb42-13"></a>                       <span class="op">~</span><span class="st"> </span>.x <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb42-14"><a href="#cb42-14"></a><span class="st">                         </span><span class="kw">mutate</span>(<span class="dt">predicted_spl =</span> <span class="kw">predict</span>(.y)))) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb42-15"><a href="#cb42-15"></a><span class="st">  </span><span class="co"># Generate plots</span></span>
-<span id="cb42-16"><a href="#cb42-16"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">plot_3 =</span> <span class="kw">map2</span>(<span class="dt">.x =</span> data_<span class="dv">4</span>,</span>
-<span id="cb42-17"><a href="#cb42-17"></a>                       <span class="dt">.y =</span> names,</span>
-<span id="cb42-18"><a href="#cb42-18"></a>                      <span class="op">~</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> .x) <span class="op">+</span></span>
-<span id="cb42-19"><a href="#cb42-19"></a><span class="st">                        </span><span class="kw">aes</span>(<span class="dt">x =</span> time_months,</span>
-<span id="cb42-20"><a href="#cb42-20"></a>                            <span class="dt">y =</span> values,</span>
-<span id="cb42-21"><a href="#cb42-21"></a>                            <span class="dt">colour =</span> dummy_knot,</span>
-<span id="cb42-22"><a href="#cb42-22"></a>                            <span class="dt">fill =</span> dummy_knot) <span class="op">+</span></span>
-<span id="cb42-23"><a href="#cb42-23"></a><span class="st">                        </span><span class="kw">geom_point</span>(<span class="dt">shape =</span> <span class="dv">21</span>,</span>
-<span id="cb42-24"><a href="#cb42-24"></a>                                   <span class="dt">size =</span> <span class="dv">3</span>) <span class="op">+</span></span>
-<span id="cb42-25"><a href="#cb42-25"></a><span class="st">                        </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">y =</span> predicted_spl)) <span class="op">+</span></span>
-<span id="cb42-26"><a href="#cb42-26"></a><span class="st">                        </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">48</span>,</span>
-<span id="cb42-27"><a href="#cb42-27"></a>                                   <span class="dt">linetype =</span> <span class="dv">2</span>) <span class="op">+</span></span>
-<span id="cb42-28"><a href="#cb42-28"></a><span class="st">                        </span><span class="kw">labs</span>(<span class="dt">title =</span> .y,</span>
-<span id="cb42-29"><a href="#cb42-29"></a>                             <span class="dt">subtitle =</span> <span class="st">&#39;Piecewise linear spline (1 knot)&#39;</span>,</span>
-<span id="cb42-30"><a href="#cb42-30"></a>                             <span class="dt">caption =</span> <span class="st">&#39;Vertical dashed line: date of reclassification (2019-04-01)&#39;</span>,</span>
-<span id="cb42-31"><a href="#cb42-31"></a>                             <span class="dt">y =</span> <span class="st">&#39;Number of prescribed items&#39;</span>,</span>
-<span id="cb42-32"><a href="#cb42-32"></a>                             <span class="dt">x =</span> <span class="st">&#39;Date&#39;</span>) <span class="op">+</span></span>
-<span id="cb42-33"><a href="#cb42-33"></a><span class="st">                        </span><span class="kw">scale_x_continuous</span>(<span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&#39;May 2015&#39;</span>, <span class="st">&#39;Dec 2016&#39;</span>, <span class="st">&#39;Aug 2018&#39;</span>, <span class="st">&#39;Apr 2020&#39;</span>)) <span class="op">+</span></span>
-<span id="cb42-34"><a href="#cb42-34"></a><span class="st">                        </span><span class="kw">theme_minimal</span>(<span class="dt">base_size =</span> <span class="dv">18</span>) <span class="op">+</span></span>
-<span id="cb42-35"><a href="#cb42-35"></a><span class="st">                        </span><span class="kw">theme</span>(<span class="dt">legend.title =</span> <span class="kw">element_blank</span>(),</span>
-<span id="cb42-36"><a href="#cb42-36"></a>                              <span class="dt">legend.position =</span> <span class="st">&#39;none&#39;</span>,</span>
-<span id="cb42-37"><a href="#cb42-37"></a>                              <span class="dt">panel.grid =</span> <span class="kw">element_blank</span>(),</span>
-<span id="cb42-38"><a href="#cb42-38"></a>                              <span class="dt">axis.line =</span> <span class="kw">element_line</span>(<span class="dt">size =</span> <span class="fl">0.5</span>),</span>
-<span id="cb42-39"><a href="#cb42-39"></a>                              <span class="dt">axis.ticks =</span> <span class="kw">element_line</span>(<span class="dt">size =</span> <span class="fl">0.5</span>))))</span>
-<span id="cb42-40"><a href="#cb42-40"></a></span>
-<span id="cb42-41"><a href="#cb42-41"></a><span class="co"># Print plots and lm outputs, and slopes</span></span>
-<span id="cb42-42"><a href="#cb42-42"></a><span class="co">## GABAPENTIN</span></span>
-<span id="cb42-43"><a href="#cb42-43"></a><span class="co">### Plot</span></span>
-<span id="cb42-44"><a href="#cb42-44"></a>data_long<span class="op">$</span>plot_<span class="dv">3</span>[[<span class="dv">1</span>]]</span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load package</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lspline)</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>data_long <span class="ot">&lt;-</span> data_long <span class="sc">%&gt;%</span> </span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Generate the model using lspline</span></span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">mod_3 =</span> <span class="fu">map</span>(<span class="at">.x =</span> data,</span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>                     <span class="sc">~</span> <span class="fu">lm</span>(values <span class="sc">~</span> <span class="fu">lspline</span>(<span class="at">x =</span> time_months,</span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">knots =</span> <span class="dv">48</span>,</span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">marginal =</span> <span class="cn">FALSE</span>), <span class="at">data =</span> .x))) <span class="sc">%&gt;%</span> </span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Get predicted values </span></span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">data_4 =</span> <span class="fu">map2</span>(<span class="at">.x =</span> data_3,</span>
+<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>                       <span class="at">.y =</span> mod_3,</span>
+<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a>                       <span class="sc">~</span> .x <span class="sc">%&gt;%</span> </span>
+<span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a>                         <span class="fu">mutate</span>(<span class="at">predicted_spl =</span> <span class="fu">predict</span>(.y)))) <span class="sc">%&gt;%</span> </span>
+<span id="cb42-15"><a href="#cb42-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Generate plots</span></span>
+<span id="cb42-16"><a href="#cb42-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">plot_3 =</span> <span class="fu">map2</span>(<span class="at">.x =</span> data_4,</span>
+<span id="cb42-17"><a href="#cb42-17" aria-hidden="true" tabindex="-1"></a>                       <span class="at">.y =</span> names,</span>
+<span id="cb42-18"><a href="#cb42-18" aria-hidden="true" tabindex="-1"></a>                      <span class="sc">~</span> <span class="fu">ggplot</span>(<span class="at">data =</span> .x) <span class="sc">+</span></span>
+<span id="cb42-19"><a href="#cb42-19" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">aes</span>(<span class="at">x =</span> time_months,</span>
+<span id="cb42-20"><a href="#cb42-20" aria-hidden="true" tabindex="-1"></a>                            <span class="at">y =</span> values,</span>
+<span id="cb42-21"><a href="#cb42-21" aria-hidden="true" tabindex="-1"></a>                            <span class="at">colour =</span> dummy_knot,</span>
+<span id="cb42-22"><a href="#cb42-22" aria-hidden="true" tabindex="-1"></a>                            <span class="at">fill =</span> dummy_knot) <span class="sc">+</span></span>
+<span id="cb42-23"><a href="#cb42-23" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">21</span>,</span>
+<span id="cb42-24"><a href="#cb42-24" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb42-25"><a href="#cb42-25" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> predicted_spl)) <span class="sc">+</span></span>
+<span id="cb42-26"><a href="#cb42-26" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">48</span>,</span>
+<span id="cb42-27"><a href="#cb42-27" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb42-28"><a href="#cb42-28" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">labs</span>(<span class="at">title =</span> .y,</span>
+<span id="cb42-29"><a href="#cb42-29" aria-hidden="true" tabindex="-1"></a>                             <span class="at">subtitle =</span> <span class="st">&#39;Piecewise linear spline (1 knot)&#39;</span>,</span>
+<span id="cb42-30"><a href="#cb42-30" aria-hidden="true" tabindex="-1"></a>                             <span class="at">caption =</span> <span class="st">&#39;Vertical dashed line: date of reclassification (2019-04-01)&#39;</span>,</span>
+<span id="cb42-31"><a href="#cb42-31" aria-hidden="true" tabindex="-1"></a>                             <span class="at">y =</span> <span class="st">&#39;Number of prescribed items&#39;</span>,</span>
+<span id="cb42-32"><a href="#cb42-32" aria-hidden="true" tabindex="-1"></a>                             <span class="at">x =</span> <span class="st">&#39;Date&#39;</span>) <span class="sc">+</span></span>
+<span id="cb42-33"><a href="#cb42-33" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">scale_x_continuous</span>(<span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&#39;May 2015&#39;</span>, <span class="st">&#39;Dec 2016&#39;</span>, <span class="st">&#39;Aug 2018&#39;</span>, <span class="st">&#39;Apr 2020&#39;</span>)) <span class="sc">+</span></span>
+<span id="cb42-34"><a href="#cb42-34" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">18</span>) <span class="sc">+</span></span>
+<span id="cb42-35"><a href="#cb42-35" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb42-36"><a href="#cb42-36" aria-hidden="true" tabindex="-1"></a>                              <span class="at">legend.position =</span> <span class="st">&#39;none&#39;</span>,</span>
+<span id="cb42-37"><a href="#cb42-37" aria-hidden="true" tabindex="-1"></a>                              <span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb42-38"><a href="#cb42-38" aria-hidden="true" tabindex="-1"></a>                              <span class="at">axis.line =</span> <span class="fu">element_line</span>(<span class="at">size =</span> <span class="fl">0.5</span>),</span>
+<span id="cb42-39"><a href="#cb42-39" aria-hidden="true" tabindex="-1"></a>                              <span class="at">axis.ticks =</span> <span class="fu">element_line</span>(<span class="at">size =</span> <span class="fl">0.5</span>))))</span>
+<span id="cb42-40"><a href="#cb42-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-41"><a href="#cb42-41" aria-hidden="true" tabindex="-1"></a><span class="co"># Print plots and lm outputs, and slopes</span></span>
+<span id="cb42-42"><a href="#cb42-42" aria-hidden="true" tabindex="-1"></a><span class="do">## GABAPENTIN</span></span>
+<span id="cb42-43"><a href="#cb42-43" aria-hidden="true" tabindex="-1"></a><span class="do">### Plot</span></span>
+<span id="cb42-44"><a href="#cb42-44" aria-hidden="true" tabindex="-1"></a>data_long<span class="sc">$</span>plot_3[[<span class="dv">1</span>]]</span></code></pre></div>
 <p><img src="2020-07-03-piecewise-regression_files/figure-html/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a><span class="co">### LM summary</span></span>
-<span id="cb43-2"><a href="#cb43-2"></a><span class="kw">summary</span>(data_long<span class="op">$</span>mod_<span class="dv">3</span>[[<span class="dv">1</span>]])</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="do">### LM summary</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(data_long<span class="sc">$</span>mod_3[[<span class="dv">1</span>]])</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = values ~ lspline(x = time_months, knots = 48, marginal = FALSE), 
@@ -732,20 +744,20 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 ## Residual standard error: 26810 on 57 degrees of freedom
 ## Multiple R-squared:  0.7303, Adjusted R-squared:  0.7208 
 ## F-statistic: 77.17 on 2 and 57 DF,  p-value: &lt; 0.00000000000000022</code></pre>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a><span class="co">### Slopes of individual segments</span></span>
-<span id="cb45-2"><a href="#cb45-2"></a><span class="co">#### Segment 1</span></span>
-<span id="cb45-3"><a href="#cb45-3"></a><span class="kw">coef</span>(data_long<span class="op">$</span>mod_<span class="dv">3</span>[[<span class="dv">1</span>]])[[<span class="dv">2</span>]]</span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Slopes of individual segments</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="do">#### Segment 1</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(data_long<span class="sc">$</span>mod_3[[<span class="dv">1</span>]])[[<span class="dv">2</span>]]</span></code></pre></div>
 <pre><code>## [1] 2985.421</code></pre>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a><span class="co">#### Segment 2 </span></span>
-<span id="cb47-2"><a href="#cb47-2"></a><span class="co">#### (marginal = FALSE, therefore coefficients can be interpreted as slopes of consecutive spline segments)</span></span>
-<span id="cb47-3"><a href="#cb47-3"></a><span class="kw">coef</span>(data_long<span class="op">$</span>mod_<span class="dv">3</span>[[<span class="dv">1</span>]])[[<span class="dv">3</span>]]</span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="do">#### Segment 2 </span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="do">#### (marginal = FALSE, therefore coefficients can be interpreted as slopes of consecutive spline segments)</span></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(data_long<span class="sc">$</span>mod_3[[<span class="dv">1</span>]])[[<span class="dv">3</span>]]</span></code></pre></div>
 <pre><code>## [1] -2495.8</code></pre>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a><span class="co">## PREGABALIN</span></span>
-<span id="cb49-2"><a href="#cb49-2"></a><span class="co">### Plot</span></span>
-<span id="cb49-3"><a href="#cb49-3"></a>data_long<span class="op">$</span>plot_<span class="dv">3</span>[[<span class="dv">2</span>]]</span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="do">## PREGABALIN</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="do">### Plot</span></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>data_long<span class="sc">$</span>plot_3[[<span class="dv">2</span>]]</span></code></pre></div>
 <p><img src="2020-07-03-piecewise-regression_files/figure-html/unnamed-chunk-9-2.png" width="672" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a><span class="co">### LM summary</span></span>
-<span id="cb50-2"><a href="#cb50-2"></a><span class="kw">summary</span>(data_long<span class="op">$</span>mod_<span class="dv">3</span>[[<span class="dv">2</span>]])</span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="do">### LM summary</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(data_long<span class="sc">$</span>mod_3[[<span class="dv">2</span>]])</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = values ~ lspline(x = time_months, knots = 48, marginal = FALSE), 
@@ -774,20 +786,20 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 ## Residual standard error: 20500 on 57 degrees of freedom
 ## Multiple R-squared:  0.9379, Adjusted R-squared:  0.9357 
 ## F-statistic: 430.1 on 2 and 57 DF,  p-value: &lt; 0.00000000000000022</code></pre>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a><span class="co">### Slopes of individual segments</span></span>
-<span id="cb52-2"><a href="#cb52-2"></a><span class="co">#### Segment 1</span></span>
-<span id="cb52-3"><a href="#cb52-3"></a><span class="kw">coef</span>(data_long<span class="op">$</span>mod_<span class="dv">3</span>[[<span class="dv">2</span>]])[[<span class="dv">2</span>]]</span></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Slopes of individual segments</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="do">#### Segment 1</span></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(data_long<span class="sc">$</span>mod_3[[<span class="dv">2</span>]])[[<span class="dv">2</span>]]</span></code></pre></div>
 <pre><code>## [1] 4779.71</code></pre>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a><span class="co">#### Segment 2</span></span>
-<span id="cb54-2"><a href="#cb54-2"></a><span class="co">#### (marginal = FALSE, therefore coefficients can be interpreted as slopes of consecutive spline segments)</span></span>
-<span id="cb54-3"><a href="#cb54-3"></a><span class="kw">coef</span>(data_long<span class="op">$</span>mod_<span class="dv">3</span>[[<span class="dv">2</span>]])[[<span class="dv">3</span>]]</span></code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="do">#### Segment 2</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="do">#### (marginal = FALSE, therefore coefficients can be interpreted as slopes of consecutive spline segments)</span></span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(data_long<span class="sc">$</span>mod_3[[<span class="dv">2</span>]])[[<span class="dv">3</span>]]</span></code></pre></div>
 <pre><code>## [1] 1972.273</code></pre>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a><span class="co">## TOTAL</span></span>
-<span id="cb56-2"><a href="#cb56-2"></a><span class="co">### Plot</span></span>
-<span id="cb56-3"><a href="#cb56-3"></a>data_long<span class="op">$</span>plot_<span class="dv">3</span>[[<span class="dv">3</span>]]</span></code></pre></div>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="do">## TOTAL</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="do">### Plot</span></span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>data_long<span class="sc">$</span>plot_3[[<span class="dv">3</span>]]</span></code></pre></div>
 <p><img src="2020-07-03-piecewise-regression_files/figure-html/unnamed-chunk-9-3.png" width="672" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1"></a><span class="co">### LM summary</span></span>
-<span id="cb57-2"><a href="#cb57-2"></a><span class="kw">summary</span>(data_long<span class="op">$</span>mod_<span class="dv">3</span>[[<span class="dv">3</span>]])</span></code></pre></div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="do">### LM summary</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(data_long<span class="sc">$</span>mod_3[[<span class="dv">3</span>]])</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = values ~ lspline(x = time_months, knots = 48, marginal = FALSE), 
@@ -816,13 +828,13 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 ## Residual standard error: 46080 on 57 degrees of freedom
 ## Multiple R-squared:  0.8771, Adjusted R-squared:  0.8727 
 ## F-statistic: 203.3 on 2 and 57 DF,  p-value: &lt; 0.00000000000000022</code></pre>
-<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1"></a><span class="co">### Slopes of individual segments</span></span>
-<span id="cb59-2"><a href="#cb59-2"></a><span class="co">#### Segment 1</span></span>
-<span id="cb59-3"><a href="#cb59-3"></a><span class="kw">coef</span>(data_long<span class="op">$</span>mod_<span class="dv">3</span>[[<span class="dv">3</span>]])[[<span class="dv">2</span>]]</span></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Slopes of individual segments</span></span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="do">#### Segment 1</span></span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(data_long<span class="sc">$</span>mod_3[[<span class="dv">3</span>]])[[<span class="dv">2</span>]]</span></code></pre></div>
 <pre><code>## [1] 7765.131</code></pre>
-<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1"></a><span class="co">#### Segment 2 </span></span>
-<span id="cb61-2"><a href="#cb61-2"></a><span class="co">#### (marginal = FALSE, therefore coefficients can be interpreted as slopes of consecutive spline segments)</span></span>
-<span id="cb61-3"><a href="#cb61-3"></a><span class="kw">coef</span>(data_long<span class="op">$</span>mod_<span class="dv">3</span>[[<span class="dv">3</span>]])[[<span class="dv">3</span>]]</span></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="do">#### Segment 2 </span></span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="do">#### (marginal = FALSE, therefore coefficients can be interpreted as slopes of consecutive spline segments)</span></span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(data_long<span class="sc">$</span>mod_3[[<span class="dv">3</span>]])[[<span class="dv">3</span>]]</span></code></pre></div>
 <pre><code>## [1] -523.5277</code></pre>
 </div>
 </div>
@@ -865,9 +877,9 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 </div>
 <div id="session-information" class="section level1">
 <h1>Session information</h1>
-<pre><code>## R version 4.0.2 (2020-06-22)
+<pre><code>## R version 4.0.4 (2021-02-15)
 ## Platform: x86_64-apple-darwin17.0 (64-bit)
-## Running under: macOS Catalina 10.15.5
+## Running under: macOS Catalina 10.15.7
 ## 
 ## Matrix products: default
 ## BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
@@ -887,51 +899,52 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
 ## 
 ## other attached packages:
 ##  [1] lspline_1.0-0       carrots_0.1.0       geofacet_0.2.0     
-##  [4] survey_4.0          survival_3.1-12     Matrix_1.2-18      
-##  [7] sf_0.9-4            fiftystater_1.0.1   skimr_2.1.1        
-## [10] magrittr_1.5        geojsonio_0.9.2     lubridate_1.7.9    
-## [13] xml2_1.3.2          sp_1.4-2            leaflet_2.0.3      
-## [16] highcharter_0.7.0   flexdashboard_0.5.2 gganimate_1.0.5    
-## [19] gdtools_0.2.2       ggiraph_0.7.0       svglite_1.2.3.2    
-## [22] pander_0.6.3        knitr_1.29          forcats_0.5.0      
-## [25] stringr_1.4.0       dplyr_1.0.0         purrr_0.3.4        
-## [28] readr_1.3.1         tidyr_1.1.0         tibble_3.0.1       
-## [31] ggplot2_3.3.2       tidyverse_1.3.0    
+##  [4] survey_4.0          survival_3.2-9      Matrix_1.3-2       
+##  [7] sf_0.9-7            fiftystater_1.0.1   skimr_2.1.3        
+## [10] magrittr_2.0.1      geojsonio_0.9.4     lubridate_1.7.10   
+## [13] xml2_1.3.2          sp_1.4-5            leaflet_2.0.4.1    
+## [16] highcharter_0.8.2   flexdashboard_0.5.2 gganimate_1.0.7    
+## [19] gdtools_0.2.3       ggiraph_0.7.8       svglite_2.0.0      
+## [22] pander_0.6.3        knitr_1.31          forcats_0.5.1      
+## [25] stringr_1.4.0       dplyr_1.0.5         purrr_0.3.4        
+## [28] readr_1.4.0         tidyr_1.1.3         tibble_3.1.0       
+## [31] ggplot2_3.3.3       tidyverse_1.3.0    
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] colorspace_1.4-1    ellipsis_0.3.1      class_7.3-17       
-##  [4] rgdal_1.5-10        base64enc_0.1-3     fs_1.4.1           
-##  [7] rstudioapi_0.11     httpcode_0.3.0      farver_2.0.3       
-## [10] ggrepel_0.8.2       fansi_0.4.1         splines_4.0.2      
-## [13] rlist_0.4.6.1       jsonlite_1.6.1      broom_0.5.6        
-## [16] dbplyr_1.4.4        png_0.1-7           rgeos_0.5-3        
-## [19] compiler_4.0.2      httr_1.4.1          backports_1.1.8    
-## [22] assertthat_0.2.1    lazyeval_0.2.2      cli_2.0.2          
-## [25] tweenr_1.0.1        htmltools_0.5.0     prettyunits_1.1.1  
-## [28] tools_4.0.2         igraph_1.2.5        gtable_0.3.0       
-## [31] glue_1.4.1          geojson_0.3.4       V8_3.2.0           
-## [34] Rcpp_1.0.4.6        imguR_1.0.3         cellranger_1.1.0   
-## [37] vctrs_0.3.1         crul_0.9.0          nlme_3.1-148       
-## [40] crosstalk_1.1.0.1   xfun_0.15           rvest_0.3.5        
-## [43] lifecycle_0.2.0     jqr_1.1.0           zoo_1.8-8          
-## [46] scales_1.1.1        hms_0.5.3           yaml_2.2.1         
-## [49] quantmod_0.4.17     curl_4.3            gridExtra_2.3      
-## [52] stringi_1.4.6       highr_0.8           maptools_1.0-1     
-## [55] e1071_1.7-3         TTR_0.23-6          boot_1.3-25        
-## [58] repr_1.1.0          rlang_0.4.6         pkgconfig_2.0.3    
-## [61] systemfonts_0.2.3   geogrid_0.1.1       evaluate_0.14      
-## [64] lattice_0.20-41     htmlwidgets_1.5.1   labeling_0.3       
-## [67] tidyselect_1.1.0    R6_2.4.1            generics_0.0.2     
-## [70] DBI_1.1.0           mgcv_1.8-31         pillar_1.4.4       
-## [73] haven_2.3.1         whisker_0.4         foreign_0.8-80     
-## [76] withr_2.2.0         units_0.6-7         xts_0.12-0         
-## [79] modelr_0.1.8        crayon_1.3.4        uuid_0.1-4         
-## [82] KernSmooth_2.23-17  utf8_1.1.4          rmarkdown_2.3      
-## [85] jpeg_0.1-8.1        progress_1.2.2      rnaturalearth_0.1.0
-## [88] readxl_1.3.1        data.table_1.12.8   blob_1.2.1         
-## [91] reprex_0.3.0        digest_0.6.25       classInt_0.4-3     
-## [94] webshot_0.5.2       munsell_0.5.0       viridisLite_0.3.0  
-## [97] kableExtra_1.1.0    mitools_2.4</code></pre>
+##   [1] colorspace_2.0-0    ellipsis_0.3.1      class_7.3-18       
+##   [4] rgdal_1.5-23        base64enc_0.1-3     fs_1.5.0           
+##   [7] rstudioapi_0.13     httpcode_0.3.0      farver_2.1.0       
+##  [10] ggrepel_0.9.1       fansi_0.4.2         splines_4.0.4      
+##  [13] rlist_0.4.6.1       jsonlite_1.7.2      broom_0.7.5        
+##  [16] dbplyr_2.1.0        png_0.1-7           rgeos_0.5-5        
+##  [19] compiler_4.0.4      httr_1.4.2          backports_1.2.1    
+##  [22] assertthat_0.2.1    lazyeval_0.2.2      cli_2.3.1          
+##  [25] tweenr_1.0.1        htmltools_0.5.1.1   prettyunits_1.1.1  
+##  [28] tools_4.0.4         igraph_1.2.6        gtable_0.3.0       
+##  [31] glue_1.4.2          geojson_0.3.4       V8_3.4.0           
+##  [34] Rcpp_1.0.6          imguR_1.0.3         cellranger_1.1.0   
+##  [37] jquerylib_0.1.3     vctrs_0.3.6         crul_1.1.0         
+##  [40] nlme_3.1-152        crosstalk_1.1.1     xfun_0.22          
+##  [43] rvest_1.0.0         lifecycle_1.0.0     jqr_1.2.0          
+##  [46] zoo_1.8-9           scales_1.1.1        hms_1.0.0          
+##  [49] yaml_2.2.1          quantmod_0.4.18     curl_4.3           
+##  [52] gridExtra_2.3       sass_0.3.1          stringi_1.5.3      
+##  [55] highr_0.8           maptools_1.0-2      e1071_1.7-4        
+##  [58] TTR_0.24.2          boot_1.3-27         repr_1.1.3         
+##  [61] rlang_0.4.10        pkgconfig_2.0.3     systemfonts_1.0.1  
+##  [64] geogrid_0.1.1       evaluate_0.14       lattice_0.20-41    
+##  [67] htmlwidgets_1.5.3   labeling_0.4.2      tidyselect_1.1.0   
+##  [70] geojsonsf_2.0.1     R6_2.5.0            magick_2.7.0       
+##  [73] generics_0.1.0      DBI_1.1.1           mgcv_1.8-34        
+##  [76] pillar_1.5.1        haven_2.3.1         foreign_0.8-81     
+##  [79] withr_2.4.1         units_0.7-0         xts_0.12.1         
+##  [82] modelr_0.1.8        crayon_1.4.1        uuid_0.1-4         
+##  [85] KernSmooth_2.23-18  utf8_1.2.1          rmarkdown_2.7      
+##  [88] jpeg_0.1-8.1        progress_1.2.2      rnaturalearth_0.1.0
+##  [91] readxl_1.3.1        data.table_1.14.0   reprex_1.0.0       
+##  [94] digest_0.6.27       classInt_0.4-3      webshot_0.5.2      
+##  [97] munsell_0.5.0       viridisLite_0.3.0   kableExtra_1.3.4   
+## [100] bslib_0.2.4         mitools_2.4</code></pre>
 </div>
 <div class="footnotes">
 <hr />
@@ -982,73 +995,73 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */
     <!-- Footer -->
     <footer>
          <!--footer-->
- <div class="container-fluid" id="foot" style="background-color:#FFFFFF;border-top:#CCCCCC solid 1px;color:#999999;font-family:'Open sans', 'Helvetica';">
-     <div class="row">
-         <div class="col-sm-4">
-             <p>Hosted by: <a href="https://www.netlify.com" target="_blank">netlify.com</a>
-                 <br>Powered by: <a href="http://rmarkdown.rstudio.com/" target="_blank">RMarkdown</a>
-                 <br>
-                 <br>
-             </p>
-         </div>
-         <div class="col-sm-4">
-             <p>Fork/clone from: <a href="https://github.com/kamermanpr/kamermanpr.github.io.git" target="_blank">GitHub</a>
-                 <br>License: <a href="./LICENSE.html" target="_blank">MIT & CC-BY 4.0</a>
-                 <br>
-                 <br>
-             </p>
-         </div>
-         <div class="col-sm-4">
-             <h4 style="padding:0;margin:0">painblogR</h3>
- 			   <p style="display:inline-block">
- 				   <span style="font-style:italic">by Peter Kamerman</span>
- 				   &ensp;
- 				   <a href="mailto:peter.kamerman@gmail.com" title="Email me" target="_blank"><i style="color:#999999;" class="fa fa-envelope"></i></a>
- 				   &ensp;
- 				   <a href="//twitter.com/@painblogR" target="_blank" title="Follow me"><i style="color:#999999;" class="fa fa-twitter"></i></a>
- 			   </p>
- 		   </div>
- 	   </div>
- 	</div>
- 
- <script>
- 
- // add bootstrap table styles to pandoc tables
- function bootstrapStylePandocTables() {
-   $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
- }
- $(document).ready(function () {
-   bootstrapStylePandocTables();
- });
- 
- </script>
- 
- <!-- tabsets -->
- 
- <script>
- $(document).ready(function () {
-   window.buildTabsets("TOC");
- });
- 
- $(document).ready(function () {
-   $('.tabset-dropdown > .nav-tabs > li').click(function () {
-     $(this).parent().toggleClass('nav-tabs-open')
-   });
- });
- </script>
- 
- <!-- code folding -->
- 
- 
- <!-- dynamically load mathjax for compatibility with self-contained -->
- <script>
-   (function () {
-     var script = document.createElement("script");
-     script.type = "text/javascript";
-     script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
-     document.getElementsByTagName("head")[0].appendChild(script);
-   })();
- </script> 
+<div class="container-fluid" id="foot" style="background-color:#FFFFFF;border-top:#CCCCCC solid 1px;color:#999999;font-family:'Open sans', 'Helvetica';">
+    <div class="row">
+        <div class="col-sm-4">
+            <p>Hosted by: <a href="https://www.netlify.com" target="_blank">netlify.com</a>
+                <br>Powered by: <a href="http://rmarkdown.rstudio.com/" target="_blank">RMarkdown</a>
+                <br>
+                <br>
+            </p>
+        </div>
+        <div class="col-sm-4">
+            <p>Fork/clone from: <a href="https://github.com/kamermanpr/kamermanpr.github.io.git" target="_blank">GitHub</a>
+                <br>License: <a href="./LICENSE.html" target="_blank">MIT & CC-BY 4.0</a>
+                <br>
+                <br>
+            </p>
+        </div>
+        <div class="col-sm-4">
+            <h4 style="padding:0;margin:0">painblogR</h3>
+			   <p style="display:inline-block">
+				   <span style="font-style:italic">by Peter Kamerman</span>
+				   &ensp;
+				   <a href="mailto:peter.kamerman@gmail.com" title="Email me" target="_blank"><i style="color:#999999;" class="fa fa-envelope"></i></a>
+				   &ensp;
+				   <a href="//twitter.com/@painblogR" target="_blank" title="Follow me"><i style="color:#999999;" class="fa fa-twitter"></i></a>
+			   </p>
+		   </div>
+	   </div>
+	</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script> 
     </footer>
 </body>
 </html>

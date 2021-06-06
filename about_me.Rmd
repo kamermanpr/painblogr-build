@@ -13,6 +13,8 @@ I am a physiologist with a keen interest in the open science movement, and in re
 
 I am based at the [University of the Witwatersrand](https://www.wits.ac.za){ target="_blank" }, Johannesburg, where I teach for the School of Physiology, and conduct research under the banner of the [Brain Function Research Group](https://www.wits.ac.za/physiology/research-entities/brain-function-research-group){ target="_blank" }; an amalgam of investigators interested in topics related to functions of the brain, and physiological and biochemical processes in which the central nervous system plays a key regulatory role. My teaching involves undergraduate and postgraduate teaching in systems-based physiology and pathophysiology, with a focus on neuroscience. For my research, I lead an active research programme in the field of HIV-related pain with a primary focus on the epidemiology, genetics and pathophysiology of HIV-associated sensory neuropathy.
 
+I also run a data science consultancy [Blueprint Analystics](https://www.blueprint-analytics.co.za/){ target="_blank" }, which focuses on the development and execution of analysis plans for biomedical and social science research. I also work with investigators to develop reproducible research workflows and train groups in the use of the R statistical environment.
+
 In my free-time I like nothing better than to hit the trails on my mountain bike.
 
 ****

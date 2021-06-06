@@ -9,15 +9,24 @@
     <meta name="generator" content="pandoc"/>
 	
 	
-	 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
- <meta name="viewport" content="width=device-width, initial-scale=1" />
- <link href="site_libs/bootstrap-3.3.5/css/yeti.min.css" rel="stylesheet" />
- <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
- <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
- <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
- <script src="site_libs/navigation-1.1/tabsets.js"></script>
- <script src="site_libs/navigation-1.1/codefolding.js"></script>
- <script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script> 
+	 <script src="site_libs/header-attrs-2.7/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/yeti.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script> 
 
 	
 		<style type="text/css">
@@ -26,19 +35,19 @@
 		}
 	</style>
 	<style type="text/css">
-		code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
+		pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -58,7 +67,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; } /* Alert */
 code span.an { color: #008000; } /* Annotation */
@@ -205,12 +214,15 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */  div.sourceCod
                             <li><a href="./publications.html">Publications & Reprints </a></li>
                         </ul>
                     </li>
+                    <!---
+                    # Teaching
                     <li class="dropdown" style="display:table-cell;float:none;vertical-align:middle;font-size:16px;">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Teaching<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="https://www.painblogr.org/biostatistics/">Introduction to Biostatistics</a></li>
                         </ul>
                     </li>
+                    --->
                     <li class="dropdown" style="display:table-cell;float:none;vertical-align:middle;font-size:16px;">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Apps<span class="caret"></span></a>
                         <ul class="dropdown-menu">
@@ -292,99 +304,99 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */  div.sourceCod
 <p>Recently, the opportunity to put one of the package’s <code>transition_*()</code> functions to work while I was preparing materials for an <a href="//painblogr.org/biostatistics/">introductory biostatistics</a> tutorial for undergrad students. I wanted to demonstrate the <em>central limit theorem</em> and <em>law of large numbers</em>, and thought that animations would help deliver the message.</p>
 <p>The <em>central limit theorem</em> provides a shortcut to knowing the sampling distribution, which is the probability distribution of a statistic (e.g., mean, proportion) for all possible samples from a population. The theorem is one of the cornerstones of probability theory because it allows you to make statements about the sampling distribution for a particular statistic without having to sample the entire population. As such, it forms the basis of statistical inference.</p>
 <p>The <em>central limit theorem</em> states that the sampling distribution of an independent, random variable is normal or near-normal if a sufficiently large number of (equal-sized) samples are taken. If the sampling distribution for a statistic follows a normal or near-normal distribution we can make probability statements about the range of values in which the statistic lies. For example, there is a 68% probability that the sample statistic is within 1 standard deviation of the population value, and a 95% probability that it lies within about 2 standard deviations (see figure below). In the case of the sampling distribution, the standard deviation of the distribution is also called the <em>standard error</em>.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># Generate data for a standard normal distribution and 1/2 SD range</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="kw">set.seed</span>(<span class="dv">2019</span>)</span>
-<span id="cb1-3"><a href="#cb1-3"></a>density &lt;-<span class="st"> </span><span class="kw">density</span>(<span class="kw">rnorm</span>(<span class="dv">100000</span>), <span class="dt">n =</span> <span class="dv">100</span>)</span>
-<span id="cb1-4"><a href="#cb1-4"></a>density &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">x =</span> density<span class="op">$</span>x,</span>
-<span id="cb1-5"><a href="#cb1-5"></a>                  <span class="dt">y =</span> density<span class="op">$</span>y)</span>
-<span id="cb1-6"><a href="#cb1-6"></a></span>
-<span id="cb1-7"><a href="#cb1-7"></a>density_sd &lt;-<span class="st"> </span>density <span class="op">%&gt;%</span></span>
-<span id="cb1-8"><a href="#cb1-8"></a><span class="st">    </span><span class="kw">filter</span>(x <span class="op">&gt;=</span><span class="st"> </span><span class="dv">-1</span> <span class="op">&amp;</span><span class="st"> </span>x <span class="op">&lt;=</span><span class="st"> </span><span class="dv">1</span>)</span>
-<span id="cb1-9"><a href="#cb1-9"></a></span>
-<span id="cb1-10"><a href="#cb1-10"></a>density_sd2 &lt;-<span class="st"> </span>density <span class="op">%&gt;%</span></span>
-<span id="cb1-11"><a href="#cb1-11"></a><span class="st">    </span><span class="kw">filter</span>(x <span class="op">&gt;=</span><span class="st"> </span><span class="dv">-2</span> <span class="op">&amp;</span><span class="st"> </span>x <span class="op">&lt;=</span><span class="st"> </span><span class="dv">2</span>)</span>
-<span id="cb1-12"><a href="#cb1-12"></a></span>
-<span id="cb1-13"><a href="#cb1-13"></a><span class="co"># Plot</span></span>
-<span id="cb1-14"><a href="#cb1-14"></a><span class="kw">ggplot</span>() <span class="op">+</span></span>
-<span id="cb1-15"><a href="#cb1-15"></a><span class="st">    </span><span class="kw">aes</span>(<span class="dt">x =</span> x,</span>
-<span id="cb1-16"><a href="#cb1-16"></a>        <span class="dt">y =</span> y) <span class="op">+</span></span>
-<span id="cb1-17"><a href="#cb1-17"></a><span class="st">    </span><span class="kw">geom_area</span>(<span class="dt">data =</span> density_sd2,</span>
-<span id="cb1-18"><a href="#cb1-18"></a>              <span class="dt">fill =</span> <span class="st">&#39;#66AAD0&#39;</span>) <span class="op">+</span></span>
-<span id="cb1-19"><a href="#cb1-19"></a><span class="st">    </span><span class="kw">geom_area</span>(<span class="dt">data =</span> density_sd,</span>
-<span id="cb1-20"><a href="#cb1-20"></a>              <span class="dt">fill =</span> <span class="st">&#39;#0072B2&#39;</span>) <span class="op">+</span></span>
-<span id="cb1-21"><a href="#cb1-21"></a><span class="st">    </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">min</span>(density_sd<span class="op">$</span>x), </span>
-<span id="cb1-22"><a href="#cb1-22"></a>                     <span class="dt">xend =</span> <span class="kw">max</span>(density_sd<span class="op">$</span>x), </span>
-<span id="cb1-23"><a href="#cb1-23"></a>                     <span class="dt">y =</span> density_sd[density_sd<span class="op">$</span>x <span class="op">==</span><span class="st"> </span><span class="kw">min</span>(density_sd<span class="op">$</span>x), ]<span class="op">$</span>y, </span>
-<span id="cb1-24"><a href="#cb1-24"></a>                     <span class="dt">yend =</span> density_sd[density_sd<span class="op">$</span>x <span class="op">==</span><span class="st"> </span><span class="kw">min</span>(density_sd<span class="op">$</span>x), ]<span class="op">$</span>y),</span>
-<span id="cb1-25"><a href="#cb1-25"></a>                 <span class="dt">size =</span> <span class="dv">1</span>,</span>
-<span id="cb1-26"><a href="#cb1-26"></a>                 <span class="dt">colour =</span> <span class="st">&#39;#FFFFFF&#39;</span>) <span class="op">+</span></span>
-<span id="cb1-27"><a href="#cb1-27"></a><span class="st">    </span><span class="kw">geom_segment</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">min</span>(density_sd2<span class="op">$</span>x), </span>
-<span id="cb1-28"><a href="#cb1-28"></a>                     <span class="dt">xend =</span> <span class="kw">max</span>(density_sd2<span class="op">$</span>x), </span>
-<span id="cb1-29"><a href="#cb1-29"></a>                     <span class="dt">y =</span> density_sd2[density_sd2<span class="op">$</span>x <span class="op">==</span><span class="st"> </span><span class="kw">min</span>(density_sd2<span class="op">$</span>x), ]<span class="op">$</span>y, </span>
-<span id="cb1-30"><a href="#cb1-30"></a>                     <span class="dt">yend =</span> density_sd2[density_sd2<span class="op">$</span>x <span class="op">==</span><span class="st"> </span><span class="kw">min</span>(density_sd2<span class="op">$</span>x), ]<span class="op">$</span>y),</span>
-<span id="cb1-31"><a href="#cb1-31"></a>                 <span class="dt">size =</span> <span class="dv">1</span>,</span>
-<span id="cb1-32"><a href="#cb1-32"></a>                 <span class="dt">colour =</span> <span class="st">&#39;#FFFFFF&#39;</span>) <span class="op">+</span></span>
-<span id="cb1-33"><a href="#cb1-33"></a><span class="st">    </span><span class="kw">geom_label</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">0</span>,</span>
-<span id="cb1-34"><a href="#cb1-34"></a>                   <span class="dt">y =</span> density_sd[density_sd<span class="op">$</span>x <span class="op">==</span><span class="st"> </span><span class="kw">min</span>(density_sd<span class="op">$</span>x), ]<span class="op">$</span>y,</span>
-<span id="cb1-35"><a href="#cb1-35"></a>                   <span class="dt">label =</span> <span class="st">&#39;1 SD: 68%&#39;</span>)) <span class="op">+</span></span>
-<span id="cb1-36"><a href="#cb1-36"></a><span class="st">    </span><span class="kw">geom_label</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">0</span>,</span>
-<span id="cb1-37"><a href="#cb1-37"></a>                   <span class="dt">y =</span> density_sd2[density_sd2<span class="op">$</span>x <span class="op">==</span><span class="st"> </span><span class="kw">min</span>(density_sd2<span class="op">$</span>x), ]<span class="op">$</span>y,</span>
-<span id="cb1-38"><a href="#cb1-38"></a>                   <span class="dt">label =</span> <span class="st">&#39;1.96 SD: 95%&#39;</span>)) <span class="op">+</span></span>
-<span id="cb1-39"><a href="#cb1-39"></a><span class="st">    </span><span class="kw">geom_line</span>(<span class="dt">data =</span> density) <span class="op">+</span></span>
-<span id="cb1-40"><a href="#cb1-40"></a><span class="st">    </span><span class="kw">scale_x_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">4</span>, <span class="dv">4</span>)) <span class="op">+</span></span>
-<span id="cb1-41"><a href="#cb1-41"></a><span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&#39;</span><span class="ch">\n</span><span class="st">Standard deviation&#39;</span>,</span>
-<span id="cb1-42"><a href="#cb1-42"></a>         <span class="dt">y =</span> <span class="st">&#39;Density</span><span class="ch">\n</span><span class="st">&#39;</span>) <span class="op">+</span></span>
-<span id="cb1-43"><a href="#cb1-43"></a><span class="st">    </span><span class="kw">theme</span>(<span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">17</span>),</span>
-<span id="cb1-44"><a href="#cb1-44"></a>          <span class="dt">axis.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">17</span>),</span>
-<span id="cb1-45"><a href="#cb1-45"></a>          <span class="dt">axis.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">17</span>),</span>
-<span id="cb1-46"><a href="#cb1-46"></a>          <span class="dt">axis.ticks =</span> <span class="kw">element_blank</span>(),</span>
-<span id="cb1-47"><a href="#cb1-47"></a>          <span class="dt">panel.grid.major =</span> <span class="kw">element_line</span>(<span class="dt">colour =</span> <span class="st">&#39;gray80&#39;</span>, </span>
-<span id="cb1-48"><a href="#cb1-48"></a>                                          <span class="dt">size =</span> <span class="fl">0.3</span>),</span>
-<span id="cb1-49"><a href="#cb1-49"></a>          <span class="dt">panel.background =</span> <span class="kw">element_blank</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate data for a standard normal distribution and 1/2 SD range</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2019</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>density <span class="ot">&lt;-</span> <span class="fu">density</span>(<span class="fu">rnorm</span>(<span class="dv">100000</span>), <span class="at">n =</span> <span class="dv">100</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>density <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> density<span class="sc">$</span>x,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> density<span class="sc">$</span>y)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>density_sd <span class="ot">&lt;-</span> density <span class="sc">%&gt;%</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(x <span class="sc">&gt;=</span> <span class="sc">-</span><span class="dv">1</span> <span class="sc">&amp;</span> x <span class="sc">&lt;=</span> <span class="dv">1</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>density_sd2 <span class="ot">&lt;-</span> density <span class="sc">%&gt;%</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(x <span class="sc">&gt;=</span> <span class="sc">-</span><span class="dv">2</span> <span class="sc">&amp;</span> x <span class="sc">&lt;=</span> <span class="dv">2</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> x,</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> y) <span class="sc">+</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_area</span>(<span class="at">data =</span> density_sd2,</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>              <span class="at">fill =</span> <span class="st">&#39;#66AAD0&#39;</span>) <span class="sc">+</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_area</span>(<span class="at">data =</span> density_sd,</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>              <span class="at">fill =</span> <span class="st">&#39;#0072B2&#39;</span>) <span class="sc">+</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">min</span>(density_sd<span class="sc">$</span>x), </span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>                     <span class="at">xend =</span> <span class="fu">max</span>(density_sd<span class="sc">$</span>x), </span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>                     <span class="at">y =</span> density_sd[density_sd<span class="sc">$</span>x <span class="sc">==</span> <span class="fu">min</span>(density_sd<span class="sc">$</span>x), ]<span class="sc">$</span>y, </span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>                     <span class="at">yend =</span> density_sd[density_sd<span class="sc">$</span>x <span class="sc">==</span> <span class="fu">min</span>(density_sd<span class="sc">$</span>x), ]<span class="sc">$</span>y),</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>                 <span class="at">size =</span> <span class="dv">1</span>,</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>                 <span class="at">colour =</span> <span class="st">&#39;#FFFFFF&#39;</span>) <span class="sc">+</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">min</span>(density_sd2<span class="sc">$</span>x), </span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>                     <span class="at">xend =</span> <span class="fu">max</span>(density_sd2<span class="sc">$</span>x), </span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>                     <span class="at">y =</span> density_sd2[density_sd2<span class="sc">$</span>x <span class="sc">==</span> <span class="fu">min</span>(density_sd2<span class="sc">$</span>x), ]<span class="sc">$</span>y, </span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>                     <span class="at">yend =</span> density_sd2[density_sd2<span class="sc">$</span>x <span class="sc">==</span> <span class="fu">min</span>(density_sd2<span class="sc">$</span>x), ]<span class="sc">$</span>y),</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>                 <span class="at">size =</span> <span class="dv">1</span>,</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>                 <span class="at">colour =</span> <span class="st">&#39;#FFFFFF&#39;</span>) <span class="sc">+</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_label</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">0</span>,</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>                   <span class="at">y =</span> density_sd[density_sd<span class="sc">$</span>x <span class="sc">==</span> <span class="fu">min</span>(density_sd<span class="sc">$</span>x), ]<span class="sc">$</span>y,</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>                   <span class="at">label =</span> <span class="st">&#39;1 SD: 68%&#39;</span>)) <span class="sc">+</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_label</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">0</span>,</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>                   <span class="at">y =</span> density_sd2[density_sd2<span class="sc">$</span>x <span class="sc">==</span> <span class="fu">min</span>(density_sd2<span class="sc">$</span>x), ]<span class="sc">$</span>y,</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>                   <span class="at">label =</span> <span class="st">&#39;1.96 SD: 95%&#39;</span>)) <span class="sc">+</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">data =</span> density) <span class="sc">+</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>)) <span class="sc">+</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&#39;</span><span class="sc">\n</span><span class="st">Standard deviation&#39;</span>,</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">&#39;Density</span><span class="sc">\n</span><span class="st">&#39;</span>) <span class="sc">+</span></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">17</span>),</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">17</span>),</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">17</span>),</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.grid.major =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">&#39;gray80&#39;</span>, </span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">size =</span> <span class="fl">0.3</span>),</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.background =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
 <p><img src="2016-05-17-probability-theory_files/figure-html/normal_distr-1.png" width="480" style="display: block; margin: auto;" /></p>
 <p>The size of the standard error also allows us to gauge the precision of the sample statistic, and this <em>‘width’</em> of the sampling distribution is dependent on the size of the samples. From a technical point of view, the standard error of the sample statistic is equal to the standard deviation of the population divided by the square root of the sample size (<span class="math inline">\(se = \frac{\sigma}{\sqrt{n}}\)</span>). Basically, as the size of a sample increases the samples are more likely to be representative of the population, and therefore variability around the point estimate should decrease. The figure below shows the effect of increasing sample size on the precision of the standard error.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># Generate data of SEM as sample size from a std normal population increases</span></span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="kw">set.seed</span>(<span class="dv">2019</span>)</span>
-<span id="cb2-3"><a href="#cb2-3"></a>population &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">200000</span>)</span>
-<span id="cb2-4"><a href="#cb2-4"></a>interval &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">5</span>, <span class="dt">to =</span> <span class="dv">1000</span>, <span class="dt">by =</span> <span class="dv">50</span>), </span>
-<span id="cb2-5"><a href="#cb2-5"></a>              <span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">1050</span>, <span class="dt">to =</span> <span class="dv">10000</span>, <span class="dt">by =</span> <span class="dv">1000</span>), <span class="dv">10000</span>)</span>
-<span id="cb2-6"><a href="#cb2-6"></a>sem &lt;-<span class="st"> </span><span class="kw">numeric</span>(<span class="kw">length</span>(interval))</span>
-<span id="cb2-7"><a href="#cb2-7"></a></span>
-<span id="cb2-8"><a href="#cb2-8"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(interval)){</span>
-<span id="cb2-9"><a href="#cb2-9"></a>    sem[[i]] &lt;-<span class="st"> </span><span class="kw">sd</span>(<span class="kw">sample</span>(<span class="dt">x =</span> population, <span class="dt">size =</span> interval[[i]]) <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(interval[[i]]))</span>
-<span id="cb2-10"><a href="#cb2-10"></a>    sem</span>
-<span id="cb2-11"><a href="#cb2-11"></a>}</span>
-<span id="cb2-12"><a href="#cb2-12"></a></span>
-<span id="cb2-13"><a href="#cb2-13"></a>sem_plot &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">x =</span> interval, <span class="dt">y =</span> sem)</span>
-<span id="cb2-14"><a href="#cb2-14"></a></span>
-<span id="cb2-15"><a href="#cb2-15"></a><span class="co"># Plot</span></span>
-<span id="cb2-16"><a href="#cb2-16"></a><span class="kw">ggplot</span>(sem_plot) <span class="op">+</span></span>
-<span id="cb2-17"><a href="#cb2-17"></a><span class="st">    </span><span class="kw">aes</span>(<span class="dt">x =</span> x,</span>
-<span id="cb2-18"><a href="#cb2-18"></a>        <span class="dt">y =</span> y) <span class="op">+</span></span>
-<span id="cb2-19"><a href="#cb2-19"></a><span class="st">    </span><span class="kw">geom_line</span>(<span class="dt">colour =</span> <span class="st">&#39;#0072B2&#39;</span>,</span>
-<span id="cb2-20"><a href="#cb2-20"></a>              <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span></span>
-<span id="cb2-21"><a href="#cb2-21"></a><span class="st">    </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">0</span>, </span>
-<span id="cb2-22"><a href="#cb2-22"></a>               <span class="dt">colour =</span> <span class="st">&quot;#E69F00&quot;</span>, </span>
-<span id="cb2-23"><a href="#cb2-23"></a>               <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span></span>
-<span id="cb2-24"><a href="#cb2-24"></a><span class="st">    </span><span class="kw">scale_x_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">10000</span>),</span>
-<span id="cb2-25"><a href="#cb2-25"></a>                       <span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">500</span>, <span class="dv">1000</span>, </span>
-<span id="cb2-26"><a href="#cb2-26"></a>                                  <span class="dv">2500</span>, <span class="dv">5000</span>, <span class="dv">7500</span>, <span class="dv">10000</span>),</span>
-<span id="cb2-27"><a href="#cb2-27"></a>                       <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&#39;0&#39;</span>, <span class="st">&#39;500&#39;</span>, <span class="st">&#39;1000&#39;</span>, </span>
-<span id="cb2-28"><a href="#cb2-28"></a>                                  <span class="st">&#39;2500&#39;</span>, <span class="st">&#39;5000&#39;</span>, <span class="st">&#39;7500&#39;</span>, <span class="st">&#39;10000&#39;</span>)) <span class="op">+</span></span>
-<span id="cb2-29"><a href="#cb2-29"></a><span class="st">    </span><span class="kw">scale_y_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.12</span>),</span>
-<span id="cb2-30"><a href="#cb2-30"></a>                       <span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.04</span>, <span class="fl">0.08</span>, <span class="fl">0.12</span>)) <span class="op">+</span></span>
-<span id="cb2-31"><a href="#cb2-31"></a><span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&#39;Standard error of the mean vs. sample size&#39;</span>,</span>
-<span id="cb2-32"><a href="#cb2-32"></a>         <span class="dt">subtitle =</span> <span class="st">&#39;(Population: N = 200 000, mean = 0, SD = 1)&#39;</span>,</span>
-<span id="cb2-33"><a href="#cb2-33"></a>         <span class="dt">x =</span> <span class="st">&#39;Sample size&#39;</span>, </span>
-<span id="cb2-34"><a href="#cb2-34"></a>         <span class="dt">y =</span> <span class="st">&#39;Standard error of the mean</span><span class="ch">\n</span><span class="st">&#39;</span>) <span class="op">+</span></span>
-<span id="cb2-35"><a href="#cb2-35"></a><span class="st">    </span><span class="kw">theme</span>(<span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">17</span>),</span>
-<span id="cb2-36"><a href="#cb2-36"></a>          <span class="dt">axis.text.y =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">17</span>),</span>
-<span id="cb2-37"><a href="#cb2-37"></a>          <span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">17</span>, <span class="dt">angle =</span> <span class="dv">45</span>, <span class="dt">hjust =</span> <span class="dv">1</span>, <span class="dt">vjust =</span> <span class="dv">1</span>),</span>
-<span id="cb2-38"><a href="#cb2-38"></a>          <span class="dt">axis.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">17</span>),</span>
-<span id="cb2-39"><a href="#cb2-39"></a>          <span class="dt">axis.ticks =</span> <span class="kw">element_blank</span>(),</span>
-<span id="cb2-40"><a href="#cb2-40"></a>          <span class="dt">panel.grid.major =</span> <span class="kw">element_line</span>(<span class="dt">colour =</span> <span class="st">&#39;gray80&#39;</span>, </span>
-<span id="cb2-41"><a href="#cb2-41"></a>                                          <span class="dt">size =</span> <span class="fl">0.3</span>),</span>
-<span id="cb2-42"><a href="#cb2-42"></a>          <span class="dt">panel.background =</span> <span class="kw">element_blank</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate data of SEM as sample size from a std normal population increases</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2019</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>population <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">200000</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>interval <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">5</span>, <span class="at">to =</span> <span class="dv">1000</span>, <span class="at">by =</span> <span class="dv">50</span>), </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>              <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">1050</span>, <span class="at">to =</span> <span class="dv">10000</span>, <span class="at">by =</span> <span class="dv">1000</span>), <span class="dv">10000</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>sem <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="fu">length</span>(interval))</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(interval)){</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    sem[[i]] <span class="ot">&lt;-</span> <span class="fu">sd</span>(<span class="fu">sample</span>(<span class="at">x =</span> population, <span class="at">size =</span> interval[[i]]) <span class="sc">/</span> <span class="fu">sqrt</span>(interval[[i]]))</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    sem</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>sem_plot <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> interval, <span class="at">y =</span> sem)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(sem_plot) <span class="sc">+</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> x,</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> y) <span class="sc">+</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">colour =</span> <span class="st">&#39;#0072B2&#39;</span>,</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>              <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, </span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>               <span class="at">colour =</span> <span class="st">&quot;#E69F00&quot;</span>, </span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>               <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">10000</span>),</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>                       <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">500</span>, <span class="dv">1000</span>, </span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>                                  <span class="dv">2500</span>, <span class="dv">5000</span>, <span class="dv">7500</span>, <span class="dv">10000</span>),</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>                       <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&#39;0&#39;</span>, <span class="st">&#39;500&#39;</span>, <span class="st">&#39;1000&#39;</span>, </span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">&#39;2500&#39;</span>, <span class="st">&#39;5000&#39;</span>, <span class="st">&#39;7500&#39;</span>, <span class="st">&#39;10000&#39;</span>)) <span class="sc">+</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.12</span>),</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>                       <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.04</span>, <span class="fl">0.08</span>, <span class="fl">0.12</span>)) <span class="sc">+</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&#39;Standard error of the mean vs. sample size&#39;</span>,</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>         <span class="at">subtitle =</span> <span class="st">&#39;(Population: N = 200 000, mean = 0, SD = 1)&#39;</span>,</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">&#39;Sample size&#39;</span>, </span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">&#39;Standard error of the mean</span><span class="sc">\n</span><span class="st">&#39;</span>) <span class="sc">+</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">17</span>),</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">17</span>),</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">17</span>, <span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>, <span class="at">vjust =</span> <span class="dv">1</span>),</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">17</span>),</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.grid.major =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">&#39;gray80&#39;</span>, </span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">size =</span> <span class="fl">0.3</span>),</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.background =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
 <p><img src="2016-05-17-probability-theory_files/figure-html/SEM_reduction-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>This leads us to the <em>law of large numbers</em>. At a simplistic level, the central limit theorem tells us about the shape of the sampling distribution, while the law of large numbers tells us where the centre of the distribution lies. From the law of large numbers we can show that the cumulative result from a large number of trials/samples tends towards the true value in the population. That is, the probability of an unusual outcome becomes smaller as the number of trials/samples increases. This convergence in probability is also called the <em>weak law of large numbers</em>.</p>
 </div>
@@ -395,97 +407,97 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */  div.sourceCod
 <h3>Our population</h3>
 <p>The <em>central limit theorem</em> holds across different distributions, and to illustrate this point I started with a population generated by taking a random sample (<em>N</em> = 200,000) from the exponential distribution (right-skewed) with rate 1.</p>
 <p>The density distribution of this dataset is shown in the figure below (the mean is marked by the orange line), and it served as the population from which samples were taken to demonstrate the central limit theorem and the law of large numbers.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># Generate data using a random sample from the exponential distribution</span></span>
-<span id="cb3-2"><a href="#cb3-2"></a><span class="kw">set.seed</span>(<span class="dv">2019</span>)</span>
-<span id="cb3-3"><a href="#cb3-3"></a>distr &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">data =</span> <span class="kw">rexp</span>(<span class="dv">200000</span>))</span>
-<span id="cb3-4"><a href="#cb3-4"></a></span>
-<span id="cb3-5"><a href="#cb3-5"></a><span class="co"># Plot</span></span>
-<span id="cb3-6"><a href="#cb3-6"></a><span class="kw">ggplot</span>(distr, <span class="kw">aes</span>(data)) <span class="op">+</span></span>
-<span id="cb3-7"><a href="#cb3-7"></a><span class="st">    </span><span class="kw">geom_density</span>(<span class="dt">fill =</span> <span class="st">&#39;#0072B2&#39;</span>, </span>
-<span id="cb3-8"><a href="#cb3-8"></a>                 <span class="dt">colour =</span> <span class="st">&#39;#0072B2&#39;</span>) <span class="op">+</span></span>
-<span id="cb3-9"><a href="#cb3-9"></a><span class="st">    </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="kw">mean</span>(distr<span class="op">$</span>data), </span>
-<span id="cb3-10"><a href="#cb3-10"></a>               <span class="dt">colour =</span> <span class="st">&quot;#E69F00&quot;</span>, </span>
-<span id="cb3-11"><a href="#cb3-11"></a>               <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span></span>
-<span id="cb3-12"><a href="#cb3-12"></a><span class="st">    </span><span class="kw">scale_x_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">14</span>),</span>
-<span id="cb3-13"><a href="#cb3-13"></a>                       <span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">10</span>, <span class="dv">12</span>, <span class="dv">14</span>)) <span class="op">+</span></span>
-<span id="cb3-14"><a href="#cb3-14"></a><span class="st">    </span><span class="kw">scale_y_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
-<span id="cb3-15"><a href="#cb3-15"></a>                       <span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.2</span>, <span class="fl">0.4</span>, <span class="fl">0.6</span>, <span class="fl">0.8</span>, <span class="dv">1</span>)) <span class="op">+</span></span>
-<span id="cb3-16"><a href="#cb3-16"></a><span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&#39;</span><span class="ch">\n</span><span class="st">Value&#39;</span>, <span class="dt">y =</span> <span class="st">&#39;Probability</span><span class="ch">\n</span><span class="st">&#39;</span>) <span class="op">+</span></span>
-<span id="cb3-17"><a href="#cb3-17"></a><span class="st">    </span><span class="kw">theme</span>(<span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">17</span>),</span>
-<span id="cb3-18"><a href="#cb3-18"></a>          <span class="dt">axis.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">17</span>),</span>
-<span id="cb3-19"><a href="#cb3-19"></a>          <span class="dt">axis.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">17</span>),</span>
-<span id="cb3-20"><a href="#cb3-20"></a>          <span class="dt">axis.ticks =</span> <span class="kw">element_blank</span>(),</span>
-<span id="cb3-21"><a href="#cb3-21"></a>          <span class="dt">panel.grid.major =</span> <span class="kw">element_line</span>(<span class="dt">colour =</span> <span class="st">&#39;gray80&#39;</span>, </span>
-<span id="cb3-22"><a href="#cb3-22"></a>                                          <span class="dt">size =</span> <span class="fl">0.3</span>),</span>
-<span id="cb3-23"><a href="#cb3-23"></a>          <span class="dt">panel.background =</span> <span class="kw">element_blank</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate data using a random sample from the exponential distribution</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2019</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>distr <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">data =</span> <span class="fu">rexp</span>(<span class="dv">200000</span>))</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(distr, <span class="fu">aes</span>(data)) <span class="sc">+</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density</span>(<span class="at">fill =</span> <span class="st">&#39;#0072B2&#39;</span>, </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>                 <span class="at">colour =</span> <span class="st">&#39;#0072B2&#39;</span>) <span class="sc">+</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(distr<span class="sc">$</span>data), </span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>               <span class="at">colour =</span> <span class="st">&quot;#E69F00&quot;</span>, </span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>               <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">14</span>),</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>                       <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">10</span>, <span class="dv">12</span>, <span class="dv">14</span>)) <span class="sc">+</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>                       <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.2</span>, <span class="fl">0.4</span>, <span class="fl">0.6</span>, <span class="fl">0.8</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&#39;</span><span class="sc">\n</span><span class="st">Value&#39;</span>, <span class="at">y =</span> <span class="st">&#39;Probability</span><span class="sc">\n</span><span class="st">&#39;</span>) <span class="sc">+</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">17</span>),</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">17</span>),</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">17</span>),</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.grid.major =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">&#39;gray80&#39;</span>, </span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">size =</span> <span class="fl">0.3</span>),</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.background =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
 <p><img src="2016-05-17-probability-theory_files/figure-html/skewed_population-1.png" width="480" style="display: block; margin: auto;" /></p>
 </div>
 <div id="the-central-limit-theorem-in-action" class="section level3">
 <h3>The central limit theorem in action</h3>
 <p>To demonstrate the central limit theorem, I took 5000 samples (without replacement) of <em>n</em> = 200 each from the ‘population’ of 200,000, and calculated the mean for each sample. I then tabulated the frequency at which sample means occurred across the 5000 samples, and used these data to plot a frequency histogram. However, in addition to the usual ggplot2 code, I added the function <code>gganimate::transition_reveal(along = sample)</code> to the final line of the plot code. Adding this additional function allows the <code>gganimate::animate()</code> function to take the <code>ggplot2</code> object and to sequentially add the frequency bins of sample means as frames in an animation.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># Generate data</span></span>
-<span id="cb4-2"><a href="#cb4-2"></a><span class="co"># Create an empty list, and a &#39;for loop&#39; counter</span></span>
-<span id="cb4-3"><a href="#cb4-3"></a>lst &lt;-<span class="st"> </span><span class="kw">list</span>()</span>
-<span id="cb4-4"><a href="#cb4-4"></a>cnt &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">5000</span></span>
-<span id="cb4-5"><a href="#cb4-5"></a></span>
-<span id="cb4-6"><a href="#cb4-6"></a><span class="co"># Take 5000 samples of n = 200 from &#39;population&#39; and make a list of sample means.</span></span>
-<span id="cb4-7"><a href="#cb4-7"></a><span class="kw">set.seed</span>(<span class="dv">2019</span>)</span>
-<span id="cb4-8"><a href="#cb4-8"></a><span class="cf">for</span>(i <span class="cf">in</span> cnt){</span>
-<span id="cb4-9"><a href="#cb4-9"></a>    lst[[i]] &lt;-<span class="st"> </span><span class="kw">mean</span>(<span class="kw">sample</span>(population, <span class="dt">size =</span> <span class="dv">200</span>))</span>
-<span id="cb4-10"><a href="#cb4-10"></a>}</span>
-<span id="cb4-11"><a href="#cb4-11"></a></span>
-<span id="cb4-12"><a href="#cb4-12"></a><span class="co"># Process data in &#39;lst&#39; for plotting</span></span>
-<span id="cb4-13"><a href="#cb4-13"></a><span class="co">## Unlist and round to reduce the number of bins for CLT plot</span></span>
-<span id="cb4-14"><a href="#cb4-14"></a>lst2 &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="kw">unlist</span>(lst), <span class="dv">2</span>)</span>
-<span id="cb4-15"><a href="#cb4-15"></a></span>
-<span id="cb4-16"><a href="#cb4-16"></a><span class="co">## cross-tabulate the data to get frequency bins</span></span>
-<span id="cb4-17"><a href="#cb4-17"></a>tab &lt;-<span class="st"> </span><span class="kw">xtabs</span>(<span class="op">~</span>lst2)</span>
-<span id="cb4-18"><a href="#cb4-18"></a></span>
-<span id="cb4-19"><a href="#cb4-19"></a><span class="co">## Extract the names (&#39;bins&#39;)</span></span>
-<span id="cb4-20"><a href="#cb4-20"></a>nam &lt;-<span class="st"> </span><span class="kw">names</span>(tab)</span>
-<span id="cb4-21"><a href="#cb4-21"></a></span>
-<span id="cb4-22"><a href="#cb4-22"></a><span class="co">## Make data.frame for plotting</span></span>
-<span id="cb4-23"><a href="#cb4-23"></a>df &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">sample =</span> <span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(tab)),</span>
-<span id="cb4-24"><a href="#cb4-24"></a>             <span class="dt">mean =</span> <span class="kw">as.numeric</span>(nam),</span>
-<span id="cb4-25"><a href="#cb4-25"></a>             <span class="dt">freq =</span> <span class="kw">as.numeric</span>(tab))</span>
-<span id="cb4-26"><a href="#cb4-26"></a></span>
-<span id="cb4-27"><a href="#cb4-27"></a><span class="co"># Plot the data</span></span>
-<span id="cb4-28"><a href="#cb4-28"></a>clt &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data =</span> df) <span class="op">+</span></span>
-<span id="cb4-29"><a href="#cb4-29"></a><span class="st">    </span><span class="kw">aes</span>(<span class="dt">y =</span> freq, </span>
-<span id="cb4-30"><a href="#cb4-30"></a>        <span class="dt">x =</span> mean,</span>
-<span id="cb4-31"><a href="#cb4-31"></a>        <span class="dt">group =</span> sample) <span class="op">+</span></span>
-<span id="cb4-32"><a href="#cb4-32"></a><span class="st">    </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&#39;identity&#39;</span>,</span>
-<span id="cb4-33"><a href="#cb4-33"></a>             <span class="dt">fill =</span> <span class="st">&#39;#0072B2&#39;</span>, </span>
-<span id="cb4-34"><a href="#cb4-34"></a>             <span class="dt">colour =</span> <span class="st">&#39;#0072B2&#39;</span>) <span class="op">+</span></span>
-<span id="cb4-35"><a href="#cb4-35"></a><span class="st">    </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="kw">mean</span>(population), </span>
-<span id="cb4-36"><a href="#cb4-36"></a>               <span class="dt">colour =</span> <span class="st">&quot;#E69F00&quot;</span>, </span>
-<span id="cb4-37"><a href="#cb4-37"></a>               <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span></span>
-<span id="cb4-38"><a href="#cb4-38"></a><span class="st">    </span><span class="kw">scale_x_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span><span class="fl">0.3</span>, <span class="fl">0.3</span>),</span>
-<span id="cb4-39"><a href="#cb4-39"></a>                       <span class="dt">breaks =</span> <span class="kw">c</span>(<span class="op">-</span><span class="fl">0.3</span>, <span class="fl">-0.2</span>, <span class="fl">-0.1</span>, <span class="dv">0</span>, <span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span>)) <span class="op">+</span></span>
-<span id="cb4-40"><a href="#cb4-40"></a><span class="st">    </span><span class="kw">scale_y_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">300</span>),</span>
-<span id="cb4-41"><a href="#cb4-41"></a>                       <span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">100</span>, <span class="dv">200</span>, <span class="dv">300</span>)) <span class="op">+</span></span>
-<span id="cb4-42"><a href="#cb4-42"></a><span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&#39;</span><span class="ch">\n</span><span class="st">Sample mean&#39;</span>, </span>
-<span id="cb4-43"><a href="#cb4-43"></a>         <span class="dt">y =</span> <span class="st">&#39;Frequency</span><span class="ch">\n</span><span class="st">&#39;</span>) <span class="op">+</span></span>
-<span id="cb4-44"><a href="#cb4-44"></a><span class="st">    </span><span class="kw">theme</span>(<span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">20</span>),</span>
-<span id="cb4-45"><a href="#cb4-45"></a>          <span class="dt">axis.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">20</span>),</span>
-<span id="cb4-46"><a href="#cb4-46"></a>          <span class="dt">axis.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">20</span>),</span>
-<span id="cb4-47"><a href="#cb4-47"></a>          <span class="dt">axis.ticks =</span> <span class="kw">element_blank</span>(),</span>
-<span id="cb4-48"><a href="#cb4-48"></a>          <span class="dt">panel.grid.major =</span> <span class="kw">element_line</span>(<span class="dt">colour =</span> <span class="st">&#39;gray80&#39;</span>,</span>
-<span id="cb4-49"><a href="#cb4-49"></a>                                          <span class="dt">size =</span> <span class="fl">0.3</span>),</span>
-<span id="cb4-50"><a href="#cb4-50"></a>          <span class="dt">panel.background =</span> <span class="kw">element_blank</span>()) <span class="op">+</span></span>
-<span id="cb4-51"><a href="#cb4-51"></a><span class="st">    </span><span class="kw">transition_reveal</span>(<span class="dt">along =</span> sample)</span>
-<span id="cb4-52"><a href="#cb4-52"></a></span>
-<span id="cb4-53"><a href="#cb4-53"></a><span class="co"># Animate plots with animate</span></span>
-<span id="cb4-54"><a href="#cb4-54"></a>clt_animate &lt;-<span class="st"> </span><span class="kw">animate</span>(clt, </span>
-<span id="cb4-55"><a href="#cb4-55"></a>                       <span class="dt">res =</span> <span class="dv">150</span>,</span>
-<span id="cb4-56"><a href="#cb4-56"></a>                       <span class="dt">width =</span> <span class="dv">7</span>,</span>
-<span id="cb4-57"><a href="#cb4-57"></a>                       <span class="dt">height =</span> <span class="dv">7</span>,</span>
-<span id="cb4-58"><a href="#cb4-58"></a>                       <span class="dt">units =</span> <span class="st">&#39;in&#39;</span>) </span>
-<span id="cb4-59"><a href="#cb4-59"></a></span>
-<span id="cb4-60"><a href="#cb4-60"></a><span class="co"># Save the output</span></span>
-<span id="cb4-61"><a href="#cb4-61"></a><span class="kw">anim_save</span>(<span class="dt">filename =</span> <span class="st">&#39;central-limit.gif&#39;</span>,</span>
-<span id="cb4-62"><a href="#cb4-62"></a>          <span class="dt">animation =</span> clt_animate, </span>
-<span id="cb4-63"><a href="#cb4-63"></a>          <span class="dt">path =</span> <span class="st">&#39;./images/posts/2016-05-17-probability-theory&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate data</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Create an empty list, and a &#39;for loop&#39; counter</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>lst <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>cnt <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5000</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Take 5000 samples of n = 200 from &#39;population&#39; and make a list of sample means.</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2019</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> cnt){</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    lst[[i]] <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">sample</span>(population, <span class="at">size =</span> <span class="dv">200</span>))</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Process data in &#39;lst&#39; for plotting</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="do">## Unlist and round to reduce the number of bins for CLT plot</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>lst2 <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">unlist</span>(lst), <span class="dv">2</span>)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="do">## cross-tabulate the data to get frequency bins</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>tab <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(<span class="sc">~</span>lst2)</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="do">## Extract the names (&#39;bins&#39;)</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>nam <span class="ot">&lt;-</span> <span class="fu">names</span>(tab)</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="do">## Make data.frame for plotting</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">sample =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(tab)),</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>             <span class="at">mean =</span> <span class="fu">as.numeric</span>(nam),</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>             <span class="at">freq =</span> <span class="fu">as.numeric</span>(tab))</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the data</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>clt <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> df) <span class="sc">+</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">y =</span> freq, </span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>        <span class="at">x =</span> mean,</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>        <span class="at">group =</span> sample) <span class="sc">+</span></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&#39;identity&#39;</span>,</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>             <span class="at">fill =</span> <span class="st">&#39;#0072B2&#39;</span>, </span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>             <span class="at">colour =</span> <span class="st">&#39;#0072B2&#39;</span>) <span class="sc">+</span></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(population), </span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>               <span class="at">colour =</span> <span class="st">&quot;#E69F00&quot;</span>, </span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>               <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.3</span>, <span class="fl">0.3</span>),</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>                       <span class="at">breaks =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.3</span>, <span class="sc">-</span><span class="fl">0.2</span>, <span class="sc">-</span><span class="fl">0.1</span>, <span class="dv">0</span>, <span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span>)) <span class="sc">+</span></span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">300</span>),</span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>                       <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">100</span>, <span class="dv">200</span>, <span class="dv">300</span>)) <span class="sc">+</span></span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&#39;</span><span class="sc">\n</span><span class="st">Sample mean&#39;</span>, </span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">&#39;Frequency</span><span class="sc">\n</span><span class="st">&#39;</span>) <span class="sc">+</span></span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>),</span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>),</span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>),</span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.grid.major =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">&#39;gray80&#39;</span>,</span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">size =</span> <span class="fl">0.3</span>),</span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.background =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>    <span class="fu">transition_reveal</span>(<span class="at">along =</span> sample)</span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a><span class="co"># Animate plots with animate</span></span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>clt_animate <span class="ot">&lt;-</span> <span class="fu">animate</span>(clt, </span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>                       <span class="at">res =</span> <span class="dv">150</span>,</span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>                       <span class="at">width =</span> <span class="dv">7</span>,</span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>                       <span class="at">height =</span> <span class="dv">7</span>,</span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>                       <span class="at">units =</span> <span class="st">&#39;in&#39;</span>) </span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a><span class="co"># Save the output</span></span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a><span class="fu">anim_save</span>(<span class="at">filename =</span> <span class="st">&#39;central-limit.gif&#39;</span>,</span>
+<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a>          <span class="at">animation =</span> clt_animate, </span>
+<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a>          <span class="at">path =</span> <span class="st">&#39;./images/posts/2016-05-17-probability-theory&#39;</span>)</span></code></pre></div>
 <p>The output is shown in the next figure, and as you can see, despite the samples being obtained from a right-skewed distribution, the distribution of sample means is roughly normal, and centred around the mean of the population (orange line).</p>
 <p><img src="images/posts/2016-05-17-probability-theory/central-limit.gif"
 style="display:block;margin-right:auto;margin-left:auto;max-width:50%;"></p>
@@ -493,53 +505,53 @@ style="display:block;margin-right:auto;margin-left:auto;max-width:50%;"></p>
 <div id="the-law-of-large-numbers-in-action" class="section level3">
 <h3>The law of large numbers in action</h3>
 <p>To illustrate the <em>law of large numbers</em>, I took the 5000 sample means I had generated and calculated a cumulative mean across the samples. The cumulative mean was then plotted against the sample number in <code>ggplot2</code> with the function <code>gganimate::transition_reveal()</code> animating the plot by sequentially adding the cumulative mean as the number of resamples increased.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># Process the data in &#39;lst2&#39; for plotting</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="co">## Calculate the cumulative mean for plotting</span></span>
-<span id="cb5-3"><a href="#cb5-3"></a>cumm_df &lt;-<span class="st"> </span>lst2 <span class="op">%&gt;%</span></span>
-<span id="cb5-4"><a href="#cb5-4"></a><span class="st">    </span><span class="kw">tibble</span>(<span class="dt">mean =</span> .) <span class="op">%&gt;%</span></span>
-<span id="cb5-5"><a href="#cb5-5"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">cmean =</span> <span class="kw">round</span>(<span class="kw">cummean</span>(mean), <span class="dv">4</span>),</span>
-<span id="cb5-6"><a href="#cb5-6"></a>           <span class="dt">count =</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(mean)) <span class="op">%&gt;%</span></span>
-<span id="cb5-7"><a href="#cb5-7"></a><span class="st">    </span><span class="kw">select</span>(count, mean, cmean) </span>
-<span id="cb5-8"><a href="#cb5-8"></a></span>
-<span id="cb5-9"><a href="#cb5-9"></a><span class="co">## Create a reduced cumm_df dataset</span></span>
-<span id="cb5-10"><a href="#cb5-10"></a>index &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">0</span>, </span>
-<span id="cb5-11"><a href="#cb5-11"></a>             <span class="dt">to =</span> <span class="kw">nrow</span>(cumm_df), </span>
-<span id="cb5-12"><a href="#cb5-12"></a>             <span class="dt">by =</span> <span class="dv">50</span>)</span>
-<span id="cb5-13"><a href="#cb5-13"></a>index[<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="dv">1</span></span>
-<span id="cb5-14"><a href="#cb5-14"></a></span>
-<span id="cb5-15"><a href="#cb5-15"></a>cumm_short &lt;-<span class="st"> </span>cumm_df <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb5-16"><a href="#cb5-16"></a><span class="st">    </span><span class="kw">filter</span>(count <span class="op">%in%</span><span class="st"> </span>index)</span>
-<span id="cb5-17"><a href="#cb5-17"></a></span>
-<span id="cb5-18"><a href="#cb5-18"></a><span class="co"># Plot the data</span></span>
-<span id="cb5-19"><a href="#cb5-19"></a>lln &lt;-<span class="st"> </span><span class="kw">ggplot</span>(cumm_short, </span>
-<span id="cb5-20"><a href="#cb5-20"></a>              <span class="kw">aes</span>(<span class="dt">y =</span> cmean, </span>
-<span id="cb5-21"><a href="#cb5-21"></a>                  <span class="dt">x =</span> count)) <span class="op">+</span></span>
-<span id="cb5-22"><a href="#cb5-22"></a><span class="st">    </span><span class="kw">geom_line</span>(<span class="dt">colour =</span> <span class="st">&#39;#0072B2&#39;</span>,</span>
-<span id="cb5-23"><a href="#cb5-23"></a>              <span class="dt">size =</span> <span class="fl">0.8</span>) <span class="op">+</span></span>
-<span id="cb5-24"><a href="#cb5-24"></a><span class="st">    </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="kw">mean</span>(population), </span>
-<span id="cb5-25"><a href="#cb5-25"></a>               <span class="dt">colour =</span> <span class="st">&quot;#E69F00&quot;</span>, </span>
-<span id="cb5-26"><a href="#cb5-26"></a>               <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span></span>
-<span id="cb5-27"><a href="#cb5-27"></a><span class="st">    </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&#39;</span><span class="ch">\n</span><span class="st">Sample number&#39;</span>, </span>
-<span id="cb5-28"><a href="#cb5-28"></a>         <span class="dt">y =</span> <span class="st">&#39;Cumulative mean</span><span class="ch">\n</span><span class="st">&#39;</span>) <span class="op">+</span></span>
-<span id="cb5-29"><a href="#cb5-29"></a><span class="st">    </span><span class="kw">theme</span>(<span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">20</span>),</span>
-<span id="cb5-30"><a href="#cb5-30"></a>          <span class="dt">axis.text =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">20</span>),</span>
-<span id="cb5-31"><a href="#cb5-31"></a>          <span class="dt">axis.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">20</span>),</span>
-<span id="cb5-32"><a href="#cb5-32"></a>          <span class="dt">axis.ticks =</span> <span class="kw">element_blank</span>(),</span>
-<span id="cb5-33"><a href="#cb5-33"></a>          <span class="dt">panel.grid.major =</span> <span class="kw">element_line</span>(<span class="dt">colour =</span> <span class="st">&#39;gray80&#39;</span>, <span class="dt">size =</span> <span class="fl">0.3</span>),</span>
-<span id="cb5-34"><a href="#cb5-34"></a>          <span class="dt">panel.background =</span> <span class="kw">element_blank</span>()) <span class="op">+</span></span>
-<span id="cb5-35"><a href="#cb5-35"></a><span class="st">    </span><span class="kw">transition_reveal</span>(<span class="dt">along =</span> count)</span>
-<span id="cb5-36"><a href="#cb5-36"></a></span>
-<span id="cb5-37"><a href="#cb5-37"></a><span class="co"># Animate plots with gg_animate</span></span>
-<span id="cb5-38"><a href="#cb5-38"></a>lln_animate &lt;-<span class="st"> </span><span class="kw">animate</span>(lln, </span>
-<span id="cb5-39"><a href="#cb5-39"></a>                       <span class="dt">res =</span> <span class="dv">150</span>,</span>
-<span id="cb5-40"><a href="#cb5-40"></a>                       <span class="dt">width =</span> <span class="dv">7</span>,</span>
-<span id="cb5-41"><a href="#cb5-41"></a>                       <span class="dt">height =</span> <span class="dv">7</span>,</span>
-<span id="cb5-42"><a href="#cb5-42"></a>                       <span class="dt">units =</span> <span class="st">&#39;in&#39;</span>) </span>
-<span id="cb5-43"><a href="#cb5-43"></a></span>
-<span id="cb5-44"><a href="#cb5-44"></a><span class="co"># Save the output</span></span>
-<span id="cb5-45"><a href="#cb5-45"></a><span class="kw">anim_save</span>(<span class="dt">filename =</span> <span class="st">&#39;law-large-numbers.gif&#39;</span>,</span>
-<span id="cb5-46"><a href="#cb5-46"></a>          <span class="dt">animation =</span> lln_animate, </span>
-<span id="cb5-47"><a href="#cb5-47"></a>          <span class="dt">path =</span> <span class="st">&#39;./images/posts/2016-05-17-probability-theory&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Process the data in &#39;lst2&#39; for plotting</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Calculate the cumulative mean for plotting</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>cumm_df <span class="ot">&lt;-</span> lst2 <span class="sc">%&gt;%</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tibble</span>(<span class="at">mean =</span> .) <span class="sc">%&gt;%</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">cmean =</span> <span class="fu">round</span>(<span class="fu">cummean</span>(mean), <span class="dv">4</span>),</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">count =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(mean)) <span class="sc">%&gt;%</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(count, mean, cmean) </span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="do">## Create a reduced cumm_df dataset</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>index <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">0</span>, </span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>             <span class="at">to =</span> <span class="fu">nrow</span>(cumm_df), </span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>             <span class="at">by =</span> <span class="dv">50</span>)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>index[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>cumm_short <span class="ot">&lt;-</span> cumm_df <span class="sc">%&gt;%</span> </span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(count <span class="sc">%in%</span> index)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the data</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>lln <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(cumm_short, </span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>              <span class="fu">aes</span>(<span class="at">y =</span> cmean, </span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>                  <span class="at">x =</span> count)) <span class="sc">+</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">colour =</span> <span class="st">&#39;#0072B2&#39;</span>,</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>              <span class="at">size =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">mean</span>(population), </span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>               <span class="at">colour =</span> <span class="st">&quot;#E69F00&quot;</span>, </span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>               <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&#39;</span><span class="sc">\n</span><span class="st">Sample number&#39;</span>, </span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">&#39;Cumulative mean</span><span class="sc">\n</span><span class="st">&#39;</span>) <span class="sc">+</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>),</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>),</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>),</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.grid.major =</span> <span class="fu">element_line</span>(<span class="at">colour =</span> <span class="st">&#39;gray80&#39;</span>, <span class="at">size =</span> <span class="fl">0.3</span>),</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.background =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>    <span class="fu">transition_reveal</span>(<span class="at">along =</span> count)</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Animate plots with gg_animate</span></span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>lln_animate <span class="ot">&lt;-</span> <span class="fu">animate</span>(lln, </span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>                       <span class="at">res =</span> <span class="dv">150</span>,</span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>                       <span class="at">width =</span> <span class="dv">7</span>,</span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>                       <span class="at">height =</span> <span class="dv">7</span>,</span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>                       <span class="at">units =</span> <span class="st">&#39;in&#39;</span>) </span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a><span class="co"># Save the output</span></span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a><span class="fu">anim_save</span>(<span class="at">filename =</span> <span class="st">&#39;law-large-numbers.gif&#39;</span>,</span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>          <span class="at">animation =</span> lln_animate, </span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>          <span class="at">path =</span> <span class="st">&#39;./images/posts/2016-05-17-probability-theory&#39;</span>)</span></code></pre></div>
 <p>The resulting figure is shown below, and shows the cumulative mean of sample means getting closer to the population mean as the number of samples increases.</p>
 <p><img src="images/posts/2016-05-17-probability-theory/law-large-numbers.gif"
 style="display:block;margin-right:auto;margin-left:auto;max-width:50%;"></p>
@@ -593,73 +605,73 @@ style="display:block;margin-right:auto;margin-left:auto;max-width:50%;"></p>
     <!-- Footer -->
     <footer>
          <!--footer-->
- <div class="container-fluid" id="foot" style="background-color:#FFFFFF;border-top:#CCCCCC solid 1px;color:#999999;font-family:'Open sans', 'Helvetica';">
-     <div class="row">
-         <div class="col-sm-4">
-             <p>Hosted by: <a href="https://www.netlify.com" target="_blank">netlify.com</a>
-                 <br>Powered by: <a href="http://rmarkdown.rstudio.com/" target="_blank">RMarkdown</a>
-                 <br>
-                 <br>
-             </p>
-         </div>
-         <div class="col-sm-4">
-             <p>Fork/clone from: <a href="https://github.com/kamermanpr/kamermanpr.github.io.git" target="_blank">GitHub</a>
-                 <br>License: <a href="./LICENSE.html" target="_blank">MIT & CC-BY 4.0</a>
-                 <br>
-                 <br>
-             </p>
-         </div>
-         <div class="col-sm-4">
-             <h4 style="padding:0;margin:0">painblogR</h3>
- 			   <p style="display:inline-block">
- 				   <span style="font-style:italic">by Peter Kamerman</span>
- 				   &ensp;
- 				   <a href="mailto:peter.kamerman@gmail.com" title="Email me" target="_blank"><i style="color:#999999;" class="fa fa-envelope"></i></a>
- 				   &ensp;
- 				   <a href="//twitter.com/@painblogR" target="_blank" title="Follow me"><i style="color:#999999;" class="fa fa-twitter"></i></a>
- 			   </p>
- 		   </div>
- 	   </div>
- 	</div>
- 
- <script>
- 
- // add bootstrap table styles to pandoc tables
- function bootstrapStylePandocTables() {
-   $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
- }
- $(document).ready(function () {
-   bootstrapStylePandocTables();
- });
- 
- </script>
- 
- <!-- tabsets -->
- 
- <script>
- $(document).ready(function () {
-   window.buildTabsets("TOC");
- });
- 
- $(document).ready(function () {
-   $('.tabset-dropdown > .nav-tabs > li').click(function () {
-     $(this).parent().toggleClass('nav-tabs-open')
-   });
- });
- </script>
- 
- <!-- code folding -->
- 
- 
- <!-- dynamically load mathjax for compatibility with self-contained -->
- <script>
-   (function () {
-     var script = document.createElement("script");
-     script.type = "text/javascript";
-     script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
-     document.getElementsByTagName("head")[0].appendChild(script);
-   })();
- </script> 
+<div class="container-fluid" id="foot" style="background-color:#FFFFFF;border-top:#CCCCCC solid 1px;color:#999999;font-family:'Open sans', 'Helvetica';">
+    <div class="row">
+        <div class="col-sm-4">
+            <p>Hosted by: <a href="https://www.netlify.com" target="_blank">netlify.com</a>
+                <br>Powered by: <a href="http://rmarkdown.rstudio.com/" target="_blank">RMarkdown</a>
+                <br>
+                <br>
+            </p>
+        </div>
+        <div class="col-sm-4">
+            <p>Fork/clone from: <a href="https://github.com/kamermanpr/kamermanpr.github.io.git" target="_blank">GitHub</a>
+                <br>License: <a href="./LICENSE.html" target="_blank">MIT & CC-BY 4.0</a>
+                <br>
+                <br>
+            </p>
+        </div>
+        <div class="col-sm-4">
+            <h4 style="padding:0;margin:0">painblogR</h3>
+			   <p style="display:inline-block">
+				   <span style="font-style:italic">by Peter Kamerman</span>
+				   &ensp;
+				   <a href="mailto:peter.kamerman@gmail.com" title="Email me" target="_blank"><i style="color:#999999;" class="fa fa-envelope"></i></a>
+				   &ensp;
+				   <a href="//twitter.com/@painblogR" target="_blank" title="Follow me"><i style="color:#999999;" class="fa fa-twitter"></i></a>
+			   </p>
+		   </div>
+	   </div>
+	</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script> 
     </footer>
 </body>
 </html>

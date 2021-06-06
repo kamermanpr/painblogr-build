@@ -9,15 +9,24 @@
     <meta name="generator" content="pandoc"/>
 	
 	
-	 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
- <meta name="viewport" content="width=device-width, initial-scale=1" />
- <link href="site_libs/bootstrap-3.3.5/css/yeti.min.css" rel="stylesheet" />
- <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
- <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
- <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
- <script src="site_libs/navigation-1.1/tabsets.js"></script>
- <script src="site_libs/navigation-1.1/codefolding.js"></script>
- <script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script> 
+	 <script src="site_libs/header-attrs-2.7/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/yeti.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script> 
 
 	
 		<style type="text/css">
@@ -26,19 +35,19 @@
 		}
 	</style>
 	<style type="text/css">
-		code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
+		pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -58,7 +67,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; } /* Alert */
 code span.an { color: #008000; } /* Annotation */
@@ -205,12 +214,15 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */  div.sourceCod
                             <li><a href="./publications.html">Publications & Reprints </a></li>
                         </ul>
                     </li>
+                    <!---
+                    # Teaching
                     <li class="dropdown" style="display:table-cell;float:none;vertical-align:middle;font-size:16px;">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Teaching<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="https://www.painblogr.org/biostatistics/">Introduction to Biostatistics</a></li>
                         </ul>
                     </li>
+                    --->
                     <li class="dropdown" style="display:table-cell;float:none;vertical-align:middle;font-size:16px;">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Apps<span class="caret"></span></a>
                         <ul class="dropdown-menu">
@@ -314,24 +326,23 @@ code span.wa { color: #008000; font-weight: bold; } /* Warning */  div.sourceCod
 <h2>Download, import, and clean data</h2>
 <p>First I had to get and clean the data.</p>
 <p>I manually downloaded the data from the Global Burden of Disease Exchange website using their <a href="http://ghdx.healthdata.org/gbd-results-tool">query tool</a> (as far as I know, the site does not have an API to remotely query and retrieve data). I then imported the two <em>*.csv</em> files I had downloaded (one for <em>years of good health</em>, and one for <em>total life expectancy</em>), and performed a cursory inspection and a basic clean-up of the data, the code and outputs of which are shown below.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co">############################################################</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="co">#                                                          #</span></span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="co">#                       Import data                        #</span></span>
-<span id="cb1-4"><a href="#cb1-4"></a><span class="co">#                                                          #</span></span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="co">############################################################</span></span>
-<span id="cb1-6"><a href="#cb1-6"></a><span class="co"># years of good health</span></span>
-<span id="cb1-7"><a href="#cb1-7"></a>hale &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&#39;_data/2019-01-25-global-burden-of-disease/hale-1990-2017.csv&#39;</span>) </span>
-<span id="cb1-8"><a href="#cb1-8"></a><span class="co"># Life expectancy</span></span>
-<span id="cb1-9"><a href="#cb1-9"></a>life &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&#39;_data/2019-01-25-global-burden-of-disease/life-expectancy-1990-2017.csv&#39;</span>)</span>
-<span id="cb1-10"><a href="#cb1-10"></a></span>
-<span id="cb1-11"><a href="#cb1-11"></a><span class="co">############################################################</span></span>
-<span id="cb1-12"><a href="#cb1-12"></a><span class="co">#                                                          #</span></span>
-<span id="cb1-13"><a href="#cb1-13"></a><span class="co">#                       Inspect data                       #</span></span>
-<span id="cb1-14"><a href="#cb1-14"></a><span class="co">#                                                          #</span></span>
-<span id="cb1-15"><a href="#cb1-15"></a><span class="co">############################################################</span></span>
-<span id="cb1-16"><a href="#cb1-16"></a><span class="kw">skim</span>(hale)</span></code></pre></div>
-<table style='width: auto;'
-        class='table table-condensed'>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">############################################################</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#                                                          #</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">#                       Import data                        #</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#                                                          #</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="do">############################################################</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># years of good health</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>hale <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&#39;_data/2019-01-25-global-burden-of-disease/hale-1990-2017.csv&#39;</span>) </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Life expectancy</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>life <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&#39;_data/2019-01-25-global-burden-of-disease/life-expectancy-1990-2017.csv&#39;</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="do">############################################################</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">#                                                          #</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">#                       Inspect data                       #</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">#                                                          #</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="do">############################################################</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">skim</span>(hale)</span></code></pre></div>
+<table style="width: auto;" class="table table-condensed">
 <caption>
 Data summary
 </caption>
@@ -760,9 +771,8 @@ lower
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">skim</span>(life)</span></code></pre></div>
-<table style='width: auto;'
-        class='table table-condensed'>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">skim</span>(life)</span></code></pre></div>
+<table style="width: auto;" class="table table-condensed">
 <caption>
 Data summary
 </caption>
@@ -1191,40 +1201,40 @@ lower
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co">############################################################</span></span>
-<span id="cb3-2"><a href="#cb3-2"></a><span class="co">#                                                          #</span></span>
-<span id="cb3-3"><a href="#cb3-3"></a><span class="co">#                        Clean data                        #</span></span>
-<span id="cb3-4"><a href="#cb3-4"></a><span class="co">#                                                          #</span></span>
-<span id="cb3-5"><a href="#cb3-5"></a><span class="co">############################################################</span></span>
-<span id="cb3-6"><a href="#cb3-6"></a>data &lt;-<span class="st"> </span>life <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb3-7"><a href="#cb3-7"></a><span class="st">    </span><span class="co"># Join imported datasets</span></span>
-<span id="cb3-8"><a href="#cb3-8"></a><span class="st">    </span><span class="kw">bind_rows</span>(hale) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb3-9"><a href="#cb3-9"></a><span class="st">    </span><span class="co"># Select required columns</span></span>
-<span id="cb3-10"><a href="#cb3-10"></a><span class="st">    </span><span class="kw">select</span>(measure, location, sex, year, metric, val) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb3-11"><a href="#cb3-11"></a><span class="st">    </span><span class="co"># Recode measure category labels</span></span>
-<span id="cb3-12"><a href="#cb3-12"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">measure =</span> <span class="kw">str_replace_all</span>(measure,</span>
-<span id="cb3-13"><a href="#cb3-13"></a>                                     <span class="dt">pattern =</span> <span class="st">&#39;HALE </span><span class="ch">\\</span><span class="st">(Healthy life expectancy</span><span class="ch">\\</span><span class="st">)&#39;</span>,</span>
-<span id="cb3-14"><a href="#cb3-14"></a>                                     <span class="dt">replacement =</span> <span class="st">&#39;Years of good health&#39;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb3-15"><a href="#cb3-15"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">measure =</span> <span class="kw">str_replace_all</span>(measure,</span>
-<span id="cb3-16"><a href="#cb3-16"></a>                                     <span class="dt">pattern =</span> <span class="st">&#39;Life expectancy&#39;</span>,</span>
-<span id="cb3-17"><a href="#cb3-17"></a>                                     <span class="dt">replacement =</span> <span class="st">&#39;Total life expectancy&#39;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb3-18"><a href="#cb3-18"></a><span class="st">    </span><span class="co"># Order location variable (socio-demographic quintile)</span></span>
-<span id="cb3-19"><a href="#cb3-19"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">location =</span> <span class="kw">factor</span>(location,</span>
-<span id="cb3-20"><a href="#cb3-20"></a>                             <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&#39;High SDI&#39;</span>, <span class="st">&#39;High-middle SDI&#39;</span>,</span>
-<span id="cb3-21"><a href="#cb3-21"></a>                                        <span class="st">&#39;Middle SDI&#39;</span>, <span class="st">&#39;Low-middle SDI&#39;</span>,</span>
-<span id="cb3-22"><a href="#cb3-22"></a>                                        <span class="st">&#39;Low SDI&#39;</span>),</span>
-<span id="cb3-23"><a href="#cb3-23"></a>                             <span class="dt">ordered =</span> <span class="ot">TRUE</span>))</span>
-<span id="cb3-24"><a href="#cb3-24"></a></span>
-<span id="cb3-25"><a href="#cb3-25"></a><span class="co"># Inspect cleaned data</span></span>
-<span id="cb3-26"><a href="#cb3-26"></a><span class="kw">glimpse</span>(data)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">############################################################</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#                                                          #</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#                        Clean data                        #</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#                                                          #</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="do">############################################################</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> life <span class="sc">%&gt;%</span> </span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Join imported datasets</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">bind_rows</span>(hale) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Select required columns</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(measure, location, sex, year, metric, val) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Recode measure category labels</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">measure =</span> <span class="fu">str_replace_all</span>(measure,</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">pattern =</span> <span class="st">&#39;HALE </span><span class="sc">\\</span><span class="st">(Healthy life expectancy</span><span class="sc">\\</span><span class="st">)&#39;</span>,</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">replacement =</span> <span class="st">&#39;Years of good health&#39;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">measure =</span> <span class="fu">str_replace_all</span>(measure,</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">pattern =</span> <span class="st">&#39;Life expectancy&#39;</span>,</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">replacement =</span> <span class="st">&#39;Total life expectancy&#39;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Order location variable (socio-demographic quintile)</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">location =</span> <span class="fu">factor</span>(location,</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>                             <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&#39;High SDI&#39;</span>, <span class="st">&#39;High-middle SDI&#39;</span>,</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>                                        <span class="st">&#39;Middle SDI&#39;</span>, <span class="st">&#39;Low-middle SDI&#39;</span>,</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>                                        <span class="st">&#39;Low SDI&#39;</span>),</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>                             <span class="at">ordered =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Inspect cleaned data</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(data)</span></code></pre></div>
 <pre><code>## Rows: 560
 ## Columns: 6
-## $ measure  &lt;chr&gt; &quot;Total life expectancy&quot;, &quot;Total life expectancy&quot;, &quot;Total lif…
-## $ location &lt;ord&gt; High-middle SDI, High-middle SDI, High SDI, High SDI, Low-mi…
-## $ sex      &lt;chr&gt; &quot;Male&quot;, &quot;Female&quot;, &quot;Male&quot;, &quot;Female&quot;, &quot;Male&quot;, &quot;Female&quot;, &quot;Male&quot;…
-## $ year     &lt;dbl&gt; 2015, 2015, 2015, 2015, 2015, 2015, 2015, 2015, 2016, 2016, …
-## $ metric   &lt;chr&gt; &quot;Years&quot;, &quot;Years&quot;, &quot;Years&quot;, &quot;Years&quot;, &quot;Years&quot;, &quot;Years&quot;, &quot;Years…
-## $ val      &lt;dbl&gt; 72.65688, 78.81469, 78.39470, 83.60049, 65.61743, 69.43073, …</code></pre>
+## $ measure  &lt;chr&gt; &quot;Total life expectancy&quot;, &quot;Total life expectancy&quot;, &quot;Total life…
+## $ location &lt;ord&gt; High-middle SDI, High-middle SDI, High SDI, High SDI, Low-mid…
+## $ sex      &lt;chr&gt; &quot;Male&quot;, &quot;Female&quot;, &quot;Male&quot;, &quot;Female&quot;, &quot;Male&quot;, &quot;Female&quot;, &quot;Male&quot;,…
+## $ year     &lt;dbl&gt; 2015, 2015, 2015, 2015, 2015, 2015, 2015, 2015, 2016, 2016, 2…
+## $ metric   &lt;chr&gt; &quot;Years&quot;, &quot;Years&quot;, &quot;Years&quot;, &quot;Years&quot;, &quot;Years&quot;, &quot;Years&quot;, &quot;Years&quot;…
+## $ val      &lt;dbl&gt; 72.65688, 78.81469, 78.39470, 83.60049, 65.61743, 69.43073, 6…</code></pre>
 <p>The data looked in good order, and only needed some minor cleaning.</p>
 <hr />
 </div>
@@ -1235,129 +1245,129 @@ lower
 <p><strong>Recapitulate the plot from the article, but with an extra panel showing <em>total life expectancy</em>.</strong></p>
 <p>I used the cleaned data to calculate the <em>years of poor health</em><a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>, and then generated separate plots for <em>total life expectancy</em>, <em>years of good health</em>, and <em>years of poor health</em>. For each plot, I presented the data by sex and socio-demographic index quintile.</p>
 <p>Finally, I pieced the individual plots together and formated the visual look using <code>html/css</code> (after bumping my head repeatedly against a brick wall trying to get the desired look using the <code>patchwork</code> and <code>cowplot</code> packages; my usual go to packages for multiplots).</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co">############################################################</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="co">#                                                          #</span></span>
-<span id="cb5-3"><a href="#cb5-3"></a><span class="co">#        Calculate years of poor health since birth        #</span></span>
-<span id="cb5-4"><a href="#cb5-4"></a><span class="co">#                                                          #</span></span>
-<span id="cb5-5"><a href="#cb5-5"></a><span class="co">############################################################</span></span>
-<span id="cb5-6"><a href="#cb5-6"></a>delta &lt;-<span class="st"> </span>data <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb5-7"><a href="#cb5-7"></a><span class="st">    </span><span class="co"># Spread the measure column</span></span>
-<span id="cb5-8"><a href="#cb5-8"></a><span class="st">    </span><span class="kw">spread</span>(<span class="dt">key =</span> measure, </span>
-<span id="cb5-9"><a href="#cb5-9"></a>           <span class="dt">value =</span> val) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb5-10"><a href="#cb5-10"></a><span class="st">    </span><span class="co"># Calculate years unhealthy </span></span>
-<span id="cb5-11"><a href="#cb5-11"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="st">`</span><span class="dt">Years of poor health</span><span class="st">`</span> =<span class="st"> `</span><span class="dt">Total life expectancy</span><span class="st">`</span> <span class="op">-</span><span class="st"> `</span><span class="dt">Years of good health</span><span class="st">`</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb5-12"><a href="#cb5-12"></a><span class="st">    </span><span class="co"># Gather measures again</span></span>
-<span id="cb5-13"><a href="#cb5-13"></a><span class="st">    </span><span class="kw">gather</span>(<span class="dt">key =</span> measure, </span>
-<span id="cb5-14"><a href="#cb5-14"></a>           <span class="dt">value =</span> val,</span>
-<span id="cb5-15"><a href="#cb5-15"></a>           <span class="op">-</span>location, <span class="op">-</span>sex, <span class="op">-</span>year, <span class="op">-</span>metric)</span>
-<span id="cb5-16"><a href="#cb5-16"></a></span>
-<span id="cb5-17"><a href="#cb5-17"></a><span class="co">############################################################</span></span>
-<span id="cb5-18"><a href="#cb5-18"></a><span class="co">#                                                          #</span></span>
-<span id="cb5-19"><a href="#cb5-19"></a><span class="co">#                           Plot                           #</span></span>
-<span id="cb5-20"><a href="#cb5-20"></a><span class="co">#                                                          #</span></span>
-<span id="cb5-21"><a href="#cb5-21"></a><span class="co">############################################################</span></span>
-<span id="cb5-22"><a href="#cb5-22"></a><span class="co"># Generate separate plots for each &#39;measure&#39;, and save the outputs.</span></span>
-<span id="cb5-23"><a href="#cb5-23"></a></span>
-<span id="cb5-24"><a href="#cb5-24"></a><span class="co">## Total life expectancy</span></span>
-<span id="cb5-25"><a href="#cb5-25"></a>le &lt;-<span class="st"> </span>delta <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb5-26"><a href="#cb5-26"></a><span class="st">    </span><span class="kw">filter</span>(measure <span class="op">==</span><span class="st"> &#39;Total life expectancy&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb5-27"><a href="#cb5-27"></a><span class="st">    </span><span class="kw">ggplot</span>(<span class="dt">data =</span> .) <span class="op">+</span></span>
-<span id="cb5-28"><a href="#cb5-28"></a><span class="st">    </span><span class="kw">aes</span>(<span class="dt">x =</span> year,</span>
-<span id="cb5-29"><a href="#cb5-29"></a>        <span class="dt">y =</span> val,</span>
-<span id="cb5-30"><a href="#cb5-30"></a>        <span class="dt">colour =</span> sex) <span class="op">+</span></span>
-<span id="cb5-31"><a href="#cb5-31"></a><span class="st">    </span><span class="kw">geom_line</span>() <span class="op">+</span></span>
-<span id="cb5-32"><a href="#cb5-32"></a><span class="st">    </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">1990</span>, <span class="dv">1995</span>, <span class="dv">2000</span>, <span class="dv">2005</span>, <span class="dv">2010</span>, <span class="dv">2017</span>)) <span class="op">+</span></span>
-<span id="cb5-33"><a href="#cb5-33"></a><span class="st">    </span><span class="kw">scale_y_continuous</span>(<span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">50</span>, <span class="dv">60</span>, <span class="dv">70</span>, <span class="dv">80</span>),</span>
-<span id="cb5-34"><a href="#cb5-34"></a>                       <span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">50</span>, <span class="dv">85</span>),</span>
-<span id="cb5-35"><a href="#cb5-35"></a>                       <span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="op">+</span></span>
-<span id="cb5-36"><a href="#cb5-36"></a><span class="st">    </span><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&#39;#ED0000&#39;</span>, <span class="st">&#39;#00468B&#39;</span>)) <span class="op">+</span></span>
-<span id="cb5-37"><a href="#cb5-37"></a><span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&#39;Total life expectancy at birth&#39;</span>,</span>
-<span id="cb5-38"><a href="#cb5-38"></a>         <span class="dt">y =</span> <span class="st">&#39;Years of life&#39;</span>) <span class="op">+</span></span>
-<span id="cb5-39"><a href="#cb5-39"></a><span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>location, </span>
-<span id="cb5-40"><a href="#cb5-40"></a>               <span class="dt">ncol =</span> <span class="dv">5</span>) <span class="op">+</span></span>
-<span id="cb5-41"><a href="#cb5-41"></a><span class="st">    </span><span class="kw">theme_bw</span>(<span class="dt">base_size =</span> <span class="dv">12</span>) <span class="op">+</span></span>
-<span id="cb5-42"><a href="#cb5-42"></a><span class="st">    </span><span class="kw">theme</span>(<span class="dt">legend.title =</span> <span class="kw">element_blank</span>(),</span>
-<span id="cb5-43"><a href="#cb5-43"></a>          <span class="dt">legend.position =</span> <span class="kw">c</span>(<span class="fl">0.99</span>, <span class="fl">0.985</span>),</span>
-<span id="cb5-44"><a href="#cb5-44"></a>          <span class="dt">legend.justification =</span> <span class="kw">c</span>(<span class="fl">0.99</span>, <span class="fl">0.985</span>),</span>
-<span id="cb5-45"><a href="#cb5-45"></a>          <span class="dt">legend.margin =</span> <span class="kw">margin</span>(<span class="dt">t =</span> <span class="dv">0</span>, <span class="dt">r =</span> <span class="dv">0</span>, <span class="dt">b =</span> <span class="dv">0</span>, <span class="dt">l =</span> <span class="dv">0</span>, <span class="dt">unit =</span> <span class="st">&#39;lines&#39;</span>),</span>
-<span id="cb5-46"><a href="#cb5-46"></a>          <span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">12</span>, <span class="dt">face =</span> <span class="st">&#39;bold&#39;</span>),</span>
-<span id="cb5-47"><a href="#cb5-47"></a>          <span class="dt">axis.text.x =</span> <span class="kw">element_blank</span>(),</span>
-<span id="cb5-48"><a href="#cb5-48"></a>          <span class="dt">axis.title.x =</span> <span class="kw">element_blank</span>(),</span>
-<span id="cb5-49"><a href="#cb5-49"></a>          <span class="dt">panel.grid =</span> <span class="kw">element_blank</span>(),</span>
-<span id="cb5-50"><a href="#cb5-50"></a>          <span class="dt">strip.background =</span> <span class="kw">element_blank</span>()) </span>
-<span id="cb5-51"><a href="#cb5-51"></a></span>
-<span id="cb5-52"><a href="#cb5-52"></a><span class="kw">ggsave</span>(<span class="dt">filename =</span> <span class="st">&#39;le.png&#39;</span>,</span>
-<span id="cb5-53"><a href="#cb5-53"></a>       <span class="dt">plot =</span> le, </span>
-<span id="cb5-54"><a href="#cb5-54"></a>       <span class="dt">path =</span> <span class="st">&#39;./images/posts/2019-01-25-global-burden-of-disease&#39;</span>, </span>
-<span id="cb5-55"><a href="#cb5-55"></a>       <span class="dt">width =</span> <span class="dv">8</span>,</span>
-<span id="cb5-56"><a href="#cb5-56"></a>       <span class="dt">height =</span> <span class="fl">2.2</span>,</span>
-<span id="cb5-57"><a href="#cb5-57"></a>       <span class="dt">units =</span> <span class="st">&#39;in&#39;</span>)</span>
-<span id="cb5-58"><a href="#cb5-58"></a></span>
-<span id="cb5-59"><a href="#cb5-59"></a><span class="co">## Years of good health</span></span>
-<span id="cb5-60"><a href="#cb5-60"></a>healthy &lt;-<span class="st"> </span>delta <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb5-61"><a href="#cb5-61"></a><span class="st">    </span><span class="kw">filter</span>(measure <span class="op">==</span><span class="st"> &#39;Years of good health&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb5-62"><a href="#cb5-62"></a><span class="st">    </span><span class="kw">ggplot</span>(<span class="dt">data =</span> .) <span class="op">+</span></span>
-<span id="cb5-63"><a href="#cb5-63"></a><span class="st">    </span><span class="kw">aes</span>(<span class="dt">x =</span> year,</span>
-<span id="cb5-64"><a href="#cb5-64"></a>        <span class="dt">y =</span> val,</span>
-<span id="cb5-65"><a href="#cb5-65"></a>        <span class="dt">colour =</span> sex) <span class="op">+</span></span>
-<span id="cb5-66"><a href="#cb5-66"></a><span class="st">    </span><span class="kw">geom_line</span>() <span class="op">+</span></span>
-<span id="cb5-67"><a href="#cb5-67"></a><span class="st">    </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">1990</span>, <span class="dv">1995</span>, <span class="dv">2000</span>, <span class="dv">2005</span>, <span class="dv">2010</span>, <span class="dv">2017</span>)) <span class="op">+</span></span>
-<span id="cb5-68"><a href="#cb5-68"></a><span class="st">    </span><span class="kw">scale_y_continuous</span>(<span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">40</span>, <span class="dv">50</span>, <span class="dv">60</span>, <span class="dv">70</span>),</span>
-<span id="cb5-69"><a href="#cb5-69"></a>                       <span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">40</span>, <span class="dv">75</span>),</span>
-<span id="cb5-70"><a href="#cb5-70"></a>                       <span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="op">+</span></span>
-<span id="cb5-71"><a href="#cb5-71"></a><span class="st">    </span><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&#39;#ED0000&#39;</span>, <span class="st">&#39;#00468B&#39;</span>)) <span class="op">+</span></span>
-<span id="cb5-72"><a href="#cb5-72"></a><span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&#39;Years of good health at birth&#39;</span>,</span>
-<span id="cb5-73"><a href="#cb5-73"></a>         <span class="dt">y =</span> <span class="st">&#39;Years of life&#39;</span>) <span class="op">+</span></span>
-<span id="cb5-74"><a href="#cb5-74"></a><span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>location, </span>
-<span id="cb5-75"><a href="#cb5-75"></a>               <span class="dt">ncol =</span> <span class="dv">5</span>) <span class="op">+</span></span>
-<span id="cb5-76"><a href="#cb5-76"></a><span class="st">    </span><span class="kw">theme_bw</span>(<span class="dt">base_size =</span> <span class="dv">12</span>) <span class="op">+</span></span>
-<span id="cb5-77"><a href="#cb5-77"></a><span class="st">    </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&#39;none&#39;</span>,</span>
-<span id="cb5-78"><a href="#cb5-78"></a>          <span class="dt">axis.text.x =</span> <span class="kw">element_blank</span>(),</span>
-<span id="cb5-79"><a href="#cb5-79"></a>          <span class="dt">axis.title.x =</span> <span class="kw">element_blank</span>(),</span>
-<span id="cb5-80"><a href="#cb5-80"></a>          <span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">12</span>, <span class="dt">face =</span> <span class="st">&#39;bold&#39;</span>),</span>
-<span id="cb5-81"><a href="#cb5-81"></a>          <span class="dt">panel.grid =</span> <span class="kw">element_blank</span>(),</span>
-<span id="cb5-82"><a href="#cb5-82"></a>          <span class="dt">strip.background =</span> <span class="kw">element_blank</span>()) </span>
-<span id="cb5-83"><a href="#cb5-83"></a></span>
-<span id="cb5-84"><a href="#cb5-84"></a><span class="kw">ggsave</span>(<span class="dt">filename =</span> <span class="st">&#39;healthy.png&#39;</span>,</span>
-<span id="cb5-85"><a href="#cb5-85"></a>       <span class="dt">plot =</span> healthy, </span>
-<span id="cb5-86"><a href="#cb5-86"></a>       <span class="dt">path =</span> <span class="st">&#39;./images/posts/2019-01-25-global-burden-of-disease&#39;</span>, </span>
-<span id="cb5-87"><a href="#cb5-87"></a>       <span class="dt">width =</span> <span class="dv">8</span>,</span>
-<span id="cb5-88"><a href="#cb5-88"></a>       <span class="dt">height =</span> <span class="fl">2.2</span>,</span>
-<span id="cb5-89"><a href="#cb5-89"></a>       <span class="dt">units =</span> <span class="st">&#39;in&#39;</span>)</span>
-<span id="cb5-90"><a href="#cb5-90"></a></span>
-<span id="cb5-91"><a href="#cb5-91"></a><span class="co">## Poor health</span></span>
-<span id="cb5-92"><a href="#cb5-92"></a>unhealthy &lt;-<span class="st"> </span>delta <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb5-93"><a href="#cb5-93"></a><span class="st">    </span><span class="kw">filter</span>(measure <span class="op">==</span><span class="st"> &#39;Years of poor health&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb5-94"><a href="#cb5-94"></a><span class="st">    </span><span class="kw">ggplot</span>(<span class="dt">data =</span> .) <span class="op">+</span></span>
-<span id="cb5-95"><a href="#cb5-95"></a><span class="st">    </span><span class="kw">aes</span>(<span class="dt">x =</span> year,</span>
-<span id="cb5-96"><a href="#cb5-96"></a>        <span class="dt">y =</span> val,</span>
-<span id="cb5-97"><a href="#cb5-97"></a>        <span class="dt">colour =</span> sex) <span class="op">+</span></span>
-<span id="cb5-98"><a href="#cb5-98"></a><span class="st">    </span><span class="kw">geom_line</span>() <span class="op">+</span></span>
-<span id="cb5-99"><a href="#cb5-99"></a><span class="st">    </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">1990</span>, <span class="dv">1995</span>, <span class="dv">2000</span>, <span class="dv">2005</span>, <span class="dv">2010</span>, <span class="dv">2017</span>)) <span class="op">+</span></span>
-<span id="cb5-100"><a href="#cb5-100"></a><span class="st">    </span><span class="kw">scale_y_continuous</span>(<span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">10</span>, <span class="dv">12</span>),</span>
-<span id="cb5-101"><a href="#cb5-101"></a>                       <span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">6</span>, <span class="dv">13</span>),</span>
-<span id="cb5-102"><a href="#cb5-102"></a>                       <span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="op">+</span></span>
-<span id="cb5-103"><a href="#cb5-103"></a><span class="st">    </span><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&#39;#ED0000&#39;</span>, <span class="st">&#39;#00468B&#39;</span>)) <span class="op">+</span></span>
-<span id="cb5-104"><a href="#cb5-104"></a><span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&#39;Years of poor health at birth&#39;</span>,</span>
-<span id="cb5-105"><a href="#cb5-105"></a>         <span class="dt">x =</span> <span class="st">&#39;Year&#39;</span>,</span>
-<span id="cb5-106"><a href="#cb5-106"></a>         <span class="dt">y =</span> <span class="st">&#39;Years of life&#39;</span>) <span class="op">+</span></span>
-<span id="cb5-107"><a href="#cb5-107"></a><span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>location, </span>
-<span id="cb5-108"><a href="#cb5-108"></a>               <span class="dt">ncol =</span> <span class="dv">5</span>) <span class="op">+</span></span>
-<span id="cb5-109"><a href="#cb5-109"></a><span class="st">    </span><span class="kw">theme_bw</span>(<span class="dt">base_size =</span> <span class="dv">12</span>) <span class="op">+</span></span>
-<span id="cb5-110"><a href="#cb5-110"></a><span class="st">    </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&#39;none&#39;</span>,</span>
-<span id="cb5-111"><a href="#cb5-111"></a>          <span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">12</span>, <span class="dt">face =</span> <span class="st">&#39;bold&#39;</span>),</span>
-<span id="cb5-112"><a href="#cb5-112"></a>          <span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle =</span> <span class="dv">45</span>,</span>
-<span id="cb5-113"><a href="#cb5-113"></a>                                     <span class="dt">hjust =</span> <span class="dv">1</span>,</span>
-<span id="cb5-114"><a href="#cb5-114"></a>                                     <span class="dt">vjust =</span> <span class="fl">1.1</span>),</span>
-<span id="cb5-115"><a href="#cb5-115"></a>          <span class="dt">panel.grid =</span> <span class="kw">element_blank</span>(),</span>
-<span id="cb5-116"><a href="#cb5-116"></a>          <span class="dt">strip.background =</span> <span class="kw">element_blank</span>()) </span>
-<span id="cb5-117"><a href="#cb5-117"></a></span>
-<span id="cb5-118"><a href="#cb5-118"></a><span class="kw">ggsave</span>(<span class="dt">filename =</span> <span class="st">&#39;unhealthy.png&#39;</span>,</span>
-<span id="cb5-119"><a href="#cb5-119"></a>       <span class="dt">plot =</span> unhealthy, </span>
-<span id="cb5-120"><a href="#cb5-120"></a>       <span class="dt">path =</span> <span class="st">&#39;./images/posts/2019-01-25-global-burden-of-disease&#39;</span>, </span>
-<span id="cb5-121"><a href="#cb5-121"></a>       <span class="dt">width =</span> <span class="dv">8</span>,</span>
-<span id="cb5-122"><a href="#cb5-122"></a>       <span class="dt">height =</span> <span class="fl">2.75</span>,</span>
-<span id="cb5-123"><a href="#cb5-123"></a>       <span class="dt">units =</span> <span class="st">&#39;in&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">############################################################</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#                                                          #</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#        Calculate years of poor health since birth        #</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#                                                          #</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="do">############################################################</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>delta <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> </span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Spread the measure column</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">spread</span>(<span class="at">key =</span> measure, </span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>           <span class="at">value =</span> val) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculate years unhealthy </span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="st">`</span><span class="at">Years of poor health</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">Total life expectancy</span><span class="st">`</span> <span class="sc">-</span> <span class="st">`</span><span class="at">Years of good health</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Gather measures again</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">gather</span>(<span class="at">key =</span> measure, </span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>           <span class="at">value =</span> val,</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>           <span class="sc">-</span>location, <span class="sc">-</span>sex, <span class="sc">-</span>year, <span class="sc">-</span>metric)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="do">############################################################</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="co">#                                                          #</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="co">#                           Plot                           #</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="co">#                                                          #</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="do">############################################################</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate separate plots for each &#39;measure&#39;, and save the outputs.</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="do">## Total life expectancy</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>le <span class="ot">&lt;-</span> delta <span class="sc">%&gt;%</span> </span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(measure <span class="sc">==</span> <span class="st">&#39;Total life expectancy&#39;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="at">data =</span> .) <span class="sc">+</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> year,</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> val,</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>        <span class="at">colour =</span> sex) <span class="sc">+</span></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">1990</span>, <span class="dv">1995</span>, <span class="dv">2000</span>, <span class="dv">2005</span>, <span class="dv">2010</span>, <span class="dv">2017</span>)) <span class="sc">+</span></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">60</span>, <span class="dv">70</span>, <span class="dv">80</span>),</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>                       <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">85</span>),</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>                       <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&#39;#ED0000&#39;</span>, <span class="st">&#39;#00468B&#39;</span>)) <span class="sc">+</span></span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&#39;Total life expectancy at birth&#39;</span>,</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">&#39;Years of life&#39;</span>) <span class="sc">+</span></span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span> location, </span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>               <span class="at">ncol =</span> <span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>          <span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.99</span>, <span class="fl">0.985</span>),</span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>          <span class="at">legend.justification =</span> <span class="fu">c</span>(<span class="fl">0.99</span>, <span class="fl">0.985</span>),</span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>          <span class="at">legend.margin =</span> <span class="fu">margin</span>(<span class="at">t =</span> <span class="dv">0</span>, <span class="at">r =</span> <span class="dv">0</span>, <span class="at">b =</span> <span class="dv">0</span>, <span class="at">l =</span> <span class="dv">0</span>, <span class="at">unit =</span> <span class="st">&#39;lines&#39;</span>),</span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>          <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">face =</span> <span class="st">&#39;bold&#39;</span>),</span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>          <span class="at">strip.background =</span> <span class="fu">element_blank</span>()) </span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="st">&#39;le.png&#39;</span>,</span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>       <span class="at">plot =</span> le, </span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a>       <span class="at">path =</span> <span class="st">&#39;./images/posts/2019-01-25-global-burden-of-disease&#39;</span>, </span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>       <span class="at">width =</span> <span class="dv">8</span>,</span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a>       <span class="at">height =</span> <span class="fl">2.2</span>,</span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a>       <span class="at">units =</span> <span class="st">&#39;in&#39;</span>)</span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a><span class="do">## Years of good health</span></span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a>healthy <span class="ot">&lt;-</span> delta <span class="sc">%&gt;%</span> </span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(measure <span class="sc">==</span> <span class="st">&#39;Years of good health&#39;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="at">data =</span> .) <span class="sc">+</span></span>
+<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> year,</span>
+<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> val,</span>
+<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a>        <span class="at">colour =</span> sex) <span class="sc">+</span></span>
+<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">1990</span>, <span class="dv">1995</span>, <span class="dv">2000</span>, <span class="dv">2005</span>, <span class="dv">2010</span>, <span class="dv">2017</span>)) <span class="sc">+</span></span>
+<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">40</span>, <span class="dv">50</span>, <span class="dv">60</span>, <span class="dv">70</span>),</span>
+<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a>                       <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">40</span>, <span class="dv">75</span>),</span>
+<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a>                       <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&#39;#ED0000&#39;</span>, <span class="st">&#39;#00468B&#39;</span>)) <span class="sc">+</span></span>
+<span id="cb5-72"><a href="#cb5-72" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&#39;Years of good health at birth&#39;</span>,</span>
+<span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">&#39;Years of life&#39;</span>) <span class="sc">+</span></span>
+<span id="cb5-74"><a href="#cb5-74" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span> location, </span>
+<span id="cb5-75"><a href="#cb5-75" aria-hidden="true" tabindex="-1"></a>               <span class="at">ncol =</span> <span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb5-76"><a href="#cb5-76" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb5-77"><a href="#cb5-77" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&#39;none&#39;</span>,</span>
+<span id="cb5-78"><a href="#cb5-78" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb5-79"><a href="#cb5-79" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb5-80"><a href="#cb5-80" aria-hidden="true" tabindex="-1"></a>          <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">face =</span> <span class="st">&#39;bold&#39;</span>),</span>
+<span id="cb5-81"><a href="#cb5-81" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb5-82"><a href="#cb5-82" aria-hidden="true" tabindex="-1"></a>          <span class="at">strip.background =</span> <span class="fu">element_blank</span>()) </span>
+<span id="cb5-83"><a href="#cb5-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-84"><a href="#cb5-84" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="st">&#39;healthy.png&#39;</span>,</span>
+<span id="cb5-85"><a href="#cb5-85" aria-hidden="true" tabindex="-1"></a>       <span class="at">plot =</span> healthy, </span>
+<span id="cb5-86"><a href="#cb5-86" aria-hidden="true" tabindex="-1"></a>       <span class="at">path =</span> <span class="st">&#39;./images/posts/2019-01-25-global-burden-of-disease&#39;</span>, </span>
+<span id="cb5-87"><a href="#cb5-87" aria-hidden="true" tabindex="-1"></a>       <span class="at">width =</span> <span class="dv">8</span>,</span>
+<span id="cb5-88"><a href="#cb5-88" aria-hidden="true" tabindex="-1"></a>       <span class="at">height =</span> <span class="fl">2.2</span>,</span>
+<span id="cb5-89"><a href="#cb5-89" aria-hidden="true" tabindex="-1"></a>       <span class="at">units =</span> <span class="st">&#39;in&#39;</span>)</span>
+<span id="cb5-90"><a href="#cb5-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-91"><a href="#cb5-91" aria-hidden="true" tabindex="-1"></a><span class="do">## Poor health</span></span>
+<span id="cb5-92"><a href="#cb5-92" aria-hidden="true" tabindex="-1"></a>unhealthy <span class="ot">&lt;-</span> delta <span class="sc">%&gt;%</span> </span>
+<span id="cb5-93"><a href="#cb5-93" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(measure <span class="sc">==</span> <span class="st">&#39;Years of poor health&#39;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-94"><a href="#cb5-94" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="at">data =</span> .) <span class="sc">+</span></span>
+<span id="cb5-95"><a href="#cb5-95" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> year,</span>
+<span id="cb5-96"><a href="#cb5-96" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> val,</span>
+<span id="cb5-97"><a href="#cb5-97" aria-hidden="true" tabindex="-1"></a>        <span class="at">colour =</span> sex) <span class="sc">+</span></span>
+<span id="cb5-98"><a href="#cb5-98" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb5-99"><a href="#cb5-99" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">1990</span>, <span class="dv">1995</span>, <span class="dv">2000</span>, <span class="dv">2005</span>, <span class="dv">2010</span>, <span class="dv">2017</span>)) <span class="sc">+</span></span>
+<span id="cb5-100"><a href="#cb5-100" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">10</span>, <span class="dv">12</span>),</span>
+<span id="cb5-101"><a href="#cb5-101" aria-hidden="true" tabindex="-1"></a>                       <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">6</span>, <span class="dv">13</span>),</span>
+<span id="cb5-102"><a href="#cb5-102" aria-hidden="true" tabindex="-1"></a>                       <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb5-103"><a href="#cb5-103" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&#39;#ED0000&#39;</span>, <span class="st">&#39;#00468B&#39;</span>)) <span class="sc">+</span></span>
+<span id="cb5-104"><a href="#cb5-104" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&#39;Years of poor health at birth&#39;</span>,</span>
+<span id="cb5-105"><a href="#cb5-105" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">&#39;Year&#39;</span>,</span>
+<span id="cb5-106"><a href="#cb5-106" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">&#39;Years of life&#39;</span>) <span class="sc">+</span></span>
+<span id="cb5-107"><a href="#cb5-107" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span> location, </span>
+<span id="cb5-108"><a href="#cb5-108" aria-hidden="true" tabindex="-1"></a>               <span class="at">ncol =</span> <span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb5-109"><a href="#cb5-109" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb5-110"><a href="#cb5-110" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&#39;none&#39;</span>,</span>
+<span id="cb5-111"><a href="#cb5-111" aria-hidden="true" tabindex="-1"></a>          <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">face =</span> <span class="st">&#39;bold&#39;</span>),</span>
+<span id="cb5-112"><a href="#cb5-112" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>,</span>
+<span id="cb5-113"><a href="#cb5-113" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">hjust =</span> <span class="dv">1</span>,</span>
+<span id="cb5-114"><a href="#cb5-114" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">vjust =</span> <span class="fl">1.1</span>),</span>
+<span id="cb5-115"><a href="#cb5-115" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb5-116"><a href="#cb5-116" aria-hidden="true" tabindex="-1"></a>          <span class="at">strip.background =</span> <span class="fu">element_blank</span>()) </span>
+<span id="cb5-117"><a href="#cb5-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-118"><a href="#cb5-118" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="st">&#39;unhealthy.png&#39;</span>,</span>
+<span id="cb5-119"><a href="#cb5-119" aria-hidden="true" tabindex="-1"></a>       <span class="at">plot =</span> unhealthy, </span>
+<span id="cb5-120"><a href="#cb5-120" aria-hidden="true" tabindex="-1"></a>       <span class="at">path =</span> <span class="st">&#39;./images/posts/2019-01-25-global-burden-of-disease&#39;</span>, </span>
+<span id="cb5-121"><a href="#cb5-121" aria-hidden="true" tabindex="-1"></a>       <span class="at">width =</span> <span class="dv">8</span>,</span>
+<span id="cb5-122"><a href="#cb5-122" aria-hidden="true" tabindex="-1"></a>       <span class="at">height =</span> <span class="fl">2.75</span>,</span>
+<span id="cb5-123"><a href="#cb5-123" aria-hidden="true" tabindex="-1"></a>       <span class="at">units =</span> <span class="st">&#39;in&#39;</span>)</span></code></pre></div>
 <div>
 <div style="margin-left:auto;margin-right:auto;width:98%;">
 <div style="border-width:thin;border-style:solid;border-color:#E29EA7;">
@@ -1375,251 +1385,251 @@ lower
 <h3>Step 2</h3>
 <p><strong>Compare cumulative year-over-year percent change in <em>years of poor health</em> and <em>years of good health</em> for the past 28 years.</strong></p>
 <p>There were several ways I could have analysed and plotted these data. For example, I could have used: sequential year-over-year percent change data, mean-centered data, or the yearly absolute difference between <em>years of good health</em> and <em>years of poor health</em>. But I chose to use cumulative year-over-year percent change because I felt it was the best option for presenting the data. As a relative measure, it corrects for the very large absolute difference between <em>years of good health</em> and <em>years of poor health</em> (~ 38 to 57 years in 1990, depending on SDI quintile and sex), and allows the assessment of the cumulative effect the yearly fluctuations in <em>years of good health</em> and <em>years of poor health</em>.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co">############################################################</span></span>
-<span id="cb6-2"><a href="#cb6-2"></a><span class="co">#                                                          #</span></span>
-<span id="cb6-3"><a href="#cb6-3"></a><span class="co">#           Plot animated versions of the total            #</span></span>
-<span id="cb6-4"><a href="#cb6-4"></a><span class="co">#        life expectancy data for males and females        #</span></span>
-<span id="cb6-5"><a href="#cb6-5"></a><span class="co">#                                                          #</span></span>
-<span id="cb6-6"><a href="#cb6-6"></a><span class="co">############################################################</span></span>
-<span id="cb6-7"><a href="#cb6-7"></a><span class="co"># Males</span></span>
-<span id="cb6-8"><a href="#cb6-8"></a>le_male &lt;-<span class="st"> </span>delta <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb6-9"><a href="#cb6-9"></a><span class="st">    </span><span class="kw">filter</span>(sex <span class="op">==</span><span class="st"> &#39;Male&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb6-10"><a href="#cb6-10"></a><span class="st">    </span><span class="kw">filter</span>(measure <span class="op">==</span><span class="st"> &#39;Total life expectancy&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb6-11"><a href="#cb6-11"></a><span class="st">    </span><span class="kw">ggplot</span>(<span class="dt">data =</span> .) <span class="op">+</span></span>
-<span id="cb6-12"><a href="#cb6-12"></a><span class="st">    </span><span class="kw">aes</span>(<span class="dt">x =</span> year,</span>
-<span id="cb6-13"><a href="#cb6-13"></a>        <span class="dt">y =</span> val) <span class="op">+</span></span>
-<span id="cb6-14"><a href="#cb6-14"></a><span class="st">    </span><span class="kw">geom_line</span>(<span class="dt">colour =</span> <span class="st">&#39;#00468B&#39;</span>) <span class="op">+</span></span>
-<span id="cb6-15"><a href="#cb6-15"></a><span class="st">    </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">1990</span>, <span class="dv">1995</span>, <span class="dv">2000</span>, <span class="dv">2005</span>, <span class="dv">2010</span>, <span class="dv">2017</span>)) <span class="op">+</span></span>
-<span id="cb6-16"><a href="#cb6-16"></a><span class="st">    </span><span class="kw">scale_y_continuous</span>(<span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">50</span>, <span class="dv">60</span>, <span class="dv">70</span>, <span class="dv">80</span>),</span>
-<span id="cb6-17"><a href="#cb6-17"></a>                       <span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">50</span>, <span class="dv">85</span>),</span>
-<span id="cb6-18"><a href="#cb6-18"></a>                       <span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="op">+</span></span>
-<span id="cb6-19"><a href="#cb6-19"></a><span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&#39;Total life expectancy at birth&#39;</span>,</span>
-<span id="cb6-20"><a href="#cb6-20"></a>         <span class="dt">y =</span> <span class="st">&#39;Years of life&#39;</span>) <span class="op">+</span></span>
-<span id="cb6-21"><a href="#cb6-21"></a><span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>location, </span>
-<span id="cb6-22"><a href="#cb6-22"></a>               <span class="dt">ncol =</span> <span class="dv">5</span>) <span class="op">+</span></span>
-<span id="cb6-23"><a href="#cb6-23"></a><span class="st">    </span><span class="kw">theme_bw</span>(<span class="dt">base_size =</span> <span class="dv">12</span>) <span class="op">+</span></span>
-<span id="cb6-24"><a href="#cb6-24"></a><span class="st">    </span><span class="kw">theme</span>(<span class="dt">legend.title =</span> <span class="kw">element_blank</span>(),</span>
-<span id="cb6-25"><a href="#cb6-25"></a>          <span class="dt">legend.position =</span> <span class="kw">c</span>(<span class="fl">0.99</span>, <span class="fl">0.985</span>),</span>
-<span id="cb6-26"><a href="#cb6-26"></a>          <span class="dt">legend.justification =</span> <span class="kw">c</span>(<span class="fl">0.99</span>, <span class="fl">0.985</span>),</span>
-<span id="cb6-27"><a href="#cb6-27"></a>          <span class="dt">legend.margin =</span> <span class="kw">margin</span>(<span class="dt">t =</span> <span class="dv">0</span>, <span class="dt">r =</span> <span class="dv">0</span>, <span class="dt">b =</span> <span class="dv">0</span>, <span class="dt">l =</span> <span class="dv">0</span>, <span class="dt">unit =</span> <span class="st">&#39;lines&#39;</span>),</span>
-<span id="cb6-28"><a href="#cb6-28"></a>          <span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">12</span>, <span class="dt">face =</span> <span class="st">&#39;bold&#39;</span>),</span>
-<span id="cb6-29"><a href="#cb6-29"></a>          <span class="dt">axis.text.x =</span> <span class="kw">element_blank</span>(),</span>
-<span id="cb6-30"><a href="#cb6-30"></a>          <span class="dt">axis.title.x =</span> <span class="kw">element_blank</span>(),</span>
-<span id="cb6-31"><a href="#cb6-31"></a>          <span class="dt">panel.grid =</span> <span class="kw">element_blank</span>(),</span>
-<span id="cb6-32"><a href="#cb6-32"></a>          <span class="dt">strip.background =</span> <span class="kw">element_blank</span>()) <span class="op">+</span></span>
-<span id="cb6-33"><a href="#cb6-33"></a><span class="st">    </span><span class="kw">transition_reveal</span>(year)</span>
-<span id="cb6-34"><a href="#cb6-34"></a></span>
-<span id="cb6-35"><a href="#cb6-35"></a>le_male &lt;-<span class="st"> </span><span class="kw">animate</span>(<span class="dt">plot =</span> le_male, </span>
-<span id="cb6-36"><a href="#cb6-36"></a>                   <span class="dt">fps =</span> <span class="dv">10</span>,</span>
-<span id="cb6-37"><a href="#cb6-37"></a>                   <span class="dt">nframes =</span> <span class="dv">150</span>,</span>
-<span id="cb6-38"><a href="#cb6-38"></a>                   <span class="dt">duration =</span> <span class="dv">15</span>,</span>
-<span id="cb6-39"><a href="#cb6-39"></a>                   <span class="dt">end_pause =</span> <span class="dv">50</span>,</span>
-<span id="cb6-40"><a href="#cb6-40"></a>                   <span class="dt">res =</span> <span class="dv">150</span>,</span>
-<span id="cb6-41"><a href="#cb6-41"></a>                   <span class="dt">width =</span> <span class="dv">8</span>,</span>
-<span id="cb6-42"><a href="#cb6-42"></a>                   <span class="dt">height =</span> <span class="fl">2.2</span>,</span>
-<span id="cb6-43"><a href="#cb6-43"></a>                   <span class="dt">units =</span> <span class="st">&#39;in&#39;</span>)</span>
-<span id="cb6-44"><a href="#cb6-44"></a></span>
-<span id="cb6-45"><a href="#cb6-45"></a><span class="kw">anim_save</span>(<span class="dt">filename =</span> <span class="st">&#39;le_male.gif&#39;</span>,</span>
-<span id="cb6-46"><a href="#cb6-46"></a>          <span class="dt">animation =</span> le_male,</span>
-<span id="cb6-47"><a href="#cb6-47"></a>          <span class="dt">path =</span> <span class="st">&#39;./images/posts/2019-01-25-global-burden-of-disease&#39;</span>)</span>
-<span id="cb6-48"><a href="#cb6-48"></a></span>
-<span id="cb6-49"><a href="#cb6-49"></a><span class="co"># Females</span></span>
-<span id="cb6-50"><a href="#cb6-50"></a>le_female &lt;-<span class="st"> </span>delta <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb6-51"><a href="#cb6-51"></a><span class="st">    </span><span class="kw">filter</span>(sex <span class="op">==</span><span class="st"> &#39;Female&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb6-52"><a href="#cb6-52"></a><span class="st">    </span><span class="kw">filter</span>(measure <span class="op">==</span><span class="st"> &#39;Total life expectancy&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb6-53"><a href="#cb6-53"></a><span class="st">    </span><span class="kw">ggplot</span>(<span class="dt">data =</span> .) <span class="op">+</span></span>
-<span id="cb6-54"><a href="#cb6-54"></a><span class="st">    </span><span class="kw">aes</span>(<span class="dt">x =</span> year,</span>
-<span id="cb6-55"><a href="#cb6-55"></a>        <span class="dt">y =</span> val) <span class="op">+</span></span>
-<span id="cb6-56"><a href="#cb6-56"></a><span class="st">    </span><span class="kw">geom_line</span>(<span class="dt">colour =</span> <span class="st">&#39;#ED0000&#39;</span>) <span class="op">+</span></span>
-<span id="cb6-57"><a href="#cb6-57"></a><span class="st">    </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">1990</span>, <span class="dv">1995</span>, <span class="dv">2000</span>, <span class="dv">2005</span>, <span class="dv">2010</span>, <span class="dv">2017</span>)) <span class="op">+</span></span>
-<span id="cb6-58"><a href="#cb6-58"></a><span class="st">    </span><span class="kw">scale_y_continuous</span>(<span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">50</span>, <span class="dv">60</span>, <span class="dv">70</span>, <span class="dv">80</span>),</span>
-<span id="cb6-59"><a href="#cb6-59"></a>                       <span class="dt">limits =</span> <span class="kw">c</span>(<span class="dv">50</span>, <span class="dv">85</span>),</span>
-<span id="cb6-60"><a href="#cb6-60"></a>                       <span class="dt">expand =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="op">+</span></span>
-<span id="cb6-61"><a href="#cb6-61"></a><span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&#39;Total life expectancy at birth&#39;</span>,</span>
-<span id="cb6-62"><a href="#cb6-62"></a>         <span class="dt">y =</span> <span class="st">&#39;Years of life&#39;</span>) <span class="op">+</span></span>
-<span id="cb6-63"><a href="#cb6-63"></a><span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>location, </span>
-<span id="cb6-64"><a href="#cb6-64"></a>               <span class="dt">ncol =</span> <span class="dv">5</span>) <span class="op">+</span></span>
-<span id="cb6-65"><a href="#cb6-65"></a><span class="st">    </span><span class="kw">theme_bw</span>(<span class="dt">base_size =</span> <span class="dv">12</span>) <span class="op">+</span></span>
-<span id="cb6-66"><a href="#cb6-66"></a><span class="st">    </span><span class="kw">theme</span>(<span class="dt">legend.title =</span> <span class="kw">element_blank</span>(),</span>
-<span id="cb6-67"><a href="#cb6-67"></a>          <span class="dt">legend.position =</span> <span class="kw">c</span>(<span class="fl">0.99</span>, <span class="fl">0.985</span>),</span>
-<span id="cb6-68"><a href="#cb6-68"></a>          <span class="dt">legend.justification =</span> <span class="kw">c</span>(<span class="fl">0.99</span>, <span class="fl">0.985</span>),</span>
-<span id="cb6-69"><a href="#cb6-69"></a>          <span class="dt">legend.margin =</span> <span class="kw">margin</span>(<span class="dt">t =</span> <span class="dv">0</span>, <span class="dt">r =</span> <span class="dv">0</span>, <span class="dt">b =</span> <span class="dv">0</span>, <span class="dt">l =</span> <span class="dv">0</span>, <span class="dt">unit =</span> <span class="st">&#39;lines&#39;</span>),</span>
-<span id="cb6-70"><a href="#cb6-70"></a>          <span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">12</span>, <span class="dt">face =</span> <span class="st">&#39;bold&#39;</span>),</span>
-<span id="cb6-71"><a href="#cb6-71"></a>          <span class="dt">axis.text.x =</span> <span class="kw">element_blank</span>(),</span>
-<span id="cb6-72"><a href="#cb6-72"></a>          <span class="dt">axis.title.x =</span> <span class="kw">element_blank</span>(),</span>
-<span id="cb6-73"><a href="#cb6-73"></a>          <span class="dt">panel.grid =</span> <span class="kw">element_blank</span>(),</span>
-<span id="cb6-74"><a href="#cb6-74"></a>          <span class="dt">strip.background =</span> <span class="kw">element_blank</span>()) <span class="op">+</span></span>
-<span id="cb6-75"><a href="#cb6-75"></a><span class="st">    </span><span class="kw">transition_reveal</span>(year)</span>
-<span id="cb6-76"><a href="#cb6-76"></a></span>
-<span id="cb6-77"><a href="#cb6-77"></a>le_female &lt;-<span class="st"> </span><span class="kw">animate</span>(<span class="dt">plot =</span> le_female, </span>
-<span id="cb6-78"><a href="#cb6-78"></a>                     <span class="dt">fps =</span> <span class="dv">10</span>, </span>
-<span id="cb6-79"><a href="#cb6-79"></a>                     <span class="dt">nframes =</span> <span class="dv">150</span>,</span>
-<span id="cb6-80"><a href="#cb6-80"></a>                     <span class="dt">duration =</span> <span class="dv">15</span>,</span>
-<span id="cb6-81"><a href="#cb6-81"></a>                     <span class="dt">end_pause =</span> <span class="dv">50</span>,</span>
-<span id="cb6-82"><a href="#cb6-82"></a>                     <span class="dt">res =</span> <span class="dv">150</span>,</span>
-<span id="cb6-83"><a href="#cb6-83"></a>                     <span class="dt">width =</span> <span class="dv">8</span>,</span>
-<span id="cb6-84"><a href="#cb6-84"></a>                     <span class="dt">height =</span> <span class="fl">2.2</span>,</span>
-<span id="cb6-85"><a href="#cb6-85"></a>                     <span class="dt">units =</span> <span class="st">&#39;in&#39;</span>)</span>
-<span id="cb6-86"><a href="#cb6-86"></a></span>
-<span id="cb6-87"><a href="#cb6-87"></a><span class="kw">anim_save</span>(<span class="dt">filename =</span> <span class="st">&#39;le_female.gif&#39;</span>,</span>
-<span id="cb6-88"><a href="#cb6-88"></a>          <span class="dt">animation =</span> le_female,</span>
-<span id="cb6-89"><a href="#cb6-89"></a>          <span class="dt">path =</span> <span class="st">&#39;./images/posts/2019-01-25-global-burden-of-disease&#39;</span>)</span>
-<span id="cb6-90"><a href="#cb6-90"></a></span>
-<span id="cb6-91"><a href="#cb6-91"></a><span class="co">############################################################</span></span>
-<span id="cb6-92"><a href="#cb6-92"></a><span class="co">#                                                          #</span></span>
-<span id="cb6-93"><a href="#cb6-93"></a><span class="co">#          General processing that will be useful          #</span></span>
-<span id="cb6-94"><a href="#cb6-94"></a><span class="co">#             for several plots down the line              #</span></span>
-<span id="cb6-95"><a href="#cb6-95"></a><span class="co">#                                                          #</span></span>
-<span id="cb6-96"><a href="#cb6-96"></a><span class="co">############################################################</span></span>
-<span id="cb6-97"><a href="#cb6-97"></a><span class="co"># Generate a version of the delta dataframe with the measure column spread</span></span>
-<span id="cb6-98"><a href="#cb6-98"></a>delta_spread &lt;-<span class="st"> </span>delta <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb6-99"><a href="#cb6-99"></a><span class="st">    </span><span class="co"># Spread the measures column</span></span>
-<span id="cb6-100"><a href="#cb6-100"></a><span class="st">    </span><span class="kw">spread</span>(<span class="dt">key =</span> measure,</span>
-<span id="cb6-101"><a href="#cb6-101"></a>           <span class="dt">value =</span> val) </span>
-<span id="cb6-102"><a href="#cb6-102"></a></span>
-<span id="cb6-103"><a href="#cb6-103"></a><span class="co"># Extract 1990 values for each measure and for each subgroup</span></span>
-<span id="cb6-104"><a href="#cb6-104"></a>baseline_<span class="dv">1990</span> &lt;-<span class="st"> </span>delta_spread <span class="op">%&gt;%</span></span>
-<span id="cb6-105"><a href="#cb6-105"></a><span class="st">    </span><span class="kw">group_by</span>(location, sex) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb6-106"><a href="#cb6-106"></a><span class="st">    </span><span class="co"># Extract 1990 values </span></span>
-<span id="cb6-107"><a href="#cb6-107"></a><span class="st">    </span><span class="kw">filter</span>(year <span class="op">==</span><span class="st"> </span><span class="dv">1990</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb6-108"><a href="#cb6-108"></a><span class="st">    </span><span class="co"># Rename columns</span></span>
-<span id="cb6-109"><a href="#cb6-109"></a><span class="st">    </span><span class="kw">rename</span>(<span class="st">`</span><span class="dt">Total life expectancy 1990</span><span class="st">`</span> =<span class="st"> `</span><span class="dt">Total life expectancy</span><span class="st">`</span>,</span>
-<span id="cb6-110"><a href="#cb6-110"></a>           <span class="st">`</span><span class="dt">Years of good health 1990</span><span class="st">`</span> =<span class="st"> `</span><span class="dt">Years of good health</span><span class="st">`</span>,</span>
-<span id="cb6-111"><a href="#cb6-111"></a>           <span class="st">`</span><span class="dt">Years of poor unhealth 1990</span><span class="st">`</span> =<span class="st"> `</span><span class="dt">Years of poor health</span><span class="st">`</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb6-112"><a href="#cb6-112"></a><span class="st">    </span><span class="co"># Remove unneeded column</span></span>
-<span id="cb6-113"><a href="#cb6-113"></a><span class="st">    </span><span class="kw">select</span>(<span class="op">-</span>metric, <span class="op">-</span>year)</span>
-<span id="cb6-114"><a href="#cb6-114"></a></span>
-<span id="cb6-115"><a href="#cb6-115"></a><span class="co"># Join baseline_1990 to delta_spread</span></span>
-<span id="cb6-116"><a href="#cb6-116"></a>delta_spread <span class="op">%&lt;&gt;%</span></span>
-<span id="cb6-117"><a href="#cb6-117"></a><span class="st">    </span><span class="kw">left_join</span>(baseline_<span class="dv">1990</span>)</span>
-<span id="cb6-118"><a href="#cb6-118"></a></span>
-<span id="cb6-119"><a href="#cb6-119"></a><span class="co">############################################################</span></span>
-<span id="cb6-120"><a href="#cb6-120"></a><span class="co">#                                                          #</span></span>
-<span id="cb6-121"><a href="#cb6-121"></a><span class="co">#       Cumulative year-on-year percent change for         #</span></span>
-<span id="cb6-122"><a href="#cb6-122"></a><span class="co">#    &#39;years of good health&#39; and &#39;years of poor health&#39;     #</span></span>
-<span id="cb6-123"><a href="#cb6-123"></a><span class="co">#                                                          #</span></span>
-<span id="cb6-124"><a href="#cb6-124"></a><span class="co">############################################################</span></span>
-<span id="cb6-125"><a href="#cb6-125"></a>delta_spread <span class="op">%&lt;&gt;%</span><span class="st"> </span></span>
-<span id="cb6-126"><a href="#cb6-126"></a><span class="st">    </span><span class="co"># Year-over-year change for each subgroup</span></span>
-<span id="cb6-127"><a href="#cb6-127"></a><span class="st">    </span><span class="kw">group_by</span>(location, sex) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb6-128"><a href="#cb6-128"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">p_yoy_good_health =</span> <span class="dv">100</span> <span class="op">*</span><span class="st"> </span>((<span class="st">`</span><span class="dt">Years of good health</span><span class="st">`</span> <span class="op">-</span><span class="st"> </span></span>
-<span id="cb6-129"><a href="#cb6-129"></a><span class="st">                                           </span><span class="kw">lag</span>(<span class="st">`</span><span class="dt">Years of good health</span><span class="st">`</span>)) <span class="op">/</span><span class="st"> </span><span class="kw">lag</span>(<span class="st">`</span><span class="dt">Years of good health</span><span class="st">`</span>)),</span>
-<span id="cb6-130"><a href="#cb6-130"></a>           <span class="dt">p_yoy_poor_health =</span> <span class="dv">100</span> <span class="op">*</span><span class="st"> </span>((<span class="st">`</span><span class="dt">Years of poor health</span><span class="st">`</span> <span class="op">-</span><span class="st"> </span></span>
-<span id="cb6-131"><a href="#cb6-131"></a><span class="st">                                           </span><span class="kw">lag</span>(<span class="st">`</span><span class="dt">Years of poor health</span><span class="st">`</span>)) <span class="op">/</span><span class="st"> </span><span class="kw">lag</span>(<span class="st">`</span><span class="dt">Years of poor health</span><span class="st">`</span>))) <span class="op">%&gt;%</span></span>
-<span id="cb6-132"><a href="#cb6-132"></a><span class="st">    </span><span class="co"># Remove lag calc &lt;NA&gt; for 1990, and add cumulative yoy change for each subgroup</span></span>
-<span id="cb6-133"><a href="#cb6-133"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">p_yoy_good_health =</span> <span class="kw">ifelse</span>(year <span class="op">==</span><span class="st"> </span><span class="dv">1990</span>,</span>
-<span id="cb6-134"><a href="#cb6-134"></a>                                  <span class="dt">yes =</span> <span class="dv">0</span>,</span>
-<span id="cb6-135"><a href="#cb6-135"></a>                                  <span class="dt">no =</span> p_yoy_good_health),</span>
-<span id="cb6-136"><a href="#cb6-136"></a>           <span class="dt">p_yoy_poor_health =</span> <span class="kw">ifelse</span>(year <span class="op">==</span><span class="st"> </span><span class="dv">1990</span>,</span>
-<span id="cb6-137"><a href="#cb6-137"></a>                                    <span class="dt">yes =</span> <span class="dv">0</span>,</span>
-<span id="cb6-138"><a href="#cb6-138"></a>                                    <span class="dt">no =</span> p_yoy_poor_health)) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb6-139"><a href="#cb6-139"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">p_cum_yoy_good_health =</span> <span class="kw">cumsum</span>(p_yoy_good_health), </span>
-<span id="cb6-140"><a href="#cb6-140"></a>           <span class="dt">p_cum_yoy_poor_health =</span> <span class="kw">cumsum</span>(p_yoy_poor_health)) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb6-141"><a href="#cb6-141"></a><span class="st">    </span><span class="kw">ungroup</span>()</span>
-<span id="cb6-142"><a href="#cb6-142"></a></span>
-<span id="cb6-143"><a href="#cb6-143"></a><span class="co">############################################################</span></span>
-<span id="cb6-144"><a href="#cb6-144"></a><span class="co">#                                                          #</span></span>
-<span id="cb6-145"><a href="#cb6-145"></a><span class="co">#           Plot year-on-year percent change for           #</span></span>
-<span id="cb6-146"><a href="#cb6-146"></a><span class="co">#    &#39;years of good health&#39; and &#39;years of poor health&#39;     #</span></span>
-<span id="cb6-147"><a href="#cb6-147"></a><span class="co">#                                                          #</span></span>
-<span id="cb6-148"><a href="#cb6-148"></a><span class="co">############################################################</span></span>
-<span id="cb6-149"><a href="#cb6-149"></a><span class="co"># Males</span></span>
-<span id="cb6-150"><a href="#cb6-150"></a>perc_male &lt;-<span class="st"> </span>delta_spread <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb6-151"><a href="#cb6-151"></a><span class="st">    </span><span class="kw">filter</span>(sex <span class="op">==</span><span class="st"> &#39;Male&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb6-152"><a href="#cb6-152"></a><span class="st">    </span><span class="co"># Gather cum_yoy_* columns</span></span>
-<span id="cb6-153"><a href="#cb6-153"></a><span class="st">    </span><span class="kw">gather</span>(<span class="dt">key =</span> <span class="st">&#39;key&#39;</span>,</span>
-<span id="cb6-154"><a href="#cb6-154"></a>           <span class="dt">value =</span> <span class="st">&#39;value&#39;</span>,</span>
-<span id="cb6-155"><a href="#cb6-155"></a>           p_cum_yoy_good_health, p_cum_yoy_poor_health) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb6-156"><a href="#cb6-156"></a><span class="st">    </span><span class="co"># Plot</span></span>
-<span id="cb6-157"><a href="#cb6-157"></a><span class="st">    </span><span class="kw">ggplot</span>(<span class="dt">data =</span> .) <span class="op">+</span></span>
-<span id="cb6-158"><a href="#cb6-158"></a><span class="st">    </span><span class="kw">aes</span>(<span class="dt">x =</span> year,</span>
-<span id="cb6-159"><a href="#cb6-159"></a>        <span class="dt">y =</span> value,</span>
-<span id="cb6-160"><a href="#cb6-160"></a>        <span class="dt">colour =</span> key) <span class="op">+</span></span>
-<span id="cb6-161"><a href="#cb6-161"></a><span class="st">    </span><span class="kw">geom_line</span>() <span class="op">+</span></span>
-<span id="cb6-162"><a href="#cb6-162"></a><span class="st">    </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">1990</span>, <span class="dv">1995</span>, <span class="dv">2000</span>, <span class="dv">2005</span>, <span class="dv">2010</span>, <span class="dv">2017</span>)) <span class="op">+</span></span>
-<span id="cb6-163"><a href="#cb6-163"></a><span class="st">    </span><span class="kw">scale_y_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>, <span class="dv">20</span>),</span>
-<span id="cb6-164"><a href="#cb6-164"></a>                       <span class="dt">breaks =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>, <span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">20</span>)) <span class="op">+</span></span>
-<span id="cb6-165"><a href="#cb6-165"></a><span class="st">    </span><span class="kw">scale_colour_manual</span>(<span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&#39;years of</span><span class="ch">\n</span><span class="st">good health&#39;</span>, <span class="st">&#39;Years of</span><span class="ch">\n</span><span class="st">poor health&#39;</span>), </span>
-<span id="cb6-166"><a href="#cb6-166"></a>                        <span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&#39;#56B4E9&#39;</span>, <span class="st">&#39;#E69F00&#39;</span>)) <span class="op">+</span></span>
-<span id="cb6-167"><a href="#cb6-167"></a><span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Cumulative year-over-year percent change in &#39;years of good health&#39; and &#39;years of poor health&#39;&quot;</span>,</span>
-<span id="cb6-168"><a href="#cb6-168"></a>         <span class="dt">x =</span> <span class="st">&#39;Year&#39;</span>,</span>
-<span id="cb6-169"><a href="#cb6-169"></a>         <span class="dt">y =</span> <span class="st">&quot;Cumulative change (%)&quot;</span>) <span class="op">+</span></span>
-<span id="cb6-170"><a href="#cb6-170"></a><span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>location, </span>
-<span id="cb6-171"><a href="#cb6-171"></a>               <span class="dt">ncol =</span> <span class="dv">5</span>) <span class="op">+</span></span>
-<span id="cb6-172"><a href="#cb6-172"></a><span class="st">    </span><span class="kw">theme_bw</span>(<span class="dt">base_size =</span> <span class="dv">12</span>) <span class="op">+</span></span>
-<span id="cb6-173"><a href="#cb6-173"></a><span class="st">    </span><span class="kw">theme</span>(<span class="dt">legend.title =</span> <span class="kw">element_blank</span>(),</span>
-<span id="cb6-174"><a href="#cb6-174"></a>          <span class="dt">legend.position =</span> <span class="kw">c</span>(<span class="fl">0.13</span>, <span class="fl">0.985</span>),</span>
-<span id="cb6-175"><a href="#cb6-175"></a>          <span class="dt">legend.justification =</span> <span class="kw">c</span>(<span class="fl">0.99</span>, <span class="fl">0.985</span>),</span>
-<span id="cb6-176"><a href="#cb6-176"></a>          <span class="dt">legend.margin =</span> <span class="kw">margin</span>(<span class="dt">t =</span> <span class="dv">0</span>, <span class="dt">r =</span> <span class="dv">0</span>, <span class="dt">b =</span> <span class="dv">0</span>, <span class="dt">l =</span> <span class="dv">0</span>, <span class="dt">unit =</span> <span class="st">&#39;lines&#39;</span>),</span>
-<span id="cb6-177"><a href="#cb6-177"></a>          <span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">12</span>, <span class="dt">face =</span> <span class="st">&#39;bold&#39;</span>),</span>
-<span id="cb6-178"><a href="#cb6-178"></a>          <span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle =</span> <span class="dv">45</span>,</span>
-<span id="cb6-179"><a href="#cb6-179"></a>                                     <span class="dt">hjust =</span> <span class="dv">1</span>,</span>
-<span id="cb6-180"><a href="#cb6-180"></a>                                     <span class="dt">vjust =</span> <span class="fl">1.1</span>),</span>
-<span id="cb6-181"><a href="#cb6-181"></a>          <span class="dt">panel.grid =</span> <span class="kw">element_blank</span>(),</span>
-<span id="cb6-182"><a href="#cb6-182"></a>          <span class="dt">strip.background =</span> <span class="kw">element_blank</span>()) <span class="op">+</span></span>
-<span id="cb6-183"><a href="#cb6-183"></a><span class="st">    </span><span class="kw">transition_reveal</span>(year)</span>
-<span id="cb6-184"><a href="#cb6-184"></a></span>
-<span id="cb6-185"><a href="#cb6-185"></a>perc_male &lt;-<span class="st"> </span><span class="kw">animate</span>(<span class="dt">plot =</span> perc_male,</span>
-<span id="cb6-186"><a href="#cb6-186"></a>                     <span class="dt">fps =</span> <span class="dv">10</span>, </span>
-<span id="cb6-187"><a href="#cb6-187"></a>                     <span class="dt">nframes =</span> <span class="dv">150</span>,</span>
-<span id="cb6-188"><a href="#cb6-188"></a>                     <span class="dt">duration =</span> <span class="dv">15</span>,</span>
-<span id="cb6-189"><a href="#cb6-189"></a>                     <span class="dt">end_pause =</span> <span class="dv">50</span>,</span>
-<span id="cb6-190"><a href="#cb6-190"></a>                     <span class="dt">res =</span> <span class="dv">150</span>,</span>
-<span id="cb6-191"><a href="#cb6-191"></a>                     <span class="dt">width =</span> <span class="dv">8</span>,</span>
-<span id="cb6-192"><a href="#cb6-192"></a>                     <span class="dt">height =</span> <span class="fl">2.75</span>,</span>
-<span id="cb6-193"><a href="#cb6-193"></a>                     <span class="dt">units =</span> <span class="st">&#39;in&#39;</span>)</span>
-<span id="cb6-194"><a href="#cb6-194"></a></span>
-<span id="cb6-195"><a href="#cb6-195"></a><span class="kw">anim_save</span>(<span class="dt">filename =</span> <span class="st">&#39;perc_male.gif&#39;</span>,</span>
-<span id="cb6-196"><a href="#cb6-196"></a>          <span class="dt">animation =</span> perc_male,</span>
-<span id="cb6-197"><a href="#cb6-197"></a>          <span class="dt">path =</span> <span class="st">&#39;./images/posts/2019-01-25-global-burden-of-disease&#39;</span>)</span>
-<span id="cb6-198"><a href="#cb6-198"></a></span>
-<span id="cb6-199"><a href="#cb6-199"></a><span class="co"># Females</span></span>
-<span id="cb6-200"><a href="#cb6-200"></a>perc_female &lt;-<span class="st"> </span>delta_spread <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb6-201"><a href="#cb6-201"></a><span class="st">    </span><span class="kw">filter</span>(sex <span class="op">==</span><span class="st"> &#39;Female&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb6-202"><a href="#cb6-202"></a><span class="st">    </span><span class="kw">gather</span>(<span class="dt">key =</span> <span class="st">&#39;key&#39;</span>,</span>
-<span id="cb6-203"><a href="#cb6-203"></a>           <span class="dt">value =</span> <span class="st">&#39;value&#39;</span>,</span>
-<span id="cb6-204"><a href="#cb6-204"></a>           p_cum_yoy_good_health, p_cum_yoy_poor_health) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb6-205"><a href="#cb6-205"></a><span class="st">    </span><span class="co"># Plot</span></span>
-<span id="cb6-206"><a href="#cb6-206"></a><span class="st">    </span><span class="kw">ggplot</span>(<span class="dt">data =</span> .) <span class="op">+</span></span>
-<span id="cb6-207"><a href="#cb6-207"></a><span class="st">    </span><span class="kw">aes</span>(<span class="dt">x =</span> year,</span>
-<span id="cb6-208"><a href="#cb6-208"></a>        <span class="dt">y =</span> value,</span>
-<span id="cb6-209"><a href="#cb6-209"></a>        <span class="dt">colour =</span> key) <span class="op">+</span></span>
-<span id="cb6-210"><a href="#cb6-210"></a><span class="st">    </span><span class="kw">geom_line</span>() <span class="op">+</span></span>
-<span id="cb6-211"><a href="#cb6-211"></a><span class="st">    </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">1990</span>, <span class="dv">1995</span>, <span class="dv">2000</span>, <span class="dv">2005</span>, <span class="dv">2010</span>, <span class="dv">2017</span>)) <span class="op">+</span></span>
-<span id="cb6-212"><a href="#cb6-212"></a><span class="st">    </span><span class="kw">scale_y_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>, <span class="dv">20</span>),</span>
-<span id="cb6-213"><a href="#cb6-213"></a>                       <span class="dt">breaks =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>, <span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">20</span>)) <span class="op">+</span></span>
-<span id="cb6-214"><a href="#cb6-214"></a><span class="st">    </span><span class="kw">scale_colour_manual</span>(<span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&#39;Years of</span><span class="ch">\n</span><span class="st">good health&#39;</span>, <span class="st">&#39;Years of</span><span class="ch">\n</span><span class="st">poor health&#39;</span>), </span>
-<span id="cb6-215"><a href="#cb6-215"></a>                        <span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&#39;#56B4E9&#39;</span>, <span class="st">&#39;#E69F00&#39;</span>)) <span class="op">+</span></span>
-<span id="cb6-216"><a href="#cb6-216"></a><span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Cumulative year-over-year percent change in &#39;years of good health&#39; and &#39;years of poor health&#39;&quot;</span>,</span>
-<span id="cb6-217"><a href="#cb6-217"></a>         <span class="dt">x =</span> <span class="st">&#39;Year&#39;</span>,</span>
-<span id="cb6-218"><a href="#cb6-218"></a>         <span class="dt">y =</span> <span class="st">&quot;Cumulative change (%)&quot;</span>) <span class="op">+</span></span>
-<span id="cb6-219"><a href="#cb6-219"></a><span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>location, </span>
-<span id="cb6-220"><a href="#cb6-220"></a>               <span class="dt">ncol =</span> <span class="dv">5</span>) <span class="op">+</span></span>
-<span id="cb6-221"><a href="#cb6-221"></a><span class="st">    </span><span class="kw">theme_bw</span>(<span class="dt">base_size =</span> <span class="dv">12</span>) <span class="op">+</span></span>
-<span id="cb6-222"><a href="#cb6-222"></a><span class="st">    </span><span class="kw">theme</span>(<span class="dt">legend.title =</span> <span class="kw">element_blank</span>(),</span>
-<span id="cb6-223"><a href="#cb6-223"></a>          <span class="dt">legend.position =</span> <span class="kw">c</span>(<span class="fl">0.13</span>, <span class="fl">0.985</span>),</span>
-<span id="cb6-224"><a href="#cb6-224"></a>          <span class="dt">legend.justification =</span> <span class="kw">c</span>(<span class="fl">0.99</span>, <span class="fl">0.985</span>),</span>
-<span id="cb6-225"><a href="#cb6-225"></a>          <span class="dt">legend.margin =</span> <span class="kw">margin</span>(<span class="dt">t =</span> <span class="dv">0</span>, <span class="dt">r =</span> <span class="dv">0</span>, <span class="dt">b =</span> <span class="dv">0</span>, <span class="dt">l =</span> <span class="dv">0</span>, <span class="dt">unit =</span> <span class="st">&#39;lines&#39;</span>),<span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">12</span>, <span class="dt">face =</span> <span class="st">&#39;bold&#39;</span>),</span>
-<span id="cb6-226"><a href="#cb6-226"></a>          <span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle =</span> <span class="dv">45</span>,</span>
-<span id="cb6-227"><a href="#cb6-227"></a>                                     <span class="dt">hjust =</span> <span class="dv">1</span>,</span>
-<span id="cb6-228"><a href="#cb6-228"></a>                                     <span class="dt">vjust =</span> <span class="fl">1.1</span>),</span>
-<span id="cb6-229"><a href="#cb6-229"></a>          <span class="dt">panel.grid =</span> <span class="kw">element_blank</span>(),</span>
-<span id="cb6-230"><a href="#cb6-230"></a>          <span class="dt">strip.background =</span> <span class="kw">element_blank</span>()) <span class="op">+</span></span>
-<span id="cb6-231"><a href="#cb6-231"></a><span class="st">    </span><span class="kw">transition_reveal</span>(year)</span>
-<span id="cb6-232"><a href="#cb6-232"></a></span>
-<span id="cb6-233"><a href="#cb6-233"></a>perc_female &lt;-<span class="st"> </span><span class="kw">animate</span>(<span class="dt">plot =</span> perc_female, </span>
-<span id="cb6-234"><a href="#cb6-234"></a>                       <span class="dt">fps =</span> <span class="dv">10</span>, </span>
-<span id="cb6-235"><a href="#cb6-235"></a>                       <span class="dt">nframes =</span> <span class="dv">150</span>,</span>
-<span id="cb6-236"><a href="#cb6-236"></a>                       <span class="dt">duration =</span> <span class="dv">15</span>,</span>
-<span id="cb6-237"><a href="#cb6-237"></a>                       <span class="dt">end_pause =</span> <span class="dv">50</span>,</span>
-<span id="cb6-238"><a href="#cb6-238"></a>                       <span class="dt">res =</span> <span class="dv">150</span>,</span>
-<span id="cb6-239"><a href="#cb6-239"></a>                       <span class="dt">width =</span> <span class="dv">8</span>,</span>
-<span id="cb6-240"><a href="#cb6-240"></a>                       <span class="dt">height =</span> <span class="fl">2.75</span>,</span>
-<span id="cb6-241"><a href="#cb6-241"></a>                       <span class="dt">units =</span> <span class="st">&#39;in&#39;</span>)</span>
-<span id="cb6-242"><a href="#cb6-242"></a></span>
-<span id="cb6-243"><a href="#cb6-243"></a><span class="kw">anim_save</span>(<span class="dt">filename =</span> <span class="st">&#39;perc_female.gif&#39;</span>,</span>
-<span id="cb6-244"><a href="#cb6-244"></a>          <span class="dt">animation =</span> perc_female,</span>
-<span id="cb6-245"><a href="#cb6-245"></a>          <span class="dt">path =</span> <span class="st">&#39;./images/posts/2019-01-25-global-burden-of-disease&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="do">############################################################</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#                                                          #</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">#           Plot animated versions of the total            #</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#        life expectancy data for males and females        #</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#                                                          #</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="do">############################################################</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Males</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>le_male <span class="ot">&lt;-</span> delta <span class="sc">%&gt;%</span> </span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(sex <span class="sc">==</span> <span class="st">&#39;Male&#39;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(measure <span class="sc">==</span> <span class="st">&#39;Total life expectancy&#39;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="at">data =</span> .) <span class="sc">+</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> year,</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> val) <span class="sc">+</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">colour =</span> <span class="st">&#39;#00468B&#39;</span>) <span class="sc">+</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">1990</span>, <span class="dv">1995</span>, <span class="dv">2000</span>, <span class="dv">2005</span>, <span class="dv">2010</span>, <span class="dv">2017</span>)) <span class="sc">+</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">60</span>, <span class="dv">70</span>, <span class="dv">80</span>),</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>                       <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">85</span>),</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>                       <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&#39;Total life expectancy at birth&#39;</span>,</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">&#39;Years of life&#39;</span>) <span class="sc">+</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span> location, </span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>               <span class="at">ncol =</span> <span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>          <span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.99</span>, <span class="fl">0.985</span>),</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>          <span class="at">legend.justification =</span> <span class="fu">c</span>(<span class="fl">0.99</span>, <span class="fl">0.985</span>),</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>          <span class="at">legend.margin =</span> <span class="fu">margin</span>(<span class="at">t =</span> <span class="dv">0</span>, <span class="at">r =</span> <span class="dv">0</span>, <span class="at">b =</span> <span class="dv">0</span>, <span class="at">l =</span> <span class="dv">0</span>, <span class="at">unit =</span> <span class="st">&#39;lines&#39;</span>),</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>          <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">face =</span> <span class="st">&#39;bold&#39;</span>),</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>          <span class="at">strip.background =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>    <span class="fu">transition_reveal</span>(year)</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>le_male <span class="ot">&lt;-</span> <span class="fu">animate</span>(<span class="at">plot =</span> le_male, </span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>                   <span class="at">fps =</span> <span class="dv">10</span>,</span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>                   <span class="at">nframes =</span> <span class="dv">150</span>,</span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>                   <span class="at">duration =</span> <span class="dv">15</span>,</span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>                   <span class="at">end_pause =</span> <span class="dv">50</span>,</span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>                   <span class="at">res =</span> <span class="dv">150</span>,</span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>                   <span class="at">width =</span> <span class="dv">8</span>,</span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>                   <span class="at">height =</span> <span class="fl">2.2</span>,</span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>                   <span class="at">units =</span> <span class="st">&#39;in&#39;</span>)</span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a><span class="fu">anim_save</span>(<span class="at">filename =</span> <span class="st">&#39;le_male.gif&#39;</span>,</span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a>          <span class="at">animation =</span> le_male,</span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>          <span class="at">path =</span> <span class="st">&#39;./images/posts/2019-01-25-global-burden-of-disease&#39;</span>)</span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a><span class="co"># Females</span></span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a>le_female <span class="ot">&lt;-</span> delta <span class="sc">%&gt;%</span> </span>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(sex <span class="sc">==</span> <span class="st">&#39;Female&#39;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(measure <span class="sc">==</span> <span class="st">&#39;Total life expectancy&#39;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="at">data =</span> .) <span class="sc">+</span></span>
+<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> year,</span>
+<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> val) <span class="sc">+</span></span>
+<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">colour =</span> <span class="st">&#39;#ED0000&#39;</span>) <span class="sc">+</span></span>
+<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">1990</span>, <span class="dv">1995</span>, <span class="dv">2000</span>, <span class="dv">2005</span>, <span class="dv">2010</span>, <span class="dv">2017</span>)) <span class="sc">+</span></span>
+<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">60</span>, <span class="dv">70</span>, <span class="dv">80</span>),</span>
+<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a>                       <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">85</span>),</span>
+<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a>                       <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&#39;Total life expectancy at birth&#39;</span>,</span>
+<span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">&#39;Years of life&#39;</span>) <span class="sc">+</span></span>
+<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span> location, </span>
+<span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a>               <span class="at">ncol =</span> <span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb6-67"><a href="#cb6-67" aria-hidden="true" tabindex="-1"></a>          <span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.99</span>, <span class="fl">0.985</span>),</span>
+<span id="cb6-68"><a href="#cb6-68" aria-hidden="true" tabindex="-1"></a>          <span class="at">legend.justification =</span> <span class="fu">c</span>(<span class="fl">0.99</span>, <span class="fl">0.985</span>),</span>
+<span id="cb6-69"><a href="#cb6-69" aria-hidden="true" tabindex="-1"></a>          <span class="at">legend.margin =</span> <span class="fu">margin</span>(<span class="at">t =</span> <span class="dv">0</span>, <span class="at">r =</span> <span class="dv">0</span>, <span class="at">b =</span> <span class="dv">0</span>, <span class="at">l =</span> <span class="dv">0</span>, <span class="at">unit =</span> <span class="st">&#39;lines&#39;</span>),</span>
+<span id="cb6-70"><a href="#cb6-70" aria-hidden="true" tabindex="-1"></a>          <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">face =</span> <span class="st">&#39;bold&#39;</span>),</span>
+<span id="cb6-71"><a href="#cb6-71" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb6-72"><a href="#cb6-72" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb6-73"><a href="#cb6-73" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb6-74"><a href="#cb6-74" aria-hidden="true" tabindex="-1"></a>          <span class="at">strip.background =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
+<span id="cb6-75"><a href="#cb6-75" aria-hidden="true" tabindex="-1"></a>    <span class="fu">transition_reveal</span>(year)</span>
+<span id="cb6-76"><a href="#cb6-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-77"><a href="#cb6-77" aria-hidden="true" tabindex="-1"></a>le_female <span class="ot">&lt;-</span> <span class="fu">animate</span>(<span class="at">plot =</span> le_female, </span>
+<span id="cb6-78"><a href="#cb6-78" aria-hidden="true" tabindex="-1"></a>                     <span class="at">fps =</span> <span class="dv">10</span>, </span>
+<span id="cb6-79"><a href="#cb6-79" aria-hidden="true" tabindex="-1"></a>                     <span class="at">nframes =</span> <span class="dv">150</span>,</span>
+<span id="cb6-80"><a href="#cb6-80" aria-hidden="true" tabindex="-1"></a>                     <span class="at">duration =</span> <span class="dv">15</span>,</span>
+<span id="cb6-81"><a href="#cb6-81" aria-hidden="true" tabindex="-1"></a>                     <span class="at">end_pause =</span> <span class="dv">50</span>,</span>
+<span id="cb6-82"><a href="#cb6-82" aria-hidden="true" tabindex="-1"></a>                     <span class="at">res =</span> <span class="dv">150</span>,</span>
+<span id="cb6-83"><a href="#cb6-83" aria-hidden="true" tabindex="-1"></a>                     <span class="at">width =</span> <span class="dv">8</span>,</span>
+<span id="cb6-84"><a href="#cb6-84" aria-hidden="true" tabindex="-1"></a>                     <span class="at">height =</span> <span class="fl">2.2</span>,</span>
+<span id="cb6-85"><a href="#cb6-85" aria-hidden="true" tabindex="-1"></a>                     <span class="at">units =</span> <span class="st">&#39;in&#39;</span>)</span>
+<span id="cb6-86"><a href="#cb6-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-87"><a href="#cb6-87" aria-hidden="true" tabindex="-1"></a><span class="fu">anim_save</span>(<span class="at">filename =</span> <span class="st">&#39;le_female.gif&#39;</span>,</span>
+<span id="cb6-88"><a href="#cb6-88" aria-hidden="true" tabindex="-1"></a>          <span class="at">animation =</span> le_female,</span>
+<span id="cb6-89"><a href="#cb6-89" aria-hidden="true" tabindex="-1"></a>          <span class="at">path =</span> <span class="st">&#39;./images/posts/2019-01-25-global-burden-of-disease&#39;</span>)</span>
+<span id="cb6-90"><a href="#cb6-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-91"><a href="#cb6-91" aria-hidden="true" tabindex="-1"></a><span class="do">############################################################</span></span>
+<span id="cb6-92"><a href="#cb6-92" aria-hidden="true" tabindex="-1"></a><span class="co">#                                                          #</span></span>
+<span id="cb6-93"><a href="#cb6-93" aria-hidden="true" tabindex="-1"></a><span class="co">#          General processing that will be useful          #</span></span>
+<span id="cb6-94"><a href="#cb6-94" aria-hidden="true" tabindex="-1"></a><span class="co">#             for several plots down the line              #</span></span>
+<span id="cb6-95"><a href="#cb6-95" aria-hidden="true" tabindex="-1"></a><span class="co">#                                                          #</span></span>
+<span id="cb6-96"><a href="#cb6-96" aria-hidden="true" tabindex="-1"></a><span class="do">############################################################</span></span>
+<span id="cb6-97"><a href="#cb6-97" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate a version of the delta dataframe with the measure column spread</span></span>
+<span id="cb6-98"><a href="#cb6-98" aria-hidden="true" tabindex="-1"></a>delta_spread <span class="ot">&lt;-</span> delta <span class="sc">%&gt;%</span> </span>
+<span id="cb6-99"><a href="#cb6-99" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Spread the measures column</span></span>
+<span id="cb6-100"><a href="#cb6-100" aria-hidden="true" tabindex="-1"></a>    <span class="fu">spread</span>(<span class="at">key =</span> measure,</span>
+<span id="cb6-101"><a href="#cb6-101" aria-hidden="true" tabindex="-1"></a>           <span class="at">value =</span> val) </span>
+<span id="cb6-102"><a href="#cb6-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-103"><a href="#cb6-103" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract 1990 values for each measure and for each subgroup</span></span>
+<span id="cb6-104"><a href="#cb6-104" aria-hidden="true" tabindex="-1"></a>baseline_1990 <span class="ot">&lt;-</span> delta_spread <span class="sc">%&gt;%</span></span>
+<span id="cb6-105"><a href="#cb6-105" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(location, sex) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-106"><a href="#cb6-106" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Extract 1990 values </span></span>
+<span id="cb6-107"><a href="#cb6-107" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">1990</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-108"><a href="#cb6-108" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Rename columns</span></span>
+<span id="cb6-109"><a href="#cb6-109" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="st">`</span><span class="at">Total life expectancy 1990</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">Total life expectancy</span><span class="st">`</span>,</span>
+<span id="cb6-110"><a href="#cb6-110" aria-hidden="true" tabindex="-1"></a>           <span class="st">`</span><span class="at">Years of good health 1990</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">Years of good health</span><span class="st">`</span>,</span>
+<span id="cb6-111"><a href="#cb6-111" aria-hidden="true" tabindex="-1"></a>           <span class="st">`</span><span class="at">Years of poor unhealth 1990</span><span class="st">`</span> <span class="ot">=</span> <span class="st">`</span><span class="at">Years of poor health</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-112"><a href="#cb6-112" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Remove unneeded column</span></span>
+<span id="cb6-113"><a href="#cb6-113" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>metric, <span class="sc">-</span>year)</span>
+<span id="cb6-114"><a href="#cb6-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-115"><a href="#cb6-115" aria-hidden="true" tabindex="-1"></a><span class="co"># Join baseline_1990 to delta_spread</span></span>
+<span id="cb6-116"><a href="#cb6-116" aria-hidden="true" tabindex="-1"></a>delta_spread <span class="sc">%&lt;&gt;%</span></span>
+<span id="cb6-117"><a href="#cb6-117" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(baseline_1990)</span>
+<span id="cb6-118"><a href="#cb6-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-119"><a href="#cb6-119" aria-hidden="true" tabindex="-1"></a><span class="do">############################################################</span></span>
+<span id="cb6-120"><a href="#cb6-120" aria-hidden="true" tabindex="-1"></a><span class="co">#                                                          #</span></span>
+<span id="cb6-121"><a href="#cb6-121" aria-hidden="true" tabindex="-1"></a><span class="co">#       Cumulative year-on-year percent change for         #</span></span>
+<span id="cb6-122"><a href="#cb6-122" aria-hidden="true" tabindex="-1"></a><span class="co">#    &#39;years of good health&#39; and &#39;years of poor health&#39;     #</span></span>
+<span id="cb6-123"><a href="#cb6-123" aria-hidden="true" tabindex="-1"></a><span class="co">#                                                          #</span></span>
+<span id="cb6-124"><a href="#cb6-124" aria-hidden="true" tabindex="-1"></a><span class="do">############################################################</span></span>
+<span id="cb6-125"><a href="#cb6-125" aria-hidden="true" tabindex="-1"></a>delta_spread <span class="sc">%&lt;&gt;%</span> </span>
+<span id="cb6-126"><a href="#cb6-126" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Year-over-year change for each subgroup</span></span>
+<span id="cb6-127"><a href="#cb6-127" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(location, sex) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-128"><a href="#cb6-128" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">p_yoy_good_health =</span> <span class="dv">100</span> <span class="sc">*</span> ((<span class="st">`</span><span class="at">Years of good health</span><span class="st">`</span> <span class="sc">-</span> </span>
+<span id="cb6-129"><a href="#cb6-129" aria-hidden="true" tabindex="-1"></a>                                           <span class="fu">lag</span>(<span class="st">`</span><span class="at">Years of good health</span><span class="st">`</span>)) <span class="sc">/</span> <span class="fu">lag</span>(<span class="st">`</span><span class="at">Years of good health</span><span class="st">`</span>)),</span>
+<span id="cb6-130"><a href="#cb6-130" aria-hidden="true" tabindex="-1"></a>           <span class="at">p_yoy_poor_health =</span> <span class="dv">100</span> <span class="sc">*</span> ((<span class="st">`</span><span class="at">Years of poor health</span><span class="st">`</span> <span class="sc">-</span> </span>
+<span id="cb6-131"><a href="#cb6-131" aria-hidden="true" tabindex="-1"></a>                                           <span class="fu">lag</span>(<span class="st">`</span><span class="at">Years of poor health</span><span class="st">`</span>)) <span class="sc">/</span> <span class="fu">lag</span>(<span class="st">`</span><span class="at">Years of poor health</span><span class="st">`</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb6-132"><a href="#cb6-132" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Remove lag calc &lt;NA&gt; for 1990, and add cumulative yoy change for each subgroup</span></span>
+<span id="cb6-133"><a href="#cb6-133" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">p_yoy_good_health =</span> <span class="fu">ifelse</span>(year <span class="sc">==</span> <span class="dv">1990</span>,</span>
+<span id="cb6-134"><a href="#cb6-134" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">yes =</span> <span class="dv">0</span>,</span>
+<span id="cb6-135"><a href="#cb6-135" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">no =</span> p_yoy_good_health),</span>
+<span id="cb6-136"><a href="#cb6-136" aria-hidden="true" tabindex="-1"></a>           <span class="at">p_yoy_poor_health =</span> <span class="fu">ifelse</span>(year <span class="sc">==</span> <span class="dv">1990</span>,</span>
+<span id="cb6-137"><a href="#cb6-137" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">yes =</span> <span class="dv">0</span>,</span>
+<span id="cb6-138"><a href="#cb6-138" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">no =</span> p_yoy_poor_health)) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-139"><a href="#cb6-139" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">p_cum_yoy_good_health =</span> <span class="fu">cumsum</span>(p_yoy_good_health), </span>
+<span id="cb6-140"><a href="#cb6-140" aria-hidden="true" tabindex="-1"></a>           <span class="at">p_cum_yoy_poor_health =</span> <span class="fu">cumsum</span>(p_yoy_poor_health)) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-141"><a href="#cb6-141" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ungroup</span>()</span>
+<span id="cb6-142"><a href="#cb6-142" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-143"><a href="#cb6-143" aria-hidden="true" tabindex="-1"></a><span class="do">############################################################</span></span>
+<span id="cb6-144"><a href="#cb6-144" aria-hidden="true" tabindex="-1"></a><span class="co">#                                                          #</span></span>
+<span id="cb6-145"><a href="#cb6-145" aria-hidden="true" tabindex="-1"></a><span class="co">#           Plot year-on-year percent change for           #</span></span>
+<span id="cb6-146"><a href="#cb6-146" aria-hidden="true" tabindex="-1"></a><span class="co">#    &#39;years of good health&#39; and &#39;years of poor health&#39;     #</span></span>
+<span id="cb6-147"><a href="#cb6-147" aria-hidden="true" tabindex="-1"></a><span class="co">#                                                          #</span></span>
+<span id="cb6-148"><a href="#cb6-148" aria-hidden="true" tabindex="-1"></a><span class="do">############################################################</span></span>
+<span id="cb6-149"><a href="#cb6-149" aria-hidden="true" tabindex="-1"></a><span class="co"># Males</span></span>
+<span id="cb6-150"><a href="#cb6-150" aria-hidden="true" tabindex="-1"></a>perc_male <span class="ot">&lt;-</span> delta_spread <span class="sc">%&gt;%</span> </span>
+<span id="cb6-151"><a href="#cb6-151" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(sex <span class="sc">==</span> <span class="st">&#39;Male&#39;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-152"><a href="#cb6-152" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Gather cum_yoy_* columns</span></span>
+<span id="cb6-153"><a href="#cb6-153" aria-hidden="true" tabindex="-1"></a>    <span class="fu">gather</span>(<span class="at">key =</span> <span class="st">&#39;key&#39;</span>,</span>
+<span id="cb6-154"><a href="#cb6-154" aria-hidden="true" tabindex="-1"></a>           <span class="at">value =</span> <span class="st">&#39;value&#39;</span>,</span>
+<span id="cb6-155"><a href="#cb6-155" aria-hidden="true" tabindex="-1"></a>           p_cum_yoy_good_health, p_cum_yoy_poor_health) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-156"><a href="#cb6-156" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Plot</span></span>
+<span id="cb6-157"><a href="#cb6-157" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="at">data =</span> .) <span class="sc">+</span></span>
+<span id="cb6-158"><a href="#cb6-158" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> year,</span>
+<span id="cb6-159"><a href="#cb6-159" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> value,</span>
+<span id="cb6-160"><a href="#cb6-160" aria-hidden="true" tabindex="-1"></a>        <span class="at">colour =</span> key) <span class="sc">+</span></span>
+<span id="cb6-161"><a href="#cb6-161" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb6-162"><a href="#cb6-162" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">1990</span>, <span class="dv">1995</span>, <span class="dv">2000</span>, <span class="dv">2005</span>, <span class="dv">2010</span>, <span class="dv">2017</span>)) <span class="sc">+</span></span>
+<span id="cb6-163"><a href="#cb6-163" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">5</span>, <span class="dv">20</span>),</span>
+<span id="cb6-164"><a href="#cb6-164" aria-hidden="true" tabindex="-1"></a>                       <span class="at">breaks =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">5</span>, <span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">20</span>)) <span class="sc">+</span></span>
+<span id="cb6-165"><a href="#cb6-165" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_colour_manual</span>(<span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&#39;years of</span><span class="sc">\n</span><span class="st">good health&#39;</span>, <span class="st">&#39;Years of</span><span class="sc">\n</span><span class="st">poor health&#39;</span>), </span>
+<span id="cb6-166"><a href="#cb6-166" aria-hidden="true" tabindex="-1"></a>                        <span class="at">values =</span> <span class="fu">c</span>(<span class="st">&#39;#56B4E9&#39;</span>, <span class="st">&#39;#E69F00&#39;</span>)) <span class="sc">+</span></span>
+<span id="cb6-167"><a href="#cb6-167" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Cumulative year-over-year percent change in &#39;years of good health&#39; and &#39;years of poor health&#39;&quot;</span>,</span>
+<span id="cb6-168"><a href="#cb6-168" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">&#39;Year&#39;</span>,</span>
+<span id="cb6-169"><a href="#cb6-169" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">&quot;Cumulative change (%)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb6-170"><a href="#cb6-170" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span> location, </span>
+<span id="cb6-171"><a href="#cb6-171" aria-hidden="true" tabindex="-1"></a>               <span class="at">ncol =</span> <span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb6-172"><a href="#cb6-172" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb6-173"><a href="#cb6-173" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb6-174"><a href="#cb6-174" aria-hidden="true" tabindex="-1"></a>          <span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.13</span>, <span class="fl">0.985</span>),</span>
+<span id="cb6-175"><a href="#cb6-175" aria-hidden="true" tabindex="-1"></a>          <span class="at">legend.justification =</span> <span class="fu">c</span>(<span class="fl">0.99</span>, <span class="fl">0.985</span>),</span>
+<span id="cb6-176"><a href="#cb6-176" aria-hidden="true" tabindex="-1"></a>          <span class="at">legend.margin =</span> <span class="fu">margin</span>(<span class="at">t =</span> <span class="dv">0</span>, <span class="at">r =</span> <span class="dv">0</span>, <span class="at">b =</span> <span class="dv">0</span>, <span class="at">l =</span> <span class="dv">0</span>, <span class="at">unit =</span> <span class="st">&#39;lines&#39;</span>),</span>
+<span id="cb6-177"><a href="#cb6-177" aria-hidden="true" tabindex="-1"></a>          <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">face =</span> <span class="st">&#39;bold&#39;</span>),</span>
+<span id="cb6-178"><a href="#cb6-178" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>,</span>
+<span id="cb6-179"><a href="#cb6-179" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">hjust =</span> <span class="dv">1</span>,</span>
+<span id="cb6-180"><a href="#cb6-180" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">vjust =</span> <span class="fl">1.1</span>),</span>
+<span id="cb6-181"><a href="#cb6-181" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb6-182"><a href="#cb6-182" aria-hidden="true" tabindex="-1"></a>          <span class="at">strip.background =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
+<span id="cb6-183"><a href="#cb6-183" aria-hidden="true" tabindex="-1"></a>    <span class="fu">transition_reveal</span>(year)</span>
+<span id="cb6-184"><a href="#cb6-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-185"><a href="#cb6-185" aria-hidden="true" tabindex="-1"></a>perc_male <span class="ot">&lt;-</span> <span class="fu">animate</span>(<span class="at">plot =</span> perc_male,</span>
+<span id="cb6-186"><a href="#cb6-186" aria-hidden="true" tabindex="-1"></a>                     <span class="at">fps =</span> <span class="dv">10</span>, </span>
+<span id="cb6-187"><a href="#cb6-187" aria-hidden="true" tabindex="-1"></a>                     <span class="at">nframes =</span> <span class="dv">150</span>,</span>
+<span id="cb6-188"><a href="#cb6-188" aria-hidden="true" tabindex="-1"></a>                     <span class="at">duration =</span> <span class="dv">15</span>,</span>
+<span id="cb6-189"><a href="#cb6-189" aria-hidden="true" tabindex="-1"></a>                     <span class="at">end_pause =</span> <span class="dv">50</span>,</span>
+<span id="cb6-190"><a href="#cb6-190" aria-hidden="true" tabindex="-1"></a>                     <span class="at">res =</span> <span class="dv">150</span>,</span>
+<span id="cb6-191"><a href="#cb6-191" aria-hidden="true" tabindex="-1"></a>                     <span class="at">width =</span> <span class="dv">8</span>,</span>
+<span id="cb6-192"><a href="#cb6-192" aria-hidden="true" tabindex="-1"></a>                     <span class="at">height =</span> <span class="fl">2.75</span>,</span>
+<span id="cb6-193"><a href="#cb6-193" aria-hidden="true" tabindex="-1"></a>                     <span class="at">units =</span> <span class="st">&#39;in&#39;</span>)</span>
+<span id="cb6-194"><a href="#cb6-194" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-195"><a href="#cb6-195" aria-hidden="true" tabindex="-1"></a><span class="fu">anim_save</span>(<span class="at">filename =</span> <span class="st">&#39;perc_male.gif&#39;</span>,</span>
+<span id="cb6-196"><a href="#cb6-196" aria-hidden="true" tabindex="-1"></a>          <span class="at">animation =</span> perc_male,</span>
+<span id="cb6-197"><a href="#cb6-197" aria-hidden="true" tabindex="-1"></a>          <span class="at">path =</span> <span class="st">&#39;./images/posts/2019-01-25-global-burden-of-disease&#39;</span>)</span>
+<span id="cb6-198"><a href="#cb6-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-199"><a href="#cb6-199" aria-hidden="true" tabindex="-1"></a><span class="co"># Females</span></span>
+<span id="cb6-200"><a href="#cb6-200" aria-hidden="true" tabindex="-1"></a>perc_female <span class="ot">&lt;-</span> delta_spread <span class="sc">%&gt;%</span> </span>
+<span id="cb6-201"><a href="#cb6-201" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(sex <span class="sc">==</span> <span class="st">&#39;Female&#39;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-202"><a href="#cb6-202" aria-hidden="true" tabindex="-1"></a>    <span class="fu">gather</span>(<span class="at">key =</span> <span class="st">&#39;key&#39;</span>,</span>
+<span id="cb6-203"><a href="#cb6-203" aria-hidden="true" tabindex="-1"></a>           <span class="at">value =</span> <span class="st">&#39;value&#39;</span>,</span>
+<span id="cb6-204"><a href="#cb6-204" aria-hidden="true" tabindex="-1"></a>           p_cum_yoy_good_health, p_cum_yoy_poor_health) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-205"><a href="#cb6-205" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Plot</span></span>
+<span id="cb6-206"><a href="#cb6-206" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="at">data =</span> .) <span class="sc">+</span></span>
+<span id="cb6-207"><a href="#cb6-207" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> year,</span>
+<span id="cb6-208"><a href="#cb6-208" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> value,</span>
+<span id="cb6-209"><a href="#cb6-209" aria-hidden="true" tabindex="-1"></a>        <span class="at">colour =</span> key) <span class="sc">+</span></span>
+<span id="cb6-210"><a href="#cb6-210" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb6-211"><a href="#cb6-211" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">1990</span>, <span class="dv">1995</span>, <span class="dv">2000</span>, <span class="dv">2005</span>, <span class="dv">2010</span>, <span class="dv">2017</span>)) <span class="sc">+</span></span>
+<span id="cb6-212"><a href="#cb6-212" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">5</span>, <span class="dv">20</span>),</span>
+<span id="cb6-213"><a href="#cb6-213" aria-hidden="true" tabindex="-1"></a>                       <span class="at">breaks =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">5</span>, <span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">20</span>)) <span class="sc">+</span></span>
+<span id="cb6-214"><a href="#cb6-214" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_colour_manual</span>(<span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&#39;Years of</span><span class="sc">\n</span><span class="st">good health&#39;</span>, <span class="st">&#39;Years of</span><span class="sc">\n</span><span class="st">poor health&#39;</span>), </span>
+<span id="cb6-215"><a href="#cb6-215" aria-hidden="true" tabindex="-1"></a>                        <span class="at">values =</span> <span class="fu">c</span>(<span class="st">&#39;#56B4E9&#39;</span>, <span class="st">&#39;#E69F00&#39;</span>)) <span class="sc">+</span></span>
+<span id="cb6-216"><a href="#cb6-216" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Cumulative year-over-year percent change in &#39;years of good health&#39; and &#39;years of poor health&#39;&quot;</span>,</span>
+<span id="cb6-217"><a href="#cb6-217" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">&#39;Year&#39;</span>,</span>
+<span id="cb6-218"><a href="#cb6-218" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">&quot;Cumulative change (%)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb6-219"><a href="#cb6-219" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span> location, </span>
+<span id="cb6-220"><a href="#cb6-220" aria-hidden="true" tabindex="-1"></a>               <span class="at">ncol =</span> <span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb6-221"><a href="#cb6-221" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb6-222"><a href="#cb6-222" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb6-223"><a href="#cb6-223" aria-hidden="true" tabindex="-1"></a>          <span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.13</span>, <span class="fl">0.985</span>),</span>
+<span id="cb6-224"><a href="#cb6-224" aria-hidden="true" tabindex="-1"></a>          <span class="at">legend.justification =</span> <span class="fu">c</span>(<span class="fl">0.99</span>, <span class="fl">0.985</span>),</span>
+<span id="cb6-225"><a href="#cb6-225" aria-hidden="true" tabindex="-1"></a>          <span class="at">legend.margin =</span> <span class="fu">margin</span>(<span class="at">t =</span> <span class="dv">0</span>, <span class="at">r =</span> <span class="dv">0</span>, <span class="at">b =</span> <span class="dv">0</span>, <span class="at">l =</span> <span class="dv">0</span>, <span class="at">unit =</span> <span class="st">&#39;lines&#39;</span>),<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">face =</span> <span class="st">&#39;bold&#39;</span>),</span>
+<span id="cb6-226"><a href="#cb6-226" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>,</span>
+<span id="cb6-227"><a href="#cb6-227" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">hjust =</span> <span class="dv">1</span>,</span>
+<span id="cb6-228"><a href="#cb6-228" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">vjust =</span> <span class="fl">1.1</span>),</span>
+<span id="cb6-229"><a href="#cb6-229" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb6-230"><a href="#cb6-230" aria-hidden="true" tabindex="-1"></a>          <span class="at">strip.background =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
+<span id="cb6-231"><a href="#cb6-231" aria-hidden="true" tabindex="-1"></a>    <span class="fu">transition_reveal</span>(year)</span>
+<span id="cb6-232"><a href="#cb6-232" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-233"><a href="#cb6-233" aria-hidden="true" tabindex="-1"></a>perc_female <span class="ot">&lt;-</span> <span class="fu">animate</span>(<span class="at">plot =</span> perc_female, </span>
+<span id="cb6-234"><a href="#cb6-234" aria-hidden="true" tabindex="-1"></a>                       <span class="at">fps =</span> <span class="dv">10</span>, </span>
+<span id="cb6-235"><a href="#cb6-235" aria-hidden="true" tabindex="-1"></a>                       <span class="at">nframes =</span> <span class="dv">150</span>,</span>
+<span id="cb6-236"><a href="#cb6-236" aria-hidden="true" tabindex="-1"></a>                       <span class="at">duration =</span> <span class="dv">15</span>,</span>
+<span id="cb6-237"><a href="#cb6-237" aria-hidden="true" tabindex="-1"></a>                       <span class="at">end_pause =</span> <span class="dv">50</span>,</span>
+<span id="cb6-238"><a href="#cb6-238" aria-hidden="true" tabindex="-1"></a>                       <span class="at">res =</span> <span class="dv">150</span>,</span>
+<span id="cb6-239"><a href="#cb6-239" aria-hidden="true" tabindex="-1"></a>                       <span class="at">width =</span> <span class="dv">8</span>,</span>
+<span id="cb6-240"><a href="#cb6-240" aria-hidden="true" tabindex="-1"></a>                       <span class="at">height =</span> <span class="fl">2.75</span>,</span>
+<span id="cb6-241"><a href="#cb6-241" aria-hidden="true" tabindex="-1"></a>                       <span class="at">units =</span> <span class="st">&#39;in&#39;</span>)</span>
+<span id="cb6-242"><a href="#cb6-242" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-243"><a href="#cb6-243" aria-hidden="true" tabindex="-1"></a><span class="fu">anim_save</span>(<span class="at">filename =</span> <span class="st">&#39;perc_female.gif&#39;</span>,</span>
+<span id="cb6-244"><a href="#cb6-244" aria-hidden="true" tabindex="-1"></a>          <span class="at">animation =</span> perc_female,</span>
+<span id="cb6-245"><a href="#cb6-245" aria-hidden="true" tabindex="-1"></a>          <span class="at">path =</span> <span class="st">&#39;./images/posts/2019-01-25-global-burden-of-disease&#39;</span>)</span></code></pre></div>
 <div style="margin-left:auto;margin-right:auto;max-width:98%;">
 <div style="border-width:thin;border-style:solid;border-color:#E29EA7;">
 <!-- Females -->
@@ -1646,10 +1656,10 @@ Males
 </div>
 <div id="session-information" class="section level2">
 <h2>Session information</h2>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw">sessionInfo</span>()</span></code></pre></div>
-<pre><code>## R version 4.0.2 (2020-06-22)
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div>
+<pre><code>## R version 4.0.4 (2021-02-15)
 ## Platform: x86_64-apple-darwin17.0 (64-bit)
-## Running under: macOS Catalina 10.15.5
+## Running under: macOS Catalina 10.15.7
 ## 
 ## Matrix products: default
 ## BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
@@ -1662,39 +1672,39 @@ Males
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-##  [1] skimr_2.1.1         magrittr_1.5        geojsonio_0.9.2    
-##  [4] lubridate_1.7.9     xml2_1.3.2          sp_1.4-2           
-##  [7] leaflet_2.0.3       highcharter_0.7.0   flexdashboard_0.5.2
-## [10] gganimate_1.0.5     gdtools_0.2.2       ggiraph_0.7.0      
-## [13] svglite_1.2.3.2     pander_0.6.3        knitr_1.29         
-## [16] forcats_0.5.0       stringr_1.4.0       dplyr_1.0.0        
-## [19] purrr_0.3.4         readr_1.3.1         tidyr_1.1.0        
-## [22] tibble_3.0.1        ggplot2_3.3.2       tidyverse_1.3.0    
+##  [1] skimr_2.1.3         magrittr_2.0.1      geojsonio_0.9.4    
+##  [4] lubridate_1.7.10    xml2_1.3.2          sp_1.4-5           
+##  [7] leaflet_2.0.4.1     highcharter_0.8.2   flexdashboard_0.5.2
+## [10] gganimate_1.0.7     gdtools_0.2.3       ggiraph_0.7.8      
+## [13] svglite_2.0.0       pander_0.6.3        knitr_1.31         
+## [16] forcats_0.5.1       stringr_1.4.0       dplyr_1.0.5        
+## [19] purrr_0.3.4         readr_1.4.0         tidyr_1.1.3        
+## [22] tibble_3.1.0        ggplot2_3.3.3       tidyverse_1.3.0    
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] nlme_3.1-148       fs_1.4.1           sf_0.9-4           xts_0.12-0        
-##  [5] webshot_0.5.2      progress_1.2.2     httr_1.4.1         repr_1.1.0        
-##  [9] tools_4.0.2        backports_1.1.8    utf8_1.1.4         rgdal_1.5-10      
-## [13] R6_2.4.1           KernSmooth_2.23-17 lazyeval_0.2.2     rgeos_0.5-3       
-## [17] DBI_1.1.0          colorspace_1.4-1   withr_2.2.0        tidyselect_1.1.0  
-## [21] prettyunits_1.1.1  curl_4.3           compiler_4.0.2     cli_2.0.2         
-## [25] rvest_0.3.5        labeling_0.3       scales_1.1.1       classInt_0.4-3    
-## [29] systemfonts_0.2.3  digest_0.6.25      foreign_0.8-80     rmarkdown_2.3     
-## [33] base64enc_0.1-3    pkgconfig_2.0.3    htmltools_0.5.0    dbplyr_1.4.4      
-## [37] highr_0.8          htmlwidgets_1.5.1  rlang_0.4.6        readxl_1.3.1      
-## [41] TTR_0.23-6         httpcode_0.3.0     rstudioapi_0.11    quantmod_0.4.17   
-## [45] farver_2.0.3       generics_0.0.2     zoo_1.8-8          jsonlite_1.6.1    
-## [49] crosstalk_1.1.0.1  rlist_0.4.6.1      kableExtra_1.1.0   Rcpp_1.0.4.6      
-## [53] munsell_0.5.0      fansi_0.4.1        lifecycle_0.2.0    stringi_1.4.6     
-## [57] whisker_0.4        yaml_2.2.1         jqr_1.1.0          maptools_1.0-1    
-## [61] grid_4.0.2         blob_1.2.1         crayon_1.3.4       lattice_0.20-41   
-## [65] haven_2.3.1        geojson_0.3.4      hms_0.5.3          pillar_1.4.4      
-## [69] igraph_1.2.5       uuid_0.1-4         boot_1.3-25        crul_0.9.0        
-## [73] reprex_0.3.0       glue_1.4.1         evaluate_0.14      V8_3.2.0          
-## [77] data.table_1.12.8  modelr_0.1.8       vctrs_0.3.1        tweenr_1.0.1      
-## [81] cellranger_1.1.0   gtable_0.3.0       assertthat_0.2.1   xfun_0.15         
-## [85] broom_0.5.6        e1071_1.7-3        class_7.3-17       viridisLite_0.3.0 
-## [89] units_0.6-7        ellipsis_0.3.1</code></pre>
+##  [1] colorspace_2.0-0   ellipsis_0.3.1     class_7.3-18       rgdal_1.5-23      
+##  [5] base64enc_0.1-3    fs_1.5.0           rstudioapi_0.13    httpcode_0.3.0    
+##  [9] farver_2.1.0       fansi_0.4.2        rlist_0.4.6.1      jsonlite_1.7.2    
+## [13] broom_0.7.5        dbplyr_2.1.0       rgeos_0.5-5        compiler_4.0.4    
+## [17] httr_1.4.2         backports_1.2.1    assertthat_0.2.1   lazyeval_0.2.2    
+## [21] cli_2.3.1          tweenr_1.0.1       htmltools_0.5.1.1  prettyunits_1.1.1 
+## [25] tools_4.0.4        igraph_1.2.6       gtable_0.3.0       glue_1.4.2        
+## [29] geojson_0.3.4      V8_3.4.0           Rcpp_1.0.6         cellranger_1.1.0  
+## [33] jquerylib_0.1.3    vctrs_0.3.6        crul_1.1.0         crosstalk_1.1.1   
+## [37] xfun_0.22          rvest_1.0.0        lifecycle_1.0.0    jqr_1.2.0         
+## [41] zoo_1.8-9          scales_1.1.1       hms_1.0.0          yaml_2.2.1        
+## [45] quantmod_0.4.18    curl_4.3           sass_0.3.1         stringi_1.5.3     
+## [49] highr_0.8          maptools_1.0-2     e1071_1.7-4        TTR_0.24.2        
+## [53] boot_1.3-27        repr_1.1.3         rlang_0.4.10       pkgconfig_2.0.3   
+## [57] systemfonts_1.0.1  evaluate_0.14      lattice_0.20-41    sf_0.9-7          
+## [61] htmlwidgets_1.5.3  labeling_0.4.2     tidyselect_1.1.0   geojsonsf_2.0.1   
+## [65] R6_2.5.0           magick_2.7.0       generics_0.1.0     DBI_1.1.1         
+## [69] pillar_1.5.1       haven_2.3.1        foreign_0.8-81     withr_2.4.1       
+## [73] units_0.7-0        xts_0.12.1         modelr_0.1.8       crayon_1.4.1      
+## [77] uuid_0.1-4         KernSmooth_2.23-18 utf8_1.2.1         rmarkdown_2.7     
+## [81] progress_1.2.2     grid_4.0.4         readxl_1.3.1       data.table_1.14.0 
+## [85] reprex_1.0.0       digest_0.6.27      classInt_0.4-3     webshot_0.5.2     
+## [89] munsell_0.5.0      viridisLite_0.3.0  kableExtra_1.3.4   bslib_0.2.4</code></pre>
 </div>
 <div class="footnotes">
 <hr />
@@ -1745,73 +1755,73 @@ Males
     <!-- Footer -->
     <footer>
          <!--footer-->
- <div class="container-fluid" id="foot" style="background-color:#FFFFFF;border-top:#CCCCCC solid 1px;color:#999999;font-family:'Open sans', 'Helvetica';">
-     <div class="row">
-         <div class="col-sm-4">
-             <p>Hosted by: <a href="https://www.netlify.com" target="_blank">netlify.com</a>
-                 <br>Powered by: <a href="http://rmarkdown.rstudio.com/" target="_blank">RMarkdown</a>
-                 <br>
-                 <br>
-             </p>
-         </div>
-         <div class="col-sm-4">
-             <p>Fork/clone from: <a href="https://github.com/kamermanpr/kamermanpr.github.io.git" target="_blank">GitHub</a>
-                 <br>License: <a href="./LICENSE.html" target="_blank">MIT & CC-BY 4.0</a>
-                 <br>
-                 <br>
-             </p>
-         </div>
-         <div class="col-sm-4">
-             <h4 style="padding:0;margin:0">painblogR</h3>
- 			   <p style="display:inline-block">
- 				   <span style="font-style:italic">by Peter Kamerman</span>
- 				   &ensp;
- 				   <a href="mailto:peter.kamerman@gmail.com" title="Email me" target="_blank"><i style="color:#999999;" class="fa fa-envelope"></i></a>
- 				   &ensp;
- 				   <a href="//twitter.com/@painblogR" target="_blank" title="Follow me"><i style="color:#999999;" class="fa fa-twitter"></i></a>
- 			   </p>
- 		   </div>
- 	   </div>
- 	</div>
- 
- <script>
- 
- // add bootstrap table styles to pandoc tables
- function bootstrapStylePandocTables() {
-   $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
- }
- $(document).ready(function () {
-   bootstrapStylePandocTables();
- });
- 
- </script>
- 
- <!-- tabsets -->
- 
- <script>
- $(document).ready(function () {
-   window.buildTabsets("TOC");
- });
- 
- $(document).ready(function () {
-   $('.tabset-dropdown > .nav-tabs > li').click(function () {
-     $(this).parent().toggleClass('nav-tabs-open')
-   });
- });
- </script>
- 
- <!-- code folding -->
- 
- 
- <!-- dynamically load mathjax for compatibility with self-contained -->
- <script>
-   (function () {
-     var script = document.createElement("script");
-     script.type = "text/javascript";
-     script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
-     document.getElementsByTagName("head")[0].appendChild(script);
-   })();
- </script> 
+<div class="container-fluid" id="foot" style="background-color:#FFFFFF;border-top:#CCCCCC solid 1px;color:#999999;font-family:'Open sans', 'Helvetica';">
+    <div class="row">
+        <div class="col-sm-4">
+            <p>Hosted by: <a href="https://www.netlify.com" target="_blank">netlify.com</a>
+                <br>Powered by: <a href="http://rmarkdown.rstudio.com/" target="_blank">RMarkdown</a>
+                <br>
+                <br>
+            </p>
+        </div>
+        <div class="col-sm-4">
+            <p>Fork/clone from: <a href="https://github.com/kamermanpr/kamermanpr.github.io.git" target="_blank">GitHub</a>
+                <br>License: <a href="./LICENSE.html" target="_blank">MIT & CC-BY 4.0</a>
+                <br>
+                <br>
+            </p>
+        </div>
+        <div class="col-sm-4">
+            <h4 style="padding:0;margin:0">painblogR</h3>
+			   <p style="display:inline-block">
+				   <span style="font-style:italic">by Peter Kamerman</span>
+				   &ensp;
+				   <a href="mailto:peter.kamerman@gmail.com" title="Email me" target="_blank"><i style="color:#999999;" class="fa fa-envelope"></i></a>
+				   &ensp;
+				   <a href="//twitter.com/@painblogR" target="_blank" title="Follow me"><i style="color:#999999;" class="fa fa-twitter"></i></a>
+			   </p>
+		   </div>
+	   </div>
+	</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script> 
     </footer>
 </body>
 </html>
