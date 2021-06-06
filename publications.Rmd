@@ -1,5 +1,5 @@
 ---
-title: Publications & Reprints
+title: "Publications"
 output:
   html_document:
     template: './_templates/default.html'

@@ -1,0 +1,496 @@
+---
+title: "The under-diagnosis of diabetes and hypertension in South Africa"
+post_title: "The under-diagnosis of diabetes and hypertension in South Africa"
+post_author: 'Peter Kamerman'
+post_date: '10 June 2021'
+post_image: 'https://www.painblogr.org/images/posts/2021-06-10-diabetes-and-hypertension/post-image.png'
+permalink:  '2021-06-10-diabetes-and-hypertension.html'
+description: "Using the 2016 South African Demographic and Household Survey to investigate the under-diagnosis of diabetes and hypertension"
+output:
+    html_document:
+        template: './_templates/posts.html'
+---
+
+```{r include = FALSE}
+# Set chunk options
+knitr::opts_chunk$set(echo = TRUE,
+                      warning = FALSE,
+                      message = FALSE,
+                      fig.align = 'center')
+
+options(scipen = 999999)
+
+library(tidyverse)
+```
+
+****
+
+## Background
+
+Hypertension and diabetes mellitus are major causes of mortality and morbidity globally [^1]<sup>,</sup>[^2]. Both are treatable conditions. 
+
+Part of the reason for the high burden of disease associated with these two diseases is their silent nature, which means that often the damage to organs (particularly the cardiovascular system and kidneys) occurs before the conditions are diagnosed and treatment started.
+
+The 2016 Demographic and Household Survey (DHS) for South Africa, was performed using nationally representative sample of adult South Africans [^3], and as part of the survey information was collected on whether participants had been diagnosed with high blood pressure and/or diabetes mellitus. In addition, in a sub-sample of consenting participants, blood samples were taken for the assessment of HBA1c (HBA1c measures the percentage of the protein haemoglobin that has sugar bound to it, and is used as an indicator of how high a person's blood glucose levels have been over a 2-3 month period). Further, blood pressure was measured in a sub-sample of consenting participants.
+
+More specifically, all participants were asked, "Has a doctor, nurse or other health worker told you that you have or have had any of the following conditions: high blood pressure?" and "Has a doctor, nurse or other health worker told you that you have or have had any of the following conditions: diabetes or blood sugar?". 
+
+In consenting adult participants, three blood pressure measurements were taken using an Omron 1300 digital blood pressure monitor. Measurements were taken at intervals of three minutes or more. For the classification of hypertension, the mean of the last two measurements were taken, and participants with a systolic pressure <span>&#8925;</span>140mmHg or diastolic pressure <span>&#8925;</span>90mmHg were classified as having hypertension [^4]. 
+
+Nurses collected finger-prick blood specimens for laboratory HbA1c testing of consenting adult participants. Blood from the finger prick was collected on a filter paper card, and the dried blood spot analysed at a later stage for total haemoglobin and glycated haemoglobin concentrations. Total haemoglobin concentration was measured by a colourimetric method monitoring the change in absorbance at 410nm. HbA1c concentration was measured by a turbidimetric immunoinhibition method monitoring the change in absorbance at 340nm. HbA1c concentration was expressed as a percentage of total haemoglobin concentration, with those participants with an HBA1c level of <span>&#8925;</span>6.5% being classified as having diabetes mellitus [^5]. Because the HBA1c was measured from a bried blood spot, a correction was applied: $HBA1c_{(corrected)} = \frac{(HBA1c_{(dried~blood~spot)} - 0.228)}{0.9866}$. The veracity of this formula has not been confirmed.
+
+## Data importing and preparation
+
+The first step in the analysis is to get the data. The data for all DHS surveys conducted globally can be obtained from the [DHS program](https://dhsprogram.com/data/dataset_admin/login_main.cfm) website [^6]. The data are provided in a variety of different formats, but not as _CSV_ or _RDS_ formats, which would make it easier for _R_ users. I downloaded the South African 2016 DHS data in SPSS format (_SAV_), and used the `foreign` package to import the data into my _R_ session.  
+
+On the DHS Program website, the data are not provided in a single file, instead they are divided according to the questionnaire used. For example, there is a file for the women's adult health questionnaire, a separate file for the men's adult health questionnaire, and yet another file for the biomarker data. 
+
+
+```{r echo = FALSE, include = FALSE, eval = FALSE}
+# Load package 
+library(foreign)
+
+# Import datasets 
+## Blood pressure and HBA1c data
+biomarker <- read.spss('_data/2021-06-10-diabetes-and-hypertension/ZA_2016_DHS/ZAPR71SV/ZAPR71FL.SAV',
+                       to.data.frame = TRUE)
+
+## Survey design data (weights, clusters, strata)
+women <- read.spss('_data/2021-06-10-diabetes-and-hypertension/ZA_2016_DHS/ZAAH71SV/ZAAHW71FL.SAV',
+                   to.data.frame = TRUE)
+
+men <- read.spss('_data/2021-06-10-diabetes-and-hypertension/ZA_2016_DHS/ZAAH71SV/ZAAHM71FL.SAV',
+                 to.data.frame = TRUE)
+```
+
+```{r dummy_import_code, eval = FALSE}
+# Load package 
+library(foreign)
+
+# Import datasets 
+## Blood pressure and HBA1c data
+biomarker <- read.spss('ZAPR71FL.SAV',
+                       to.data.frame = TRUE)
+
+## Survey design data (weights, clusters, strata)
+women <- read_spss('ZAAHW71FL.SAV',
+                   to.data.frame = TRUE)
+
+men <- read_spss('ZAAHM71FL.SAV',
+                 to.data.frame = TRUE)
+```
+
+The next step is to get the data ready for analysis by extracting the required columns of data, joining the three separate data files, cleaning the data, and calculating derived values (i.e., hypertension from the blood pressure data, and diabetes from the HBA1c data).
+
+### Extract and rename required columns
+
+```{r, eval = FALSE}
+# Load packages
+library(dplyr) # For general data munging
+
+#-- Biomarker --#
+biomarker_reduced <- biomarker %>% 
+    # Select columns
+    select(HV001, # Cluster number
+           HV002, # Household number
+           HVIDX, # Respondent line number
+           SH228A, # Second reading systolic (women)
+           SH228B, # Second reading diastolic (women)
+           SH232A, # Third reading systolic (women)
+           SH232B, # Third reading diastolic (women)
+           SH328A, # Second reading systolic (men)
+           SH328B, # Second reading diastolic (men)
+           SH332A, # Third reading systolic (men)
+           SH332B, # Third reading diastolic (men)
+           SHWHBA1C, # HBA1c (women). Note: 3 decimals implicit
+           SHMHBA1C)  %>%  # HBA1c (men). Note: 3 decimals implicit
+    # Rename variables
+    ## SBP/DBP = systolic/diastolic blood pressure, 
+    ## W/M = women/men
+    rename(V001 = HV001,
+           V002 = HV002,
+           V003 = HVIDX,
+           SBP_2_W = SH228A, 
+           DBP_2_W = SH228B,
+           SBP_3_W = SH232A,
+           DBP_3_W = SH232B,
+           SBP_2_M = SH328A, 
+           DBP_2_M = SH328B,
+           SBP_3_M = SH332A,
+           DBP_3_M = SH332B,
+           HBA1C_W = SHWHBA1C,
+           HBA1C_M = SHMHBA1C)
+
+#-- Women --#
+women_reduced <- women %>% 
+    # Select columns
+    select(V001, # Cluster number
+           V002, # Household number
+           V003, # Respondent line number
+           V021, # Primary sampling unit (PSU)
+           V023, # Sampling strata
+           SWEIGHT, # Sample weight Note: 6 decimals implicit
+           S1413A, # Diagnosed with high blood pressure
+           S1413F) %>% # Diagnosed with diabetes
+    # Rename variables
+    rename(Hypertension =  S1413A,
+           Diabetes = S1413F)
+
+#-- Men --#
+men_reduced <- men %>% 
+    # Select columns
+    select(MV001, # Cluster number
+           MV002, # Household number
+           MV003, # Respondent line number
+           MV021, # Primary sampling unit (PSU)
+           MV023, # Sampling strata
+           SMWEIGHT, # Sample weight Note: 6 decimals implicit
+           SM1108A, # Diagnosed with high blood pressure
+           SM1108F) %>% # Diagnosed with diabetes
+    # Rename variables
+    rename(V001 = MV001,
+           V002 = MV002,
+           V003 = MV003,
+           V021 = MV021,
+           V023 = MV023,
+           SWEIGHT = SMWEIGHT,
+           Hypertension =  SM1108A,
+           Diabetes = SM1108F)
+```
+
+### Join the datasets
+
+```{r eval = FALSE}
+#-- Bind men_reduced2 and women_reduced2 by row --#
+sex <- bind_rows(women_reduced, men_reduced)
+
+#-- Join biomarker with sex using columns V001, V002, V003 --#
+combined <- left_join(sex, biomarker_reduced)
+```
+
+### Clean the combined dataset
+
+**Note:** 
+
+- I recoded _"Don't know"_ answers for the hypertension and diabetes questions as _"No"_
+
+- I recoded none numeric data codes (_"Inconclusive"_) for HBA1c as missing data
+
+- I recoded none numeric data codes (_"Other", Technical problems"_) for blood pressure measurements as missing data
+
+```{r eval = FALSE}
+# Load packages
+library(forcats) # For working with factors
+
+combined_clean <- combined %>% 
+    # Remove joining columns
+    select(-c(V001, V002, V003)) %>% 
+    # Convert columns to correct format
+    mutate(# Blood pressure columns to numeric 
+           # Will also convert non-numeric data codes ("Other", "Technical problems") to <NA>
+           across(contains('BP_'), ~ as.numeric(as.character(.x))), 
+           # HBA1C columns to numeric 
+           # Will also convert non-numeric data codes ("inconclusive") to <NA>
+           across(starts_with('HBA'), ~ as.numeric(as.character(.x)))) %>% 
+    # Convert SWEIGHT to correct number of decimals (6 decimals)
+    mutate(SWEIGHT = SWEIGHT / 1000000) %>% 
+    # Correct HBA1C data to correct number of variables (3 decimals)
+    mutate(across(starts_with('HBA'), ~ .x / 1000)) %>% 
+    # Recode hypertension and diabetes factor levels
+    mutate(Hypertension = fct_collapse(Hypertension,
+                                       Yes = 'Yes',
+                                       No = c("No", "Don't know")),
+           Diabetes = fct_collapse(Diabetes,
+                                   Yes = 'Yes',
+                                   No = c("No", "Don't know"))) 
+```
+
+### Generate calculated variables
+
+```{r eval = FALSE}
+#-- Generate the analsyis set of data --#
+analysis_set <- combined_clean %>% 
+    # Calculate average systolic and diastolic blood pressures
+    rowwise() %>% 
+    mutate(SBP_W = mean(c_across(cols = c(6, 8)), na.rm = TRUE),
+           DBP_W = mean(c_across(cols = c(7, 9)), na.rm = TRUE),
+           SBP_M = mean(c_across(cols = c(10, 12)), na.rm = TRUE),
+           DBP_M = mean(c_across(cols = c(11, 13)), na.rm = TRUE)) %>% 
+    ungroup() %>% 
+    # Remove original columns
+    select(-contains('_2_'), -contains('_3_')) %>% 
+    # Combine men and women columns
+    mutate(# Systolic blood pressure
+           SBP = case_when(
+               is.nan(SBP_W) ~ SBP_M,
+               TRUE ~ SBP_W
+           ),
+           # Diastolic blood pressure
+           DBP = case_when(
+               is.nan(DBP_W) ~ DBP_M,
+               TRUE ~ DBP_W
+           ),
+           # HBA1C
+           HBA1C = case_when(
+               is.na(HBA1C_W) ~ HBA1C_M,
+               TRUE ~ HBA1C_W
+           )) %>% 
+    # Remove 'M' and 'W' columns
+    select(-ends_with('_W'), -ends_with('_M')) %>% 
+    # Calculate whether hypertension is present
+    mutate(Hypertension_objective = case_when(
+        SBP >= 140 |
+            DBP >= 90 ~ 'Yes',
+        SBP < 140 |
+            DBP < 90 ~ 'No'
+    )) %>% 
+    # Correct HBA1c based on the use of a dried blood spot (DBS) instead 
+    # of fresh venous blood (DBS-0.228)/0.9866
+    mutate(HBA1C = (HBA1C - 0.228) / 0.9866) %>% 
+    # Calculate whether diabetes is present 
+    mutate(Diabetes_objective = case_when(
+        HBA1C >= 6.5 ~ 'Yes',
+        HBA1C < 6.5 ~ 'No'
+    )) %>% 
+    # Convert Hypertension_objective and Diabetes_objective to factors
+    mutate(across(ends_with('objective'), ~factor(.x)))
+
+#-- Get rid of pesky <NaN> values in SBP and DBP columns --#
+analysis_set$SBP[is.nan(analysis_set$SBP)] <- NA
+analysis_set$DBP[is.nan(analysis_set$DBP)] <- NA
+```
+
+```{r echo = FALSE, eval = FALSE}
+# Write cleaned data to file
+readr::write_rds(x = analysis_set,
+                 file = '_data/2021-06-10-diabetes-and-hypertension/clean-data.rds')
+```
+
+```{r echo = FALSE, include = FALSE}
+# Read cleaned data from file
+analysis_set <- readRDS('_data/2021-06-10-diabetes-and-hypertension/clean-data.rds')
+```
+
+## Data analysis 
+
+Once you have the analysis dataset, you need to convert the nice and clean dataframe into a _design object_ from the `survey` package. Survey design objects are key to analysing surveys such as the DHS, which use multi-stage stratified sampling. This complex sampling needs to be factored into any analysis when calculating point estimates, and measures of precision (e.g., confidence intervals). 
+
+If you want to know more about design-based analysis and using the `survey` package, I recommend that you visit Thomas Lumley's website: [Survey analysis in R](http://r-survey.r-forge.r-project.org/survey/).
+
+**NB: All data presented in this blog are crude estimates.**
+
+### Create design object
+
+```{r}
+# load packages
+library(survey)
+
+# Create design object
+design_obj <- svydesign(ids = ~V021, # Primary sampling units
+                        strata = ~V023, # Strata
+                        weights = ~SWEIGHT, # Design weights
+                        data = analysis_set)
+
+```
+
+### Hidden burden of hypertension
+
+####  Exploratory plot of systolic and diastolic blood pressures
+
+The horizontal red lines indicate the hypertension cut-off values (systolic pressure <span>&#8925;</span>140mmHg and/or diastolic pressure <span>&#8925;</span>90mmHg)
+
+```{r fig.width = 8, fig.height = 7}
+# Set plotting area to have 1 row and 2 columns
+par(mfcol = c(1, 2))
+
+# Plot diastolic blood pressure
+svyboxplot(DBP ~ 1, # data to plot
+           design = design_obj, # Design object
+           all.outliers = TRUE, # Show all outliers
+           ylab = 'Pressure (mmHg)', # Y-axis label
+           main = 'Diastolic blood pressure', # Plot title
+           ylim = c(40, 300)) # Y-axis limits
+
+# Add a horizontal dotted ,line at the 90 mmHg cut-off
+abline(h = 90, # Threshold value
+       col = 'red', # Line colour: red
+       lwd = 2, # Line weight
+       lty = 3) # Line type (dotted)
+
+# Plot systolic blood pressure
+svyboxplot(SBP ~ 1, 
+           design = design_obj, 
+           all.outliers = TRUE, # Show all outliers
+           main = 'Systolic blood pressure', 
+           ylim = c(40, 300)) 
+
+# Add a horizontal dotted ,line at the 140 mmHg cut-off
+abline(h = 140, 
+       col = 'red',
+       lwd = 2, 
+       lty = 3)
+```
+
+Firstly, the proportion of people who remembered being told that they have high blood pressure/hypertension.
+
+```{r}
+# Load packages
+library(kableExtra) # prints pretty tables
+
+# Calculate the proportion of participants with a previous diagnosis of hypertension
+hypertension_diag <- svyciprop(~ Hypertension, # Variable
+                               design = design_obj) # Design object
+
+# Tabulate
+# Create a dataframe from svyciprop object
+data.frame(# Extract estimate, convert to percentage, round to first decimal
+           'Estimate' = round(100 * as.vector(hypertension_diag), 1),
+            # Extract CI2.5%, convert to percentage, round to first decimal
+           'Lower_CI' = round(100 * attr(hypertension_diag, 'ci')[1], 1),
+            # Extract CI97.5%, convert to percentage, round to first decimal
+           'Upper_CI' = round(100 * attr(hypertension_diag, 'ci')[2], 1)) %>% 
+    # Make a new column (Confidence interval 95%) using the two *_CI columns
+    mutate('Confidence interval 95%' = paste(Lower_CI, 'to', Upper_CI)) %>% 
+    # Remove old *_CI columns
+    select(-ends_with('CI')) %>% 
+    # Draw the table
+    kbl(caption = 'Percent participants who remember previously being told that they have hypertension (crude estimate)', # Add a caption
+        row.names = FALSE, # No row names
+        align = 'rr') %>% # Right align both columns
+    # Add some basic styling to the table
+    kable_styling(bootstrap_options = 'striped')
+```
+
+Now for the proportion of people who had hypertension/high blood pressure based on the blood pressure measurements made during the survey.
+
+```{r}
+# Calculate the proportion of participants diagnosed with hypertension based on 
+# blood pressure measurements at the time of the survey
+hypertension_measured <- svyciprop(~ Hypertension_objective, # Variable
+                                   design = design_obj) # Design object
+
+# Tabulate
+data.frame('Estimate' = round(100 * as.vector(hypertension_measured), 1),
+           'Lower_CI' = round(100 * attr(hypertension_measured, 'ci')[1], 1),
+           'Upper_CI' = round(100 * attr(hypertension_measured, 'ci')[2], 1)) %>% 
+    mutate('Confidence interval 95%' = paste(Lower_CI, 'to', Upper_CI)) %>% 
+    select(-ends_with('CI')) %>% 
+    kbl(caption = 'Percent participants with hypertension based on current blood pressure measurements (crude estimate)', 
+        row.names = FALSE, 
+        align = 'rr') %>% 
+    kable_styling(bootstrap_options = 'striped')
+```
+
+The prevalence of hypertension, based on measured blood pressure, in the South African adult population is consistent with global estimates of the prevalence of hypertension (see footnote 1), especially for low- and middle-income countries which have seen a rapid rise in the prevalence of hypertension in the past two decades [^7]^,^[^8]. 
+
+More importantly in the context of this blog, however, is the major difference in the percentage of people who remember previously being told that they have high blood pressure/hypertension, and the percentage with hypertension based on measurements taken at the time of the survey (19% vs 37%). Indeed, the estimate based on current measurements is roughly double that of the estimate based on awareness of a previous diagnosis. 
+
+I think that the question on whether participants had ever been told that they have high blood pressure/hypertension by a medical professional may under-estimate the true diagnosis rate because it requires the participant to recall having received that diagnosis. But even when considering this possibility, the data indicate a massive under-diagnosis of hypertension in the South African population. According of the report for the 2016 South African DHS survey (see footnote 3, page 269), 15% of men and 22% of women are taking medication to control there blood pressure, which is consistent with the prevalence of people who have been told that have high blood pressure/hypertension (~19%). However, I did not checked how many people who could not remember being told that they have hypertension were, in fact, taking medication for it. I suspect that in some individuals this incongruency may have been present, but not enough to confound the results significantly. 
+
+One thing to remember about these data is that I have presented crude estimates, which have not been standardised for age, and age is an important risk factor for hypertension. The effect of age on hypertension is best illustrated by a recent study of a large cohort of South Africans living in a rural community, and who were aged <span>&#8925;</span>40 years [^9]. In that study, ~60% of participants had hypertension, and these age-related data are in agreement with those reported in the summary of the 2016 South African DHS survey (see footnote 3, page 269). 
+
+### Hidden burden of diabetes mellitus
+
+#### Exploratory plot of HBA1c
+
+The horizontal red lines indicate the diabetes mellitus cut-off value (HBA1c <span>&#8925;</span>6.5%)
+
+```{r, fig.width = 4, fig.height = 7}
+# Reset plotting area to 1 row and 1 column
+par(mfcol = c(1, 1))
+
+# Plot HBA1c data
+svyboxplot(HBA1C ~ 1,
+           design = design_obj,
+           all.outliers = TRUE,
+           ylab = 'Percent haemoglobin (%)',
+           main = 'HBA1c')
+
+# Add a horizontal dotted ,line at the 6.6% cut-off
+abline(h = 6.5, 
+       col = 'red',
+       lwd = 2, 
+       lty = 3)
+```
+
+Firstly, the proportion of people who remembered being told that they have high blood sugar/diabetes.
+
+```{r}
+# Calculate the proportion of participants with a previous diagnosis of diabetes
+diabetes_diag <- svyciprop(~ Diabetes,
+                           design = design_obj)
+
+# Tabulate
+# Create a dataframe from svyciprop object
+data.frame('Estimate' = round(100 * as.vector(diabetes_diag), 1),
+           'Lower_CI' = round(100 * attr(diabetes_diag, 'ci')[1], 1),
+           'Upper_CI' = round(100 * attr(diabetes_diag, 'ci')[2], 1)) %>% 
+    mutate('Confidence interval 95%' = paste(Lower_CI, 'to', Upper_CI)) %>% 
+    select(-ends_with('CI')) %>% 
+    kbl(caption = 'Percent participants who remember previously being told that they have diabetes (crude estimate)', 
+        row.names = FALSE, 
+        align = 'rr') %>% 
+    kable_styling(bootstrap_options = 'striped')
+```
+
+Now for the proportion of people who had diabetes based on the HBA1c measurements made during the survey.
+
+```{r}
+# Calculate the proportion of participants diagnosed with diabetes based on 
+# HBA1c measurements at the time of the survey
+diabetes_measured <- svyciprop(~ Diabetes_objective, 
+                               design = design_obj) 
+
+# Tabulate
+data.frame('Estimate' = round(100 * as.vector(diabetes_measured), 1),
+           'Lower_CI' = round(100 * attr(diabetes_measured, 'ci')[1], 1),
+           'Upper_CI' = round(100 * attr(diabetes_measured, 'ci')[2], 1)) %>% 
+    mutate('Confidence interval 95%' = paste(Lower_CI, 'to', Upper_CI)) %>% 
+    select(-ends_with('CI')) %>% 
+    kbl(caption = 'Percent participants with diabetes based on current HBA1c measurements (crude estimate)', 
+        row.names = FALSE, 
+        align = 'rr') %>% 
+    kable_styling(bootstrap_options = 'striped')
+```
+
+There appears to be a gross under-diagnosis of the prevalence of diabetes based on the number of people who remembered being given such a diagnosis compared to those individuals meeting the definition of diabetes based on HBA1c levels (4.5% vs 11.4%). Using the estimate of diabetes prevalence (11.4%) from the 2016 South African DHS, about 6.7 million South Africans have diabetes. 
+
+The prevalence I report here is similar to that reported in a recent systematic review and meta-analysis by Pheiffer and colleagues on type II diabetes in South Africa [^10]. Using pooled data, from studies using objective criteria for the diagnosis of diabetes, they reported a prevalence ~15% in people aged <span>&#8925;</span>25 years. The 2016 South African DHS data includes a wider age range (<span>&#8925;</span>15 years), which may explain the difference in prevalence. Another reason for the slight discrepancy between the prevalence reported by Pheiffer and collegaues and the data I present here is that the correction factor applied to the HBA1c data in the DHS for using a dried blood spot and not a fresh venous blood may have over-corrected the HBA1c. Not applying the correction leads to an estimated diabetes prevalence of 21%. 
+
+## Conclusion
+
+Using the estimate of diabetes prevalence (11.4%) from the 2016 South African DHS, about 6.7 million adult South Africans have diabetes. Similarly, about 21.8 million South African adults have hypertension (37%). Thus there is a high burden (number of people affected) of two diseases that are major causes of mortality and morbidity. 
+
+According to 2017 data from Statistics South Africa [^11] complications of diabetes were the second most common cause of death (5.7% of deaths); the biggest killer was tuberculosis (6.4% of deaths). Hypertensive diseases are the seventh most common cause of death (4.7% deaths), but when you add in diseases where hypertension is a major contributing factor, then the contribution of hypertension becomes more apparent (e.g., cerebrovacular disease caused 5.0% of deaths). 
+
+The data I present here shows that there is significant under-diagnosis of diabetes mellitus and hypertension. Both these diseases are treatable, so the under-diagnosis means greater morbidity and mortality from these diseases, which is a a big worry from a public health point of view.
+
+****
+
+[^1]: Mills KT _et al_. Global disparities of hypertension prevalence and control: A systematic analysis of population-based studies from 90 countries. _Circulation_ **134**:441-50, 2016. PMID: [27502908](https://pubmed.ncbi.nlm.nih.gov/27502908/)
+
+[^2]: GBD 2017 Causes of Death Collaborators. Global, regional, and national age-sex-specific mortality for 282 causes of death in 195 countries and territories, 1980-2017: a systematic analysis for the Global Burden of Disease Study 2017. _Lancet_ **392**:1736-1788, 2018. PMID: [30496103](https://pubmed.ncbi.nlm.nih.gov/30496103/)
+
+[^3]: National Department of Health (NDoH), Statistics South Africa (Stats SA), South African Medical Research Council (SAMRC), and ICF. 2019. South Africa Demographic and Health Survey 2016. Pretoria, South Africa, and Rockville, Maryland, USA: NDoH, Stats SA, SAMRC, and ICF ([Link](https://dhsprogram.com/pubs/pdf/FR337/FR337.pdf))
+
+[^4]: Unger T _et al_. 2020 International Society of Hypertension Global Hypertension Practice Guidelines. _Hypertension_ **75**:1334-1357, 2020. PMID: [32370572](https://pubmed.ncbi.nlm.nih.gov/32370572/)
+
+[^5]: American Diabetes Association. Classification and diagnosis of diabetes. _Diabetes Care_ 38 (Suppl. 1):S8–S16, 2015. PMID: [25537714](https://pubmed.ncbi.nlm.nih.gov/25537714/)
+
+[^6]: You need to [register](https://dhsprogram.com/data/dataset_admin/login_main.cfm?) as a user on the DHS Program system, and then request access to data for a defined project. The registration process is quick, and submitting a request for data is straightforward. The permissions to use the data usually comes within 24-hour of submitting the request. 
+
+[^7]: Kearney PM _et al_. Global burden of hypertension: analysis of worldwide data. _Lancet_ **365**:217-23, 2005. PMID: [15652604](https://pubmed.ncbi.nlm.nih.gov/15652604/)
+
+[^8]: Mills KT _et al_. The global epidemiology of hypertension. _Nature Reviews Nephrology_ **16**:223-237, 2020. PMID: [32024986](https://pubmed.ncbi.nlm.nih.gov/32024986).
+
+[^9]: Gaziano TA _et al_. Cardiometabolic risk in a population of older adults with multiple co-morbidities in rural south africa: the HAALSI (Health and Aging in Africa: longitudinal studies of INDEPTH communities) study. _BMC Public Health_ **17**, 206, 2017. DOI: [10.1186/s12889-017-4117-y](https://doi.org/10.1186/s12889-017-4117-y)
+
+[^10]: Pheiffer C _et al_. Prevalence of Type 2 Diabetes in South Africa: A Systematic Review and Meta-Analysis. _International Journal Environmental Research and Public Health_ **18**:5868, 2021. PMID: [34070714](https://pubmed.ncbi.nlm.nih.gov/34070714).
+
+[^11]: Statistics South Africa. Mortality and causes of death in South Africa: Findings from death notification 2017 (Statistical release P0309.3). [Link](https://www.statssa.gov.za/publications/P03093/P030932017.pdf)
+
+## Session information
+
+```{r echo = FALSE}
+sessionInfo()
+```

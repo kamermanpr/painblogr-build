@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" >
+
+<!-- Head --------------------------------------------------------->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="generator" content="pandoc"/>
+	
+	
+	 <script src="site_libs/header-attrs-2.7/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/yeti.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" /> 
+
+	
+		<style type="text/css">
+		code {
+			white-space: pre;
+		}
+	</style>
+	<style type="text/css">
+		pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; } /* Alert */
+code span.an { color: #008000; } /* Annotation */
+code span.at { } /* Attribute */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #0000ff; } /* ControlFlow */
+code span.ch { color: #008080; } /* Char */
+code span.cn { } /* Constant */
+code span.co { color: #008000; } /* Comment */
+code span.cv { color: #008000; } /* CommentVar */
+code span.do { color: #008000; } /* Documentation */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.im { } /* Import */
+code span.in { color: #008000; } /* Information */
+code span.kw { color: #0000ff; } /* Keyword */
+code span.op { } /* Operator */
+code span.ot { color: #ff4000; } /* Other */
+code span.pp { color: #ff4000; } /* Preprocessor */
+code span.sc { color: #008080; } /* SpecialChar */
+code span.ss { color: #008080; } /* SpecialString */
+code span.st { color: #008080; } /* String */
+code span.va { } /* Variable */
+code span.vs { color: #008080; } /* VerbatimString */
+code span.wa { color: #008000; font-weight: bold; } /* Warning */ 
+	</style>
+
+		<style type="text/css">
+		pre:not([class]) {
+			background-color: white;
+		}
+	</style>
+	   	<style type="text/css">
+		h1 {
+			font-size: 34px;
+		}
+
+		h1.title {
+			font-size: 38px;
+		}
+
+		h2 {
+			font-size: 30px;
+		}
+
+		h3 {
+			font-size: 24px;
+		}
+
+		h4 {
+			font-size: 18px;
+		}
+
+		h5 {
+			font-size: 16px;
+		}
+
+		h6 {
+			font-size: 12px;
+		}
+
+		.table th:not([align]) {
+			text-align: left;
+		}
+
+		
+	</style>
+	
+		<link rel="stylesheet" href="css/custom.css" type="text/css" />  
+    <!-- Latest maxdcn font-awesome and academicons -->
+    <link rel="stylesheet" href="./css/font-awesome-4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./css/academicons-1.7.0/css/academicons.min.css">
+
+    <!-- custom css -->
+        <link rel="stylesheet" href="css/custom.css" type="text/css" />
+	
+    <!-- Include these sections here, otherwise YAML headings not inserted -->
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-71613331-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-71613331-1');
+    </script>
+
+    <!-- SEO -->
+    <title>The under-diagnosis of diabetes and hypertension in South Africa</title>
+    <meta name="description" content="Using the 2016 South African Demographic and Household Survey to investigate the under-diagnosis of diabetes and hypertension">
+    <link rel="author" href="https://plus.google.com/u/0/103355314187199079295" />
+    <meta name="robots" content="robots.txt">
+    <link rel="canonical" href="https://www.painblogr.org/2021-06-10-diabetes-and-hypertension.html">
+
+    <!-- Twittercard -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@painblogR">
+    <meta name="twitter:creator" content="@painblogR">
+    <meta name="twitter:title" content="The under-diagnosis of diabetes and hypertension in South Africa">
+    <meta name="twitter:description" content="Using the 2016 South African Demographic and Household Survey to investigate the under-diagnosis of diabetes and hypertension">
+    <meta name="twitter:image" content="<a href="https://www.painblogr.org/images/posts/2021-06-10-diabetes-and-hypertension/post-image.png" class="uri">https://www.painblogr.org/images/posts/2021-06-10-diabetes-and-hypertension/post-image.png</a>">
+    <meta name="twitter:url" content="https://www.painblogr.org/2021-06-10-diabetes-and-hypertension.html">
+
+    <!-- Opengraph -->
+    <meta property="og:title" content="The under-diagnosis of diabetes and hypertension in South Africa">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://www.painblogr.org/2021-06-10-diabetes-and-hypertension.html">
+    <meta property="og:image" content="<a href="https://www.painblogr.org/images/posts/2021-06-10-diabetes-and-hypertension/post-image.png" class="uri">https://www.painblogr.org/images/posts/2021-06-10-diabetes-and-hypertension/post-image.png</a>">
+    <meta property="og:description" content="Using the 2016 South African Demographic and Household Survey to investigate the under-diagnosis of diabetes and hypertension">
+    <meta property="og:site_name" content="painblogR">
+    <meta property="fb:app_id" content="621412384962188">
+</head>
+
+<!-- Body --------------------------------------------------------->
+
+<body>
+    <!-- Navigation bar -->
+    <nav class="navbar navbar-fixed-top" role="navigation" , style="background-color:#FFFFFF;border-bottom: 1px solid #CCCCCC;">
+        <div class="container-fluid" id="navfluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar-collapse" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <img src="images/capsaicin.png" alt="logo" , style="max-height:60px;padding-top:5px;">
+                <span class="site-title"><a href="https://www.painblogr.org" style="color:#000000;font-size:250%;vertical-align:middle;">
+				painblogR</a></span>&emsp;
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-navbar-collapse">
+                <ul class="nav navbar-nav" style="display:table-row;padding-top:7px">
+                    <li style="display:table-cell;float:none;vertical-align:middle;font-size:16px;"><a href="https://www.painblogr.org">Home</a></li>
+                    <li style="display:table-cell;float:none;vertical-align:middle;font-size:16px;"><a href="./archive.html">Archive</a></li>
+                    <li class="dropdown" style="display:table-cell;float:none;vertical-align:middle;font-size:16px;">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">About<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="./about_me.html">About me</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="./publications.html">Publications & Reprints </a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" style="display:table-cell;float:none;vertical-align:middle;font-size:16px;">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Teaching<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="https://www.painblogr.org/biostatistics/">Introduction to Biostatistics</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" style="display:table-cell;float:none;vertical-align:middle;font-size:16px;">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Apps<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="https://kamermanpr.shinyapps.io/painblogr-statr/">statr: a stats calculator</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <!-- /. nav-collapse -->
+        </div>
+        <!-- /. container-fluid -->
+    </nav>
+
+	<!-- Extras -->
+		<style type = "text/css">
+		code {
+  			color: inherit;
+  			background-color: rgba(0, 0, 0, 0.04);
+		}
+		img {
+  			max-width:100%;
+  			height: auto;
+		}
+		.tabbed-pane {
+  			padding-top: 12px;
+		}
+		button.code-folding-btn:focus {
+  			outline: none;
+		}
+	</style>
+
+	<div class="container-fluid main-container">
+		<!-- tabsets -->
+		<script src="/tabsets.js"></script>
+		<script>
+			$(document).ready(function () {
+  			window.buildTabsets("TOC");
+			});
+		</script>
+
+		<!-- code folding -->
+		
+		<div class="fluid-row" id="header">
+
+    <!-- Main text --->
+    <div class="container-fluid" id="mainbody">
+         
+        <h1>The under-diagnosis of diabetes and hypertension in South Africa</h1> 
+        <h4>Peter Kamerman</h4> 
+        <em>10 June 2021</em> <hr />
+<div id="background" class="section level2">
+<h2>Background</h2>
+<p>Hypertension and diabetes mellitus are major causes of mortality and morbidity globally <a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a><sup>,</sup><a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>. Both are treatable conditions.</p>
+<p>Part of the reason for the high burden of disease associated with these two diseases is their silent nature, which means that often the damage to organs (particularly the cardiovascular system and kidneys) occurs before the conditions are diagnosed and treatment started.</p>
+<p>The 2016 Demographic and Household Survey (DHS) for South Africa, was performed using nationally representative sample of adult South Africans <a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>, and as part of the survey information was collected on whether participants had been diagnosed with high blood pressure and/or diabetes mellitus. In addition, in a sub-sample of consenting participants, blood samples were taken for the assessment of HBA1c (HBA1c measures the percentage of the protein haemoglobin that has sugar bound to it, and is used as an indicator of how high a person’s blood glucose levels have been over a 2-3 month period). Further, blood pressure was measured in a sub-sample of consenting participants.</p>
+<p>More specifically, all participants were asked, “Has a doctor, nurse or other health worker told you that you have or have had any of the following conditions: high blood pressure?” and “Has a doctor, nurse or other health worker told you that you have or have had any of the following conditions: diabetes or blood sugar?”.</p>
+<p>In consenting adult participants, three blood pressure measurements were taken using an Omron 1300 digital blood pressure monitor. Measurements were taken at intervals of three minutes or more. For the classification of hypertension, the mean of the last two measurements were taken, and participants with a systolic pressure <span>⋝</span>140mmHg or diastolic pressure <span>⋝</span>90mmHg were classified as having hypertension <a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a>.</p>
+<p>Nurses collected finger-prick blood specimens for laboratory HbA1c testing of consenting adult participants. Blood from the finger prick was collected on a filter paper card, and the dried blood spot analysed at a later stage for total haemoglobin and glycated haemoglobin concentrations. Total haemoglobin concentration was measured by a colourimetric method monitoring the change in absorbance at 410nm. HbA1c concentration was measured by a turbidimetric immunoinhibition method monitoring the change in absorbance at 340nm. HbA1c concentration was expressed as a percentage of total haemoglobin concentration, with those participants with an HBA1c level of <span>⋝</span>6.5% being classified as having diabetes mellitus <a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a>. Because the HBA1c was measured from a bried blood spot, a correction was applied: <span class="math inline">\(HBA1c_{(corrected)} = \frac{(HBA1c_{(dried~blood~spot)} - 0.228)}{0.9866}\)</span>. The veracity of this formula has not been confirmed.</p>
+</div>
+<div id="data-importing-and-preparation" class="section level2">
+<h2>Data importing and preparation</h2>
+<p>The first step in the analysis is to get the data. The data for all DHS surveys conducted globally can be obtained from the <a href="https://dhsprogram.com/data/dataset_admin/login_main.cfm">DHS program</a> website <a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a>. The data are provided in a variety of different formats, but not as <em>CSV</em> or <em>RDS</em> formats, which would make it easier for <em>R</em> users. I downloaded the South African 2016 DHS data in SPSS format (<em>SAV</em>), and used the <code>foreign</code> package to import the data into my <em>R</em> session.</p>
+<p>On the DHS Program website, the data are not provided in a single file, instead they are divided according to the questionnaire used. For example, there is a file for the women’s adult health questionnaire, a separate file for the men’s adult health questionnaire, and yet another file for the biomarker data.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load package </span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(foreign)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Import datasets </span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Blood pressure and HBA1c data</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>biomarker <span class="ot">&lt;-</span> <span class="fu">read.spss</span>(<span class="st">&#39;ZAPR71FL.SAV&#39;</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>                       <span class="at">to.data.frame =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="do">## Survey design data (weights, clusters, strata)</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>women <span class="ot">&lt;-</span> <span class="fu">read_spss</span>(<span class="st">&#39;ZAAHW71FL.SAV&#39;</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>                   <span class="at">to.data.frame =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>men <span class="ot">&lt;-</span> <span class="fu">read_spss</span>(<span class="st">&#39;ZAAHM71FL.SAV&#39;</span>,</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>                 <span class="at">to.data.frame =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p>The next step is to get the data ready for analysis by extracting the required columns of data, joining the three separate data files, cleaning the data, and calculating derived values (i.e., hypertension from the blood pressure data, and diabetes from the HBA1c data).</p>
+<div id="extract-and-rename-required-columns" class="section level3">
+<h3>Extract and rename required columns</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load packages</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr) <span class="co"># For general data munging</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#-- Biomarker --#</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>biomarker_reduced <span class="ot">&lt;-</span> biomarker <span class="sc">%&gt;%</span> </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Select columns</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(HV001, <span class="co"># Cluster number</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>           HV002, <span class="co"># Household number</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>           HVIDX, <span class="co"># Respondent line number</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>           SH228A, <span class="co"># Second reading systolic (women)</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>           SH228B, <span class="co"># Second reading diastolic (women)</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>           SH232A, <span class="co"># Third reading systolic (women)</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>           SH232B, <span class="co"># Third reading diastolic (women)</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>           SH328A, <span class="co"># Second reading systolic (men)</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>           SH328B, <span class="co"># Second reading diastolic (men)</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>           SH332A, <span class="co"># Third reading systolic (men)</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>           SH332B, <span class="co"># Third reading diastolic (men)</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>           SHWHBA1C, <span class="co"># HBA1c (women). Note: 3 decimals implicit</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>           SHMHBA1C)  <span class="sc">%&gt;%</span>  <span class="co"># HBA1c (men). Note: 3 decimals implicit</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Rename variables</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    <span class="do">## SBP/DBP = systolic/diastolic blood pressure, </span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    <span class="do">## W/M = women/men</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">V001 =</span> HV001,</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>           <span class="at">V002 =</span> HV002,</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>           <span class="at">V003 =</span> HVIDX,</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>           <span class="at">SBP_2_W =</span> SH228A, </span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>           <span class="at">DBP_2_W =</span> SH228B,</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>           <span class="at">SBP_3_W =</span> SH232A,</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>           <span class="at">DBP_3_W =</span> SH232B,</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>           <span class="at">SBP_2_M =</span> SH328A, </span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>           <span class="at">DBP_2_M =</span> SH328B,</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>           <span class="at">SBP_3_M =</span> SH332A,</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>           <span class="at">DBP_3_M =</span> SH332B,</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>           <span class="at">HBA1C_W =</span> SHWHBA1C,</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>           <span class="at">HBA1C_M =</span> SHMHBA1C)</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="co">#-- Women --#</span></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>women_reduced <span class="ot">&lt;-</span> women <span class="sc">%&gt;%</span> </span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Select columns</span></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(V001, <span class="co"># Cluster number</span></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>           V002, <span class="co"># Household number</span></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>           V003, <span class="co"># Respondent line number</span></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>           V021, <span class="co"># Primary sampling unit (PSU)</span></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>           V023, <span class="co"># Sampling strata</span></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>           SWEIGHT, <span class="co"># Sample weight Note: 6 decimals implicit</span></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>           S1413A, <span class="co"># Diagnosed with high blood pressure</span></span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>           S1413F) <span class="sc">%&gt;%</span> <span class="co"># Diagnosed with diabetes</span></span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Rename variables</span></span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">Hypertension =</span>  S1413A,</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>           <span class="at">Diabetes =</span> S1413F)</span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a><span class="co">#-- Men --#</span></span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>men_reduced <span class="ot">&lt;-</span> men <span class="sc">%&gt;%</span> </span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Select columns</span></span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(MV001, <span class="co"># Cluster number</span></span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>           MV002, <span class="co"># Household number</span></span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>           MV003, <span class="co"># Respondent line number</span></span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>           MV021, <span class="co"># Primary sampling unit (PSU)</span></span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>           MV023, <span class="co"># Sampling strata</span></span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>           SMWEIGHT, <span class="co"># Sample weight Note: 6 decimals implicit</span></span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>           SM1108A, <span class="co"># Diagnosed with high blood pressure</span></span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>           SM1108F) <span class="sc">%&gt;%</span> <span class="co"># Diagnosed with diabetes</span></span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Rename variables</span></span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">V001 =</span> MV001,</span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>           <span class="at">V002 =</span> MV002,</span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>           <span class="at">V003 =</span> MV003,</span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>           <span class="at">V021 =</span> MV021,</span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>           <span class="at">V023 =</span> MV023,</span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>           <span class="at">SWEIGHT =</span> SMWEIGHT,</span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>           <span class="at">Hypertension =</span>  SM1108A,</span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>           <span class="at">Diabetes =</span> SM1108F)</span></code></pre></div>
+</div>
+<div id="join-the-datasets" class="section level3">
+<h3>Join the datasets</h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#-- Bind men_reduced2 and women_reduced2 by row --#</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>sex <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(women_reduced, men_reduced)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#-- Join biomarker with sex using columns V001, V002, V003 --#</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>combined <span class="ot">&lt;-</span> <span class="fu">left_join</span>(sex, biomarker_reduced)</span></code></pre></div>
+</div>
+<div id="clean-the-combined-dataset" class="section level3">
+<h3>Clean the combined dataset</h3>
+<p><strong>Note:</strong></p>
+<ul>
+<li><p>I recoded <em>“Don’t know”</em> answers for the hypertension and diabetes questions as <em>“No”</em></p></li>
+<li><p>I recoded none numeric data codes (<em>“Inconclusive”</em>) for HBA1c as missing data</p></li>
+<li><p>I recoded none numeric data codes (<em>“Other”, Technical problems"</em>) for blood pressure measurements as missing data</p></li>
+</ul>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load packages</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(forcats) <span class="co"># For working with factors</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>combined_clean <span class="ot">&lt;-</span> combined <span class="sc">%&gt;%</span> </span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Remove joining columns</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(V001, V002, V003)) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Convert columns to correct format</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="co"># Blood pressure columns to numeric </span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>           <span class="co"># Will also convert non-numeric data codes (&quot;Other&quot;, &quot;Technical problems&quot;) to &lt;NA&gt;</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>           <span class="fu">across</span>(<span class="fu">contains</span>(<span class="st">&#39;BP_&#39;</span>), <span class="sc">~</span> <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(.x))), </span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>           <span class="co"># HBA1C columns to numeric </span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>           <span class="co"># Will also convert non-numeric data codes (&quot;inconclusive&quot;) to &lt;NA&gt;</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>           <span class="fu">across</span>(<span class="fu">starts_with</span>(<span class="st">&#39;HBA&#39;</span>), <span class="sc">~</span> <span class="fu">as.numeric</span>(<span class="fu">as.character</span>(.x)))) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Convert SWEIGHT to correct number of decimals (6 decimals)</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">SWEIGHT =</span> SWEIGHT <span class="sc">/</span> <span class="dv">1000000</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Correct HBA1C data to correct number of variables (3 decimals)</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">starts_with</span>(<span class="st">&#39;HBA&#39;</span>), <span class="sc">~</span> .x <span class="sc">/</span> <span class="dv">1000</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Recode hypertension and diabetes factor levels</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Hypertension =</span> <span class="fu">fct_collapse</span>(Hypertension,</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">Yes =</span> <span class="st">&#39;Yes&#39;</span>,</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">No =</span> <span class="fu">c</span>(<span class="st">&quot;No&quot;</span>, <span class="st">&quot;Don&#39;t know&quot;</span>)),</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>           <span class="at">Diabetes =</span> <span class="fu">fct_collapse</span>(Diabetes,</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">Yes =</span> <span class="st">&#39;Yes&#39;</span>,</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">No =</span> <span class="fu">c</span>(<span class="st">&quot;No&quot;</span>, <span class="st">&quot;Don&#39;t know&quot;</span>))) </span></code></pre></div>
+</div>
+<div id="generate-calculated-variables" class="section level3">
+<h3>Generate calculated variables</h3>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#-- Generate the analsyis set of data --#</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>analysis_set <span class="ot">&lt;-</span> combined_clean <span class="sc">%&gt;%</span> </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculate average systolic and diastolic blood pressures</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">SBP_W =</span> <span class="fu">mean</span>(<span class="fu">c_across</span>(<span class="at">cols =</span> <span class="fu">c</span>(<span class="dv">6</span>, <span class="dv">8</span>)), <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">DBP_W =</span> <span class="fu">mean</span>(<span class="fu">c_across</span>(<span class="at">cols =</span> <span class="fu">c</span>(<span class="dv">7</span>, <span class="dv">9</span>)), <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">SBP_M =</span> <span class="fu">mean</span>(<span class="fu">c_across</span>(<span class="at">cols =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">12</span>)), <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>           <span class="at">DBP_M =</span> <span class="fu">mean</span>(<span class="fu">c_across</span>(<span class="at">cols =</span> <span class="fu">c</span>(<span class="dv">11</span>, <span class="dv">13</span>)), <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Remove original columns</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span><span class="fu">contains</span>(<span class="st">&#39;_2_&#39;</span>), <span class="sc">-</span><span class="fu">contains</span>(<span class="st">&#39;_3_&#39;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Combine men and women columns</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="co"># Systolic blood pressure</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>           <span class="at">SBP =</span> <span class="fu">case_when</span>(</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>               <span class="fu">is.nan</span>(SBP_W) <span class="sc">~</span> SBP_M,</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>               <span class="cn">TRUE</span> <span class="sc">~</span> SBP_W</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>           ),</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>           <span class="co"># Diastolic blood pressure</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>           <span class="at">DBP =</span> <span class="fu">case_when</span>(</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>               <span class="fu">is.nan</span>(DBP_W) <span class="sc">~</span> DBP_M,</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>               <span class="cn">TRUE</span> <span class="sc">~</span> DBP_W</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>           ),</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>           <span class="co"># HBA1C</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>           <span class="at">HBA1C =</span> <span class="fu">case_when</span>(</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>               <span class="fu">is.na</span>(HBA1C_W) <span class="sc">~</span> HBA1C_M,</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>               <span class="cn">TRUE</span> <span class="sc">~</span> HBA1C_W</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>           )) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Remove &#39;M&#39; and &#39;W&#39; columns</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span><span class="fu">ends_with</span>(<span class="st">&#39;_W&#39;</span>), <span class="sc">-</span><span class="fu">ends_with</span>(<span class="st">&#39;_M&#39;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculate whether hypertension is present</span></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Hypertension_objective =</span> <span class="fu">case_when</span>(</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>        SBP <span class="sc">&gt;=</span> <span class="dv">140</span> <span class="sc">|</span></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>            DBP <span class="sc">&gt;=</span> <span class="dv">90</span> <span class="sc">~</span> <span class="st">&#39;Yes&#39;</span>,</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>        SBP <span class="sc">&lt;</span> <span class="dv">140</span> <span class="sc">|</span></span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>            DBP <span class="sc">&lt;</span> <span class="dv">90</span> <span class="sc">~</span> <span class="st">&#39;No&#39;</span></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>    )) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Correct HBA1c based on the use of a dried blood spot (DBS) instead </span></span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>    <span class="co"># of fresh venous blood (DBS-0.228)/0.9866</span></span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">HBA1C =</span> (HBA1C <span class="sc">-</span> <span class="fl">0.228</span>) <span class="sc">/</span> <span class="fl">0.9866</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculate whether diabetes is present </span></span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Diabetes_objective =</span> <span class="fu">case_when</span>(</span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>        HBA1C <span class="sc">&gt;=</span> <span class="fl">6.5</span> <span class="sc">~</span> <span class="st">&#39;Yes&#39;</span>,</span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>        HBA1C <span class="sc">&lt;</span> <span class="fl">6.5</span> <span class="sc">~</span> <span class="st">&#39;No&#39;</span></span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>    )) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Convert Hypertension_objective and Diabetes_objective to factors</span></span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">ends_with</span>(<span class="st">&#39;objective&#39;</span>), <span class="sc">~</span><span class="fu">factor</span>(.x)))</span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a><span class="co">#-- Get rid of pesky &lt;NaN&gt; values in SBP and DBP columns --#</span></span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>analysis_set<span class="sc">$</span>SBP[<span class="fu">is.nan</span>(analysis_set<span class="sc">$</span>SBP)] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>analysis_set<span class="sc">$</span>DBP[<span class="fu">is.nan</span>(analysis_set<span class="sc">$</span>DBP)] <span class="ot">&lt;-</span> <span class="cn">NA</span></span></code></pre></div>
+</div>
+</div>
+<div id="data-analysis" class="section level2">
+<h2>Data analysis</h2>
+<p>Once you have the analysis dataset, you need to convert the nice and clean dataframe into a <em>design object</em> from the <code>survey</code> package. Survey design objects are key to analysing surveys such as the DHS, which use multi-stage stratified sampling. This complex sampling needs to be factored into any analysis when calculating point estimates, and measures of precision (e.g., confidence intervals).</p>
+<p>If you want to know more about design-based analysis and using the <code>survey</code> package, I recommend that you visit Thomas Lumley’s website: <a href="http://r-survey.r-forge.r-project.org/survey/">Survey analysis in R</a>.</p>
+<p><strong>NB: All data presented in this blog are crude estimates.</strong></p>
+<div id="create-design-object" class="section level3">
+<h3>Create design object</h3>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load packages</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survey)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create design object</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>design_obj <span class="ot">&lt;-</span> <span class="fu">svydesign</span>(<span class="at">ids =</span> <span class="sc">~</span>V021, <span class="co"># Primary sampling units</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>                        <span class="at">strata =</span> <span class="sc">~</span>V023, <span class="co"># Strata</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>                        <span class="at">weights =</span> <span class="sc">~</span>SWEIGHT, <span class="co"># Design weights</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>                        <span class="at">data =</span> analysis_set)</span></code></pre></div>
+</div>
+<div id="hidden-burden-of-hypertension" class="section level3">
+<h3>Hidden burden of hypertension</h3>
+<div id="exploratory-plot-of-systolic-and-diastolic-blood-pressures" class="section level4">
+<h4>Exploratory plot of systolic and diastolic blood pressures</h4>
+<p>The horizontal red lines indicate the hypertension cut-off values (systolic pressure <span>⋝</span>140mmHg and/or diastolic pressure <span>⋝</span>90mmHg)</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set plotting area to have 1 row and 2 columns</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfcol =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot diastolic blood pressure</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">svyboxplot</span>(DBP <span class="sc">~</span> <span class="dv">1</span>, <span class="co"># data to plot</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">design =</span> design_obj, <span class="co"># Design object</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">all.outliers =</span> <span class="cn">TRUE</span>, <span class="co"># Show all outliers</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>           <span class="at">ylab =</span> <span class="st">&#39;Pressure (mmHg)&#39;</span>, <span class="co"># Y-axis label</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>           <span class="at">main =</span> <span class="st">&#39;Diastolic blood pressure&#39;</span>, <span class="co"># Plot title</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>           <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">40</span>, <span class="dv">300</span>)) <span class="co"># Y-axis limits</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a horizontal dotted ,line at the 90 mmHg cut-off</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">90</span>, <span class="co"># Threshold value</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="st">&#39;red&#39;</span>, <span class="co"># Line colour: red</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">lwd =</span> <span class="dv">2</span>, <span class="co"># Line weight</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">lty =</span> <span class="dv">3</span>) <span class="co"># Line type (dotted)</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot systolic blood pressure</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="fu">svyboxplot</span>(SBP <span class="sc">~</span> <span class="dv">1</span>, </span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>           <span class="at">design =</span> design_obj, </span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>           <span class="at">all.outliers =</span> <span class="cn">TRUE</span>, <span class="co"># Show all outliers</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>           <span class="at">main =</span> <span class="st">&#39;Systolic blood pressure&#39;</span>, </span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>           <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">40</span>, <span class="dv">300</span>)) </span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a horizontal dotted ,line at the 140 mmHg cut-off</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">140</span>, </span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="st">&#39;red&#39;</span>,</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>       <span class="at">lwd =</span> <span class="dv">2</span>, </span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>       <span class="at">lty =</span> <span class="dv">3</span>)</span></code></pre></div>
+<p><img src="2021-06-10-diabetes-and-hypertension_files/figure-html/unnamed-chunk-10-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p>Firstly, the proportion of people who remembered being told that they have high blood pressure/hypertension.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load packages</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra) <span class="co"># prints pretty tables</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the proportion of participants with a previous diagnosis of hypertension</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>hypertension_diag <span class="ot">&lt;-</span> <span class="fu">svyciprop</span>(<span class="sc">~</span> Hypertension, <span class="co"># Variable</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>                               <span class="at">design =</span> design_obj) <span class="co"># Design object</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Tabulate</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a dataframe from svyciprop object</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="co"># Extract estimate, convert to percentage, round to first decimal</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>           <span class="st">&#39;Estimate&#39;</span> <span class="ot">=</span> <span class="fu">round</span>(<span class="dv">100</span> <span class="sc">*</span> <span class="fu">as.vector</span>(hypertension_diag), <span class="dv">1</span>),</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Extract CI2.5%, convert to percentage, round to first decimal</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>           <span class="st">&#39;Lower_CI&#39;</span> <span class="ot">=</span> <span class="fu">round</span>(<span class="dv">100</span> <span class="sc">*</span> <span class="fu">attr</span>(hypertension_diag, <span class="st">&#39;ci&#39;</span>)[<span class="dv">1</span>], <span class="dv">1</span>),</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Extract CI97.5%, convert to percentage, round to first decimal</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>           <span class="st">&#39;Upper_CI&#39;</span> <span class="ot">=</span> <span class="fu">round</span>(<span class="dv">100</span> <span class="sc">*</span> <span class="fu">attr</span>(hypertension_diag, <span class="st">&#39;ci&#39;</span>)[<span class="dv">2</span>], <span class="dv">1</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Make a new column (Confidence interval 95%) using the two *_CI columns</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="st">&#39;Confidence interval 95%&#39;</span> <span class="ot">=</span> <span class="fu">paste</span>(Lower_CI, <span class="st">&#39;to&#39;</span>, Upper_CI)) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Remove old *_CI columns</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span><span class="fu">ends_with</span>(<span class="st">&#39;CI&#39;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Draw the table</span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kbl</span>(<span class="at">caption =</span> <span class="st">&#39;Percent participants who remember previously being told that they have hypertension (crude estimate)&#39;</span>, <span class="co"># Add a caption</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>        <span class="at">row.names =</span> <span class="cn">FALSE</span>, <span class="co"># No row names</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>        <span class="at">align =</span> <span class="st">&#39;rr&#39;</span>) <span class="sc">%&gt;%</span> <span class="co"># Right align both columns</span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Add some basic styling to the table</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="st">&#39;striped&#39;</span>)</span></code></pre></div>
+<table class="table table-striped" style="margin-left: auto; margin-right: auto;">
+<caption>
+Percent participants who remember previously being told that they have hypertension (crude estimate)
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+Estimate
+</th>
+<th style="text-align:right;">
+Confidence interval 95%
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+18.9
+</td>
+<td style="text-align:right;">
+17.7 to 20.1
+</td>
+</tr>
+</tbody>
+</table>
+<p>Now for the proportion of people who had hypertension/high blood pressure based on the blood pressure measurements made during the survey.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the proportion of participants diagnosed with hypertension based on </span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># blood pressure measurements at the time of the survey</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>hypertension_measured <span class="ot">&lt;-</span> <span class="fu">svyciprop</span>(<span class="sc">~</span> Hypertension_objective, <span class="co"># Variable</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">design =</span> design_obj) <span class="co"># Design object</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Tabulate</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="st">&#39;Estimate&#39;</span> <span class="ot">=</span> <span class="fu">round</span>(<span class="dv">100</span> <span class="sc">*</span> <span class="fu">as.vector</span>(hypertension_measured), <span class="dv">1</span>),</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>           <span class="st">&#39;Lower_CI&#39;</span> <span class="ot">=</span> <span class="fu">round</span>(<span class="dv">100</span> <span class="sc">*</span> <span class="fu">attr</span>(hypertension_measured, <span class="st">&#39;ci&#39;</span>)[<span class="dv">1</span>], <span class="dv">1</span>),</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>           <span class="st">&#39;Upper_CI&#39;</span> <span class="ot">=</span> <span class="fu">round</span>(<span class="dv">100</span> <span class="sc">*</span> <span class="fu">attr</span>(hypertension_measured, <span class="st">&#39;ci&#39;</span>)[<span class="dv">2</span>], <span class="dv">1</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="st">&#39;Confidence interval 95%&#39;</span> <span class="ot">=</span> <span class="fu">paste</span>(Lower_CI, <span class="st">&#39;to&#39;</span>, Upper_CI)) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span><span class="fu">ends_with</span>(<span class="st">&#39;CI&#39;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kbl</span>(<span class="at">caption =</span> <span class="st">&#39;Percent participants with hypertension based on current blood pressure measurements (crude estimate)&#39;</span>, </span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">row.names =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">align =</span> <span class="st">&#39;rr&#39;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="st">&#39;striped&#39;</span>)</span></code></pre></div>
+<table class="table table-striped" style="margin-left: auto; margin-right: auto;">
+<caption>
+Percent participants with hypertension based on current blood pressure measurements (crude estimate)
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+Estimate
+</th>
+<th style="text-align:right;">
+Confidence interval 95%
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+37.1
+</td>
+<td style="text-align:right;">
+35.3 to 38.9
+</td>
+</tr>
+</tbody>
+</table>
+<p>The prevalence of hypertension, based on measured blood pressure, in the South African adult population is consistent with global estimates of the prevalence of hypertension (see footnote 1), especially for low- and middle-income countries which have seen a rapid rise in the prevalence of hypertension in the past two decades <a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a><sup>,</sup><a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a>.</p>
+<p>More importantly in the context of this blog, however, is the major difference in the percentage of people who remember previously being told that they have high blood pressure/hypertension, and the percentage with hypertension based on measurements taken at the time of the survey (19% vs 37%). Indeed, the estimate based on current measurements is roughly double that of the estimate based on awareness of a previous diagnosis.</p>
+<p>I think that the question on whether participants had ever been told that they have high blood pressure/hypertension by a medical professional may under-estimate the true diagnosis rate because it requires the participant to recall having received that diagnosis. But even when considering this possibility, the data indicate a massive under-diagnosis of hypertension in the South African population. According of the report for the 2016 South African DHS survey (see footnote 3, page 269), 15% of men and 22% of women are taking medication to control there blood pressure, which is consistent with the prevalence of people who have been told that have high blood pressure/hypertension (~19%). However, I did not checked how many people who could not remember being told that they have hypertension were, in fact, taking medication for it. I suspect that in some individuals this incongruency may have been present, but not enough to confound the results significantly.</p>
+<p>One thing to remember about these data is that I have presented crude estimates, which have not been standardised for age, and age is an important risk factor for hypertension. The effect of age on hypertension is best illustrated by a recent study of a large cohort of South Africans living in a rural community, and who were aged <span>⋝</span>40 years <a href="#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a>. In that study, ~60% of participants had hypertension, and these age-related data are in agreement with those reported in the summary of the 2016 South African DHS survey (see footnote 3, page 269).</p>
+</div>
+</div>
+<div id="hidden-burden-of-diabetes-mellitus" class="section level3">
+<h3>Hidden burden of diabetes mellitus</h3>
+<div id="exploratory-plot-of-hba1c" class="section level4">
+<h4>Exploratory plot of HBA1c</h4>
+<p>The horizontal red lines indicate the diabetes mellitus cut-off value (HBA1c <span>⋝</span>6.5%)</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Reset plotting area to 1 row and 1 column</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfcol =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot HBA1c data</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="fu">svyboxplot</span>(HBA1C <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">design =</span> design_obj,</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">all.outliers =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>           <span class="at">ylab =</span> <span class="st">&#39;Percent haemoglobin (%)&#39;</span>,</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>           <span class="at">main =</span> <span class="st">&#39;HBA1c&#39;</span>)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a horizontal dotted ,line at the 6.6% cut-off</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="fl">6.5</span>, </span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="st">&#39;red&#39;</span>,</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">lwd =</span> <span class="dv">2</span>, </span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">lty =</span> <span class="dv">3</span>)</span></code></pre></div>
+<p><img src="2021-06-10-diabetes-and-hypertension_files/figure-html/unnamed-chunk-13-1.png" width="384" style="display: block; margin: auto;" /></p>
+<p>Firstly, the proportion of people who remembered being told that they have high blood sugar/diabetes.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the proportion of participants with a previous diagnosis of diabetes</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>diabetes_diag <span class="ot">&lt;-</span> <span class="fu">svyciprop</span>(<span class="sc">~</span> Diabetes,</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                           <span class="at">design =</span> design_obj)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Tabulate</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a dataframe from svyciprop object</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="st">&#39;Estimate&#39;</span> <span class="ot">=</span> <span class="fu">round</span>(<span class="dv">100</span> <span class="sc">*</span> <span class="fu">as.vector</span>(diabetes_diag), <span class="dv">1</span>),</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>           <span class="st">&#39;Lower_CI&#39;</span> <span class="ot">=</span> <span class="fu">round</span>(<span class="dv">100</span> <span class="sc">*</span> <span class="fu">attr</span>(diabetes_diag, <span class="st">&#39;ci&#39;</span>)[<span class="dv">1</span>], <span class="dv">1</span>),</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>           <span class="st">&#39;Upper_CI&#39;</span> <span class="ot">=</span> <span class="fu">round</span>(<span class="dv">100</span> <span class="sc">*</span> <span class="fu">attr</span>(diabetes_diag, <span class="st">&#39;ci&#39;</span>)[<span class="dv">2</span>], <span class="dv">1</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="st">&#39;Confidence interval 95%&#39;</span> <span class="ot">=</span> <span class="fu">paste</span>(Lower_CI, <span class="st">&#39;to&#39;</span>, Upper_CI)) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span><span class="fu">ends_with</span>(<span class="st">&#39;CI&#39;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kbl</span>(<span class="at">caption =</span> <span class="st">&#39;Percent participants who remember previously being told that they have diabetes (crude estimate)&#39;</span>, </span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">row.names =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">align =</span> <span class="st">&#39;rr&#39;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="st">&#39;striped&#39;</span>)</span></code></pre></div>
+<table class="table table-striped" style="margin-left: auto; margin-right: auto;">
+<caption>
+Percent participants who remember previously being told that they have diabetes (crude estimate)
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+Estimate
+</th>
+<th style="text-align:right;">
+Confidence interval 95%
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+4.5
+</td>
+<td style="text-align:right;">
+3.9 to 5.1
+</td>
+</tr>
+</tbody>
+</table>
+<p>Now for the proportion of people who had diabetes based on the HBA1c measurements made during the survey.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the proportion of participants diagnosed with diabetes based on </span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co"># HBA1c measurements at the time of the survey</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>diabetes_measured <span class="ot">&lt;-</span> <span class="fu">svyciprop</span>(<span class="sc">~</span> Diabetes_objective, </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>                               <span class="at">design =</span> design_obj) </span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Tabulate</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="st">&#39;Estimate&#39;</span> <span class="ot">=</span> <span class="fu">round</span>(<span class="dv">100</span> <span class="sc">*</span> <span class="fu">as.vector</span>(diabetes_measured), <span class="dv">1</span>),</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>           <span class="st">&#39;Lower_CI&#39;</span> <span class="ot">=</span> <span class="fu">round</span>(<span class="dv">100</span> <span class="sc">*</span> <span class="fu">attr</span>(diabetes_measured, <span class="st">&#39;ci&#39;</span>)[<span class="dv">1</span>], <span class="dv">1</span>),</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>           <span class="st">&#39;Upper_CI&#39;</span> <span class="ot">=</span> <span class="fu">round</span>(<span class="dv">100</span> <span class="sc">*</span> <span class="fu">attr</span>(diabetes_measured, <span class="st">&#39;ci&#39;</span>)[<span class="dv">2</span>], <span class="dv">1</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="st">&#39;Confidence interval 95%&#39;</span> <span class="ot">=</span> <span class="fu">paste</span>(Lower_CI, <span class="st">&#39;to&#39;</span>, Upper_CI)) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span><span class="fu">ends_with</span>(<span class="st">&#39;CI&#39;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kbl</span>(<span class="at">caption =</span> <span class="st">&#39;Percent participants with diabetes based on current HBA1c measurements (crude estimate)&#39;</span>, </span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">row.names =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">align =</span> <span class="st">&#39;rr&#39;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="st">&#39;striped&#39;</span>)</span></code></pre></div>
+<table class="table table-striped" style="margin-left: auto; margin-right: auto;">
+<caption>
+Percent participants with diabetes based on current HBA1c measurements (crude estimate)
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+Estimate
+</th>
+<th style="text-align:right;">
+Confidence interval 95%
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+11.4
+</td>
+<td style="text-align:right;">
+10.4 to 12.5
+</td>
+</tr>
+</tbody>
+</table>
+<p>There appears to be a gross under-diagnosis of the prevalence of diabetes based on the number of people who remembered being given such a diagnosis compared to those individuals meeting the definition of diabetes based on HBA1c levels (4.5% vs 11.4%). Using the estimate of diabetes prevalence (11.4%) from the 2016 South African DHS, about 6.7 million South Africans have diabetes.</p>
+<p>The prevalence I report here is similar to that reported in a recent systematic review and meta-analysis by Pheiffer and colleagues on type II diabetes in South Africa <a href="#fn10" class="footnote-ref" id="fnref10"><sup>10</sup></a>. Using pooled data, from studies using objective criteria for the diagnosis of diabetes, they reported a prevalence ~15% in people aged <span>⋝</span>25 years. The 2016 South African DHS data includes a wider age range (<span>⋝</span>15 years), which may explain the difference in prevalence. Another reason for the slight discrepancy between the prevalence reported by Pheiffer and collegaues and the data I present here is that the correction factor applied to the HBA1c data in the DHS for using a dried blood spot and not a fresh venous blood may have over-corrected the HBA1c. Not applying the correction leads to an estimated diabetes prevalence of 21%.</p>
+</div>
+</div>
+</div>
+<div id="conclusion" class="section level2">
+<h2>Conclusion</h2>
+<p>Using the estimate of diabetes prevalence (11.4%) from the 2016 South African DHS, about 6.7 million adult South Africans have diabetes. Similarly, about 21.8 million South African adults have hypertension (37%). Thus there is a high burden (number of people affected) of two diseases that are major causes of mortality and morbidity.</p>
+<p>According to 2017 data from Statistics South Africa <a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a> complications of diabetes were the second most common cause of death (5.7% of deaths); the biggest killer was tuberculosis (6.4% of deaths). Hypertensive diseases are the seventh most common cause of death (4.7% deaths), but when you add in diseases where hypertension is a major contributing factor, then the contribution of hypertension becomes more apparent (e.g., cerebrovacular disease caused 5.0% of deaths).</p>
+<p>The data I present here shows that there is significant under-diagnosis of diabetes mellitus and hypertension. Both these diseases are treatable, so the under-diagnosis means greater morbidity and mortality from these diseases, which is a a big worry from a public health point of view.</p>
+<hr />
+</div>
+<div id="session-information" class="section level2">
+<h2>Session information</h2>
+<pre><code>## R version 4.0.4 (2021-02-15)
+## Platform: x86_64-apple-darwin17.0 (64-bit)
+## Running under: macOS Catalina 10.15.7
+## 
+## Matrix products: default
+## BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
+## 
+## locale:
+## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+## 
+## attached base packages:
+## [1] grid      stats     graphics  grDevices utils     datasets  methods  
+## [8] base     
+## 
+## other attached packages:
+##  [1] kableExtra_1.3.4 survey_4.0       survival_3.2-9   Matrix_1.3-2    
+##  [5] forcats_0.5.1    stringr_1.4.0    dplyr_1.0.5      purrr_0.3.4     
+##  [9] readr_1.4.0      tidyr_1.1.3      tibble_3.1.0     ggplot2_3.3.3   
+## [13] tidyverse_1.3.0 
+## 
+## loaded via a namespace (and not attached):
+##  [1] Rcpp_1.0.6        svglite_2.0.0     lubridate_1.7.10  lattice_0.20-41  
+##  [5] assertthat_0.2.1  digest_0.6.27     utf8_1.2.1        R6_2.5.0         
+##  [9] cellranger_1.1.0  backports_1.2.1   reprex_1.0.0      evaluate_0.14    
+## [13] httr_1.4.2        highr_0.8         pillar_1.5.1      rlang_0.4.10     
+## [17] readxl_1.3.1      rstudioapi_0.13   jquerylib_0.1.3   rmarkdown_2.7    
+## [21] splines_4.0.4     webshot_0.5.2     munsell_0.5.0     broom_0.7.5      
+## [25] compiler_4.0.4    modelr_0.1.8      xfun_0.22         pkgconfig_2.0.3  
+## [29] systemfonts_1.0.1 htmltools_0.5.1.1 mitools_2.4       tidyselect_1.1.0 
+## [33] viridisLite_0.3.0 fansi_0.4.2       crayon_1.4.1      dbplyr_2.1.0     
+## [37] withr_2.4.1       jsonlite_1.7.2    gtable_0.3.0      lifecycle_1.0.0  
+## [41] DBI_1.1.1         magrittr_2.0.1    scales_1.1.1      cli_2.3.1        
+## [45] stringi_1.5.3     fs_1.5.0          xml2_1.3.2        bslib_0.2.4      
+## [49] ellipsis_0.3.1    generics_0.1.0    vctrs_0.3.6       tools_4.0.4      
+## [53] glue_1.4.2        hms_1.0.0         yaml_2.2.1        colorspace_2.0-0 
+## [57] rvest_1.0.0       knitr_1.31        haven_2.3.1       sass_0.3.1</code></pre>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Mills KT <em>et al</em>. Global disparities of hypertension prevalence and control: A systematic analysis of population-based studies from 90 countries. <em>Circulation</em> <strong>134</strong>:441-50, 2016. PMID: <a href="https://pubmed.ncbi.nlm.nih.gov/27502908/">27502908</a><a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>GBD 2017 Causes of Death Collaborators. Global, regional, and national age-sex-specific mortality for 282 causes of death in 195 countries and territories, 1980-2017: a systematic analysis for the Global Burden of Disease Study 2017. <em>Lancet</em> <strong>392</strong>:1736-1788, 2018. PMID: <a href="https://pubmed.ncbi.nlm.nih.gov/30496103/">30496103</a><a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p>National Department of Health (NDoH), Statistics South Africa (Stats SA), South African Medical Research Council (SAMRC), and ICF. 2019. South Africa Demographic and Health Survey 2016. Pretoria, South Africa, and Rockville, Maryland, USA: NDoH, Stats SA, SAMRC, and ICF (<a href="https://dhsprogram.com/pubs/pdf/FR337/FR337.pdf">Link</a>)<a href="#fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn4"><p>Unger T <em>et al</em>. 2020 International Society of Hypertension Global Hypertension Practice Guidelines. <em>Hypertension</em> <strong>75</strong>:1334-1357, 2020. PMID: <a href="https://pubmed.ncbi.nlm.nih.gov/32370572/">32370572</a><a href="#fnref4" class="footnote-back">↩︎</a></p></li>
+<li id="fn5"><p>American Diabetes Association. Classification and diagnosis of diabetes. <em>Diabetes Care</em> 38 (Suppl. 1):S8–S16, 2015. PMID: <a href="https://pubmed.ncbi.nlm.nih.gov/25537714/">25537714</a><a href="#fnref5" class="footnote-back">↩︎</a></p></li>
+<li id="fn6"><p>You need to <a href="https://dhsprogram.com/data/dataset_admin/login_main.cfm?">register</a> as a user on the DHS Program system, and then request access to data for a defined project. The registration process is quick, and submitting a request for data is straightforward. The permissions to use the data usually comes within 24-hour of submitting the request.<a href="#fnref6" class="footnote-back">↩︎</a></p></li>
+<li id="fn7"><p>Kearney PM <em>et al</em>. Global burden of hypertension: analysis of worldwide data. <em>Lancet</em> <strong>365</strong>:217-23, 2005. PMID: <a href="https://pubmed.ncbi.nlm.nih.gov/15652604/">15652604</a><a href="#fnref7" class="footnote-back">↩︎</a></p></li>
+<li id="fn8"><p>Mills KT <em>et al</em>. The global epidemiology of hypertension. <em>Nature Reviews Nephrology</em> <strong>16</strong>:223-237, 2020. PMID: <a href="https://pubmed.ncbi.nlm.nih.gov/32024986">32024986</a>.<a href="#fnref8" class="footnote-back">↩︎</a></p></li>
+<li id="fn9"><p>Gaziano TA <em>et al</em>. Cardiometabolic risk in a population of older adults with multiple co-morbidities in rural south africa: the HAALSI (Health and Aging in Africa: longitudinal studies of INDEPTH communities) study. <em>BMC Public Health</em> <strong>17</strong>, 206, 2017. DOI: <a href="https://doi.org/10.1186/s12889-017-4117-y">10.1186/s12889-017-4117-y</a><a href="#fnref9" class="footnote-back">↩︎</a></p></li>
+<li id="fn10"><p>Pheiffer C <em>et al</em>. Prevalence of Type 2 Diabetes in South Africa: A Systematic Review and Meta-Analysis. <em>International Journal Environmental Research and Public Health</em> <strong>18</strong>:5868, 2021. PMID: <a href="https://pubmed.ncbi.nlm.nih.gov/34070714">34070714</a>.<a href="#fnref10" class="footnote-back">↩︎</a></p></li>
+<li id="fn11"><p>Statistics South Africa. Mortality and causes of death in South Africa: Findings from death notification 2017 (Statistical release P0309.3). <a href="https://www.statssa.gov.za/publications/P03093/P030932017.pdf">Link</a><a href="#fnref11" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+
+        <!-- Include these sections here, otherwise YAML headings not inserted -->
+        <!-- Share -->
+        <div class="share">
+            <p style="display:inline-block">
+                <hr>
+                <h3>Share</h3>&ensp;
+                <a href="mailto:?subject=The under-diagnosis of diabetes and hypertension in South Africa&body=Hi, I thought you might like this post I found on painblogR:%0D%0A%0D%0Ahttps://www.painblogr.org/2021-06-10-diabetes-and-hypertension.html.%0D%0A%0D%0ABest regards" target="_blank"><i class="fa fa-envelope" style="color:#000000;vertical-align:middle;" title="Share on email" ></i></a>&ensp;
+                <a href="https://twitter.com/intent/tweet?url=https://www.painblogr.org/2021-06-10-diabetes-and-hypertension.html&text=The under-diagnosis of diabetes and hypertension in South Africa&via=painblogR" rel="nofollow" target="_blank" title="Share on Twitter"><i class="fa fa-twitter" style="color:#000000;vertical-align:middle;"></i></a>&ensp;
+                <a href="https://facebook.com/sharer.php?u=https://www.painblogr.org/2021-06-10-diabetes-and-hypertension.html" rel="nofollow" target="_blank" title="Share on Facebook"><i class="fa fa-facebook" style="color:#000000;vertical-align:middle;"></i></a>&ensp;
+                <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://www.painblogr.org/2021-06-10-diabetes-and-hypertension.html" rel="nofollow" target="_blank" title="Share on LinkedIn"><i class="fa fa-linkedin" style="color:#000000;vertical-align:middle;"></i></a>
+            </p>
+        </div>
+
+        <!-- Disqus
+        <div class="comments">
+            <hr>
+            <h3>Comments</h3>
+            <div id="disqus_thread"></div>
+            <script>
+                var disqus_config = function() {
+                    this.page.url = 'https://www.painblogr.org/2021-06-10-diabetes-and-hypertension.html'
+                    this.page.identifier = '/2021-06-10-diabetes-and-hypertension.html'
+                };
+
+                (function() {
+                    var d = document,
+                        s = d.createElement('script');
+
+                    s.src = 'https://www.painblogr.disqus.com/embed.js';
+                    s.setAttribute('data-timestamp', +new Date());
+                    (d.head || d.body).appendChild(s);
+                })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+            </noscript>
+        </div>
+    </div> -->
+
+    <!-- Footer -->
+    <footer>
+         <!--footer-->
+<div class="container-fluid" id="foot" style="background-color:#FFFFFF;border-top:#CCCCCC solid 1px;color:#999999;font-family:'Open sans', 'Helvetica';">
+    <div class="row">
+        <div class="col-sm-4">
+            <p>Hosted by: <a href="https://www.netlify.com" target="_blank">netlify.com</a>
+                <br>Powered by: <a href="http://rmarkdown.rstudio.com/" target="_blank">RMarkdown</a>
+                <br>
+                <br>
+            </p>
+        </div>
+        <div class="col-sm-4">
+            <p>Fork/clone from: <a href="https://github.com/kamermanpr/kamermanpr.github.io.git" target="_blank">GitHub</a>
+                <br>License: <a href="./LICENSE.html" target="_blank">MIT & CC-BY 4.0</a>
+                <br>
+                <br>
+            </p>
+        </div>
+        <div class="col-sm-4">
+            <h4 style="padding:0;margin:0">painblogR</h3>
+			   <p style="display:inline-block">
+				   <span style="font-style:italic">by Peter Kamerman</span>
+				   &ensp;
+				   <a href="mailto:peter.kamerman@gmail.com" title="Email me" target="_blank"><i style="color:#999999;" class="fa fa-envelope"></i></a>
+				   &ensp;
+				   <a href="//twitter.com/@painblogR" target="_blank" title="Follow me"><i style="color:#999999;" class="fa fa-twitter"></i></a>
+			   </p>
+		   </div>
+	   </div>
+	</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script> 
+    </footer>
+</body>
+</html>

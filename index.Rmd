@@ -9,6 +9,21 @@ output:
 
 <br>
 
+![](./images/posts/2021-06-10-diabetes-and-hypertension/post-image.png){ style="float:left;margin-left:auto;margin-right:auto;padding:16px 16px 20px 0px;" width=200px }
+
+### The under-diagnosis of diabetes and hypertension in South Africa
+
+**Peter Kamerman**
+
+_10 June 2021_
+
+Using the 2016 South African Demographic and Household Survey to investigate the under-diagnosis of diabetes and hypertension.
+
+<a class="btn btn-primary" href="https://www.painblogr.org/2021-06-10-diabetes-and-hypertension.html" target="_blank">Read more <i class="fa fa-arrow-circle-o-right fa-2x" style="vertical-align: middle;" aria-hidden="true"></i></a><br>
+<br>
+
+****
+
 ![](./images/posts/2020-12-15-climate-change/post-image.jpg){ style="float:left;margin-left:auto;margin-right:auto;padding:16px 16px 20px 0px;" width=200px }
 
 ### Using raster data to calculate and then map aridity indices
@@ -36,19 +51,3 @@ _3 July 2020_
 Interrupted times series analysis of gabapentinoids in England using piecewise regression.
 
 <a class="btn btn-primary" href="https://www.painblogr.org/2020-07-03-piecewise-regression.html" target="_blank">Read more <i class="fa fa-arrow-circle-o-right fa-2x" style="vertical-align: middle;" aria-hidden="true"></i></a><br>
-
-****
-
-<br>
-
-![](./images/posts/2020-06-19-purring-through-exploratory-analyses/post-image.jpg){ style="float:left;margin-left:auto;margin-right:auto;padding:16px 16px 20px 0px;" width=200px }
-
-### Neat and tidy data exploration with list-columns and <em>purrr</em>
-
-**Peter Kamerman**
-
-_19 June 2020_
-
-Exploring data with the purrr package.
-
-<a class="btn btn-primary" href="https://www.painblogr.org/2020-06-19-purring-through-exploratory-analyses.html" target="_blank">Read more <i class="fa fa-arrow-circle-o-right fa-2x" style="vertical-align: middle;" aria-hidden="true"></i></a><br>

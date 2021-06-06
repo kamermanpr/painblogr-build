@@ -1,0 +1,1381 @@
+                                                  ZAAHW71FL                                                   
+                                                ZAAHW71FL_DICT                                                
+
+                                       ZAAHW71FL.DCF                                                          
+                                    Last Modified:  1/30/2019  11:16:06 AM                                    
+
+--------------------------------------------------------------------------------------------------------------
+Level Name                    Level Label                                                  Type            Rec
+  Record Name                   Record Label                                              Value  Req  Max  Len
+--------------------------------------------------------------------------------------------------------------
+HOUSEHOLD                     HOUSEHOLD                                                                       
+  RECORD1                       RECORD1                                                          Yes    1  503
+Level: HOUSEHOLD                                       Record: RECORD1
+--------------------------------------------------------------------------------------------------------------
+                                                                                 Data Item            Dec Zero
+Item Name              Item Label                                     Start  Len Type Type  Occ  Dec Char Fill
+--------------------------------------------------------------------------------------------------------------
+CASEID            (id) Case Identification                                1   15   AN    I    1    0   No   No
+                         (record type)                                    0    0   AN    I    1    0   No   No
+V000                   Country code and phase                            16    3   AN    I    1    0   No   No
+V001                   Cluster number                                    19    6    N    I    1    0   No   No
+V002                   Household number                                  25    6    N    I    1    0   No   No
+V003                   Respondent's line number                          31    3    N    I    1    0   No   No
+V004                   Ultimate area unit                                34    4    N    I    1    0   No   No
+V005                   Women's individual sample weight (6 decimals)     38    8    N    I    1    0   No   No
+V006                   Month of interview                                46    2    N    I    1    0   No   No
+                               1:12  
+V007                   Year of interview                                 48    4    N    I    1    0   No   No
+                               2013:2025  
+V008                   Date of interview (CMC)                           52    4    N    I    1    0   No   No
+V008A                  Date of interview Century Day Code (CDC)          56    5    N    I    1    0   No   No
+V009                   Respondent's month of birth                       61    2    N    I    1    0   No   No
+                               1:12  
+                          (na)       Not applicable
+V010                   Respondent's year of birth                        63    4    N    I    1    0   No   No
+                               1920:2001  
+                          (na)            Not applicable
+V011                   Date of birth (CMC)                               67    4    N    I    1    0   No   No
+V012                   Respondent's current age                          71    2    N    I    1    0   No   No
+                               15:95  
+                          (na)        Not applicable
+V013                   Age in 5-year groups                              73    1    N    I    1    0   No   No
+                               1  15-19
+                               2  20-24
+                               3  25-29
+                               4  30-34
+                               5  35-39
+                               6  40-44
+                               7  45-49
+                               8  50+
+                          (na)    Not applicable
+V014                   Completeness of age information                   74    1    N    I    1    0   No   No
+                               1  Month and year - information complete
+                               2  Month and age - year imputed
+                               3  Year and age - month imputed
+                               4  Year and age - year ignored
+                               5  Year - age/month imputed
+                               6  Age - year/month imputed
+                               7  Month - age/year imputed
+                               8  None - all imputed
+                          (na)    Not applicable
+V015                   Result of individual interview                    75    1    N    I    1    0   No   No
+                               1  Completed
+                               2  Not at home
+                               3  Postponed
+                               4  Refused
+                               5  Partially completed
+                               6  Respondent incapacitated
+                               7  Other
+V016                   Day of interview                                  76    2    N    I    1    0   No   No
+                               1:31  
+V017                   CMC start of calendar                             78    4    N    I    1    0   No   No
+                          (na)       Not applicable
+V018                   Row of month of interview                         82    2    N    I    1    0   No   No
+                               0     No calendar
+                               1:20  
+V019                   Length of calendar                                84    2    N    I    1    0   No   No
+                               0      No calendar
+                               61:80  
+V019A                  Number of calendar columns                        86    1    N    I    1    0   No   No
+                               0    No calendar
+                               1:9  
+                          (na)      Not applicable
+V020                   Ever-married sample                               87    1    N    I    1    0   No   No
+                               0  All woman sample
+                               1  Ever married sample
+V021                   Primary sampling unit                             88    4    N    I    1    0   No   No
+V022                   Sample strata for sampling errors                 92    4    N    I    1    0   No   No
+                               1   Urban - Western Cape
+                               2   Farms - Western Cape
+                               3   Urban - Eastern Cape
+                               4   Traditional - Eastern Cape
+                               5   Farms - Eastern Cape
+                               6   Urban - Northern Cape
+                               7   Traditional - Northern Cape
+                               8   Farms - Northern Cape
+                               9   Urban - Free State
+                               10  Traditional - Free State
+                               11  Farms - Free State
+                               12  Urban - Kwazulu-Natal
+                               13  Traditional - Kwazulu-Natal
+                               14  Farms - Kwazulu-Natal
+                               15  Urban - North West
+                               16  Traditional - North West
+                               17  Farms - North West
+                               18  Urban - Gauteng
+                               19  Traditional - Gauteng
+                               20  Farms - Gauteng
+                               21  Urban - Mpumalanga
+                               22  Traditional - Mpumalanga
+                               23  Farms - Mpumalanga
+                               24  Urban - Limpopo
+                               25  Traditional - Limpopo
+                               26  Farms - Limpopo
+V023                   Stratification used in sample design              96    2    N    I    1    0   No   No
+                               1   Urban - Western Cape
+                               2   Farms - Western Cape
+                               3   Urban - Eastern Cape
+                               4   Traditional - Eastern Cape
+                               5   Farms - Eastern Cape
+                               6   Urban - Northern Cape
+                               7   Traditional - Northern Cape
+                               8   Farms - Northern Cape
+                               9   Urban - Free State
+                               10  Traditional - Free State
+                               11  Farms - Free State
+                               12  Urban - Kwazulu-Natal
+                               13  Traditional - Kwazulu-Natal
+                               14  Farms - Kwazulu-Natal
+                               15  Urban - North West
+                               16  Traditional - North West
+                               17  Farms - North West
+                               18  Urban - Gauteng
+                               19  Traditional - Gauteng
+                               20  Farms - Gauteng
+                               21  Urban - Mpumalanga
+                               22  Traditional - Mpumalanga
+                               23  Farms - Mpumalanga
+                               24  Urban - Limpopo
+                               25  Traditional - Limpopo
+                               26  Farms - Limpopo
+V024                   Region                                            98    2    N    I    1    0   No   No
+                               1  Western Cape
+                               2  Eastern Cape
+                               3  Northern Cape
+                               4  Free State
+                               5  Kwazulu-Natal
+                               6  North West
+                               7  Gauteng
+                               8  Mpumalanga
+                               9  Limpopo
+V025                   Type of place of residence                       100    1    N    I    1    0   No   No
+                               1  Urban
+                               2  Rural
+V026                   NA - De facto place of residence                 101    1    N    I    1    0   No   No
+                               0  Capital, large city
+                               1  Small city
+                               2  Town
+                               3  Countryside
+                           (m) 9  Missing
+V027                   Number of visits                                 102    1    N    I    1    0   No   No
+                               1:8  
+                           (m) 9    Missing
+V028                   Interviewer identification                       103    5    N    I    1    0   No   No
+                           (m) 999    Missing
+V029                   NA - Keyer identification                        108    3    N    I    1    0   No   No
+                           (m) 99   Missing
+V030                   Field supervisor                                 111    5    N    I    1    0   No   No
+                           (m) 999    Missing
+                          (na)        Not applicable
+V031                   NA - Field editor                                116    5    N    I    1    0   No   No
+                           (m) 999    Missing
+                          (na)        Not applicable
+V032                   NA - Office editor                               121    3    N    I    1    0   No   No
+                           (m) 99   Missing
+                          (na)      Not applicable
+V034                   Line number of husband                           124    2    N    I    1    0   No   No
+                               0     Husband not in household
+                               1:90  
+                           (m) 99    Missing
+                          (na)       Not applicable
+V040                   Cluster altitude in meters                       126    4    N    I    1    0   No   No
+                           (m) 9999  Missing
+V042                   Household selected for hemoglobin                130    1    N    I    1    0   No   No
+                               0  Not selected
+                               1  Selected
+                          (na)    Not applicable
+V044                   Selected for Domestic Violence module            131    1    N    I    1    0   No   No
+                               0  Woman not selected
+                               1  Woman selected and interviewed
+                               2  Woman selected, but privacy not possible
+                               3  Woman selected, but not interviewed
+                          (na)    Not applicable
+V045A                  Language of questionnaire                        132    3    N    I    1    0   No   No
+                               1   ENGLISH
+                               2   AFRIKAANS
+                               3   isiXHOSA
+                               4   isiZULU
+                               5   SeSOTHO
+                               6   SeTSWANA
+                               7   SePEDI
+                               8   SiSWATI
+                               9   TshiVENDA
+                               10  XITSONGA
+                               11  isiNDEBELE
+V045B                  Language of interview                            135    3    N    I    1    0   No   No
+                               1   ENGLISH
+                               2   AFRIKAANS
+                               3   isiXHOSA
+                               4   isiZULU
+                               5   SeSOTHO
+                               6   SeTSWANA
+                               7   SePEDI
+                               8   SiSWATI
+                               9   TshiVENDA
+                               10  XITSONGA
+                               11  isiNDEBELE
+V045C                  Native language of respondent                    138    3    N    I    1    0   No   No
+                               1   ENGLISH
+                               2   AFRIKAANS
+                               3   isiXHOSA
+                               4   isiZULU
+                               5   SeSOTHO
+                               6   SeTSWANA
+                               7   SePEDI
+                               8   SiSWATI
+                               9   TshiVENDA
+                               10  XITSONGA
+                               11  isiNDEBELE
+                               96  Other
+V046                   Translator used                                  141    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+V101                   Region                                           142    2    N    I    1    0   No   No
+                               1  Western Cape
+                               2  Eastern Cape
+                               3  Northern Cape
+                               4  Free State
+                               5  Kwazulu-Natal
+                               6  North West
+                               7  Gauteng
+                               8  Mpumalanga
+                               9  Limpopo
+V102                   Type of place of residence                       144    1    N    I    1    0   No   No
+                               1  Urban
+                               2  Rural
+V103                   Childhood place of residence                     145    1    N    I    1    0   No   No
+                               0  Capital, large city
+                               1  City
+                               2  Town
+                               3  Countryside
+                               4  Abroad
+                               5  Farm
+                               6  Tribal area
+                               7  Informal settlement
+                           (m) 9  Missing
+V104                   Years lived in place of residence                146    2    N    I    1    0   No   No
+                               0:90  
+                               95    Always
+                               96    Visitor
+                               97    Inconsistent
+                               98    Don't know
+                           (m) 99    Missing
+V105                   Type of place of previous residence              148    1    N    I    1    0   No   No
+                               0  Capital, large city
+                               1  City
+                               2  Town
+                               3  Countryside
+                               4  Abroad
+                               5  Farm
+                               6  Tribal area
+                               7  Informal settlement
+                           (m) 9  Missing
+                          (na)    Not applicable
+V105A                  Region of previous residence                     149    2    N    I    1    0   No   No
+                               1   Western Cape
+                               2   Eastern Cape
+                               3   Northern Cape
+                               4   Free State
+                               5   Kwazulu-Natal
+                               6   North West
+                               7   Gauteng
+                               8   Mpumalanga
+                               9   Limpopo
+                               16  SADC country
+                               26  Other country
+                           (m) 99  Missing
+                          (na)     Not applicable
+V106                   Highest educational level                        151    1    N    I    1    0   No   No
+                               0  No education
+                               1  Primary
+                               2  Secondary
+                               3  Higher
+                           (m) 9  Missing
+V107                   Highest year of education                        152    2    N    I    1    0   No   No
+                               0     No years completed at level V106
+                               1:15  
+                           (m) 99    Missing
+                          (na)       Not applicable
+V113                   Source of drinking water                         154    2    N    I    1    0   No   No
+                               10  PIPED WATER
+                               11  Piped into dwelling
+                               12  Piped to yard/plot
+                               13  Piped to neighbor
+                               14  Public tap/standpipe
+                               20  TUBE WELL WATER
+                               21  Tube well or borehole
+                               30  DUG WELL (OPEN/PROTECTED)
+                               31  Protected well
+                               32  Unprotected well
+                               40  SURFACE FROM SPRING
+                               41  Protected spring
+                               42  Unprotected spring
+                               43  River/dam/lake/ponds/stream/canal/irrigation channel
+                               51  Rainwater
+                               61  Tanker truck
+                               62  Cart with small tank
+                               71  Bottled water
+                               96  Other
+                               97  Not a dejure resident
+                           (m) 99  Missing
+V115                   Time to get to water source                      156    3    N    I    1    0   No   No
+                               0:900  
+                               996    On premises
+                               997    Not a dejure resident
+                               998    Don't know
+                           (m) 999    Missing
+                          (na)        Not applicable
+V116                   Type of toilet facility                          159    2    N    I    1    0   No   No
+                               10  FLUSH TOILET
+                               11  Flush to piped sewer system
+                               12  Flush to septic tank
+                               13  Flush to pit latrine
+                               14  Flush to somewhere else
+                               15  Flush, don't know where
+                               20  PIT TOILET LATRINE
+                               21  Ventilated Improved Pit latrine (VIP)
+                               22  Pit latrine with slab
+                               23  Pit latrine without slab/open pit
+                               30  NO FACILITY
+                               31  No facility/bush/field
+                               41  Composting toilet
+                               42  Bucket toilet
+                               43  Hanging toilet/latrine
+                               44  Chemical toilet
+                               96  Other
+                               97  Not a dejure resident
+                           (m) 99  Missing
+V119                   Household has: electricity                       161    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                               7  Not a dejure resident
+                           (m) 9  Missing
+V120                   Household has: radio                             162    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                               7  Not a dejure resident
+                           (m) 9  Missing
+V121                   Household has: television                        163    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                               7  Not a dejure resident
+                           (m) 9  Missing
+V122                   Household has: refrigerator                      164    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                               7  Not a dejure resident
+                           (m) 9  Missing
+V123                   Household has: bicycle                           165    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                               7  Not a dejure resident
+                           (m) 9  Missing
+V124                   Household has: motorcycle/scooter                166    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                               7  Not a dejure resident
+                           (m) 9  Missing
+V125                   Household has: car/truck                         167    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                               7  Not a dejure resident
+                           (m) 9  Missing
+V127                   Main floor material                              168    2    N    I    1    0   No   No
+                               10  NATURAL
+                               11  Earth/sand
+                               12  Dung
+                               20  RUDIMENTARY
+                               21  Wood planks
+                               30  FINISHED
+                               31  Laminated or polished wood
+                               32  Vinyl or asphalt strips
+                               33  Ceramic tiles
+                               34  Cement
+                               35  Carpet
+                               96  Other
+                               97  Not a dejure resident
+                           (m) 99  Missing
+V128                   Main wall material                               170    2    N    I    1    0   No   No
+                               10  NATURAL
+                               11  No walls
+                               12  Dirt/mud
+                               20  RUDIMENTARY
+                               21  Plastic
+                               22  Wattle and daub
+                               23  Stone with mud
+                               24  Mud with cement mix
+                               25  Cardboard
+                               26  Reused wood
+                               30  FINISHED
+                               31  Cement
+                               32  Stone with lime/cement
+                               33  Bricks
+                               34  Cement block/concrete
+                               36  Wood planks
+                               37  Corrugated iron/zinc
+                               96  Other
+                               97  Not a dejure resident
+                           (m) 99  Missing
+V129                   Main roof material                               172    2    N    I    1    0   No   No
+                               10  NATURAL
+                               11  No roof
+                               12  Thatching/grass
+                               13  Mud/sod
+                               20  RUDIMENTARY
+                               30  FINISHED
+                               21  Plastic
+                               22  Wattle and daub
+                               23  Mud with cement mix
+                               24  Bricks
+                               25  Wood planks
+                               26  Cardboard
+                               31  Corrugated iron/zinc
+                               32  Wood
+                               33  Asbestos
+                               34  Tiles
+                               35  Cement
+                               96  Other
+                               97  Not a dejure resident
+                           (m) 99  Missing
+V130                   NA - Religion                                    174    2    N    I    1    0   No   No
+                               96  Other
+                           (m) 99  Missing
+V131                   Ethnicity                                        176    3    N    I    1    0   No   No
+                               1    Black/African
+                               2    White
+                               3    Coloured
+                               4    Indian/Asian
+                               996  Other
+                           (m) 999  Missing
+V133                   Education in single years                        179    2    N    I    1    0   No   No
+                               0:20  
+                               97    Inconsistent
+                           (m) 99    Missing
+V134                   NA - De facto place of residence                 181    1    N    I    1    0   No   No
+                               0  Capital, large city
+                               1  Small city
+                               2  Town
+                               3  Countryside
+                           (m) 9  Missing
+V135                   Usual resident or visitor                        182    1    N    I    1    0   No   No
+                               1  Usual resident
+                               2  Visitor
+                           (m) 9  Missing
+V136                   Number of household members (listed)             183    2    N    I    1    0   No   No
+V137                   Number of children 5 and under in household (de  185    2    N    I    1    0   No   No
+V138                   Number of eligible women in household (de facto  187    2    N    I    1    0   No   No
+V139                   De jure region of residence                      189    2    N    I    1    0   No   No
+                               0   Abroad
+                               1   Western Cape
+                               2   Eastern Cape
+                               3   Northern Cape
+                               4   Free State
+                               5   Kwazulu-Natal
+                               6   North West
+                               7   Gauteng
+                               8   Mpumalanga
+                               9   Limpopo
+                               97  Not dejure resident
+                           (m) 99  Missing
+V140                   De jure type of place of residence               191    1    N    I    1    0   No   No
+                               0  Abroad
+                               1  Urban
+                               2  Rural
+                               7  Not a dejure resident
+                           (m) 9  Missing
+V141                   NA - De jure place of residence                  192    1    N    I    1    0   No   No
+                               0  Capital, large city
+                               1  City
+                               2  Town
+                               3  Countryside
+                               4  Abroad
+                               7  Not a dejure resident
+                           (m) 9  Missing
+V149                   Educational attainment                           193    1    N    I    1    0   No   No
+                               0  No education
+                               1  Incomplete primary
+                               2  Complete primary
+                               3  Incomplete secondary
+                               4  Complete secondary
+                               5  Higher
+                           (m) 9  Missing
+V150                   Relationship to household head                   194    2    N    I    1    0   No   No
+                               1   Head
+                               2   Wife or husband
+                               3   Son/daughter
+                               4   Son/daughter-in-law
+                               5   Grandchild
+                               6   Parent
+                               7   Parent-in-law
+                               8   Brother/sister
+                               9   Co-spouse
+                               10  Other relative
+                               11  Adopted child
+                               12  Not related
+                               13  Foster
+                               14  Stepchild
+                               98  Don't know
+                           (m) 99  Missing
+V151                   Sex of household head                            196    1    N    I    1    0   No   No
+                               1  Male
+                               2  Female
+V152                   Age of household head                            197    2    N    I    1    0   No   No
+                               0:96  
+                               97    97+
+                               98    Don't know
+                           (m) 99    Missing
+V153                   Household has: telephone (land-line)             199    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                               7  Not a dejure resident
+                           (m) 9  Missing
+AWFACTT                All woman factor - total                         200    5    N    I    1    0   No   No
+                          (na)        Not applicable
+AWFACTU                All woman factor - urban/rural                   205    5    N    I    1    0   No   No
+                          (na)        Not applicable
+AWFACTR                All woman factor - regional                      210    5    N    I    1    0   No   No
+                          (na)        Not applicable
+AWFACTE                All woman factor - educational                   215    5    N    I    1    0   No   No
+                          (na)        Not applicable
+AWFACTW                All woman factor - wealth index                  220    5    N    I    1    0   No   No
+                          (na)        Not applicable
+V155                   Literacy                                         225    1    N    I    1    0   No   No
+                               0  Cannot read at all
+                               1  Able to read only parts of sentence
+                               2  Able to read whole sentence
+                               3  No card with required language
+                               4  Blind/visually impaired
+                           (m) 9  Missing
+V156                   NA - Ever participated in a literacy program ou  226    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  Missing
+                          (na)    Not applicable
+V157                   Frequency of reading newspaper or magazine       227    1    N    I    1    0   No   No
+                               0  Not at all
+                               1  Less than once a week
+                               2  At least once a week
+                               3  Almost every day
+                           (m) 9  Missing
+                          (na)    Not applicable
+V158                   Frequency of listening to radio                  228    1    N    I    1    0   No   No
+                               0  Not at all
+                               1  Less than once a week
+                               2  At least once a week
+                               3  Almost every day
+                           (m) 9  Missing
+V159                   Frequency of watching television                 229    1    N    I    1    0   No   No
+                               0  Not at all
+                               1  Less than once a week
+                               2  At least once a week
+                               3  Almost every day
+                           (m) 9  Missing
+V160                   Toilet facilities shared with other households   230    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                               7  Not a dejure resident
+                           (m) 9  Missing
+                          (na)    Not applicable
+V161                   Type of cooking fuel                             231    2    N    I    1    0   No   No
+                               1   Electricity
+                               2   LPG
+                               3   Natural gas
+                               4   Biogas
+                               5   Kerosene/Paraffin
+                               6   Coal, lignite
+                               7   Charcoal
+                               8   Wood
+                               9   Straw/shrubs/grass
+                               10  Agricultural crop
+                               11  Animal dung
+                               12  Electricity from generator
+                               13  Electricity from other source
+                               14  Solar energy
+                               95  No food cooked in house
+                               96  Other
+                               97  Not a dejure resident
+                           (m) 99  Missing
+V166                   NA - Result of salt test for iodine              233    3    N    I    1    0   No   No
+                               0       0 ppm (no iodine)
+                               1:6     
+                               7       7 ppm
+                               8:14    
+                               15      15 ppm
+                               16:29   
+                               30      30 ppm
+                               31:100  
+                               994     Salt not tested
+                               995     No salt
+                               997     Not a dejure resident
+                           (m) 999     Missing
+V167                   Number of trips in last 12 months                236    2    N    I    1    0   No   No
+                               0     None
+                               1:89  
+                               90    90+
+                           (m) 99    Missing
+                          (na)       Not applicable
+V168                   Away for more than one month in last 12 months   238    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  Missing
+                          (na)    Not applicable
+V169A                  Owns a mobile telephone                          239    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  Missing
+V169B                  Use mobile telephone for financial transactions  240    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  Missing
+V170                   Has an account in a bank or other financial ins  241    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  Missing
+V171A                  Use of internet                                  242    1    N    I    1    0   No   No
+                               0  Never
+                               1  Yes, last 12 months
+                               2  Yes, before last 12 months
+                               3  Yes, can't establish when
+                           (m) 9  Missing
+V171B                  Frequency of using internet last month           243    1    N    I    1    0   No   No
+                               0  Not at all
+                               1  Less than once a week
+                               2  At least once a week
+                               3  Almost every day
+                           (m) 9  Missing
+                          (na)    Not applicable
+V190                   Wealth index combined                            244    1    N    I    1    0   No   No
+                               1  Poorest
+                               2  Poorer
+                               3  Middle
+                               4  Richer
+                               5  Richest
+                          (na)    Not applicable
+V191                   Wealth index factor score combined (5 decimals)  245    8    N    I    1    0   No   No
+                          (na)           Not applicable
+V190A                  Wealth index for urban/rural                     253    1    N    I    1    0   No   No
+                               1  Poorest
+                               2  Poorer
+                               3  Middle
+                               4  Richer
+                               5  Richest
+                          (na)    Not applicable
+V191A                  Wealth index factor score for urban/rural (5 de  254    8    N    I    1    0   No   No
+                          (na)           Not applicable
+ML101                  NA - Type of mosquito bed net(s) slept under la  262    1    N    I    1    0   No   No
+                               0  No net
+                               1  Only treated nets
+                               2  Both treated and untreated nets
+                               3  Only untreated nets
+                           (m) 9  Missing
+                          (na)    Not applicable
+V501                   Current marital status                           263    1    N    I    1    0   No   No
+                               0  Never in union
+                               1  Married
+                               2  Living with partner
+                               3  Widowed
+                               4  Divorced
+                               5  No longer living together/separated
+                           (m) 9  Missing
+V502                   Currently/formerly/never in union                264    1    N    I    1    0   No   No
+                               0  Never in union
+                               1  Currently in union/living with a man
+                               2  Formerly in union/living with a man
+                           (m) 9  Missing
+V535                   Ever been married or in union                    265    1    N    I    1    0   No   No
+                               0  No
+                               1  Formerly married
+                               2  Lived with a man
+                           (m) 9  Missing
+                          (na)    Not applicable
+V701                   Husband/partner's education level                266    1    N    I    1    0   No   No
+                               0  No education
+                               1  Primary
+                               2  Secondary
+                               3  Higher
+                               8  Don't know
+                           (m) 9  Missing
+                          (na)    Not applicable
+V702                   Husband/partner's highest year of education (at  267    2    N    I    1    0   No   No
+                               0     No years completed at level V701
+                               1:15  
+                               98    Don't know
+                           (m) 99    Missing
+                          (na)       Not applicable
+V704                   Husband/partner's occupation                     269    5    N    I    1    0   No   No
+                               0      Not working and didn't work in last 12 months
+                               1      Legislators, senior officials and managers
+                               2      Professionals
+                               3      Technicians and associate professionals
+                               4      Clerks
+                               5      Service workers and shop and market sales workers
+                               6      Skilled agriculture and fishery workers
+                               7      Craft and related trades workers
+                               8      Plant and machine operators and assemblers
+                               9      Elementary occupations
+                               10     Domestic workers
+                               11     Agricultural unskilled
+                               99998  Don't know
+                           (m) 99999  Missing
+                          (na)        Not applicable
+V705                   Husband/partner's occupation (grouped)           274    2    N    I    1    0   No   No
+                               0   Did not work
+                               1   Professional/technical/managerial
+                               2   Clerical
+                               3   Sales
+                               4   Agricultural - self employed
+                               5   Agricultural - unskilled
+                               6   Household and domestic
+                               7   Services
+                               8   Skilled manual
+                               9   Unskilled manual
+                               98  Don't know
+                           (m) 99  Missing
+                          (na)     Not applicable
+V704A                  Husband/partner worked in last 7 days/12 months  276    1    N    I    1    0   No   No
+                               0  Didn't work last 12 months
+                               1  Worked last 7 days
+                               2  Worked last 12 months
+                               8  Don't know
+                           (m) 9  Missing
+                          (na)    Not applicable
+V714                   Respondent currently working                     277    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  Missing
+V714A                  Respondent has a job, but currently absent       278    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  Missing
+                          (na)    Not applicable
+V716                   Respondent's occupation                          279    5    N    I    1    0   No   No
+                               0      Not working and didn't work in last 12 months
+                               1      Legislators, senior officials and managers
+                               2      Professionals
+                               3      Technicians and associate professionals
+                               4      Clerks
+                               5      Service workers and shop and market sales workers
+                               6      Skilled agriculture and fishery workers
+                               7      Craft and related trades workers
+                               8      Plant and machine operators and assemblers
+                               9      Elementary occupations
+                               10     Domestic workers
+                               11     Agricultural unskilled
+                               9998   Don't know
+                           (m) 99999  Missing
+V717                   Respondent's occupation (grouped)                284    2    N    I    1    0   No   No
+                               0   Not working
+                               1   Professional/technical/managerial
+                               2   Clerical
+                               3   Sales
+                               4   Agricultural - self employed
+                               5   Agricultural - unskilled
+                               6   Household and domestic
+                               7   Services
+                               8   Skilled manual
+                               9   Unskilled manual
+                               10  Domestic workers
+                               11  Agricultural unskilled
+                               98  Don't know
+                           (m) 99  Missing
+                          (na)     Not applicable
+V731                   Respondent worked in last 12 months              286    1    N    I    1    0   No   No
+                               0  No
+                               1  In the past year
+                               2  Currently working
+                               3  Have a job, but on leave last 7 days
+                           (m) 9  Missing
+                          (na)    Not applicable
+V463AA                 Frequency smokes cigarettes                      287    1    N    I    1    0   No   No
+                               0  Does not smoke
+                               1  Every day
+                               2  Some days
+                           (m) 9  Missing
+                          (na)    Not applicable
+SWEIGHT                Women's sample weight for adult health(6 decima  288    8    N    I    1    0   No   No
+S1202                  Respondent perception of own health              296    1    N    I    1    0   No   No
+                               1  Poor
+                               2  Average
+                               3  Good
+                               4  Excellent
+S1203                  Respondent own perception of weight              297    1    N    I    1    0   No   No
+                               1  Underweight
+                               2  Normal weight
+                               3  Overweight
+                               4  Obese
+                               8  Don't know
+V463AC                 In the past smoked tobacco every day             298    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                           (m) 9  Missing
+                          (na)    Not applicable
+V463AD                 Frequency in the past smoked tobacco             299    1    N    I    1    0   No   No
+                               0  Do not smokes
+                               1  Every day
+                               2  Some days
+                           (m) 9  Missing
+                          (na)    Not applicable
+V464A                  On average respondent smokes daily: manufacture  300    3    N    I    1    0   No   No
+                               0      Product not used
+                               1:300  
+                               888    Not every day
+                           (m) 999    Missing
+                          (na)        Not applicable
+V464B                  On average respondent smokes daily: hand roll c  303    3    N    I    1    0   No   No
+                               0      Product not used
+                               1:300  
+                               888    Not every day
+                           (m) 999    Missing
+                          (na)        Not applicable
+V464D                  On average respondent smokes daily: pipes full   306    3    N    I    1    0   No   No
+                               0      Product not used
+                               1:300  
+                               888    Not every day
+                           (m) 999    Missing
+                          (na)        Not applicable
+V464E                  On average respondent smokes daily: cigars, che  309    3    N    I    1    0   No   No
+                               0      Product not used
+                               1:300  
+                               888    Not every day
+                           (m) 999    Missing
+                          (na)        Not applicable
+V464F                  On average respondent smokes daily: water pipe   312    3    N    I    1    0   No   No
+                               0      Product not used
+                               1:300  
+                               888    Not every day
+                           (m) 999    Missing
+                          (na)        Not applicable
+V464G                  On average respondent smokes daily: others       315    3    N    I    1    0   No   No
+                               0      Product not used
+                               1:300  
+                               888    Not every day
+                           (m) 999    Missing
+                          (na)        Not applicable
+V464H                  On average respondent uses daily: snuff by mout  318    3    N    I    1    0   No   No
+                               0      Product not used
+                               1:300  
+                               888    Not every day
+                           (m) 999    Missing
+                          (na)        Not applicable
+V464I                  On average respondent uses daily: snuff by nose  321    3    N    I    1    0   No   No
+                               0      Product not used
+                               1:300  
+                               888    Not every day
+                           (m) 999    Missing
+                          (na)        Not applicable
+V464J                  On average respondent uses daily: chewing tobac  324    3    N    I    1    0   No   No
+                               0      Product not used
+                               1:300  
+                               888    Not every day
+                           (m) 999    Missing
+                          (na)        Not applicable
+V464L                  On average respondent uses daily: any others     327    3    N    I    1    0   No   No
+                               0      Product not used
+                               1:300  
+                               888    Not every day
+                           (m) 999    Missing
+                          (na)        Not applicable
+V484A                  On average respondent smokes weekly: manufactur  330    3    N    I    1    0   No   No
+                               0      Product not used
+                               1:300  
+                               888    Not every week
+                           (m) 999    Missing
+                          (na)        Not applicable
+V484B                  On average respondent smokes weekly: hand roll   333    3    N    I    1    0   No   No
+                               0      Product not used
+                               1:300  
+                               888    Not every week
+                           (m) 999    Missing
+                          (na)        Not applicable
+V484D                  On average respondent smokes weekly: pipes full  336    3    N    I    1    0   No   No
+                               0      Product not used
+                               1:300  
+                               888    Not every week
+                           (m) 999    Missing
+                          (na)        Not applicable
+V484E                  On average respondent smokes weekly: cigars, ch  339    3    N    I    1    0   No   No
+                               0      Product not used
+                               1:300  
+                               888    Not every week
+                           (m) 999    Missing
+                          (na)        Not applicable
+V484F                  On average respondent smokes weekly: water pipe  342    3    N    I    1    0   No   No
+                               0      Product not used
+                               1:300  
+                               888    Not every week
+                           (m) 999    Missing
+                          (na)        Not applicable
+V484G                  On average respondent smokes weekly: others      345    3    N    I    1    0   No   No
+                               0      Product not used
+                               1:300  
+                               888    Not every week
+                           (m) 999    Missing
+                          (na)        Not applicable
+V484H                  On average respondent uses weekly: snuff by mou  348    3    N    I    1    0   No   No
+                               0      Product not used
+                               1:300  
+                               888    Not every week
+                           (m) 999    Missing
+                          (na)        Not applicable
+V484I                  On average respondent uses weekly: snuff by nos  351    3    N    I    1    0   No   No
+                               0      Product not used
+                               1:300  
+                               888    Not every week
+                           (m) 999    Missing
+                          (na)        Not applicable
+V484J                  On average respondent uses weekly: chewing toba  354    3    N    I    1    0   No   No
+                               0      Product not used
+                               1:300  
+                               888    Not every week
+                           (m) 999    Missing
+                          (na)        Not applicable
+V484L                  On average respondent uses weekly: any others    357    3    N    I    1    0   No   No
+                               0      Product not used
+                               1:300  
+                               888    Not every week
+                           (m) 999    Missing
+                          (na)        Not applicable
+S1210                  Frequency used smokeless tobacco in the past     360    1    N    I    1    0   No   No
+                               0  Not at all
+                               1  Every day
+                               2  Some days
+S1217                  Frequency smoked tobacco during pregnancy        361    1    N    I    1    0   No   No
+                               0  Not at all
+                               1  Every day
+                               2  Some days
+S1219                  Frequency used smokeless tobacco during pregnan  362    1    N    I    1    0   No   No
+                               0  Not at all
+                               1  Every day
+                               2  Some days
+S1220                  Currently work on a job where other people smok  363    1    N    I    1    0   No   No
+                               0  Not currently working
+                               1  Yes
+                               2  No
+S1221                  Ever worked in a place exposed to smoke, dust,   364    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+S1222                  Number of years worked in place exposed to smok  365    2    N    I    1    0   No   No
+                               0:95  
+S1223                  Currently use e-cigarettes                       367    1    N    I    1    0   No   No
+                               0  Not at all
+                               1  Every day
+                               2  Some days
+S1224                  Ever consumed alcohol                            368    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+S1225                  Consumed alcohol in the last 12 months           369    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+S1226                  Frequency alcohol consumption last 12 moths      370    1    N    I    1    0   No   No
+                               1  5 or more days a week
+                               2  1-4 days per week
+                               3  1-3 days per month
+                               4  Less often than once a month
+S1227A                 Number of drinks on: Monday                      371    2    N    I    1    0   No   No
+                               0     None
+                               1:29  
+                               30    30+
+S1227B                 Number of drinks on: Tuesday                     373    2    N    I    1    0   No   No
+                               0     None
+                               1:29  
+                               30    30+
+S1227C                 Number of drinks on: Wednesday                   375    2    N    I    1    0   No   No
+                               0     None
+                               1:29  
+                               30    30+
+S1227D                 Number of drinks on: Thursday                    377    2    N    I    1    0   No   No
+                               0     None
+                               1:29  
+                               30    30+
+S1227E                 Number of drinks on: Friday                      379    2    N    I    1    0   No   No
+                               0     None
+                               1:29  
+                               30    30+
+S1227F                 Number of drinks on: Saturday                    381    2    N    I    1    0   No   No
+                               0     None
+                               1:29  
+                               30    30+
+S1227G                 Number of drinks on: Sunday                      383    2    N    I    1    0   No   No
+                               0     None
+                               1:29  
+                               30    30+
+S1227H                 Number of home-made alcohol drinks on past 7 da  385    2    N    I    1    0   No   No
+                               0     None
+                               1:89  
+                               90    90+
+S1228                  Ever felt that should cut down on drinking       387    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+S1229                  People annoyed by criticizing your drinking      388    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+S1230                  Ever felt bad or guilty about your drinking      389    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+S1231                  Ever had a drink first thing in the morning      390    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+S1232                  Last 30 days consumed five or more drinks on on  391    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+S1236                  Frequency drank alcohol last pregnancy           392    1    N    I    1    0   No   No
+                               0  Not at all
+                               1  Every day
+                               2  Some days
+S1304                  Frequency eat fried foods                        393    1    N    I    1    0   No   No
+                               0  Never
+                               1  Every day
+                               2  At least once a week
+                               3  Occasionally
+S1305                  Frequency eat fast foods                         394    1    N    I    1    0   No   No
+                               0  Never
+                               1  Every day
+                               2  At least once a week
+                               3  Occasionally
+S1306                  Frequency eat packed chips                       395    1    N    I    1    0   No   No
+                               0  Never
+                               1  Every day
+                               2  At least once a week
+                               3  Occasionally
+S1307                  Frequency eat processed meat                     396    1    N    I    1    0   No   No
+                               0  Never
+                               1  Every day
+                               2  At least once a week
+                               3  Occasionally
+S1308                  Approach towards salt consumption                397    1    N    I    1    0   No   No
+                               1  No intention to lower salt
+                               2  Interested within next six months
+                               3  Interested within next month
+                               4  Started in last six months
+                               5  Already lowered longer than six months
+                               8  Don't know
+S1309                  Types of fruits eaten yesterday                  398    2    N    I    1    0   No   No
+                               0     None
+                               1:19  
+                               20    20+
+S1310                  Types of vegetables eaten yesterday              400    2    N    I    1    0   No   No
+                               0     None
+                               1:19  
+                               20    20+
+S1311                  Sugar-sweetened drinks yesterday                 402    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+S1311A1                Number of sugar-sweetened drinks of 200 ML glas  403    2    N    I    1    0   No   No
+                               1:19  
+                               20    20+
+S1311A2                Number of sugar-sweetened drinks of 330 ML can   405    2    N    I    1    0   No   No
+                               1:19  
+                               20    20+
+S1311A3                Number of sugar-sweetened drinks of 500 ML bott  407    2    N    I    1    0   No   No
+                               1:19  
+                               20    20+
+S1311A4                Number of sugar-sweetened drinks of 1 L bottle   409    2    N    I    1    0   No   No
+                               1:19  
+                               20    20+
+S1311A5                Number of sugar-sweetened drinks of 2 L bottle   411    2    N    I    1    0   No   No
+                               1:19  
+                               20    20+
+S1312                  Fruit juice drinks yesterday                     413    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+S1312A1                Number of sugar-sweetened drinks of 200 ML juic  414    2    N    I    1    0   No   No
+                               1:19  
+                               20    20+
+S1312A2                Number of sugar-sweetened drinks of 200 ML glas  416    2    N    I    1    0   No   No
+                               1:19  
+                               20    20+
+S1402                  Covered by health insurance                      418    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+S1404                  Last month received medical or dental care       419    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+S1405A                 Place for medical, dental treatment: government  420    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+S1405B                 Place for medical, dental treatment: government  421    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+S1405C                 Place for medical, dental treatment: other publ  422    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+S1405D                 Place for medical, dental treatment: private ho  423    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+S1405E                 Place for medical, dental treatment: chemist/ph  424    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+S1405F                 Place for medical, dental treatment: dentist/hy  425    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+S1405G                 Place for medical, dental treatment: other priv  426    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+S1405H                 Place for medical, dental treatment: workplace   427    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+S1405I                 Place for medical, dental treatment: traditiona  428    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+S1405J                 Place for medical, dental treatment: traditiona  429    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+S1405K                 Place for medical, dental treatment: faith heal  430    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+S1405X                 Place for medical, dental treatment: other       431    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+S1406                  Last month had visits by home-based care giver   432    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                               3  Don't know
+S1407                  Have ever had Pap smear                          433    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                               8  Don't know
+S1408                  Time for last Pap smear test                     434    1    N    I    1    0   No   No
+                               1  Within the last 3 years
+                               2  4-5 years ago
+                               3  6-10 years ago
+                               4  More than 10 years ago
+                               8  Don't know/don't remember
+S1409                  Did get results of Pap smear                     435    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                               8  Don't know/don't remember
+S1410                  Has a doctor or nurse told that you had TB       436    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                               8  Don't know
+S1411                  Last time were told to have TB                   437    1    N    I    1    0   No   No
+                               1  In the last 12 months
+                               2  More than 12 months ago
+S1412                  Did get treatment for TB                         438    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                               8  Don't know/don't remember
+S1413A                 Doctor, nurse diagnosed with: high blood pressu  439    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                               8  Don't know
+S1413B                 Doctor, nurse diagnosed with: heart attack       440    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                               8  Don't know
+S1413C                 Doctor, nurse diagnosed with: cancer             441    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                               8  Don't know
+S1413D                 Doctor, nurse diagnosed with: stroke             442    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                               8  Don't know
+S1413E                 Doctor, nurse diagnosed with: high blood choles  443    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                               8  Don't know
+S1413F                 Doctor, nurse diagnosed with: diabetes           444    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                               8  Don't know
+S1413G                 Doctor, nurse diagnosed with: chronic bronchiti  445    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                               8  Don't know
+S1413H                 Doctor, nurse diagnosed with: asthma             446    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                               8  Don't know
+S1416                  Did get treatment for high blood pressure        447    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                               8  Don't know/don't remember
+S1418                  Did get treatment for heart attack               448    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                               8  Don't know/don't remember
+S1420                  Did get treatment for cancer                     449    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                               8  Don't know/don't remember
+S1422                  Did get treatment for stroke                     450    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                               8  Don't know/don't remember
+S1424                  Did get treatment for high blood cholesterol     451    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                               8  Don't know/don't remember
+S1426                  Did get treatment for diabetes                   452    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                               8  Don't know/don't remember
+S1428                  Did get treatment for chronic bronchitis         453    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                               8  Don't know/don't remember
+S1430                  Did get treatment for asthma                     454    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                               8  Don't know/don't remember
+S1432                  Have less breath when exerting compared to othe  455    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                               8  Don't know
+S1433                  Last 12 months respiratory problems              456    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                               8  Don't know
+S1434                  Also had short breath when with respiratory pro  457    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                               8  Don't know
+S1435                  Had respiratory problem when didn't have a cold  458    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                               8  Don't know
+S1436                  Last 12 months have woken up with tightness in   459    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                               8  Don't know
+S1437                  Last 12 months have woken up with shortness of   460    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                               8  Don't know
+S1438                  Last 12 months have woken up with an attack of   461    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                               8  Don't know
+S1439                  Usually cough most days                          462    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                               8  Don't know
+S1440                  When with cough did bring up phlegm from chest   463    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                               8  Don't know
+S1441                  Have brought up phlegm for three months last ye  464    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                               8  Don't know
+S1442                  Number of years have brought up phlegm           465    2    N    I    1    0   No   No
+                               0     Less than a year
+                               1:95  
+S1443                  Currently troubled by pain or discomfort         467    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+S1444                  Have had the pain or discomfort for more than 3  468    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+S1445A                 Place of pain or discomfort: back pain           469    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+S1445B                 Place of pain or discomfort: neck or shoulder    470    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+S1445C                 Place of pain or discomfort: headache, facial,   471    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+S1445D                 Place of pain or discomfort: stomach, abdomen    472    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+S1445E                 Place of pain or discomfort: arms, hands, hips,  473    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+S1445F                 Place of pain or discomfort: chest               474    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+S1445X                 Place of pain or discomfort: other               475    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+S1446                  Last 12 months did teeth or mouth caused pain o  476    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+S1447                  Did get treatment last time had teeth or mouth   477    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+S1448A                 Place for treatment for teeth or mouth: public   478    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+S1448B                 Place for treatment for teeth or mouth: public   479    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+S1448C                 Place for treatment for teeth or mouth: private  480    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+S1448D                 Place for treatment for teeth or mouth: private  481    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+S1448E                 Place for treatment for teeth or mouth: traditi  482    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+S1448X                 Place for treatment for teeth or mouth: other    483    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+S1449                  Main reason didn't get teeth/mouth treatment     484    1    N    I    1    0   No   No
+                               1  No oral health service available
+                               2  Oral health services too far
+                               3  Oral health services too expensive/could not afford
+                               4  Problem went away
+                               6  Other
+S1450                  Use medication regularly prescribed by doctor/n  485    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+S1451                  Number of prescribed medications used regularly  486    2    N    I    1    0   No   No
+                               1:29  
+                               30    30+
+S1452                  Person that pays for medications                 488    1    N    I    1    0   No   No
+                               1  Respondent
+                               2  Family/friend
+                               3  Medical aid
+                               4  Employer
+                               5  Provided by public clinic or hospital
+                               6  Other
+S1453                  Last 12 months have been sent away from clinic   489    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+S1454                  Number of times sent without medication last 12  490    2    N    I    1    0   No   No
+                               1:29  
+                               30    30+
+S1455                  Last 12 months used medication with codeine      492    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+                               8  Don't know
+S1457                  Last 12 months have used codeine medication for  493    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+S1458A                 Medications with codeine used in last 12 months  494    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+S1458B                 Medications with codeine used in last 12 months  495    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+S1458C                 Medications with codeine used in last 12 months  496    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+S1458D                 Medications with codeine used in last 12 months  497    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+S1458E                 Medications with codeine used in last 12 months  498    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+S1458F                 Medications with codeine used in last 12 months  499    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+S1458G                 Medications with codeine used in last 12 months  500    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+S1458H                 Medications with codeine used in last 12 months  501    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+S1458X                 Medications with codeine used in last 12 months  502    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+S1459                  Last 12 months received treatment for use of co  503    1    N    I    1    0   No   No
+                               0  No
+                               1  Yes
+--------------------------------------------------------------------------------------------------------------
+Relation Name         Primary               Linked by             Secondary             Linked by
+--------------------------------------------------------------------------------------------------------------

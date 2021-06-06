@@ -5,6 +5,11 @@ output:
         template: './_templates/default.html'
 ---
 
+### 2021
+
+- 10 June 2021 [The under-diagnosis of diabetes and hypertension in South Africa](https://www.painblogr.org/2021-06-10-diabetes-and-hypertension.html)
+
+
 ### 2020
 
 - 15 December 2020 [Using raster maths to calculate and map aridity indices](https://www.painblogr.org/2020-12-15-climate-change.html)
