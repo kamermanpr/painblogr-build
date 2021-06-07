@@ -502,7 +502,7 @@ The data I present here shows that there is significant under-diagnosis of diabe
 
 [^4]: Unger T _et al_. 2020 International Society of Hypertension Global Hypertension Practice Guidelines. _Hypertension_ **75**:1334-1357, 2020. PMID: [32370572](https://pubmed.ncbi.nlm.nih.gov/32370572/)
 
-[^5]: American Diabetes Association. Classification and diagnosis of diabetes. _Diabetes Care_ 38 (Suppl. 1):S8–S16, 2015. PMID: [25537714](https://pubmed.ncbi.nlm.nih.gov/25537714/)
+[^5]: American Diabetes Association. Classification and diagnosis of diabetes. _Diabetes Care_ **38**(Suppl. 1):S8–S16, 2015. PMID: [25537714](https://pubmed.ncbi.nlm.nih.gov/25537714/)
 
 [^6]: You need to [register](https://dhsprogram.com/data/dataset_admin/login_main.cfm?) as a user on the DHS Program system, and then request access to data for a defined project. The registration process is quick, and submitting a request for data is straightforward. The permissions to use the data usually comes within 24-hour of submitting the request. 
 
