@@ -17,7 +17,7 @@ output:
 
 _10 June 2021_
 
-Using the 2016 South African Demographic and Household Survey to investigate the under-diagnosis of diabetes and hypertension.
+Using the 2016 South African Demographic and Health Survey to investigate the under-diagnosis of diabetes and hypertension.
 
 <a class="btn btn-primary" href="https://www.painblogr.org/2021-06-10-diabetes-and-hypertension.html" target="_blank">Read more <i class="fa fa-arrow-circle-o-right fa-2x" style="vertical-align: middle;" aria-hidden="true"></i></a><br>
 <br>
