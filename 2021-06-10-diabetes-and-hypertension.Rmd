@@ -5,7 +5,7 @@ post_author: 'Peter Kamerman'
 post_date: '10 June 2021'
 post_image: 'https://www.painblogr.org/images/posts/2021-06-10-diabetes-and-hypertension/post-image.png'
 permalink:  '2021-06-10-diabetes-and-hypertension.html'
-description: "Using the 2016 South African Demographic and Household Survey to investigate the under-diagnosis of diabetes and hypertension"
+description: "Using the 2016 South African Demographic and Health Survey to investigate the under-diagnosis of diabetes and hypertension"
 output:
     html_document:
         code_folding: show
@@ -28,15 +28,15 @@ library(tidyverse)
 
 ## Background
 
-Hypertension and diabetes mellitus are major causes of mortality and morbidity globally [^1]^,^[^2]. Part of the reason for the high burden of disease associated with these two treatable diseases is their silent nature, which means that often the damage to organs (particularly the cardiovascular system and kidneys) occurs before the conditions are diagnosed and treatment started. In this blog, I use the data from the 2016 Demographic and Household Survey (DHS) for South Africa, a nationally representative sample of adult South Africans [^3], to show that there is significant under-diagnosis of both these treatable conditions.
+Hypertension (high blood pressure) and diabetes mellitus (high blood glucose) are major causes of mortality and morbidity globally [^1]^,^[^2]. Part of the reason for the high burden of disease associated with these two treatable diseases is their silent nature, which means that often the damage to organs (particularly the cardiovascular system and kidneys) occurs before the conditions are diagnosed and treatment started. In this blog, I use the data from the 2016 Demographic and Health Survey (DHS) for South Africa, a nationally representative sample of adult South Africans [^3], to show that there is significant under-diagnosis of both these treatable conditions.
 
-As part of the 2016 DHS information was collected on whether participants had ever received a diagnosis of high blood pressure and/or diabetes mellitus. In addition, in a sub-sample of consenting participants, blood samples were taken for the assessment of HBA1c (HBA1c measures the percentage of the protein haemoglobin that has sugar bound to it, and is used as an indicator of how high a person's blood glucose levels have been over a 2-3 month period). Blood pressure also was measured in consenting participants.
+As part of the 2016 DHS, information was collected on whether participants had ever received a diagnosis of high blood pressure and/or diabetes mellitus. In addition, in a sub-sample of consenting participants, blood pressure was measured and blood samples were taken for the measurement of HBA1c (HBA1c measures the percentage of the protein haemoglobin that has sugar bound to it, and is used as an indicator of how high a person's blood glucose levels have been over a 2-3 month period). 
 
-More specifically, all participants were asked, "Has a doctor, nurse or other health worker told you that you have or have had any of the following conditions: high blood pressure?" and "Has a doctor, nurse or other health worker told you that you have or have had any of the following conditions: diabetes or blood sugar?". 
+More specifically, all participants were asked, _"Has a doctor, nurse or other health worker told you that you have or have had any of the following conditions: high blood pressure?"_ and _"Has a doctor, nurse or other health worker told you that you have or have had any of the following conditions: diabetes or high blood sugar?"._ 
 
-In consenting adult participants (<span>&#8925;</span>15 years old), three blood pressure measurements were taken using an Omron 1300 digital blood pressure monitor. Measurements were taken at intervals of three minutes or more. For the classification of hypertension, the mean of the last two measurements were taken, and participants with a systolic pressure <span>&#8925;</span>140mmHg or diastolic pressure <span>&#8925;</span>90mmHg were classified as having hypertension [^4]. 
+In a sub-sample of consenting adult participants (<span>&#8925;</span>15 years old), three blood pressure measurements were taken using an Omron 1300 digital blood pressure monitor. Measurements were taken at intervals of three minutes or more. For the classification of hypertension, the mean of the last two measurements were taken, and participants with a systolic pressure <span>&#8925;</span>140mmHg or diastolic pressure <span>&#8925;</span>90mmHg were classified as having hypertension [^4]. 
 
-Also in consenting adult participants, nurses collected finger-prick blood specimens for laboratory HbA1c testing. Blood from the finger prick was collected on a filter paper card, and the dried blood spot analysed at a later stage for total haemoglobin and glycated haemoglobin (HBA1c) concentrations. Total haemoglobin concentration was measured by a colourimetric method monitoring the change in absorbance at 410nm. HbA1c concentration was measured by a turbidimetric immunoinhibition method monitoring the change in absorbance at 340nm. HbA1c concentration was expressed as a percentage of total haemoglobin concentration, with those participants with an HBA1c level of <span>&#8925;</span>6.5% being classified as having diabetes mellitus [^5]. Because the HBA1c was measured from a dried blood spot, a correction was applied: $HBA1c_{(corrected)} = \frac{(HBA1c_{(dried~blood~spot)} - 0.228)}{0.9866}$. The veracity of this formula has not been confirmed.
+Also in a sub-sample of consenting adult participants, nurses collected finger-prick blood specimens for laboratory HbA1c testing. Blood from the finger prick was collected on a filter paper card, and the dried blood spot analysed at a later stage for total haemoglobin and glycated haemoglobin (HBA1c) concentrations. Total haemoglobin concentration was measured by a colourimetric method monitoring the change in absorbance at 410nm. HbA1c concentration was measured by a turbidimetric immunoinhibition method monitoring the change in absorbance at 340nm. HbA1c concentration was expressed as a percentage of total haemoglobin concentration, with those participants with an HBA1c level of <span>&#8925;</span>6.5% being classified as having diabetes mellitus [^5]. Because the HBA1c was measured from a dried blood spot, a correction was applied: $HBA1c_{(corrected)} = \frac{(HBA1c_{(dried~blood~spot)} - 0.228)}{0.9866}$. The veracity of this formula has not been confirmed.
 
 This blog post serves two purposes. Firstly, it investigates whether there is under-diagnosis of hypertension and diabetes mellitus in the adult population of South Africa. Secondly, it serves as a mini tutorial on using the _R statistical environment_ to analyse DHS data. 
 
@@ -44,7 +44,7 @@ This blog post serves two purposes. Firstly, it investigates whether there is un
 
 The first step in the analysis was to get the data. The data for all DHS surveys conducted globally can be obtained from the [DHS program](https://dhsprogram.com/data/dataset_admin/login_main.cfm) website [^6]. The data are provided in a variety of different formats, but not as CSV or RDS files, file formats that would make it easier for _R_ users to import the data. Instead, I downloaded the South African 2016 DHS data in SPSS format (SAV files), and used the `foreign` package to import the data into my _R_ session.  
 
-On the DHS Program website, the data are not provided in a single file, instead they are divided according to the questionnaire used. Consequently, I had to download, import, and merge three files: a file with biomarker data (blood pressure and HBA1c data), a file with adult health questionnaire data for women, and a file with adult health questionnaire data for men. The adult health files contained the data on whether a diagnosis of hypertension and/or diabetes had ever been made, and information on the sampling design of the study that informs how the data are analysed (i.e., design weights, clusters, and strata).  
+On the DHS Program website, the data are not provided in a single file, instead they are divided according to the questionnaire used. Consequently, I had to download, import, and combine three files: a file with biomarker data (blood pressure and HBA1c data), a file with adult health questionnaire data for women, and a file with adult health questionnaire data for men. The adult health files contained the data on whether a diagnosis of hypertension and/or diabetes had ever been made, and information on the sampling design of the study that informs how the data are analysed (i.e., design weights, clusters, and strata).  
 
 ```{r echo = FALSE, include = FALSE, eval = FALSE}
 # Load package 
@@ -82,7 +82,7 @@ men <- read.spss('ZAAHM71FL.SAV',
                  to.data.frame = TRUE)
 ```
 
-The next step was to get the data ready for analysis by extracting the required columns of data, joining the three separate data files, cleaning the data, and calculating derived values (i.e., hypertension from the blood pressure data, and diabetes from the HBA1c data).
+The next step was to get the data ready for analysis by extracting the required columns of data, combining the three separate data files, cleaning the data, and calculating derived values (i.e., hypertension from the blood pressure data, and diabetes from the HBA1c data).
 
 ### Extract and rename required columns
 
@@ -160,11 +160,11 @@ men_reduced <- men %>%
            Diabetes = SM1108F)
 ```
 
-### Join the datasets
+### Combining the datasets
 
-The `women_reduced` and `men_reduced` dataframes consisted of the same columns of data so they could easily be appended to one another, forming on new dataframe (which I called `women_and_men`). 
+To combine the three datasets I first did a "vertical join" between the `women_reduced` and `men_reduced` dataframe by appending the `men_reduced` onto the `women_reduced` dataframe. This is possible because the variables (columns) in each dataframe are the same, so you are merely adding cases to the bottom of one of the dataframes. I called the new dataframe: `women_and_men`. 
 
-The `women_and_men` dataframe shared three columns with the `biomarker_reduced` dataframe, and these three columns could then act as indices to form the basis of a join between the two dataframe. The join would allow me to pair rows of data from the two dataframes, and in doing so, allow data from the same participant across to dataframes to be combined into in a single row for each participant. 
+The `women_and_men` dataframe shared three columns with the `biomarker_reduced` dataframe, and these three columns could then act as indices to form the basis of a "horizontal join" between the two dataframes. The shared indices essentially allows one to align the rows of two dataframes, and in doing so, allow data from the same participant across two dataframes to be combined into in a single row. 
 
 ```{r eval = FALSE}
 #-- Append men_reduced to women_reduced --#
@@ -183,9 +183,9 @@ combined <- left_join(women_and_men, biomarker_reduced)
 
 - I recoded _"Don't know"_ answers for the hypertension and diabetes questions as _"No"_
 
-- I recoded none numeric data codes (_"Inconclusive"_) for HBA1c as missing data
+- I recoded non-numeric data codes (_"Inconclusive"_) for HBA1c as missing data
 
-- I recoded none numeric data codes (_"Other", Technical problems"_) for blood pressure measurements as missing data
+- I recoded non-numeric data codes (_"Other", Technical problems"_) for blood pressure measurements as missing data
 
 ```{r eval = FALSE}
 # Load packages
@@ -220,7 +220,7 @@ combined_clean <- combined %>%
 
 The systolic and diastolic blood pressures had to be calculated from the second and third measurements taken during data collection, and from the resulting averages, I had to determine which participants had hypertension. 
 
-For HBA1c, I first needed to apply a correction factor because the assay was performed using dried and not fresh venous blood. Then I had to use the resulting HBA1c level to determine which participants had diabetes.
+For HBA1c, I first needed to apply a correction factor because the assay was performed using dried and not fresh venous blood. Then I had to use the resulting HBA1c levels to determine which participants had diabetes.
 
 Once I had made these calculations, I was left with a version of the data (`analysis_set`) with all the variables I needed to perform the analyses.
 
@@ -290,17 +290,17 @@ analysis_set <- readRDS('_data/2021-06-10-diabetes-and-hypertension/clean-data.r
 
 ## Data analysis 
 
-Once I had the analysis dataset (`analysis_set`), I needed to convert the nice and clean dataframe into a _design object_ from the `survey` package. Survey design objects are key to analysing surveys such as the DHS with complex sampling designs. In the case of the South African 2016 DHS survey, it a stratified two-stage sampling design. This complex sampling needs to be factored into any analysis when calculating point estimates and measures of precision (e.g., confidence intervals) so that these estimates are representative of the population the survey represents.
+Once I had the analysis dataset (`analysis_set`), I needed to convert the dataframe into a _design object_ from the `survey` package. Survey design objects are key to analysing surveys such as the DHS, which have complex sampling designs. In the case of the South African 2016 DHS survey, it is a stratified two-stage sampling design. This complex sampling needs to be factored into the calculation of point estimates and measures of precision (e.g., confidence intervals) so that these estimates are representative of the population the survey represents.
 
 If you want to know more about design-based analysis and using the `survey` package, I recommend that you visit Thomas Lumley's website: [Survey analysis in R](http://r-survey.r-forge.r-project.org/survey/).
 
-**NB: All data presented in this blog are crude estimates. That is. I have not standardised for variables such as age and sex.**
+**NB: All data presented in this blog are crude estimates. That is, I have not standardised for variables such as age and sex.**
 
 ### Create design object
 
-Generation of a design object requires three bits of information about the survey: i) what are the primary sampling units, ii) what are the strata, and iii) what are the sample weights. 
+Generation of a design object requires three bits of information about the survey: i) the primary sampling unit, ii) the strata, and iii) the sampling/survey weights. 
 
-The primary sampling unit (PSU) is the first unit that is sampled in the design. In the case of the 2016 DHS for South Africa, enumeration areas (EAs, small geographic areas with clearly distinguishable boundaries) from the 2011 population census that were of manageable size were treated as primary sampling units (PSUs), whereas small neighbouring EAs were pooled together to form new PSUs, and large EAs were split into conceptual PSUs. In total, 750 PSUs were selected in the survey. Stratification is a method of breaking up the population into different groups based on certain identifying characteristics. Sampling is done within each stratum, and because of the homogeneity within each stratum, the process increases the precision of any estimates that are calculated. For the 2016 DHS for South Africa, each of the provinces in the country was stratified into urban, farm, and traditional areas, yielding 26 sampling strata within the 750 PSUs. Sample weights are weights applied to every participant in the survey that correct for over or under representation of the group that person represents in the population. For example, women in a rural area may have been over-sampled, and thus the weight carried by data from those women must be decreased.
+The primary sampling unit (PSU) is the first unit that is sampled in the design. In the case of the 2016 DHS for South Africa, enumeration areas (EAs, small geographic areas with clearly distinguishable boundaries) from the 2011 population census that were of manageable size were treated as primary sampling units (PSUs), whereas small neighbouring EAs were pooled together to form new PSUs, and large EAs were split into conceptual PSUs. In total, 750 PSUs were selected in the survey. Stratification is a method of breaking up the population into different groups based on certain identifying characteristics. Sampling is done within each stratum, and because of the homogeneity within each stratum, the process increases the precision of estimates that are calculated. For the 2016 DHS for South Africa, each of the provinces in the country was stratified into urban, farm, and traditional areas, yielding 26 sampling strata within the 750 PSUs. Sampling weights are weights applied to every participant in the survey that correct for over or under representation of the group that person represents in the population. For example, women in a rural area may have been over-sampled, and thus the weight carried by data from those women must be decreased.
 
 ```{r}
 # load packages
@@ -320,7 +320,7 @@ The first analysis I completed was to determine whether there was under-diagnosi
 
 ####  Exploratory plot of systolic and diastolic blood pressures
 
-The first step in any analysis is to get a feel for the data by plotting it. In this case, I constructed box-and-whisker plots of diastolic and systolic blood pressures. Importantly, I used the `survey::svyboxplot` function, thus ensuring that all the values (e.g., median, 25th percentile) in the box-and-whisker plot were calculated while taking the survey design into consideration.
+The first step in any analysis is to get a feel for the data by plotting it. In this case, I constructed box-and-whisker plots of diastolic and systolic blood pressures (see below). Importantly, I used the `survey::svyboxplot` function, thus ensuring that all the values (e.g., median, 25th percentile) in the box-and-whisker plot were calculated while taking the survey design into consideration.
 
 The horizontal red lines on the box-and-whisker plots below indicate the hypertension cut-off values (systolic pressure <span>&#8925;</span>140mmHg and/or diastolic pressure <span>&#8925;</span>90mmHg)
 
@@ -356,7 +356,7 @@ abline(h = 140,
        lty = 3)
 ```
 
-After plotting the data, I then calculated the proportion (with 95% confidence intervals) of people who remembered being told that they have high blood pressure/hypertension. I used the `survey::svyciprop` function to make the calculations while factoring in the sampling design of the survey. For reporting purposes, I converted the proportions to percentages.
+After plotting the data, I calculated the proportion (with 95% confidence intervals) of people who remembered being told that they have high blood pressure. I used the `survey::svyciprop` function to make the calculations while factoring in the sampling design of the survey. For reporting purposes, I converted the proportions to percentages.
 
 ```{r}
 # Load packages
@@ -386,7 +386,7 @@ data.frame(# Extract estimate, convert to percentage, round to first decimal
     kable_styling(bootstrap_options = 'striped')
 ```
 
-After calculating the percentage of participants who remembered ever having been told that they have high blood pressure/hypertension, I then calculated the proportion of people who had hypertension based on the blood pressure measurements made during the survey. I used the `survey::svyciprop` function again, and converted the proportion to a percentage for reporting. 
+After calculating the percentage of participants who remembered ever having been told that they have high blood pressure, I then calculated the proportion of people who had hypertension based on the blood pressure measurements made during the survey. I used the `survey::svyciprop` function again, and converted the proportion to a percentage for reporting. 
 
 ```{r}
 # Calculate the proportion of participants diagnosed with hypertension based on 
@@ -406,23 +406,21 @@ data.frame('Estimate' = round(100 * as.vector(hypertension_measured), 1),
     kable_styling(bootstrap_options = 'striped')
 ```
 
-The prevalence of hypertension, based on measured blood pressure, in the South African adult population is consistent with global estimates of the prevalence of hypertension (see footnote 1), especially for low- and middle-income countries which have seen a rapid rise in the prevalence of hypertension in the past two decades [^7]^,^[^8]. 
+In the context of my objectives, there was a major difference in the percentage of people who remember previously being told that they have high blood pressure **(19%)**, and the percentage with hypertension based on measurements taken at the time of the survey **(37%)**. _Indeed, the estimate based on current measurements is roughly double that of the estimate based on awareness of a previous diagnosis._ The prevalence of hypertension based on measured pressures in this survey (37%), is consistent with global estimates, especially for low- and middle-income countries, which have seen a rapid rise in the prevalence of hypertension in the past two decades ^1^^,^[^7]^,^[^8].
 
-More importantly in the context of my objectives, however, is the major difference in the percentage of people who remember previously being told that they have high blood pressure/hypertension, and the percentage with hypertension based on measurements taken at the time of the survey (19% vs 37%). Indeed, the estimate based on current measurements is roughly double that of the estimate based on awareness of a previous diagnosis. 
+I think that the question on whether participants had ever been told that they have high blood pressure by a medical professional may under-estimate the true diagnosis rate because it requires the participant to recall having received that diagnosis. But even when considering this possibility, the data indicate a massive under-diagnosis of hypertension in the South African population. 
 
-I think that the question on whether participants had ever been told that they have high blood pressure/hypertension by a medical professional may under-estimate the true diagnosis rate because it requires the participant to recall having received that diagnosis. But even when considering this possibility, the data indicate a massive under-diagnosis of hypertension in the South African population. 
+One way to check whether someone has received a diagnosis is to look at whether they are being treated for the condition. According to the official report for the 2016 South African DHS survey (see footnote 3, page 269), 15% of men and 22% of women are taking medication to control their blood pressure, which is consistent with the prevalence of people who have been told that they have high blood pressure (~19%). However, I did not checked if people who could not remember a hypertension diagnosis were, in fact, taking medication for hypertension. I suspect that in some individuals this incongruency may have been present, but not enough to confound the results significantly. 
 
-One way to check whether someone has received a diagnosis is to look at whether they are been treated for the condition. According of the report for the 2016 South African DHS survey (see footnote 3, page 269), 15% of men and 22% of women are taking medication to control there blood pressure, which is consistent with the prevalence of people who have been told that have high blood pressure/hypertension (~19%). However, I did not checked how many people who could not remember being told that they have hypertension were, in fact, taking medication for it. I suspect that in some individuals this incongruency may have been present, but not enough to confound the results significantly. 
-
-One thing to remember about these data is that I have presented crude estimates, which have not been standardised for age, and age is an important risk factor for hypertension. The effect of age on hypertension is best illustrated by a recent study of a large cohort of South Africans living in a rural community, and who were aged <span>&#8925;</span>40 years [^9]. In that study, ~60% of participants had hypertension, and these age-related data are in agreement with those reported in the summary of the 2016 South African DHS survey (see footnote 3, page 269). 
+One thing to remember about these data is that I have presented crude estimates, which have not been standardised for age, and age is an important risk factor for hypertension. The effect of age on hypertension is best illustrated by a recent study of a large cohort of South Africans living in a rural community, and who were aged <span>&#8925;</span>40 years [^9]. In that study, ~60% of participants had hypertension, and these age-related data are in agreement with those reported in the official report for the 2016 South African DHS survey (see footnote 3, page 269). 
 
 ### Under-diagnosis of diabetes mellitus
 
-The next part of my analysis was to look at whether there was under-diagnosis of diabetes mellitus in the South African adult population.
+The next part of my analysis was to look at whether there was under-diagnosis of diabetes mellitus in South Africa.
 
 #### Exploratory plot of HBA1c
 
-As with the hypertension data, I produced an exploratory box-and-whisker plot, but this time of HBA1c levels. In this HBA1c figure (see below), the horizontal red lines indicate the diabetes mellitus cut-off value (HBA1c <span>&#8925;</span>6.5%)
+As with the hypertension data, I produced an exploratory box-and-whisker plot, but this time of HBA1c levels. In this HBA1c figure (see below), the horizontal red lines indicate the diabetes mellitus cut-off value (HBA1c <span>&#8925;</span>6.5%).
 
 ```{r, fig.width = 4, fig.height = 7}
 # Reset plotting area to 1 row and 1 column
@@ -442,7 +440,7 @@ abline(h = 6.5,
        lty = 3)
 ```
 
-My first action was to calculate the proportion of people who remembered being told that they have high blood sugar/diabetes. I converted the proportions to percentages when reporting the data. 
+My first action was to calculate the proportion of people who remembered being told that they have high blood sugar or diabetes. I converted the proportions to percentages when reporting the data. 
 
 ```{r}
 # Calculate the proportion of participants with a previous diagnosis of diabetes
@@ -482,17 +480,17 @@ data.frame('Estimate' = round(100 * as.vector(diabetes_measured), 1),
     kable_styling(bootstrap_options = 'striped')
 ```
 
-When comparing the data from the two diabetes analyses, there clearly is a gross under-diagnosis of the prevalence of diabetes based on the number of people who remembered being given such a diagnosis compared to those individuals meeting the definition of diabetes based on HBA1c levels (4.5% vs 11.4%). 
+When comparing the data from the two diabetes analyses, there clearly is a gross under-diagnosis of the prevalence of diabetes based on the number of people who remembered being given such a diagnosis **(4.5%)** compared to those individuals meeting the definition of diabetes based on HBA1c levels **(11.4%)**. _Indeed, the estimate based on current measurements is more than double that of the estimate based on awareness of a previous diagnosis._
 
-The prevalence I report here is similar to that reported in a recent systematic review and meta-analysis by Pheiffer and colleagues on type II diabetes in South Africa [^10]. Using pooled data, from studies using objective criteria for the diagnosis of diabetes, they reported a prevalence ~15% in people aged <span>&#8925;</span>25 years. The 2016 South African DHS data includes a wider age range (<span>&#8925;</span>15 years), which may explain the difference in prevalence. Another reason for the slight discrepancy between the prevalence reported by Pheiffer and collegaues and the data I present here is that the correction factor applied to the HBA1c data in the DHS for using a dried blood spot and not a fresh venous blood may have over-corrected the HBA1c. Not applying the correction leads to an estimated diabetes prevalence of 21%. 
+The prevalence I report here is similar to that reported in a recent systematic review and meta-analysis by Pheiffer and colleagues on type II diabetes in South Africa [^10]. Using pooled data, from studies using objective criteria for the diagnosis of diabetes, they reported a prevalence ~15% in people aged <span>&#8925;</span>25 years. The 2016 South African DHS data includes a wider age range (<span>&#8925;</span>15 years), which may explain the difference in prevalence. Another reason for the slight discrepancy between the prevalence reported by Pheiffer and colleagues and the data I present here is that the correction factor applied to the HBA1c data in the DHS for using a dried blood spot and not a fresh venous blood may have over-corrected the HBA1c. Not applying the correction leads to an estimated diabetes prevalence of 21%. 
 
 ## Conclusion
 
 Using the estimate of diabetes prevalence (11.4%) from the 2016 South African DHS, about 6.7 million adult South Africans have diabetes. Similarly, about 21.8 million South African adults have hypertension (37%). Thus there is a high burden (number of people affected) of two diseases that are major causes of mortality and morbidity. 
 
-According to 2017 data from Statistics South Africa [^11] complications of diabetes were the second most common cause of death (5.7% of deaths); the biggest killer was tuberculosis (6.4% of deaths). Hypertensive diseases are the seventh most common cause of death (4.7% deaths), but when you add in diseases where hypertension is a major contributing factor, then the contribution of hypertension becomes more apparent (e.g., cerebrovacular disease caused 5.0% of deaths). 
+According to 2017 data from Statistics South Africa [^11], complications of diabetes was the second most common cause of death (5.7% of deaths); the biggest killer was tuberculosis (6.4% of deaths). Hypertensive diseases was the seventh most common cause of death (4.7% deaths), but when you add in diseases where hypertension is a major contributing factor, then the contribution of hypertension becomes more apparent (e.g., cerebrovacular disease caused 5.0% of deaths). 
 
-The data I present here shows that there is significant under-diagnosis of diabetes mellitus and hypertension. Both these diseases are treatable, so the under-diagnosis means greater morbidity and mortality from these diseases, which is a a big worry from a public health point of view.
+The data I present here shows that there is significant under-diagnosis of diabetes mellitus and hypertension. Both these diseases are treatable, so the under-diagnosis means greater morbidity and mortality from these diseases, which is a big worry from a public health point of view.
 
 ****
 
